@@ -16,6 +16,16 @@ import {
   FormItemError,
 } from '../../../styles/boardsNew';
 import { useState } from 'react';
+import { useMutation, gql } from '@apollo/client';
+
+const CREATE_BOARD = gql`
+  mutation createBoard($createBoardInput: CreateBoardInput!) {
+    createBoard(createBoardInput: $createBoardInput) {
+      _id
+      writer
+    }
+  }
+`;
 
 export default function NewBoard() {
   const [writer, setWriter] = useState('');
@@ -28,6 +38,8 @@ export default function NewBoard() {
   const [titleError, setTitleError] = useState('');
   const [contentsError, setContentsError] = useState('');
 
+  const [createBoard] = useMutation(CREATE_BOARD);
+
   const handleInputChange = (e, setInput, setError) => {
     setInput(e.target.value);
     if (e.target.value !== '') {
@@ -35,7 +47,7 @@ export default function NewBoard() {
     }
   };
 
-  const handleSumbit = () => {
+  const handleSumbit = async () => {
     if (!writer) {
       setWriterError('작성자를 입력해주세요');
     }
@@ -49,7 +61,23 @@ export default function NewBoard() {
       setContentsError('내용을 입력해주세요');
     }
     if (writer && password && title && contents) {
-      alert('게시글이 등록되었습니다.');
+      const result = await createBoard({
+        variables: {
+          createBoardInput: {
+            writer: writer,
+            password: password,
+            title: title,
+            contents: contents,
+          },
+        },
+      });
+      if (result?.data?.createBoard?._id) {
+        setWriter('');
+        setTitle('');
+        setContents('');
+        setPassword('');
+        alert('게시글이 등록되었습니다.');
+      }
     }
   };
 
