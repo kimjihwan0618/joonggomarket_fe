@@ -14,7 +14,7 @@ import {
   UploadButtonWrapper,
   RadioItem,
   FormItemError,
-} from '../../../styles/boardsNew';
+} from '../../../styles/boards/New';
 import { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
 
@@ -64,10 +64,10 @@ export default function NewBoard() {
       const result = await createBoard({
         variables: {
           createBoardInput: {
-            writer: writer,
-            password: password,
-            title: title,
-            contents: contents,
+            writer,
+            password,
+            title,
+            contents,
           },
         },
       });
