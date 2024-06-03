@@ -14,9 +14,10 @@ import {
   UploadButtonWrapper,
   RadioItem,
   FormItemError,
-} from '../../../styles/boards/New';
+} from '@/styles/boards/New';
 import { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
+import { useRouter } from 'next/router';
 
 const CREATE_BOARD = gql`
   mutation createBoard($createBoardInput: CreateBoardInput!) {
@@ -39,6 +40,7 @@ export default function NewBoard() {
   const [contentsError, setContentsError] = useState('');
 
   const [createBoard] = useMutation(CREATE_BOARD);
+  const router = useRouter();
 
   const handleInputChange = (e, setInput, setError) => {
     setInput(e.target.value);
@@ -60,7 +62,7 @@ export default function NewBoard() {
     if (!contents) {
       setContentsError('내용을 입력해주세요');
     }
-    if (writer && password && title && contents) {
+    try {
       const result = await createBoard({
         variables: {
           createBoardInput: {
@@ -72,12 +74,11 @@ export default function NewBoard() {
         },
       });
       if (result?.data?.createBoard?._id) {
-        setWriter('');
-        setTitle('');
-        setContents('');
-        setPassword('');
         alert('게시글이 등록되었습니다.');
+        router.push(`/boards/${result?.data?.createBoard?._id}`)
       }
+    } catch (error) {
+      alert(error.message);
     }
   };
 
