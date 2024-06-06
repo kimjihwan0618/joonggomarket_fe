@@ -51,7 +51,7 @@ export default function BoardListUI({
       {boards?.map((el, idx) => (
         <div key={el.id}>
           <span>번호 : {page + idx + 1}&nbsp;||&nbsp;</span>
-          <span id={el.id} onClick={onClickBoardTitle}>
+          <span id={el._id} onClick={onClickBoardTitle}>
             제목 : {el.title}&nbsp;||&nbsp;
           </span>
           <span>작성자 : {el.writer}&nbsp;||&nbsp;</span>

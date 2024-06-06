@@ -81,7 +81,7 @@ export default function BoardList() {
   };
 
   const onClickBoardTitle = (event) => {
-    console.log(event.target);
+    route.push(`/boards/${event.target.id}`);
   };
 
   useEffect(() => {
