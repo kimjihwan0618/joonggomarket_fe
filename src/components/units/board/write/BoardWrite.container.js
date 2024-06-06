@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { CREATE_BOARD } from './BoardWrite.queries';
@@ -14,15 +14,17 @@ export default function BoardWrite() {
   const [passwordError, setPasswordError] = useState('');
   const [titleError, setTitleError] = useState('');
   const [contentsError, setContentsError] = useState('');
+  const [formValidation, setFormValidation] = useState(false);
 
   const [createBoard] = useMutation(CREATE_BOARD);
   const router = useRouter();
 
-  const handleInputChange = (e, setInput, setError) => {
-    console.log(e)
+  const handleInputChange = (e, setInput, setError, message) => {
     setInput(e.target.value);
     if (e.target.value !== '') {
       setError('');
+    } else {
+      setError(message);
     }
   };
 
@@ -52,12 +54,20 @@ export default function BoardWrite() {
       });
       if (result?.data?.createBoard?._id) {
         alert('게시글이 등록되었습니다.');
-        router.push(`/boards/${result?.data?.createBoard?._id}`)
+        router.push(`/boards/${result?.data?.createBoard?._id}`);
       }
     } catch (error) {
       alert(error.message);
     }
   };
+
+  useEffect(() => {
+    if (writer && password && title && contents) {
+      setFormValidation(true);
+    } else {
+      setFormValidation(false);
+    }
+  }, [writer, password, title, contents]);
 
   return (
     <BoardWriteUI
@@ -79,6 +89,7 @@ export default function BoardWrite() {
       contentsError={contentsError}
       handleInputChange={handleInputChange}
       handleSumbit={handleSumbit}
+      formValidation={formValidation}
     />
-  )
+  );
 }

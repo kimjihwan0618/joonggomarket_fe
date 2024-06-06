@@ -137,7 +137,7 @@ export const RegisterButton = styled.button`
   height: 52px;
   width: 179px;
   margin-top: 80px;
-  background: #ffd600;
+  background: ${(props) => (props.formValidation ? '#ffd600' : 'rgba(189, 189, 189, 1)')};
   color: #000;
   margin: 0 auto;
   font-weight: 500;

@@ -12,10 +12,7 @@ import {
 } from './BoardDetail.styles';
 import Image from 'next/image';
 
-export default function BoardDetailUI({
-  board,
-  handleDeleteBoard
-}) {
+export default function BoardDetailUI({ board, onClickDeleteButton, onClickBoardsButton }) {
   return (
     <>
       <ContentWrapper>
@@ -38,10 +35,10 @@ export default function BoardDetailUI({
         </ContentsWrapper>
       </ContentWrapper>
       <ButtonWrapper>
-        <BoardActionButton>목록으로</BoardActionButton>
+        <BoardActionButton onClick={onClickBoardsButton}>목록으로</BoardActionButton>
         <BoardActionButton>수정하기</BoardActionButton>
-        <BoardActionButton onClick={handleDeleteBoard}>삭제하기</BoardActionButton>
+        <BoardActionButton onClick={onClickDeleteButton}>삭제하기</BoardActionButton>
       </ButtonWrapper>
     </>
-  )
+  );
 }

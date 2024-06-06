@@ -35,6 +35,7 @@ export default function BoardWriteUI({
   contentsError,
   handleInputChange,
   handleSumbit,
+  formValidation,
 }) {
   return (
     <ContentWrapper>
@@ -45,7 +46,7 @@ export default function BoardWriteUI({
           <ItemInput
             value={writer}
             onChange={(e) => {
-              handleInputChange(e, setWriter, setWriterError);
+              handleInputChange(e, setWriter, setWriterError, '작성자를 입력해주세요');
             }}
             type="text"
             placeholder="이름을 적어주세요."
@@ -57,7 +58,7 @@ export default function BoardWriteUI({
           <ItemInput
             value={password}
             onChange={(e) => {
-              handleInputChange(e, setPassword, setPasswordError);
+              handleInputChange(e, setPassword, setPasswordError, '비밀번호를 입력해주세요');
             }}
             type="password"
             placeholder="비밀번호를 입력해주세요."
@@ -69,7 +70,7 @@ export default function BoardWriteUI({
           <ItemInput
             value={title}
             onChange={(e) => {
-              handleInputChange(e, setTitle, setTitleError);
+              handleInputChange(e, setTitle, setTitleError, '제목을 입력해주세요');
             }}
             type="text"
             placeholder="제목을 작성해주세요."
@@ -81,7 +82,7 @@ export default function BoardWriteUI({
           <ItemTextArea
             value={contents}
             onChange={(e) => {
-              handleInputChange(e, setContents, setContentsError);
+              handleInputChange(e, setContents, setContentsError, '내용을 입력해주세요');
             }}
             type="text"
             placeholder="내용을 작성해주세요."
@@ -133,7 +134,12 @@ export default function BoardWriteUI({
         </FormItem>
       </FormWrapper>
       <FormItem style={{ width: '100%' }}>
-        <RegisterButton onClick={handleSumbit}>등록하기</RegisterButton>
+        <RegisterButton
+          disabled={!formValidation}
+          formValidation={formValidation}
+          onClick={handleSumbit}>
+          등록하기
+        </RegisterButton>
       </FormItem>
     </ContentWrapper>
   );

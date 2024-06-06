@@ -11,34 +11,39 @@ export default function BoardDetail() {
 
   const { data } = useQuery(FETCH_BOARD, {
     variables: { boardId: router.query.boardId },
-    skip: !router.query.boardId
+    skip: !router.query.boardId,
   });
 
-  const handleDeleteBoard = async () => {
+  const onClickBoardsButton = () => {
+    router.push('/boards');
+  };
+
+  const onClickDeleteButton = async () => {
     try {
       const result = await deleteBoard({
         variables: {
-          boardId: router.query.boardId
-        }
-      })
+          boardId: router.query.boardId,
+        },
+      });
       if (result?.data?.deleteBoard) {
-        alert("해당 게시글이 삭제되었습니다.")
-        router.push("/boards/new");
+        alert('해당 게시글이 삭제되었습니다.');
+        router.push('/boards');
       }
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-  }
+  };
 
   useEffect(() => {
-    setBoard(data?.fetchBoard)
-  }, [data])
+    setBoard(data?.fetchBoard);
+  }, [data]);
 
   return (
     <BoardDetailUI
       board={board}
       setBoard={setBoard}
-      handleDeleteBoard={handleDeleteBoard}
+      onClickBoardsButton={onClickBoardsButton}
+      onClickDeleteButton={onClickDeleteButton}
     />
-  )
+  );
 }
