@@ -1,4 +1,4 @@
-import { formatDateToYYYYMMDD } from '@/utils/dateUtils';
+import { toYYYYMMDD } from 'src/lib/utils/date';
 import DatePicker from 'react-datepicker';
 import * as S from './BoardList.styles';
 import Image from 'next/image';
@@ -75,7 +75,7 @@ export default function BoardListUI({
               <td>{(page - 1) * 10 + idx + 1}</td>
               <td id={el._id} onClick={onClickBoardTitle}>{el.title}</td>
               <td>{el.writer}</td>
-              <td>{formatDateToYYYYMMDD(new Date(el.createdAt))}</td>
+              <td>{toYYYYMMDD(new Date(el.createdAt))}</td>
             </S.TableRow>
           ))}
         </S.TableBody>

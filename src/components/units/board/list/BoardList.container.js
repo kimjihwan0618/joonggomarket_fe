@@ -2,7 +2,7 @@ import { useLazyQuery } from '@apollo/client';
 import BoardListUI from './BoardList.presenter';
 import { FETCH_BOARDS, FETCH_BOARDS_COUNT } from './BoardList.queries';
 import { useEffect, useState } from 'react';
-import { formatDateToYYYYMMDD } from '@/utils/dateUtils';
+import { toYYYYMMDD } from 'src/lib/utils/date';
 import { useRouter } from 'next/router';
 
 export default function BoardList() {
@@ -10,7 +10,7 @@ export default function BoardList() {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [startDate, setStartDate] = useState('2020-01-01');
-  const [endDate, setEndDate] = useState(formatDateToYYYYMMDD(new Date()));
+  const [endDate, setEndDate] = useState(toYYYYMMDD(new Date()));
   const [pageList, setPageList] = useState([]);
   const [pageMaxRange, setPageMaxRange] = useState(5);
 

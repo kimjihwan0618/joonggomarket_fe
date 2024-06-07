@@ -1,4 +1,4 @@
-import { formatDateToSeoul } from '@/utils/dateUtils';
+import { toYYYYMMDDHHMMSS } from 'src/lib/utils/date';
 import * as S from './BoardDetail.styles';
 import Image from 'next/image';
 
@@ -11,7 +11,7 @@ export default function BoardDetailUI({ board, onClickDeleteButton, onClickBoard
             <Image src={'/images/ic_profile.png'} width={56} height={56} />
             <S.Info>
               <dt>{board?.writer}</dt>
-              <dd>Date : {board?.updatedAt && formatDateToSeoul(board?.updatedAt)}</dd>
+              <dd>Date : {board?.updatedAt && toYYYYMMDDHHMMSS(board?.updatedAt)}</dd>
             </S.Info>
           </S.WriterInfo>
           <div></div>
