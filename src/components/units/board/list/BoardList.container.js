@@ -12,6 +12,7 @@ export default function BoardList() {
   const [startDate, setStartDate] = useState('2020-01-01');
   const [endDate, setEndDate] = useState(formatDateToYYYYMMDD(new Date()));
   const [pageList, setPageList] = useState([]);
+  const [pageMaxRange, setPageMaxRange] = useState(5);
 
   const [fetchBoards, { data: boards }] = useLazyQuery(FETCH_BOARDS);
   const [fetchBoardsCount, { data: boardsPageCount }] = useLazyQuery(FETCH_BOARDS_COUNT);
@@ -38,17 +39,17 @@ export default function BoardList() {
   };
 
   const handlePageListSet = (event) => {
-    const maxPageRange = 10; // 페이지 범위 크기
-    const remainder = (page - 1) % maxPageRange;
+    const remainder = (page - 1) % pageMaxRange;
     let newStartPage = page - remainder || 1;
     if (event === 'prev') {
-      newStartPage -= 10;
+      newStartPage -= pageMaxRange;
     } else if (event === 'next') {
-      newStartPage += 10;
+      newStartPage += pageMaxRange;
     }
 
-    const finalLastPage = Math.round(boardsPageCount?.fetchBoardsCount / 10);
-    const newEndPage = newStartPage + 9 <= finalLastPage ? newStartPage + 9 : finalLastPage;
+
+    const finalLastPage = Math.ceil(boardsPageCount?.fetchBoardsCount / 10);
+    const newEndPage = newStartPage + (pageMaxRange - 1) <= finalLastPage ? newStartPage + (pageMaxRange - 1) : finalLastPage;
     const newPageListResult = Array.from(
       { length: newEndPage - newStartPage + 1 },
       (_, index) => newStartPage + index
@@ -67,6 +68,7 @@ export default function BoardList() {
   };
 
   const onClickSearchButton = () => {
+    setPage(1);
     handleFetchBoards();
     handleFetchBoardsPageCount();
   };
@@ -111,6 +113,7 @@ export default function BoardList() {
       onClickNextPageList={handlePageListSet}
       onClickAddBoardButton={onClickAddBoardButton}
       onClickBoardTitle={onClickBoardTitle}
+      pageMaxRange={pageMaxRange}
     />
   );
 }

@@ -17,7 +17,13 @@ export const formatDateToSeoul = (dateString) => {
 };
 
 export const formatDateToYYYYMMDD = (date) => {
-  const year = date.getFullYear();
+  const seoulOffset = 9 * 60; // 서울은 UTC+9
+  const localOffset = date.getTimezoneOffset();
+  const utcTimestamp = date.getTime() + localOffset * 60 * 1000;
+  const seoulTimestamp = utcTimestamp + seoulOffset * 60 * 1000;
+  const seoulDate = new Date(seoulTimestamp);
+
+  const year = seoulDate.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
