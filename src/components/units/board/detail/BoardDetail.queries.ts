@@ -7,7 +7,28 @@ export const FETCH_BOARD = gql`
       writer
       title
       contents
+      youtubeUrl
+      likeCount
+      dislikeCount
+      images
+      createdAt
       updatedAt
+      boardAddress {
+        _id
+        zipcode
+        address
+        addressDetail
+        createdAt
+        updatedAt
+      }
+      user {
+        _id
+        email
+        name
+        picture        
+        createdAt
+        updatedAt
+      }
     }
   }
 `;

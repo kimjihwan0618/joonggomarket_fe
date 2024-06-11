@@ -14,6 +14,10 @@ export default function BoardDetail() {
     skip: !router.query.boardId,
   });
 
+  const onClickUpdateButton = () => {
+    router.push(`/boards/${router.query.boardId}/edit`)
+  }
+
   const onClickBoardsButton = () => {
     router.push('/boards');
   };
@@ -41,9 +45,9 @@ export default function BoardDetail() {
   return (
     <BoardDetailUI
       board={board}
-      setBoard={setBoard}
       onClickBoardsButton={onClickBoardsButton}
       onClickDeleteButton={onClickDeleteButton}
+      onClickUpdateButton={onClickUpdateButton}
     />
   );
 }

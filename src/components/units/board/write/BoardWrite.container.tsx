@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { CREATE_BOARD } from './BoardWrite.queries';
+import { CREATE_BOARD, UPDATE_BOARD } from './BoardWrite.queries';
 import BoardWriteUI from './BoardWrite.presenter';
 
-export default function BoardWrite() {
+export default function BoardWrite(props) {
   const [writer, setWriter] = useState('');
   const [password, setPassword] = useState('');
   const [title, setTitle] = useState('');
@@ -17,18 +17,19 @@ export default function BoardWrite() {
   const [formValidation, setFormValidation] = useState(false);
 
   const [createBoard] = useMutation(CREATE_BOARD);
+  const [updateBoard] = useMutation(UPDATE_BOARD);
   const router = useRouter();
 
-  const handleInputChange = (e, setInput, setError, message) => {
-    setInput(e.target.value);
-    if (e.target.value !== '') {
+  const onChangeFormInput = (event, setInput, setError, message) => {
+    setInput(event.target.value);
+    if (event.target.value !== '') {
       setError('');
     } else {
       setError(message);
     }
   };
 
-  const handleSumbit = async () => {
+  const onClickSumbit = async () => {
     if (!writer) {
       setWriterError('작성자를 입력해주세요');
     }
@@ -61,8 +62,34 @@ export default function BoardWrite() {
     }
   };
 
+  const onClickUpdate = async () => {
+    const updateBoardInput = {}
+    if (title) updateBoardInput["title"] = title;
+    if (contents) updateBoardInput["contents"] = contents;
+    const variables = {
+      boardId: router.query.boardId,
+      password: password,
+      updateBoardInput
+    }
+    try {
+      const result = await updateBoard({
+        variables,
+      });
+      if (result?.data?.updateBoard?._id) {
+        alert('게시글이 수정되었습니다.');
+        router.push(`/boards/${result?.data?.updateBoard?._id}`);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   useEffect(() => {
-    if (writer && password && title && contents) {
+    const fetchBoard = props?.data?.fetchBoard
+    if ((writer || fetchBoard?.writer) &&
+      (title || fetchBoard?.title) &&
+      (contents || fetchBoard?.contents) &&
+      password) {
       setFormValidation(true);
     } else {
       setFormValidation(false);
@@ -87,9 +114,12 @@ export default function BoardWrite() {
       titleError={titleError}
       setTitleError={setTitleError}
       contentsError={contentsError}
-      handleInputChange={handleInputChange}
-      handleSumbit={handleSumbit}
+      onChangeFormInput={onChangeFormInput}
+      onClickSumbit={onClickSumbit}
+      onClickUpdate={onClickUpdate}
       formValidation={formValidation}
+      isEdit={props.isEdit}
+      data={props.data}
     />
   );
 }

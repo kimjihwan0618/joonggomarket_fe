@@ -2,7 +2,7 @@ import { toYYYYMMDDHHMMSS } from 'src/lib/utils/date';
 import * as S from './BoardDetail.styles';
 import Image from 'next/image';
 
-export default function BoardDetailUI({ board, onClickDeleteButton, onClickBoardsButton }) {
+export default function BoardDetailUI({ board, onClickDeleteButton, onClickBoardsButton, onClickUpdateButton }) {
   return (
     <>
       <S.ContentWrapper>
@@ -26,7 +26,7 @@ export default function BoardDetailUI({ board, onClickDeleteButton, onClickBoard
       </S.ContentWrapper>
       <S.ButtonWrapper>
         <S.BoardActionButton onClick={onClickBoardsButton}>목록으로</S.BoardActionButton>
-        <S.BoardActionButton>수정하기</S.BoardActionButton>
+        <S.BoardActionButton onClick={onClickUpdateButton}>수정하기</S.BoardActionButton>
         <S.BoardActionButton onClick={onClickDeleteButton}>삭제하기</S.BoardActionButton>
       </S.ButtonWrapper>
     </>

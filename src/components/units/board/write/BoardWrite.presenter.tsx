@@ -17,20 +17,23 @@ export default function BoardWriteUI({
   titleError,
   setTitleError,
   contentsError,
-  handleInputChange,
-  handleSumbit,
+  onChangeFormInput,
+  onClickSumbit,
+  onClickUpdate,
   formValidation,
+  isEdit,
+  data
 }) {
   return (
     <S.ContentWrapper>
-      <S.ContentTitle>게시물 등록</S.ContentTitle>
+      <S.ContentTitle>게시물 {isEdit ? "수정" : "등록"}</S.ContentTitle>
       <S.FormWrapper>
         <S.FormItem style={{ width: '48.78%' }}>
           <S.ItemTitle>작성자</S.ItemTitle>
           <S.ItemInput
-            value={writer}
+            defaultValue={data?.fetchBoard.writer}
             onChange={(e) => {
-              handleInputChange(e, setWriter, setWriterError, '작성자를 입력해주세요');
+              onChangeFormInput(e, setWriter, setWriterError, '작성자를 입력해주세요');
             }}
             type="text"
             placeholder="이름을 적어주세요."
@@ -40,9 +43,8 @@ export default function BoardWriteUI({
         <S.FormItem style={{ width: '48.78%' }}>
           <S.ItemTitle>비밀번호</S.ItemTitle>
           <S.ItemInput
-            value={password}
             onChange={(e) => {
-              handleInputChange(e, setPassword, setPasswordError, '비밀번호를 입력해주세요');
+              onChangeFormInput(e, setPassword, setPasswordError, '비밀번호를 입력해주세요');
             }}
             type="password"
             placeholder="비밀번호를 입력해주세요."
@@ -52,9 +54,9 @@ export default function BoardWriteUI({
         <S.FormItem style={{ width: '100%' }}>
           <S.ItemTitle>제목</S.ItemTitle>
           <S.ItemInput
-            value={title}
+            defaultValue={data?.fetchBoard.title}
             onChange={(e) => {
-              handleInputChange(e, setTitle, setTitleError, '제목을 입력해주세요');
+              onChangeFormInput(e, setTitle, setTitleError, '제목을 입력해주세요');
             }}
             type="text"
             placeholder="제목을 작성해주세요."
@@ -64,9 +66,9 @@ export default function BoardWriteUI({
         <S.FormItem style={{ width: '100%' }}>
           <S.ItemTitle>내용</S.ItemTitle>
           <S.ItemTextArea
-            value={contents}
+            defaultValue={data?.fetchBoard.contents}
             onChange={(e) => {
-              handleInputChange(e, setContents, setContentsError, '내용을 입력해주세요');
+              onChangeFormInput(e, setContents, setContentsError, '내용을 입력해주세요');
             }}
             type="text"
             placeholder="내용을 작성해주세요."
@@ -121,8 +123,8 @@ export default function BoardWriteUI({
         <S.RegisterButton
           disabled={!formValidation}
           formValidation={formValidation}
-          onClick={handleSumbit}>
-          등록하기
+          onClick={isEdit ? onClickUpdate : onClickSumbit}>
+          {isEdit ? "수정" : "등록"}하기
         </S.RegisterButton>
       </S.FormItem>
     </S.ContentWrapper>
