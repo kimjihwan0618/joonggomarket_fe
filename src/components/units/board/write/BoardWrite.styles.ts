@@ -6,6 +6,7 @@ export const ContentWrapper = styled.div`
   margin: 101px auto;
   min-width: 920px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
 `;
 
 export const ContentTitle = styled.h2`
@@ -137,7 +138,9 @@ export const RegisterButton = styled.button`
   height: 52px;
   width: 179px;
   margin-top: 80px;
-  background: ${(props) => (props.formValidation ? '#ffd600' : 'rgba(189, 189, 189, 1)')};
+  cursor: pointer;
+  background: ${(props) =>
+    props.formValidation ? 'rgba(255, 214, 0, 1)' : 'rgba(189, 189, 189, 1)'};
   color: #000;
   margin: 0 auto;
   font-weight: 500;

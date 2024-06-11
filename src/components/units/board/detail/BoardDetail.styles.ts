@@ -7,6 +7,7 @@ export const ContentWrapper = styled.div`
   min-width: 920px;
   min-height: 700px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
 `;
 
 export const BoardTitleWrapper = styled.div`
@@ -55,7 +56,13 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 87px auto 0;
+  margin: 87px auto 40px;
+  padding: 80px 101px;
+  width: 62.5%;
+  box-sizing: border-box;
+  padding-bottom: 87px;
+  border-bottom: 1px solid rgba(189, 189, 189, 1);
+
   button:nth-of-type(2) {
     margin: 0 24px;
   }
@@ -72,4 +79,8 @@ export const BoardActionButton = styled.button`
   color: #000;
   font-weight: 500;
   outline: none;
+  cursor: pointer;
+  &:hover {
+    background: rgba(255, 214, 0, 1);
+  }
 `;
