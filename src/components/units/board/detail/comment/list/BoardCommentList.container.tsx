@@ -37,41 +37,7 @@ export default function BoardCommentList() {
     );
   };
 
-  // const onClickCommentDelete = async () => {
-
-  // }
-
   const onClickCommentUpdate = async () => {
-    try {
-      if (password === '') {
-        alert('비밀번호를 입력해주세요.');
-        return;
-      }
-      const result = await deleteBoardComment({
-        variables: {
-          boardCommentId: commentId,
-          password,
-          updateBoardCommentInput: {
-            contents,
-            rating: Number(rating),
-          },
-        },
-        refetchQueries: [
-          {
-            query: FETCH_BOARD_COMMENTS,
-            variables: { boardId: router.query.boardId },
-          },
-        ],
-      });
-      if (result?.data?.updateBoardComment?._id) {
-        setPassword('');
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
-  const onClickCommentDelete = async () => {
     try {
       if (password === '') {
         alert('비밀번호를 입력해주세요.');
@@ -96,6 +62,43 @@ export default function BoardCommentList() {
       if (result?.data?.updateBoardComment?._id) {
         setPassword('');
       }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const onClickCommentDelete = async (event) => {
+    event.stopPropagation();
+    try {
+      const deletePassword = prompt('비밀번호를 입력해주세요');
+      if (deletePassword === '') {
+        alert('비밀번호를 입력해주세요.');
+        return;
+      }
+      console.log({
+        boardCommentId: event.target.id,
+        password: deletePassword,
+        updateBoardCommentInput: {
+          contents,
+          rating: Number(rating),
+        },
+      });
+      const result = await deleteBoardComment({
+        variables: {
+          boardCommentId: event.target.id,
+          password: deletePassword,
+          updateBoardCommentInput: {
+            contents,
+            rating: Number(rating),
+          },
+        },
+        refetchQueries: [
+          {
+            query: FETCH_BOARD_COMMENTS,
+            variables: { boardId: router.query.boardId },
+          },
+        ],
+      });
     } catch (error) {
       alert(error.message);
     }

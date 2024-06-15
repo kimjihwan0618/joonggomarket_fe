@@ -7,6 +7,7 @@ export default function BoardCommentListUI({
   comments,
   onClickCommentEdit,
   onClickCommentUpdate,
+  onClickCommentDelete,
   onClickRating,
   rating,
   contents,
@@ -14,7 +15,6 @@ export default function BoardCommentListUI({
   password,
   onInputContents,
   onInputUserInfo,
-  onClickCommentDelete,
 }) {
   return (
     <S.Wrapper>

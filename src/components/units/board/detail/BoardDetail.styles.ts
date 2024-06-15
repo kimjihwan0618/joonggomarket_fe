@@ -59,6 +59,7 @@ export const ButtonWrapper = styled.div`
   margin: 87px auto 40px;
   padding: 80px 101px;
   width: 62.5%;
+  min-width: 920px;
   box-sizing: border-box;
   padding-bottom: 87px;
   border-bottom: 1px solid rgba(189, 189, 189, 1);

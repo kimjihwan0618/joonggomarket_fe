@@ -9,7 +9,7 @@ const InputStyle = css`
 
 export const Wrapper = styled.div`
   width: ${(props) => (props.isEdit ? '100%' : '62.5%')};
-  min-width: 1122px;
+  min-width: 920px;
   margin: 0 auto;
 `;
 

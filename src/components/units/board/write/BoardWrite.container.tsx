@@ -63,14 +63,22 @@ export default function BoardWrite(props) {
   };
 
   const onClickUpdate = async () => {
-    const updateBoardInput = {}
-    if (title) updateBoardInput["title"] = title;
-    if (contents) updateBoardInput["contents"] = contents;
+    if (!title && !contents) {
+      alert('수정한 내용이 없습니다.');
+      return;
+    }
+    if (!password) {
+      alert('비밀번호를 입력해주세요.');
+      return;
+    }
+    const updateBoardInput = {};
+    if (title) updateBoardInput['title'] = title;
+    if (contents) updateBoardInput['contents'] = contents;
     const variables = {
       boardId: router.query.boardId,
       password: password,
-      updateBoardInput
-    }
+      updateBoardInput,
+    };
     try {
       const result = await updateBoard({
         variables,
@@ -85,11 +93,13 @@ export default function BoardWrite(props) {
   };
 
   useEffect(() => {
-    const fetchBoard = props?.data?.fetchBoard
-    if ((writer || fetchBoard?.writer) &&
+    const fetchBoard = props?.data?.fetchBoard;
+    if (
+      (writer || fetchBoard?.writer) &&
       (title || fetchBoard?.title) &&
       (contents || fetchBoard?.contents) &&
-      password) {
+      password
+    ) {
       setFormValidation(true);
     } else {
       setFormValidation(false);

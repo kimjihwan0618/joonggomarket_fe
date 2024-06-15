@@ -22,15 +22,16 @@ export default function BoardWriteUI({
   onClickUpdate,
   formValidation,
   isEdit,
-  data
+  data,
 }) {
   return (
     <S.ContentWrapper>
-      <S.ContentTitle>게시물 {isEdit ? "수정" : "등록"}</S.ContentTitle>
+      <S.ContentTitle>게시물 {isEdit ? '수정' : '등록'}</S.ContentTitle>
       <S.FormWrapper>
         <S.FormItem style={{ width: '48.78%' }}>
           <S.ItemTitle>작성자</S.ItemTitle>
           <S.ItemInput
+            disabled={isEdit ? true : false}
             defaultValue={data?.fetchBoard.writer}
             onChange={(e) => {
               onChangeFormInput(e, setWriter, setWriterError, '작성자를 입력해주세요');
@@ -124,7 +125,7 @@ export default function BoardWriteUI({
           disabled={!formValidation}
           formValidation={formValidation}
           onClick={isEdit ? onClickUpdate : onClickSumbit}>
-          {isEdit ? "수정" : "등록"}하기
+          {isEdit ? '수정' : '등록'}하기
         </S.RegisterButton>
       </S.FormItem>
     </S.ContentWrapper>

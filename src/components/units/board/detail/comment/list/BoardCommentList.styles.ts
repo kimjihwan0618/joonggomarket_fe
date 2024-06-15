@@ -10,7 +10,7 @@ import { css } from '@emotion/react';
 export const Wrapper = styled.div`
   margin-top: 31px;
   width: 62.5%;
-  min-width: 1122px;
+  min-width: 920px;
   margin: 87px auto 0;
 `;
 
