@@ -12,12 +12,13 @@ import {
 
 export default function BoardDetail() {
   const router = useRouter();
+  const [boardId, setBoardId] = useState('');
   const [deleteBoard] = useMutation<Pick<IMutation, 'deleteBoard'>, IMutationDeleteBoardArgs>(
     DELETE_BOARD
   );
 
   const { data } = useQuery<Pick<IQuery, 'fetchBoard'>, IQueryFetchBoardArgs>(FETCH_BOARD, {
-    variables: { boardId: router.query.boardId },
+    variables: { boardId },
     skip: !router.query.boardId,
   });
 
@@ -33,7 +34,7 @@ export default function BoardDetail() {
     try {
       const result = await deleteBoard({
         variables: {
-          boardId: router.query.boardId,
+          boardId,
         },
       });
       if (result?.data?.deleteBoard) {
@@ -44,6 +45,12 @@ export default function BoardDetail() {
       alert(error.message);
     }
   };
+
+  useEffect(() => {
+    setBoardId(
+      Array.isArray(router.query.boardId) ? router.query.boardId[0] : router.query.boardId
+    );
+  }, [router?.query?.boardId]);
 
   return (
     <BoardDetailUI
