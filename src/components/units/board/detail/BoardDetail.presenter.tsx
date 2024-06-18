@@ -1,8 +1,14 @@
 import { toYYYYMMDDHHMMSS } from 'src/lib/utils/date';
 import * as S from './BoardDetail.styles';
 import Image from 'next/image';
+import { IBoardDetailUIProps } from './BoardDetail.types';
 
-export default function BoardDetailUI({ board, onClickDeleteButton, onClickBoardsButton, onClickUpdateButton }) {
+export default function BoardDetailUI({
+  board,
+  onClickDeleteButton,
+  onClickBoardsButton,
+  onClickUpdateButton,
+}: IBoardDetailUIProps) {
   return (
     <>
       <S.ContentWrapper>

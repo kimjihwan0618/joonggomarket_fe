@@ -1,10 +1,7 @@
 import * as S from './BoardWrite.styles';
+import { IBoardWriteUIProps } from './BoardWrite.types';
 
 export default function BoardWriteUI({
-  writer,
-  password,
-  title,
-  contents,
   setWriter,
   setPassword,
   setTitle,
@@ -18,12 +15,12 @@ export default function BoardWriteUI({
   setTitleError,
   contentsError,
   onChangeFormInput,
-  onClickSumbit,
+  onClickSubmit,
   onClickUpdate,
   formValidation,
   isEdit,
   data,
-}) {
+}: IBoardWriteUIProps) {
   return (
     <S.ContentWrapper>
       <S.ContentTitle>게시물 {isEdit ? '수정' : '등록'}</S.ContentTitle>
@@ -71,7 +68,6 @@ export default function BoardWriteUI({
             onChange={(e) => {
               onChangeFormInput(e, setContents, setContentsError, '내용을 입력해주세요');
             }}
-            type="text"
             placeholder="내용을 작성해주세요."
           />
           <S.FormItemError>{contentsError}</S.FormItemError>
@@ -114,17 +110,16 @@ export default function BoardWriteUI({
           <S.ItemTitle>메인 설정</S.ItemTitle>
           <S.RadioItem>
             <input id="youtube" type="radio" value={'유튜브'} name="main-set"></input>
-            <label for="youtube">유튜브</label>
+            <label htmlFor="youtube">유튜브</label>
             <input id="photo" type="radio" value={'사진'} name="main-set"></input>
-            <label for="photo">사진</label>
+            <label htmlFor="photo">사진</label>
           </S.RadioItem>
         </S.FormItem>
       </S.FormWrapper>
       <S.FormItem style={{ width: '100%' }}>
         <S.RegisterButton
           disabled={!formValidation}
-          formValidation={formValidation}
-          onClick={isEdit ? onClickUpdate : onClickSumbit}>
+          onClick={isEdit ? onClickUpdate : onClickSubmit}>
           {isEdit ? '수정' : '등록'}하기
         </S.RegisterButton>
       </S.FormItem>

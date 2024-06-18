@@ -3,20 +3,27 @@ import { useMutation, useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import BoardDetailUI from './BoardDetail.presenter';
 import { DELETE_BOARD, FETCH_BOARD } from './BoardDetail.queries';
+import {
+  IMutation,
+  IMutationDeleteBoardArgs,
+  IQuery,
+  IQueryFetchBoardArgs,
+} from 'src/commons/types/generated/types';
 
 export default function BoardDetail() {
   const router = useRouter();
-  const [board, setBoard] = useState({});
-  const [deleteBoard] = useMutation(DELETE_BOARD);
+  const [deleteBoard] = useMutation<Pick<IMutation, 'deleteBoard'>, IMutationDeleteBoardArgs>(
+    DELETE_BOARD
+  );
 
-  const { data } = useQuery(FETCH_BOARD, {
+  const { data } = useQuery<Pick<IQuery, 'fetchBoard'>, IQueryFetchBoardArgs>(FETCH_BOARD, {
     variables: { boardId: router.query.boardId },
     skip: !router.query.boardId,
   });
 
   const onClickUpdateButton = () => {
-    router.push(`/boards/${router.query.boardId}/edit`)
-  }
+    router.push(`/boards/${router.query.boardId}/edit`);
+  };
 
   const onClickBoardsButton = () => {
     router.push('/boards');
@@ -38,13 +45,9 @@ export default function BoardDetail() {
     }
   };
 
-  useEffect(() => {
-    setBoard(data?.fetchBoard);
-  }, [data]);
-
   return (
     <BoardDetailUI
-      board={board}
+      board={data?.fetchBoard}
       onClickBoardsButton={onClickBoardsButton}
       onClickDeleteButton={onClickDeleteButton}
       onClickUpdateButton={onClickUpdateButton}
