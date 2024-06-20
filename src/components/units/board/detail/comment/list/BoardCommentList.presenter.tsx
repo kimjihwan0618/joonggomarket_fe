@@ -2,6 +2,7 @@ import { toYYYYMMDD } from 'src/lib/utils/date';
 import * as S from './BoardCommentList.styles';
 import Image from 'next/image';
 import BoardCommentWriteUI from '../write/BoardCommentWrite.presenter';
+import { IBoardCommentListUIProps } from './BoardCommentList.types';
 
 export default function BoardCommentListUI({
   comments,
@@ -15,7 +16,7 @@ export default function BoardCommentListUI({
   password,
   onInputContents,
   onInputUserInfo,
-}) {
+}: IBoardCommentListUIProps) {
   return (
     <S.Wrapper>
       {comments.map((comment, idx) =>

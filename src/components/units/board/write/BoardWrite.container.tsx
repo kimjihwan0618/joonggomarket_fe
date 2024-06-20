@@ -15,6 +15,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [password, setPassword] = useState('');
   const [title, setTitle] = useState('');
   const [contents, setContents] = useState('');
+  const [boardId, setBoardId] = useState('');
 
   const [writerError, setWriterError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -90,14 +91,13 @@ export default function BoardWrite(props: IBoardWriteProps) {
     const updateBoardInput = {};
     if (title) updateBoardInput['title'] = title;
     if (contents) updateBoardInput['contents'] = contents;
-    const variables = {
-      boardId: router.query.boardId,
-      password: password,
-      updateBoardInput,
-    };
     try {
       const result = await updateBoard({
-        variables,
+        variables: {
+          boardId,
+          password: password,
+          updateBoardInput,
+        },
       });
       if (result?.data?.updateBoard?._id) {
         alert('게시글이 수정되었습니다.');
@@ -121,6 +121,12 @@ export default function BoardWrite(props: IBoardWriteProps) {
       setFormValidation(false);
     }
   }, [writer, password, title, contents]);
+
+  useEffect(() => {
+    setBoardId(
+      Array.isArray(router.query.boardId) ? router.query.boardId[0] : router.query.boardId
+    );
+  }, [router?.query?.boardId]);
 
   return (
     <BoardWriteUI

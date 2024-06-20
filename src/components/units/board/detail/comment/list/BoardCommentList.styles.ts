@@ -1,11 +1,4 @@
 import styled from '@emotion/styled';
-import { css } from '@emotion/react';
-
-// const InputStyle = css`
-//   box-sizing: border-box;
-//   padding: 14px 20px;
-//   outline: none;
-// `
 
 export const Wrapper = styled.div`
   margin-top: 31px;

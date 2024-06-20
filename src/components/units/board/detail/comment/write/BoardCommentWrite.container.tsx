@@ -3,19 +3,21 @@ import BoardCommentWriteUI from './BoardCommentWrite.presenter';
 import { useMutation } from '@apollo/client';
 import { CREATE_BOARD_COMMENT } from './BoardCommentWrite.queries';
 import { FETCH_BOARD_COMMENTS } from '../list/BoardCommentList.queries';
-import { useState } from 'react';
+import { FormEvent, MouseEvent, useEffect, useState } from 'react';
+import { IMutation, IMutationCreateBoardCommentArgs } from 'src/commons/types/generated/types';
 
 export default function BoardCommentWrite() {
-  const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT);
+  const [createBoardComment] = useMutation<Pick<IMutation, 'createBoardComment'>, IMutationCreateBoardCommentArgs>(CREATE_BOARD_COMMENT);
   const router = useRouter();
   const [rating, setRating] = useState(0);
   const [contents, setContents] = useState('');
   const [writer, setWriter] = useState('');
   const [password, setPassword] = useState('');
+  const [boardId, setBoardId] = useState('');
 
-  const onInputContents = (event) => {
+  const onInputContents = (event: FormEvent<HTMLTextAreaElement>) => {
     const {
-      target: { value },
+      currentTarget: { value },
     } = event;
     if (value.length <= 100) {
       setContents(value);
@@ -24,13 +26,13 @@ export default function BoardCommentWrite() {
     }
   };
 
-  const onClickRating = (event) => {
-    setRating(Number(event.target.id.replace('rating', '')));
+  const onClickRating = (event: MouseEvent<HTMLImageElement>) => {
+    setRating(Number(event.currentTarget.id.replace('rating', '')));
   };
 
-  const onInputUserInfo = (event) => {
+  const onInputUserInfo = (event: FormEvent<HTMLInputElement>) => {
     const {
-      target: { value, id },
+      currentTarget: { value, id },
     } = event;
     if (id === 'writerInput') setWriter(value);
     if (id === 'pwInput') setPassword(value);
@@ -48,7 +50,7 @@ export default function BoardCommentWrite() {
       }
       const result = await createBoardComment({
         variables: {
-          boardId: router.query.boardId,
+          boardId,
           createBoardCommentInput: {
             writer,
             password,
@@ -72,6 +74,12 @@ export default function BoardCommentWrite() {
       alert(error.message);
     }
   };
+
+  useEffect(() => {
+    setBoardId(
+      Array.isArray(router.query.boardId) ? router.query.boardId[0] : router.query.boardId
+    );
+  }, [router?.query?.boardId]);
 
   return (
     <BoardCommentWriteUI

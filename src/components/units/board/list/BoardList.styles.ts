@@ -118,8 +118,8 @@ export const PageButton = styled.button`
   border: none;
   padding: 0;
   cursor: pointer;
-  color: ${(props) => (props.isActive ? 'rgba(255, 214, 0, 1)' : '#000')};
-  text-decoration: ${(props) => (props.isActive ? 'underline' : 'none')};
+  color: ${(props) => (props['data-isActive'] ? 'rgba(255, 214, 0, 1)' : '#000')};
+  text-decoration: ${(props) => (props['data-isActive'] ? 'underline' : 'none')};
 `;
 
 export const ArrowButton = styled.button`

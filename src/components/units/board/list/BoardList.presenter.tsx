@@ -3,10 +3,12 @@ import DatePicker from 'react-datepicker';
 import * as S from './BoardList.styles';
 import Image from 'next/image';
 import 'react-datepicker/dist/react-datepicker.css';
+import { IBoardListUIProps } from './BoardList.types';
 
 export default function BoardListUI({
   boards,
   onInputSearch,
+  onKeyDownSearch,
   onClickSearchButton,
   startDate,
   setStartDate,
@@ -16,24 +18,19 @@ export default function BoardListUI({
   page,
   pageList,
   onClickPageNumber,
-  onClickPrevPageList,
-  onClickNextPageList,
+  handlePageListSet,
   onClickAddBoardButton,
   onClickBoardTitle,
   pageMaxRange
-}) {
+}: IBoardListUIProps) {
   return (
     <S.Wrapper>
       <S.SearchWrapper>
         <S.SearchInput
           placeholder='제목을 검색해주세요'
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              onClickSearchButton();
-            }
-          }}
           type="text"
           onInput={onInputSearch}
+          onKeyDown={onKeyDownSearch}
         />
         <S.SearchRightItems>
           <S.DatePickerBox>
@@ -83,17 +80,17 @@ export default function BoardListUI({
       <S.BottomWrapper>
         <S.Pagination>
           {pageList?.length > 0 && pageList?.[0] !== 1 && (
-            <S.ArrowButton onClick={() => onClickPrevPageList('prev')}>
+            <S.ArrowButton data-direction="prev" onClick={handlePageListSet}>
               <Image src={'/images/ic_page_prev.png'} width={7.41} height={12} />
             </S.ArrowButton>
           )}
           {pageList.map((el) => (
-            <S.PageButton id={el} onClick={onClickPageNumber} isActive={el === page}>
+            <S.PageButton id={String(el)} onClick={onClickPageNumber} data-isActive={el === page}>
               {el}
             </S.PageButton>
           ))}
           {pageList?.length >= pageMaxRange && pageList[pageList.length - 1] < boardsPageCount / 10 && (
-            <S.ArrowButton onClick={() => onClickNextPageList('next')}>
+            <S.ArrowButton data-direction="next" onClick={handlePageListSet}>
               <Image src={'/images/ic_page_next.png'} width={7.41} height={12} />
             </S.ArrowButton>
           )}
