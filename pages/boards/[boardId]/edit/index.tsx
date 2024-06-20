@@ -3,21 +3,14 @@ import { FETCH_BOARD } from 'src/components/units/board/detail/BoardDetail.queri
 import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { IQuery, IQueryFetchBoardArgs } from 'src/commons/types/generated/types';
-import { useEffect, useState } from 'react';
 
 export default function BoardEditPage() {
   const router = useRouter();
-  const [boardId, setBoardId] = useState('');
+  const boardId = typeof router.query.boardId === 'string' ? router.query.boardId : '';
   const { data } = useQuery<Pick<IQuery, 'fetchBoard'>, IQueryFetchBoardArgs>(FETCH_BOARD, {
     variables: { boardId },
     skip: !router.query.boardId,
   });
-
-  useEffect(() => {
-    setBoardId(
-      Array.isArray(router.query.boardId) ? router.query.boardId[0] : router.query.boardId
-    );
-  }, []);
-
+  if (!boardId) return <></>;
   return <BoardWrite isEdit={true} data={data} />;
 }

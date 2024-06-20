@@ -15,7 +15,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [password, setPassword] = useState('');
   const [title, setTitle] = useState('');
   const [contents, setContents] = useState('');
-  const [boardId, setBoardId] = useState('');
 
   const [writerError, setWriterError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -75,7 +74,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
         router.push(`/boards/${result?.data?.createBoard?._id}`);
       }
     } catch (error) {
-      alert(error.message);
+      if (error instanceof Error) alert(error.message);
     }
   };
 
@@ -92,9 +91,13 @@ export default function BoardWrite(props: IBoardWriteProps) {
     if (title) updateBoardInput['title'] = title;
     if (contents) updateBoardInput['contents'] = contents;
     try {
+      if (typeof router.query.boardId !== 'string') {
+        alert('시스템에 문제가 있습니다.');
+        return;
+      }
       const result = await updateBoard({
         variables: {
-          boardId,
+          boardId: router.query.boardId,
           password: password,
           updateBoardInput,
         },
@@ -104,7 +107,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
         router.push(`/boards/${result?.data?.updateBoard?._id}`);
       }
     } catch (error) {
-      alert(error.message);
+      if (error instanceof Error) alert(error.message);
     }
   };
 
@@ -121,12 +124,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
       setFormValidation(false);
     }
   }, [writer, password, title, contents]);
-
-  useEffect(() => {
-    setBoardId(
-      Array.isArray(router.query.boardId) ? router.query.boardId[0] : router.query.boardId
-    );
-  }, [router?.query?.boardId]);
 
   return (
     <BoardWriteUI

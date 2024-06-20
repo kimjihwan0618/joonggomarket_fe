@@ -12,7 +12,7 @@ import {
 
 export default function BoardDetail() {
   const router = useRouter();
-  const [boardId, setBoardId] = useState('');
+  const boardId = typeof router.query.boardId === 'string' ? router.query.boardId : '';
   const [deleteBoard] = useMutation<Pick<IMutation, 'deleteBoard'>, IMutationDeleteBoardArgs>(
     DELETE_BOARD
   );
@@ -42,16 +42,11 @@ export default function BoardDetail() {
         router.push('/boards');
       }
     } catch (error) {
-      alert(error.message);
+      if (error instanceof Error) alert(error.message);
     }
   };
 
-  useEffect(() => {
-    setBoardId(
-      Array.isArray(router.query.boardId) ? router.query.boardId[0] : router.query.boardId
-    );
-  }, [router?.query?.boardId]);
-
+  if (!boardId) return <></>;
   return (
     <BoardDetailUI
       board={data?.fetchBoard}

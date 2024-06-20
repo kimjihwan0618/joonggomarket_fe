@@ -7,13 +7,16 @@ import { FormEvent, MouseEvent, useEffect, useState } from 'react';
 import { IMutation, IMutationCreateBoardCommentArgs } from 'src/commons/types/generated/types';
 
 export default function BoardCommentWrite() {
-  const [createBoardComment] = useMutation<Pick<IMutation, 'createBoardComment'>, IMutationCreateBoardCommentArgs>(CREATE_BOARD_COMMENT);
+  const [createBoardComment] = useMutation<
+    Pick<IMutation, 'createBoardComment'>,
+    IMutationCreateBoardCommentArgs
+  >(CREATE_BOARD_COMMENT);
   const router = useRouter();
   const [rating, setRating] = useState(0);
   const [contents, setContents] = useState('');
   const [writer, setWriter] = useState('');
   const [password, setPassword] = useState('');
-  const [boardId, setBoardId] = useState('');
+  const boardId = typeof router.query.boardId === 'string' ? router.query.boardId : '';
 
   const onInputContents = (event: FormEvent<HTMLTextAreaElement>) => {
     const {
@@ -61,7 +64,7 @@ export default function BoardCommentWrite() {
         refetchQueries: [
           {
             query: FETCH_BOARD_COMMENTS,
-            variables: { boardId: router.query.boardId },
+            variables: { boardId },
           },
         ],
       });
@@ -71,16 +74,10 @@ export default function BoardCommentWrite() {
         setContents('');
       }
     } catch (error) {
-      alert(error.message);
+      if (error instanceof Error) alert(error.message);
     }
   };
-
-  useEffect(() => {
-    setBoardId(
-      Array.isArray(router.query.boardId) ? router.query.boardId[0] : router.query.boardId
-    );
-  }, [router?.query?.boardId]);
-
+  if (!boardId) return <></>;
   return (
     <BoardCommentWriteUI
       onClickRating={onClickRating}

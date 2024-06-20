@@ -28,8 +28,9 @@ export default function BoardWriteUI({
         <S.FormItem style={{ width: '48.78%' }}>
           <S.ItemTitle>작성자</S.ItemTitle>
           <S.ItemInput
-            disabled={isEdit ? true : false}
-            defaultValue={data?.fetchBoard.writer}
+            disabled={!!data?.fetchBoard.writer}
+            readOnly={!!data?.fetchBoard.writer}
+            defaultValue={data?.fetchBoard.writer ?? ''}
             onChange={(e) => {
               onChangeFormInput(e, setWriter, setWriterError, '작성자를 입력해주세요');
             }}

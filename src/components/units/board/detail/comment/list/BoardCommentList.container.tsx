@@ -17,7 +17,7 @@ import {
 
 export default function BoardCommentList() {
   const router = useRouter();
-  const [boardId, setBoardId] = useState('');
+  const boardId = typeof router.query.boardId === 'string' ? router.query.boardId : '';
   const { data } = useQuery<Pick<IQuery, 'fetchBoardComments'>, IQueryFetchBoardCommentsArgs>(
     FETCH_BOARD_COMMENTS,
     {
@@ -80,7 +80,7 @@ export default function BoardCommentList() {
         setPassword('');
       }
     } catch (error) {
-      alert(error.message);
+      if (error instanceof Error) alert(error.message);
     }
   };
 
@@ -106,7 +106,7 @@ export default function BoardCommentList() {
         ],
       });
     } catch (error) {
-      alert(error.message);
+      if (error instanceof Error) alert(error.message);
     }
   };
 
@@ -143,13 +143,7 @@ export default function BoardCommentList() {
       );
     }
   }, [data]);
-
-  useEffect(() => {
-    setBoardId(
-      Array.isArray(router.query.boardId) ? router.query.boardId[0] : router.query.boardId
-    );
-  }, [router?.query?.boardId]);
-
+  if (!boardId) return <></>;
   return (
     <BoardCommentListUI
       comments={comments}

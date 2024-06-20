@@ -1,8 +1,9 @@
 import { ChangeEvent, MouseEvent, Dispatch, SetStateAction } from 'react';
+import { IQuery } from 'src/commons/types/generated/types';
 
 export interface IBoardWriteProps {
   isEdit: boolean;
-  data?: any;
+  data?: Pick<IQuery, 'fetchBoard'>;
 }
 
 export interface IBoardWriteUIProps {
@@ -28,5 +29,5 @@ export interface IBoardWriteUIProps {
   onClickUpdate: (event: MouseEvent<HTMLButtonElement>) => void;
   formValidation: boolean;
   isEdit: boolean;
-  data: any;
+  data?: Pick<IQuery, 'fetchBoard'>;
 }
