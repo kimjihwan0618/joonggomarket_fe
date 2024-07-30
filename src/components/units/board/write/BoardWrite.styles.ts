@@ -58,6 +58,7 @@ export const ImageUploadButton = styled.button`
   margin-right: 24px;
   border: none;
   display: flex;
+  cursor: pointer;
   flex-direction: column;
   align-items: center;
   justify-content: center;

@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { CREATE_BOARD, UPDATE_BOARD } from './BoardWrite.queries';
@@ -11,6 +11,8 @@ import {
 } from 'src/commons/types/generated/types';
 
 export default function BoardWrite(props: IBoardWriteProps) {
+  const fileRef1 = useRef<HTMLInputElement>(null);
+
   const [writer, setWriter] = useState('');
   const [password, setPassword] = useState('');
   const [title, setTitle] = useState('');
@@ -111,6 +113,9 @@ export default function BoardWrite(props: IBoardWriteProps) {
     }
   };
 
+  const handleFileChange1 = () => {};
+  const handleImageUploadClick = () => {};
+
   useEffect(() => {
     const fetchBoard = props?.data?.fetchBoard;
     if (
@@ -145,6 +150,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
       formValidation={formValidation}
       isEdit={props.isEdit}
       data={props.data}
+      fileInputHandler={{
+        handleFileChange: handleFileChange1,
+        handleImageUploadClick: handleImageUploadClick,
+        fileInputRef: fileRef1,
+      }}
     />
   );
 }

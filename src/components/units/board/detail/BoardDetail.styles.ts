@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { ThumbsUIProps } from './BoardDetail.types';
 
 export const ContentWrapper = styled.div`
   padding: 80px 101px;
@@ -83,5 +84,39 @@ export const BoardActionButton = styled.button`
   cursor: pointer;
   &:hover {
     background: rgba(255, 214, 0, 1);
+  }
+`;
+
+export const ThumbsWrapper = styled.ul`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 120px;
+  list-style: none;
+  li:nth-of-type(1) {
+    margin-right: 40px;
+  }
+`;
+
+export const Thumbs = styled.dl<ThumbsUIProps>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px;
+  cursor: pointer;
+  dt {
+    display: flex;
+    justify-content: center;
+  }
+  dd {
+    margin: 0px;
+    font-size: 18px;
+    text-align: center;
+  }
+  &[data-up='true'] {
+    color: rgba(255, 214, 0, 1);
+  }
+  &[data-up='fasle'] {
+    color: rgba(130, 130, 130, 1);
   }
 `;

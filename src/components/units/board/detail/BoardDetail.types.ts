@@ -6,4 +6,9 @@ export interface IBoardDetailUIProps {
   onClickDeleteButton: (event: MouseEvent<HTMLButtonElement>) => void;
   onClickBoardsButton: (event: MouseEvent<HTMLButtonElement>) => void;
   onClickUpdateButton: (event: MouseEvent<HTMLButtonElement>) => void;
+  onClickThumbs: (event: MouseEvent<HTMLDListElement>) => void;
+}
+
+export interface ThumbsUIProps {
+  'data-up': boolean;
 }

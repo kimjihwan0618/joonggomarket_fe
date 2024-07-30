@@ -20,9 +20,16 @@ export default function BoardWriteUI({
   formValidation,
   isEdit,
   data,
+  fileInputHandler,
 }: IBoardWriteUIProps) {
   return (
     <S.ContentWrapper>
+      <input
+        type="file"
+        style={{ display: 'none' }}
+        onChange={fileInputHandler.handleFileChange}
+        accept="image/*"
+      />
       <S.ContentTitle>게시물 {isEdit ? '수정' : '등록'}</S.ContentTitle>
       <S.FormWrapper>
         <S.FormItem style={{ width: '48.78%' }}>
@@ -93,7 +100,7 @@ export default function BoardWriteUI({
         <S.FormItem style={{ width: '100%' }}>
           <S.ItemTitle>사진 첨부</S.ItemTitle>
           <S.UploadButtonWrapper>
-            <S.ImageUploadButton>
+            <S.ImageUploadButton onClick={() => fileInputHandler.handleImageUploadClick(1)}>
               <span>+</span>
               <p>Upload</p>
             </S.ImageUploadButton>

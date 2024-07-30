@@ -8,6 +8,7 @@ export default function BoardDetailUI({
   onClickDeleteButton,
   onClickBoardsButton,
   onClickUpdateButton,
+  onClickThumbs,
 }: IBoardDetailUIProps) {
   return (
     <>
@@ -28,6 +29,28 @@ export default function BoardDetailUI({
           <S.ContentsMain>
             <p>{board?.contents}</p>
           </S.ContentsMain>
+          <S.ThumbsWrapper>
+            <li>
+              <S.Thumbs data-up={true} onClick={onClickThumbs}>
+                <dl>
+                  <dt>
+                    <Image src={'/images/ic_thumb_up.png'} width={24} height={24} />
+                  </dt>
+                  <dd>{board?.likeCount}</dd>
+                </dl>
+              </S.Thumbs>
+            </li>
+            <li>
+              <S.Thumbs data-up={false} onClick={onClickThumbs}>
+                <dl>
+                  <dt>
+                    <Image src={'/images/ic_thumb_down.png'} width={24} height={24} />
+                  </dt>
+                  <dd>{board?.dislikeCount}</dd>
+                </dl>
+              </S.Thumbs>
+            </li>
+          </S.ThumbsWrapper>
         </S.ContentsWrapper>
       </S.ContentWrapper>
       <S.ButtonWrapper>

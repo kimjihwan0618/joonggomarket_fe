@@ -1,9 +1,10 @@
 import { ChangeEvent, MouseEvent, Dispatch, SetStateAction } from 'react';
 import { IQuery } from 'src/commons/types/generated/types';
 
-export interface IBoardWriteProps {
-  isEdit: boolean;
-  data?: Pick<IQuery, 'fetchBoard'>;
+export interface FileInputHandler {
+  handleFileChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleImageUploadClick: (fileType: 1 | 2 | 3) => void;
+  fileInputRef: React.RefObject<HTMLInputElement>;
 }
 
 export interface IBoardWriteUIProps {
@@ -28,6 +29,12 @@ export interface IBoardWriteUIProps {
   onClickSubmit: (event: MouseEvent<HTMLButtonElement>) => void;
   onClickUpdate: (event: MouseEvent<HTMLButtonElement>) => void;
   formValidation: boolean;
+  isEdit: boolean;
+  data?: Pick<IQuery, 'fetchBoard'>;
+  fileInputHandler: FileInputHandler;
+}
+
+export interface IBoardWriteProps {
   isEdit: boolean;
   data?: Pick<IQuery, 'fetchBoard'>;
 }
