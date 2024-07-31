@@ -1,24 +1,42 @@
-import { toYYYYMMDD } from 'src/lib/utils/date';
-import * as S from './BoardCommentList.styles';
-import Image from 'next/image';
-import BoardCommentWriteUI from '../write/BoardCommentWrite.presenter';
-import { IBoardCommentListUIProps } from './BoardCommentList.types';
+import { toYYYYMMDD } from 'src/lib/utils/date'
+import * as S from './BoardCommentList.styles'
+import Image from 'next/image'
+import BoardCommentWriteUI from '../write/BoardCommentWrite.presenter'
+import { IBoardCommentListUIProps } from './BoardCommentList.types'
+import { Modal } from 'antd'
 
 export default function BoardCommentListUI({
   comments,
   onClickCommentEdit,
   onClickCommentUpdate,
+  onClickCommentDeleteOk,
   onClickCommentDelete,
   onClickRating,
   rating,
   contents,
   writer,
   password,
+  setPasswordCheck,
   onInputContents,
   onInputUserInfo,
+  isOpen,
+  handlePasswordModal,
+  passwordCheck,
 }: IBoardCommentListUIProps) {
   return (
     <S.Wrapper>
+      <Modal
+        title="비밀번호를 입력해주세요."
+        open={isOpen}
+        onOk={onClickCommentDeleteOk}
+        onCancel={handlePasswordModal}
+      >
+        <S.PasswordInput
+          value={passwordCheck}
+          onChange={(e) => setPasswordCheck(e.target.value)}
+          type="password"
+        />
+      </Modal>
       {comments.map((comment, idx) =>
         !comment.isEdit ? (
           <S.CommentBox key={`${comment.writer}_${idx}`}>
@@ -49,7 +67,8 @@ export default function BoardCommentListUI({
                 data-writer={comment.writer}
                 data-contents={comment.contents}
                 data-rating={comment.rating}
-                onClick={onClickCommentEdit}>
+                onClick={onClickCommentEdit}
+              >
                 <Image src={'/images/ic_pencil-gray.png'} width={18} height={18} />
               </button>
               <button id={comment._id} onClick={onClickCommentDelete}>
@@ -73,5 +92,5 @@ export default function BoardCommentListUI({
         )
       )}
     </S.Wrapper>
-  );
+  )
 }
