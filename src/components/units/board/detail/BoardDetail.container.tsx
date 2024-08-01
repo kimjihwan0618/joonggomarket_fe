@@ -2,12 +2,7 @@ import { useRouter } from 'next/router'
 import { useMutation, useQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import BoardDetailUI from './BoardDetail.presenter'
-import {
-  DELETE_BOARD,
-  DISLIKE_BOARD,
-  FETCH_BOARD,
-  LIKE_BOARD,
-} from './BoardDetail.queries'
+import { DELETE_BOARD, DISLIKE_BOARD, FETCH_BOARD, LIKE_BOARD } from './BoardDetail.queries'
 import {
   IMutation,
   IMutationDeleteBoardArgs,
@@ -21,28 +16,19 @@ import { Modal } from 'antd'
 
 export default function BoardDetail() {
   const router = useRouter()
-  const boardId =
-    typeof router.query.boardId === 'string' ? router.query.boardId : ''
-  const [deleteBoard] = useMutation<
-    Pick<IMutation, 'deleteBoard'>,
-    IMutationDeleteBoardArgs
-  >(DELETE_BOARD)
-  const [likeBoard] = useMutation<
-    Pick<IMutation, 'likeBoard'>,
-    IMutationLikeBoardArgs
-  >(LIKE_BOARD)
-  const [dislikeBoard] = useMutation<
-    Pick<IMutation, 'dislikeBoard'>,
-    IMutationDislikeBoardArgs
-  >(DISLIKE_BOARD)
-
-  const { data } = useQuery<Pick<IQuery, 'fetchBoard'>, IQueryFetchBoardArgs>(
-    FETCH_BOARD,
-    {
-      variables: { boardId },
-      skip: !router.query.boardId,
-    }
+  const boardId = typeof router.query.boardId === 'string' ? router.query.boardId : ''
+  const [deleteBoard] = useMutation<Pick<IMutation, 'deleteBoard'>, IMutationDeleteBoardArgs>(
+    DELETE_BOARD
   )
+  const [likeBoard] = useMutation<Pick<IMutation, 'likeBoard'>, IMutationLikeBoardArgs>(LIKE_BOARD)
+  const [dislikeBoard] = useMutation<Pick<IMutation, 'dislikeBoard'>, IMutationDislikeBoardArgs>(
+    DISLIKE_BOARD
+  )
+
+  const { data } = useQuery<Pick<IQuery, 'fetchBoard'>, IQueryFetchBoardArgs>(FETCH_BOARD, {
+    variables: { boardId },
+    skip: !router.query.boardId,
+  })
 
   const onClickThumbs = async (event: MouseEvent<HTMLDListElement>) => {
     const isUp = JSON.parse(event.currentTarget.getAttribute('data-up'))
@@ -58,6 +44,18 @@ export default function BoardDetail() {
         },
       ],
     })
+  }
+
+  const onClickCopyLink = () => {
+    const url = window.location.href
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        Modal.success({ content: 'URL이 클립보드에 복사되었습니다!' })
+      })
+      .catch((err) => {
+        Modal.error({ content: '클립보드 복사에 실패했습니다.' })
+      })
   }
 
   const onClickUpdateButton = () => {
@@ -92,6 +90,7 @@ export default function BoardDetail() {
       onClickDeleteButton={onClickDeleteButton}
       onClickUpdateButton={onClickUpdateButton}
       onClickThumbs={onClickThumbs}
+      onClickCopyLink={onClickCopyLink}
     />
   )
 }

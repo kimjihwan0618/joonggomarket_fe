@@ -8,6 +8,8 @@ import {
   IMutation,
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
+  IUpdateBoardInput,
+  ICreateBoardInput,
 } from 'src/commons/types/generated/types'
 import { Modal } from 'antd'
 import type { Address } from 'react-daum-postcode'
@@ -91,7 +93,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
         addressDetail,
         zipcode,
       }
-      const createBoardInput = {
+      const createBoardInput: ICreateBoardInput = {
         writer,
         password,
         title,
@@ -115,11 +117,21 @@ export default function BoardWrite(props: IBoardWriteProps) {
   }
 
   const onClickUpdate = async () => {
-    if (!password) {
+    if (
+      title === '' &&
+      contents === '' &&
+      youtubeUrl === '' &&
+      address === '' &&
+      addressDetail === '' &&
+      zipcode === ''
+    ) {
+      Modal.warning({ content: '수정한 내용이 없습니다' })
+    }
+    if (password === '') {
       Modal.warning({ content: '비밀번호를 입력해주세요.' })
       return
     }
-    const updateBoardInput = {}
+    const updateBoardInput: IUpdateBoardInput = {}
     if (title) updateBoardInput['title'] = title
     if (contents) updateBoardInput['contents'] = contents
     const images = imageFiles
@@ -188,13 +200,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
   useEffect(() => {
     const fetchBoard = props?.data?.fetchBoard
     fetchBoard?.boardAddress?.address && setAddress(fetchBoard?.boardAddress?.address)
-    fetchBoard?.boardAddress?.addressDetail &&
-      setAddressDetail(fetchBoard?.boardAddress?.addressDetail)
     fetchBoard?.boardAddress?.zipcode && setZipcode(fetchBoard?.boardAddress?.zipcode)
-    fetchBoard?.title && setTitle(fetchBoard?.title)
-    fetchBoard?.contents && setContents(fetchBoard?.contents)
-    fetchBoard?.writer && setWriter(fetchBoard?.writer)
-    fetchBoard?.youtubeUrl && setYoutubeUrl(fetchBoard?.youtubeUrl)
   }, [props?.data?.fetchBoard])
 
   useEffect(() => {

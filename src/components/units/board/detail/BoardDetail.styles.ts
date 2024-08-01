@@ -1,5 +1,12 @@
-import styled from '@emotion/styled';
-import { ThumbsUIProps } from './BoardDetail.types';
+import styled from '@emotion/styled'
+import { ThumbsUIProps } from './BoardDetail.types'
+import ReactPlayer from 'react-player'
+import { css } from '@emotion/react'
+
+const IconButton = css`
+  background: none;
+  border: none;
+`
 
 export const ContentWrapper = styled.div`
   padding: 80px 101px;
@@ -9,7 +16,7 @@ export const ContentWrapper = styled.div`
   min-height: 700px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
-`;
+`
 
 export const BoardTitleWrapper = styled.div`
   display: flex;
@@ -17,12 +24,17 @@ export const BoardTitleWrapper = styled.div`
   align-items: center;
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(189, 189, 189, 1);
-`;
+`
 
 export const WriterInfo = styled.div`
   display: flex;
   align-items: center;
-`;
+`
+
+export const IconInfo = styled.div`
+  display: flex;
+  align-items: center;
+`
 
 export const Info = styled.dl`
   margin-left: 12px;
@@ -35,23 +47,23 @@ export const Info = styled.dl`
     margin-left: 0px;
     color: rgba(130, 130, 130, 1);
   }
-`;
+`
 
 export const ContentsWrapper = styled.div`
   margin-top: 80px;
-`;
+`
 
 export const ContentsTitle = styled.h3`
   font-weight: 700;
   font-size: 36px;
-`;
+`
 
 export const ContentsMain = styled.div`
   margin-top: 40px;
   p {
     font-size: 16px;
   }
-`;
+`
 
 export const ButtonWrapper = styled.div`
   display: flex;
@@ -68,7 +80,7 @@ export const ButtonWrapper = styled.div`
   button:nth-of-type(2) {
     margin: 0 24px;
   }
-`;
+`
 export const BoardActionButton = styled.button`
   padding: 14px 16px;
   box-sizing: border-box;
@@ -85,7 +97,7 @@ export const BoardActionButton = styled.button`
   &:hover {
     background: rgba(255, 214, 0, 1);
   }
-`;
+`
 
 export const ThumbsWrapper = styled.ul`
   display: flex;
@@ -96,7 +108,7 @@ export const ThumbsWrapper = styled.ul`
   li:nth-of-type(1) {
     margin-right: 40px;
   }
-`;
+`
 
 export const Thumbs = styled.dl<ThumbsUIProps>`
   display: flex;
@@ -119,4 +131,20 @@ export const Thumbs = styled.dl<ThumbsUIProps>`
   &[data-up='fasle'] {
     color: rgba(130, 130, 130, 1);
   }
-`;
+`
+
+export const YoutubePlayer = styled(ReactPlayer)`
+  margin: 120px auto 0;
+  width: 486px !important;
+  height: 240px !important;
+`
+
+export const LinkIcon = styled.button`
+  ${IconButton}
+  margin-right: 20px;
+  cursor: pointer;
+`
+
+export const LocationIcon = styled.button`
+  ${IconButton}
+`

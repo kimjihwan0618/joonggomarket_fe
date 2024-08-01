@@ -1,7 +1,8 @@
-import { toYYYYMMDDHHMMSS } from 'src/lib/utils/date';
-import * as S from './BoardDetail.styles';
-import Image from 'next/image';
-import { IBoardDetailUIProps } from './BoardDetail.types';
+import { toYYYYMMDDHHMMSS } from 'src/lib/utils/date'
+import * as S from './BoardDetail.styles'
+import Image from 'next/image'
+import { IBoardDetailUIProps } from './BoardDetail.types'
+import { Tooltip } from 'antd'
 
 export default function BoardDetailUI({
   board,
@@ -9,6 +10,7 @@ export default function BoardDetailUI({
   onClickBoardsButton,
   onClickUpdateButton,
   onClickThumbs,
+  onClickCopyLink,
 }: IBoardDetailUIProps) {
   return (
     <>
@@ -21,14 +23,29 @@ export default function BoardDetailUI({
               <dd>Date : {board?.updatedAt && toYYYYMMDDHHMMSS(board?.updatedAt)}</dd>
             </S.Info>
           </S.WriterInfo>
-          <div></div>
-          {/* div children marker , linker */}
+          <S.IconInfo>
+            <S.LinkIcon onClick={onClickCopyLink}>
+              <Image width={34} height={34} src={'/images/ic_link.png'} />
+            </S.LinkIcon>
+            {board?.boardAddress?.address ||
+              (board?.boardAddress?.addressDetail && (
+                <Tooltip
+                  placement="topRight"
+                  title={`${board?.boardAddress?.address} \r\n ${board?.boardAddress?.addressDetail}`}
+                >
+                  <S.LocationIcon>
+                    <Image width={34} height={34} src={'/images/ic_location.png'} />
+                  </S.LocationIcon>
+                </Tooltip>
+              ))}
+          </S.IconInfo>
         </S.BoardTitleWrapper>
         <S.ContentsWrapper>
           <S.ContentsTitle>{board?.title}</S.ContentsTitle>
           <S.ContentsMain>
             <p>{board?.contents}</p>
           </S.ContentsMain>
+          {board?.youtubeUrl && <S.YoutubePlayer url={board.youtubeUrl} />}
           <S.ThumbsWrapper>
             <li>
               <S.Thumbs data-up={true} onClick={onClickThumbs}>
@@ -59,5 +76,5 @@ export default function BoardDetailUI({
         <S.BoardActionButton onClick={onClickDeleteButton}>삭제하기</S.BoardActionButton>
       </S.ButtonWrapper>
     </>
-  );
+  )
 }
