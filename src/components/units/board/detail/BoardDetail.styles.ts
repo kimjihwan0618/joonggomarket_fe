@@ -10,12 +10,11 @@ const IconButton = css`
 
 export const ContentWrapper = styled.div`
   padding: 80px 101px;
-  width: 62.5%;
+  /* width: 62.5%; */
   margin: 101px auto;
   min-width: 920px;
   min-height: 700px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  box-sizing: border-box;
 `
 
 export const BoardTitleWrapper = styled.div`
@@ -39,11 +38,11 @@ export const IconInfo = styled.div`
 export const Info = styled.dl`
   margin-left: 12px;
   dt {
-    font-size: 24px;
+    font-size: 2.4rem;
     font-weight: 500;
   }
   dd {
-    font-size: 16px;
+    font-size: 1.6rem;
     margin-left: 0px;
     color: rgba(130, 130, 130, 1);
   }
@@ -55,13 +54,13 @@ export const ContentsWrapper = styled.div`
 
 export const ContentsTitle = styled.h3`
   font-weight: 700;
-  font-size: 36px;
+  font-size: 3.6rem;
 `
 
 export const ContentsMain = styled.div`
   margin-top: 40px;
   p {
-    font-size: 16px;
+    font-size: 1.6rem;
   }
 `
 
@@ -71,9 +70,8 @@ export const ButtonWrapper = styled.div`
   align-items: center;
   margin: 87px auto 40px;
   padding: 80px 101px;
-  width: 62.5%;
+  /* width: 62.5%; */
   min-width: 920px;
-  box-sizing: border-box;
   padding-bottom: 87px;
   border-bottom: 1px solid rgba(189, 189, 189, 1);
 
@@ -83,7 +81,6 @@ export const ButtonWrapper = styled.div`
 `
 export const BoardActionButton = styled.button`
   padding: 14px 16px;
-  box-sizing: border-box;
   color: white;
   white-space: nowrap;
   height: 52px;
@@ -104,7 +101,6 @@ export const ThumbsWrapper = styled.ul`
   justify-content: center;
   align-items: center;
   margin-top: 120px;
-  list-style: none;
   li:nth-of-type(1) {
     margin-right: 40px;
   }
@@ -122,8 +118,10 @@ export const Thumbs = styled.dl<ThumbsUIProps>`
   }
   dd {
     margin: 0px;
-    font-size: 18px;
+    font-weight: 400;
+    font-size: 1.8rem;
     text-align: center;
+    color: ${(props) => (props['data-up'] ? props.theme.colors.main : props.theme.colors.gray03)};
   }
   &[data-up='true'] {
     color: rgba(255, 214, 0, 1);

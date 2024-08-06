@@ -2,15 +2,14 @@ import styled from '@emotion/styled'
 
 export const Wrapper = styled.div`
   margin-top: 31px;
-  width: 62.5%;
+  /* width: 62.5%; */
   min-width: 920px;
   margin: 87px auto 0;
 `
 
 export const CommentBox = styled.div`
-  box-sizing: border-box;
   padding: 9px 0 20px;
-  border-bottom: 1px solid #bdbdbd;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray04};
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -37,9 +36,9 @@ export const Comment = styled.p`
 `
 
 export const Date = styled.p`
-  color: #bdbdbd;
+  color: ${({ theme }) => theme.colors.gray04};
   margin-top: 20px;
-  font-size: 12px;
+  font-size: 1.2rem;
 `
 
 export const CommentInfo = styled.div`
@@ -83,10 +82,9 @@ export const Rating = styled.div`
 `
 
 export const PasswordInput = styled.input`
-  box-sizing: border-box;
   padding: 14px 20px;
   outline: none;
   height: 52px;
   width: 100%;
-  border: 1px solid #bdbdbd;
+  border: 1px solid ${({ theme }) => theme.colors.gray04};
 `

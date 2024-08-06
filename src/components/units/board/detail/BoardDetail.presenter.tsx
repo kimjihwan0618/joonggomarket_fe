@@ -27,17 +27,22 @@ export default function BoardDetailUI({
             <S.LinkIcon onClick={onClickCopyLink}>
               <Image width={34} height={34} src={'/images/ic_link.png'} />
             </S.LinkIcon>
-            {board?.boardAddress?.address ||
-              (board?.boardAddress?.addressDetail && (
-                <Tooltip
-                  placement="topRight"
-                  title={`${board?.boardAddress?.address} \r\n ${board?.boardAddress?.addressDetail}`}
-                >
-                  <S.LocationIcon>
-                    <Image width={34} height={34} src={'/images/ic_location.png'} />
-                  </S.LocationIcon>
-                </Tooltip>
-              ))}
+            {(board?.boardAddress?.address || board?.boardAddress?.addressDetail) && (
+              <Tooltip
+                placement="topRight"
+                title={
+                  <>
+                    {board?.boardAddress?.address}
+                    <br />
+                    {board?.boardAddress?.addressDetail}
+                  </>
+                }
+              >
+                <S.LocationIcon>
+                  <Image width={34} height={34} src={'/images/ic_location.png'} />
+                </S.LocationIcon>
+              </Tooltip>
+            )}
           </S.IconInfo>
         </S.BoardTitleWrapper>
         <S.ContentsWrapper>

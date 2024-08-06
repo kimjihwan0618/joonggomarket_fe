@@ -1,10 +1,8 @@
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
-import Image from 'next/image'
 
 const ButtonStyle = css`
   padding: 14px 16px;
-  box-sizing: border-box;
   margin-left: 16px;
   white-space: nowrap;
   height: 52px;
@@ -16,15 +14,14 @@ const ButtonStyle = css`
 
 export const ContentWrapper = styled.div`
   padding: 60px 101px 100px;
-  width: 62.5%;
+  /* width: 62.5%; */
   margin: 101px auto;
   min-width: 920px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  box-sizing: border-box;
 `
 
 export const ContentTitle = styled.h2`
-  font-size: 36px;
+  font-size: 3.6rem;
   font-weight: 700;
   margin-bottom: 80px;
   text-align: center;
@@ -46,14 +43,13 @@ export const FormItem = styled.div`
 `
 
 export const ItemTitle = styled.div`
-  font-size: 16px;
+  font-size: 1.6rem;
   margin-bottom: 21px;
 `
 
 export const ItemInput = styled.input`
-  font-size: 16px;
-  border: 1px solid #bdbdbd;
-  box-sizing: border-box;
+  font-size: 1.6rem;
+  border: 1px solid ${({ theme }) => theme.colors.gray04};
   padding: 14px 16px;
   height: 52px;
   &::-webkit-outer-spin-button,
@@ -68,7 +64,7 @@ export const UploadButtonWrapper = styled.div`
 export const ImageUploadButton = styled.button`
   width: 78px;
   height: 78px;
-  background: #bdbdbd;
+  background: ${({ theme }) => theme.colors.gray04};
   margin-right: 24px;
   border: none;
   display: flex;
@@ -77,13 +73,13 @@ export const ImageUploadButton = styled.button`
   align-items: center;
   justify-content: center;
   span {
-    color: #4f4f4f;
-    font-size: 24px;
+    color: ${({ theme }) => theme.colors.gray02};
+    font-size: 2.4rem;
   }
   p {
-    font-size: 12px;
+    font-size: 1.2rem;
     font-weight: 500;
-    color: #4f4f4f;
+    color: ${({ theme }) => theme.colors.gray02};
     padding: 0px;
   }
 `
@@ -99,15 +95,14 @@ export const RadioItem = styled.div`
   & > input[type='radio'] {
     width: 20px;
     height: 20px;
-    accent-color: #ffd600;
-    background-color: #ffd600;
+    accent-color: ${({ theme }) => theme.colors.main};
+    background-color: ${({ theme }) => theme.colors.main};
   }
 `
 
 export const ItemTextArea = styled.textarea`
-  font-size: 16px;
-  border: 1px solid #bdbdbd;
-  box-sizing: border-box;
+  font-size: 1.6rem;
+  border: 1px solid ${({ theme }) => theme.colors.gray04};
   padding: 14px 16px;
   min-height: 480px;
   resize: none;
@@ -128,16 +123,14 @@ export const PostSearchItem = styled.div`
   }
 `
 export const DetailAddressInput = styled.input`
-  font-size: 16px;
-  border: 1px solid #bdbdbd;
-  box-sizing: border-box;
+  font-size: 1.6rem;
+  border: 1px solid ${({ theme }) => theme.colors.gray04};
   padding: 14px 16px;
   height: 52px;
 `
 export const PostSearchButton = styled.button`
   background: #000;
   padding: 14px 16px;
-  box-sizing: border-box;
   margin-left: 16px;
   color: white;
   white-space: nowrap;
@@ -161,13 +154,13 @@ export const UndoButton = styled.button`
   ${ButtonStyle}
   cursor: pointer;
   background: rgba(189, 189, 189, 1);
-  color: #4f4f4f;
+  color: ${({ theme }) => theme.colors.gray02};
   margin-right: 24px;
 `
 
 export const FormItemError = styled.p`
   color: red;
-  font-size: 16px;
+  font-size: 1.6rem;
   margin-top: 4px;
 `
 
