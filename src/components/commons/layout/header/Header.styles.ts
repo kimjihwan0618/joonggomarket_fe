@@ -2,12 +2,13 @@ import styled from '@emotion/styled'
 
 export const Header = styled.header`
   background: white;
-  height: 152px;
+  height: 100px;
   width: 100%;
   position: fixed;
   left: 0;
   top: 0;
   z-index: 9999;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
 `
 export const HeaderInner = styled.div`
   width: 62.5%;

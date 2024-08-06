@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 
 export const Wrapper = styled.div`
   height: 400px;
-  margin-top: 152px;
+  margin-top: 100px;
 `
 
 export const Carousel = styled.div`
