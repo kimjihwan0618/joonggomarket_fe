@@ -1,4 +1,4 @@
-import { useLazyQuery } from '@apollo/client'
+import { useLazyQuery, useQuery } from '@apollo/client'
 import BoardListUI from './BoardList.presenter'
 import { FETCH_BOARDS, FETCH_BOARDS_COUNT } from './BoardList.queries'
 import { useEffect, useState, MouseEvent, FormEvent, KeyboardEvent } from 'react'
@@ -13,69 +13,47 @@ import {
 export default function BoardList() {
   const route = useRouter()
   const [search, setSearch] = useState('')
-  const [page, setPage] = useState(1)
+  const [activePage, setActivePage] = useState(1)
+  const [startPage, setStartPage] = useState(1)
   const [startDate, setStartDate] = useState(
     toYYYYMMDD(new Date(new Date().setDate(new Date().getDate() - 30)))
   )
   const [endDate, setEndDate] = useState(toYYYYMMDD(new Date()))
-  const [pageList, setPageList] = useState([])
-  const [pageMaxRange, setPageMaxRange] = useState(5)
 
-  const [fetchBoards, { data: boards }] = useLazyQuery<
+  const { data: boards, refetch: refetchBoards } = useQuery<
     Pick<IQuery, 'fetchBoards'>,
     IQueryFetchBoardsArgs
   >(FETCH_BOARDS)
-  const [fetchBoardsCount, { data: boardsPageCount }] = useLazyQuery<
+  const { data: boardsCount, refetch: refetchBoardsCount } = useQuery<
     Pick<IQuery, 'fetchBoardsCount'>,
     IQueryFetchBoardsCountArgs
   >(FETCH_BOARDS_COUNT)
-
-  const handleFetchBoards = (currentPage: number, newStartPage: number) => {
-    if (newStartPage) {
-      const finalLastPage = Math.ceil(boardsPageCount?.fetchBoardsCount / 10)
-      const newEndPage =
-        newStartPage + (pageMaxRange - 1) <= finalLastPage
-          ? newStartPage + (pageMaxRange - 1)
-          : finalLastPage
-      const newPageListResult = Array.from(
-        { length: newEndPage - newStartPage + 1 },
-        (_, index) => newStartPage + index
-      )
-      if (newPageListResult.length > 0) {
-        setPage(newPageListResult[0])
-      }
-      setPageList(newPageListResult)
-    }
-    fetchBoards({
-      variables: {
-        search,
-        page: currentPage ? currentPage : page,
-        startDate,
-        endDate,
-      },
-    })
-  }
+  const lastPage = Math.ceil((boardsCount?.fetchBoardsCount ?? 10) / 10)
 
   const handleFetchBoardsPageCount = () => {
-    fetchBoardsCount({
-      variables: {
-        search,
-        startDate,
-        endDate,
-      },
+    refetchBoardsCount({
+      search,
+      startDate,
+      endDate,
     })
   }
 
-  const handlePageListSet = (event: MouseEvent<HTMLButtonElement>) => {
-    const direction = event.currentTarget.getAttribute('data-direction')
-    const remainder = (page - 1) % pageMaxRange
-    let newStartPage = page - remainder || 1
-    if (direction === 'prev') {
-      newStartPage -= pageMaxRange
-    } else if (direction === 'next') {
-      newStartPage += pageMaxRange
-    }
-    handleFetchBoards(0, newStartPage)
+  const onClickPage = (event) => {
+    const page = Number(event.currentTarget.id)
+    setActivePage(page)
+    refetchBoards({ page, endDate, startDate, search })
+  }
+
+  const onClickPrev = () => {
+    setActivePage(startPage - 10)
+    refetchBoards({ page: startPage - 10, endDate, startDate, search })
+    setStartPage((prev) => prev - 10)
+  }
+
+  const onClickNext = () => {
+    setActivePage(startPage + 10)
+    refetchBoards({ page: startPage + 10, endDate, startDate, search })
+    setStartPage((prev) => prev + 10)
   }
 
   const onInputSearch = (event: FormEvent<HTMLInputElement>) => {
@@ -89,14 +67,9 @@ export default function BoardList() {
   }
 
   const onClickSearchButton = () => {
-    setPage(1)
-    handleFetchBoards(0, 1)
+    setActivePage(1)
+    setStartPage(1)
     handleFetchBoardsPageCount()
-  }
-
-  const onClickPageNumber = (event: MouseEvent<HTMLButtonElement>) => {
-    setPage(Number(event.currentTarget.id))
-    handleFetchBoards(Number(event.currentTarget.id), 0)
   }
 
   const onClickAddBoardButton = () => {
@@ -108,16 +81,12 @@ export default function BoardList() {
   }
 
   useEffect(() => {
-    handleFetchBoards(0, 1)
-  }, [boardsPageCount])
-
-  useEffect(() => {
     handleFetchBoardsPageCount()
   }, [])
 
   return (
     <BoardListUI
-      page={page}
+      activePage={activePage}
       startDate={startDate}
       setStartDate={setStartDate}
       endDate={endDate}
@@ -126,13 +95,13 @@ export default function BoardList() {
       onClickSearchButton={onClickSearchButton}
       setEndDate={setEndDate}
       boards={boards?.fetchBoards}
-      boardsPageCount={boardsPageCount?.fetchBoardsCount}
-      pageList={pageList}
-      onClickPageNumber={onClickPageNumber}
-      handlePageListSet={handlePageListSet}
       onClickAddBoardButton={onClickAddBoardButton}
       onClickBoardTitle={onClickBoardTitle}
-      pageMaxRange={pageMaxRange}
+      onClickPage={onClickPage}
+      onClickPrev={onClickPrev}
+      onClickNext={onClickNext}
+      startPage={startPage}
+      lastPage={lastPage}
     />
   )
 }

@@ -106,38 +106,6 @@ export const BottomWrapper = styled.div`
   position: relative;
 `
 
-export const Pagination = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-export const PageButton = styled.button`
-  margin: 0 10px;
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: 1.6rem;
-  cursor: pointer;
-  color: ${(props) => (props['data-isActive'] ? 'rgba(255, 214, 0, 1)' : '#000')};
-  text-decoration: ${(props) => (props['data-isActive'] ? 'underline' : 'none')};
-`
-
-export const ArrowButton = styled.button`
-  background: none;
-  border: none;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  font-size: 1.6rem;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  &:hover {
-    background: rgba(255, 214, 0, 1);
-  }
-`
-
 export const BoardAddButton = styled.button`
   position: absolute;
   right: 0;
