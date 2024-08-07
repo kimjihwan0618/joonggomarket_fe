@@ -7,7 +7,7 @@ import { FormEvent, MouseEvent, useEffect, useState } from 'react'
 import { IMutation, IMutationCreateBoardCommentArgs } from 'src/commons/types/generated/types'
 import { Modal } from 'antd'
 
-export default function BoardCommentWrite() {
+export default function BoardCommentWrite(): JSX.Element {
   const [createBoardComment] = useMutation<
     Pick<IMutation, 'createBoardComment'>,
     IMutationCreateBoardCommentArgs
@@ -19,7 +19,7 @@ export default function BoardCommentWrite() {
   const [password, setPassword] = useState('')
   const boardId = typeof router.query.boardId === 'string' ? router.query.boardId : ''
 
-  const onInputContents = (event: FormEvent<HTMLTextAreaElement>) => {
+  const onInputContents = (event: FormEvent<HTMLTextAreaElement>): void => {
     const {
       currentTarget: { value },
     } = event
@@ -30,11 +30,11 @@ export default function BoardCommentWrite() {
     }
   }
 
-  const onClickRating = (event: MouseEvent<HTMLImageElement>) => {
+  const onClickRating = (event: MouseEvent<HTMLImageElement>): void => {
     setRating(Number(event.currentTarget.id.replace('rating', '')))
   }
 
-  const onInputUserInfo = (event: FormEvent<HTMLInputElement>) => {
+  const onInputUserInfo = (event: FormEvent<HTMLInputElement>): void => {
     const {
       currentTarget: { value, id },
     } = event
@@ -42,7 +42,7 @@ export default function BoardCommentWrite() {
     if (id === 'pwInput') setPassword(value)
   }
 
-  const onClickSubmit = async () => {
+  const onClickSubmit = async (): Promise<void> => {
     try {
       if (writer === '') {
         Modal.warning({ content: '작성자를 입력해주세요.' })

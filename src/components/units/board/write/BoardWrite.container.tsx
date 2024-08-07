@@ -14,7 +14,7 @@ import {
 import { Modal } from 'antd'
 import type { Address } from 'react-daum-postcode'
 
-export default function BoardWrite(props: IBoardWriteProps) {
+export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
   const fileRefs = [
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
@@ -56,7 +56,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
     setInput: Dispatch<SetStateAction<string>>,
     setError: Dispatch<SetStateAction<string>> | null,
     message: string
-  ) => {
+  ): void => {
     setInput(event.target.value)
     if (setError) {
       if (event.target.value !== '') {
@@ -67,11 +67,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
     }
   }
 
-  const onClickUndo = () => {
+  const onClickUndo = (): void => {
     props.isEdit ? router.push(`/boards/${props?.data?.fetchBoard?._id}`) : router.push(`/boards`)
   }
 
-  const onClickSubmit = async () => {
+  const onClickSubmit = async (): Promise<void> => {
     if (!writer) {
       setWriterError('작성자를 입력해주세요')
     }
@@ -116,7 +116,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
     }
   }
 
-  const onClickUpdate = async () => {
+  const onClickUpdate = async (): Promise<void> => {
     if (
       title === '' &&
       contents === '' &&
@@ -165,7 +165,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
     }
   }
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const fileNumber = Number(event.currentTarget.getAttribute('data-fileNumber'))
     const file = event.target.files?.[0]
     setImageFiles((prev) =>
@@ -173,11 +173,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
     )
   }
 
-  const handleModalOpen = () => {
+  const handleModalOpen = (): void => {
     setIsOpen((prev) => !prev)
   }
 
-  const handleGetAddress = (data: Address) => {
+  const handleGetAddress = (data: Address): void => {
     setIsOpen((prev) => !prev)
     if (data) {
       setAddress(data.address)
@@ -187,11 +187,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
     }
   }
 
-  const onClickImageUpload = (fileNumber: 1 | 2 | 3) => {
+  const onClickImageUpload = (fileNumber: 1 | 2 | 3): void => {
     fileRefs[fileNumber - 1].current.click()
   }
 
-  const onClickImageReset = (fileNumber: 1 | 2 | 3) => {
+  const onClickImageReset = (fileNumber: 1 | 2 | 3): void => {
     setImageFiles((prev) =>
       prev.map((image) => (image.number === fileNumber ? { ...image, file: null } : image))
     )

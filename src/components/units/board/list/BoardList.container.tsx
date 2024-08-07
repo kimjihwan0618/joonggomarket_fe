@@ -1,7 +1,8 @@
-import { useLazyQuery, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import BoardListUI from './BoardList.presenter'
 import { FETCH_BOARDS, FETCH_BOARDS_COUNT } from './BoardList.queries'
-import { useEffect, useState, MouseEvent, FormEvent, KeyboardEvent } from 'react'
+import type { MouseEvent, FormEvent, KeyboardEvent } from 'react'
+import { useEffect, useState } from 'react'
 import { toYYYYMMDD } from 'src/lib/utils/date'
 import { useRouter } from 'next/router'
 import {
@@ -10,7 +11,7 @@ import {
   IQueryFetchBoardsCountArgs,
 } from 'src/commons/types/generated/types'
 
-export default function BoardList() {
+export default function BoardList(): JSX.Element {
   const route = useRouter()
   const [search, setSearch] = useState('')
   const [activePage, setActivePage] = useState(1)
@@ -30,7 +31,7 @@ export default function BoardList() {
   >(FETCH_BOARDS_COUNT)
   const lastPage = Math.ceil((boardsCount?.fetchBoardsCount ?? 10) / 10)
 
-  const handleFetchBoardsPageCount = () => {
+  const handleFetchBoardsPageCount = (): void => {
     refetchBoardsCount({
       search,
       startDate,
@@ -38,51 +39,47 @@ export default function BoardList() {
     })
   }
 
-  const onClickPage = (event) => {
+  const onClickPage = (event: MouseEvent<HTMLButtonElement>): void => {
     const page = Number(event.currentTarget.id)
     setActivePage(page)
     refetchBoards({ page, endDate, startDate, search })
   }
 
-  const onClickPrev = () => {
+  const onClickPrev = (): void => {
     setActivePage(startPage - 10)
     refetchBoards({ page: startPage - 10, endDate, startDate, search })
     setStartPage((prev) => prev - 10)
   }
 
-  const onClickNext = () => {
+  const onClickNext = (): void => {
     setActivePage(startPage + 10)
     refetchBoards({ page: startPage + 10, endDate, startDate, search })
     setStartPage((prev) => prev + 10)
   }
 
-  const onInputSearch = (event: FormEvent<HTMLInputElement>) => {
+  const onInputSearch = (event: FormEvent<HTMLInputElement>): void => {
     setSearch(event.currentTarget.value)
   }
 
-  const onKeyDownSearch = (event: KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDownSearch = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter') {
       onClickSearchButton()
     }
   }
 
-  const onClickSearchButton = () => {
+  const onClickSearchButton = (): void => {
     setActivePage(1)
     setStartPage(1)
     handleFetchBoardsPageCount()
   }
 
-  const onClickAddBoardButton = () => {
+  const onClickAddBoardButton = (): void => {
     route.push('/boards/new')
   }
 
-  const onClickBoardTitle = (event: MouseEvent<HTMLTableCellElement>) => {
+  const onClickBoardTitle = (event: MouseEvent<HTMLTableCellElement>): void => {
     route.push(`/boards/${event.currentTarget.id}`)
   }
-
-  useEffect(() => {
-    handleFetchBoardsPageCount()
-  }, [])
 
   return (
     <BoardListUI

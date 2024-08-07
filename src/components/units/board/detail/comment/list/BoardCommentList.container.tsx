@@ -16,7 +16,7 @@ import {
 } from 'src/commons/types/generated/types'
 import { Modal } from 'antd'
 
-export default function BoardCommentList() {
+export default function BoardCommentList(): JSX.Element {
   const router = useRouter()
   const boardId = typeof router.query.boardId === 'string' ? router.query.boardId : ''
   const { data } = useQuery<Pick<IQuery, 'fetchBoardComments'>, IQueryFetchBoardCommentsArgs>(
@@ -44,7 +44,7 @@ export default function BoardCommentList() {
   const [passwordCheck, setPasswordCheck] = useState('')
   const [deleteCommentId, setDeleteCommentId] = useState('')
 
-  const onClickCommentEdit = (event: MouseEvent<HTMLButtonElement>) => {
+  const onClickCommentEdit = (event: MouseEvent<HTMLButtonElement>): void => {
     const { currentTarget } = event
     setCommentId(currentTarget.id)
     setWriter(currentTarget.getAttribute('data-writer'))
@@ -58,7 +58,7 @@ export default function BoardCommentList() {
     )
   }
 
-  const onClickCommentUpdate = async () => {
+  const onClickCommentUpdate = async (): Promise<void> => {
     try {
       if (password === '') {
         Modal.warning({ content: '비밀번호를 입력해주세요' })
@@ -88,7 +88,7 @@ export default function BoardCommentList() {
     }
   }
 
-  const onClickCommentDeleteOk = async (event: MouseEvent<HTMLButtonElement>) => {
+  const onClickCommentDeleteOk = async (event: MouseEvent<HTMLButtonElement>): Promise<void> => {
     try {
       if (passwordCheck === '') {
         Modal.warning({ content: '비밀번호를 입력해주세요.' })
@@ -114,11 +114,11 @@ export default function BoardCommentList() {
     }
   }
 
-  const onClickRating = (event: MouseEvent<HTMLImageElement>) => {
+  const onClickRating = (event: MouseEvent<HTMLImageElement>): void => {
     setRating(Number(event.currentTarget.id.replace('rating', '')))
   }
 
-  const onInputContents = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const onInputContents = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const {
       currentTarget: { value },
     } = event
@@ -129,7 +129,7 @@ export default function BoardCommentList() {
     }
   }
 
-  const onInputUserInfo = (event: FormEvent<HTMLInputElement>) => {
+  const onInputUserInfo = (event: FormEvent<HTMLInputElement>): void => {
     const {
       currentTarget: { value, id },
     } = event
@@ -137,14 +137,14 @@ export default function BoardCommentList() {
     if (id === 'pwInput') setPassword(value)
   }
 
-  const handlePasswordModal = (event: MouseEvent<HTMLButtonElement>) => {
+  const handlePasswordModal = (event: MouseEvent<HTMLButtonElement>): void => {
     event.stopPropagation()
     setIsOpen((prev) => !prev)
     setDeleteCommentId('')
     setPasswordCheck('')
   }
 
-  const onClickCommentDelete = (event: MouseEvent<HTMLButtonElement>) => {
+  const onClickCommentDelete = (event: MouseEvent<HTMLButtonElement>): void => {
     event.stopPropagation()
     setDeleteCommentId(event.currentTarget.id)
     setIsOpen((prev) => !prev)

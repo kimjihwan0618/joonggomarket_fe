@@ -1,4 +1,4 @@
-import { Dispatch, FormEvent, MouseEvent, SetStateAction, KeyboardEvent } from 'react'
+import type { Dispatch, FormEvent, MouseEvent, SetStateAction, KeyboardEvent } from 'react'
 import { IQuery, IQueryFetchBoardsArgs } from 'src/commons/types/generated/types'
 
 export interface IBoardListUIProps {

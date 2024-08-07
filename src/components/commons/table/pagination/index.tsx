@@ -1,7 +1,17 @@
 import Image from 'next/image'
 import * as S from 'src/components/commons/table/pagination/Pagination.Styles'
+import type { MouseEvent } from 'react'
 
-export default function Pagination(props: any): JSX.Element {
+interface IPaginationProps {
+  startPage: number
+  lastPage: number
+  activePage: number
+  onClickPrev: (event: MouseEvent<HTMLButtonElement>) => void
+  onClickNext: (event: MouseEvent<HTMLButtonElement>) => void
+  onClickPage: (event: MouseEvent<HTMLButtonElement>) => void
+}
+
+export default function Pagination(props: IPaginationProps): JSX.Element {
   return (
     <S.Pagination>
       {!(props.startPage === 1) && (
@@ -14,7 +24,7 @@ export default function Pagination(props: any): JSX.Element {
           index + props.startPage <= props.lastPage && (
             <S.PageButton
               key={index}
-              id={index + props.startPage}
+              id={String(index + props.startPage)}
               onClick={props.onClickPage}
               data-isActive={index + props.startPage === props.activePage}
             >

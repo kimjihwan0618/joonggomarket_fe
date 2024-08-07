@@ -14,7 +14,7 @@ import {
 import { MouseEvent } from 'react'
 import { Modal } from 'antd'
 
-export default function BoardDetail() {
+export default function BoardDetail(): JSX.Element {
   const router = useRouter()
   const boardId = typeof router.query.boardId === 'string' ? router.query.boardId : ''
   const [deleteBoard] = useMutation<Pick<IMutation, 'deleteBoard'>, IMutationDeleteBoardArgs>(
@@ -30,7 +30,7 @@ export default function BoardDetail() {
     skip: !router.query.boardId,
   })
 
-  const onClickThumbs = async (event: MouseEvent<HTMLDListElement>) => {
+  const onClickThumbs = async (event: MouseEvent<HTMLDListElement>): Promise<void> => {
     const isUp = JSON.parse(event.currentTarget.getAttribute('data-up'))
     const updateApi = isUp ? likeBoard : dislikeBoard
     const result = await updateApi({
@@ -46,7 +46,7 @@ export default function BoardDetail() {
     })
   }
 
-  const onClickCopyLink = () => {
+  const onClickCopyLink = (): void => {
     const url = window.location.href
     navigator.clipboard
       .writeText(url)
@@ -58,15 +58,15 @@ export default function BoardDetail() {
       })
   }
 
-  const onClickUpdateButton = () => {
+  const onClickUpdateButton = (): void => {
     router.push(`/boards/${router.query.boardId}/edit`)
   }
 
-  const onClickBoardsButton = () => {
+  const onClickBoardsButton = (): void => {
     router.push('/boards')
   }
 
-  const onClickDeleteButton = async () => {
+  const onClickDeleteButton = async (): Promise<void> => {
     try {
       const result = await deleteBoard({
         variables: {

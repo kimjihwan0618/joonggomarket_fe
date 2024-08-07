@@ -5,39 +5,22 @@ import BoardCommentWriteUI from '../write/BoardCommentWrite.presenter'
 import { IBoardCommentListUIProps } from './BoardCommentList.types'
 import { Modal } from 'antd'
 
-export default function BoardCommentListUI({
-  comments,
-  onClickCommentEdit,
-  onClickCommentUpdate,
-  onClickCommentDeleteOk,
-  onClickCommentDelete,
-  onClickRating,
-  rating,
-  contents,
-  writer,
-  password,
-  setPasswordCheck,
-  onInputContents,
-  onInputUserInfo,
-  isOpen,
-  handlePasswordModal,
-  passwordCheck,
-}: IBoardCommentListUIProps) {
+export default function BoardCommentListUI(props: IBoardCommentListUIProps): JSX.Element {
   return (
     <S.Wrapper>
       <Modal
         title="비밀번호를 입력해주세요."
-        open={isOpen}
-        onOk={onClickCommentDeleteOk}
-        onCancel={handlePasswordModal}
+        open={props.isOpen}
+        onOk={props.onClickCommentDeleteOk}
+        onCancel={props.handlePasswordModal}
       >
         <S.PasswordInput
-          value={passwordCheck}
-          onChange={(e) => setPasswordCheck(e.target.value)}
+          value={props.passwordCheck}
+          onChange={(e) => props.setPasswordCheck(e.target.value)}
           type="password"
         />
       </Modal>
-      {comments.map((comment, idx) =>
+      {props.comments.map((comment, idx) =>
         !comment.isEdit ? (
           <S.CommentBox key={`${comment.writer}_${idx}`}>
             <S.CommentInfo>
@@ -67,11 +50,11 @@ export default function BoardCommentListUI({
                 data-writer={comment.writer}
                 data-contents={comment.contents}
                 data-rating={comment.rating}
-                onClick={onClickCommentEdit}
+                onClick={props.onClickCommentEdit}
               >
                 <Image src={'/images/ic_pencil-gray.png'} width={18} height={18} />
               </button>
-              <button id={comment._id} onClick={onClickCommentDelete}>
+              <button id={comment._id} onClick={props.onClickCommentDelete}>
                 <Image src={'/images/ic_close-gray.png'} width={14} height={14} />
               </button>
             </S.Buttons>
@@ -79,14 +62,14 @@ export default function BoardCommentListUI({
         ) : (
           <BoardCommentWriteUI
             key={`${comment.writer}_${idx}`}
-            onClickRating={onClickRating}
-            rating={rating}
-            contents={contents}
-            writer={writer}
-            password={password}
-            onInputContents={onInputContents}
-            onInputUserInfo={onInputUserInfo}
-            onClickSubmit={onClickCommentUpdate}
+            onClickRating={props.onClickRating}
+            rating={props.rating}
+            contents={props.contents}
+            writer={props.writer}
+            password={props.password}
+            onInputContents={props.onInputContents}
+            onInputUserInfo={props.onInputUserInfo}
+            onClickSubmit={props.onClickCommentUpdate}
             isEdit={true}
           />
         )
