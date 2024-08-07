@@ -12,7 +12,7 @@ export interface IBoardListUIProps {
   setEndDate: Dispatch<SetStateAction<IQueryFetchBoardsArgs['endDate']>>
   activePage: IQueryFetchBoardsArgs['page']
   onClickAddBoardButton: (event: MouseEvent<HTMLButtonElement>) => void
-  onClickBoardTitle: (event: MouseEvent<HTMLTableCellElement>) => void
+  onClickActionCell: (event: MouseEvent<HTMLTableCellElement>) => void
   onClickPage: (event: MouseEvent<HTMLButtonElement>) => void
   onClickPrev: (event: MouseEvent<HTMLButtonElement>) => void
   onClickNext: (event: MouseEvent<HTMLButtonElement>) => void

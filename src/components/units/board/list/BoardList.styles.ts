@@ -66,39 +66,6 @@ export const SearchButton = styled.button`
   }
 `
 
-export const Table = styled.table`
-  margin: 40px 0 54px;
-  width: 100%;
-  border-top: 1px solid #000;
-  border-bottom: 1px solid #000;
-`
-
-export const TableHead = styled.thead`
-  font-size: 1.8rem;
-  font-weight: 500;
-`
-
-export const TableBody = styled.tbody``
-
-export const TableRow = styled.tr`
-  td {
-    text-align: center;
-    border-top: 1px solid ${({ theme }) => theme.colors.gray04};
-    font-size: 1.6rem;
-  }
-  td:nth-of-type(2) {
-    &:hover {
-      cursor: pointer;
-      text-decoration: underline;
-      color: rgba(255, 214, 0, 1);
-    }
-  }
-  th {
-    text-align: center;
-  }
-  height: 52px;
-`
-
 export const BottomWrapper = styled.div`
   display: flex;
   align-items: center;

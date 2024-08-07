@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import * as S from 'src/components/commons/table/pagination/Pagination.Styles'
+import * as S from 'src/components/commons/ui/dataGrid/pagination/Pagination.Styles'
 import type { MouseEvent } from 'react'
 
 interface IPaginationProps {

@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, Dispatch, SetStateAction } from 'react'
+import type { ChangeEvent, MouseEvent, Dispatch, SetStateAction } from 'react'
 import { IQuery } from 'src/commons/types/generated/types'
 import type { Address } from 'react-daum-postcode'
 

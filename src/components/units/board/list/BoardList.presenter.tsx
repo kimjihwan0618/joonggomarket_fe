@@ -4,7 +4,8 @@ import * as S from './BoardList.styles'
 import Image from 'next/image'
 import 'react-datepicker/dist/react-datepicker.css'
 import { IBoardListUIProps } from './BoardList.types'
-import Pagination from 'src/components/commons/table/pagination'
+import Pagination from 'src/components/commons/ui/dataGrid/pagination'
+import Table from 'src/components/commons/ui/dataGrid/table'
 
 export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
   return (
@@ -39,28 +40,17 @@ export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
           <S.SearchButton onClick={props.onClickSearchButton}>검색하기</S.SearchButton>
         </S.SearchRightItems>
       </S.SearchWrapper>
-      <S.Table>
-        <S.TableHead>
-          <S.TableRow>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>날짜</th>
-          </S.TableRow>
-        </S.TableHead>
-        <S.TableBody>
-          {props.boards?.map((el, idx) => (
-            <S.TableRow key={el._id}>
-              <td>{(props.activePage - 1) * 10 + idx + 1}</td>
-              <td id={el._id} onClick={props.onClickBoardTitle}>
-                {el.title}
-              </td>
-              <td>{el.writer}</td>
-              <td>{toYYYYMMDD(new Date(el.createdAt))}</td>
-            </S.TableRow>
-          ))}
-        </S.TableBody>
-      </S.Table>
+      <Table
+        data={props.boards}
+        rowKey="_id"
+        activePage={props.activePage}
+        onClickActionCell={props.onClickActionCell}
+        columns={[
+          { name: '제목', dataKey: 'title', isClick: true },
+          { name: '작성자', dataKey: 'writer', isClick: false },
+          { name: '날짜', dataKey: 'createdAt', isClick: false },
+        ]}
+      />
       <S.BottomWrapper>
         <Pagination
           onClickPage={props.onClickPage}

@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client'
 import BoardListUI from './BoardList.presenter'
 import { FETCH_BOARDS, FETCH_BOARDS_COUNT } from './BoardList.queries'
 import type { MouseEvent, FormEvent, KeyboardEvent } from 'react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { toYYYYMMDD } from 'src/lib/utils/date'
 import { useRouter } from 'next/router'
 import {
@@ -28,7 +28,13 @@ export default function BoardList(): JSX.Element {
   const { data: boardsCount, refetch: refetchBoardsCount } = useQuery<
     Pick<IQuery, 'fetchBoardsCount'>,
     IQueryFetchBoardsCountArgs
-  >(FETCH_BOARDS_COUNT)
+  >(FETCH_BOARDS_COUNT, {
+    variables: {
+      endDate,
+      startDate,
+      search,
+    },
+  })
   const lastPage = Math.ceil((boardsCount?.fetchBoardsCount ?? 10) / 10)
 
   const handleFetchBoardsPageCount = (): void => {
@@ -77,7 +83,7 @@ export default function BoardList(): JSX.Element {
     route.push('/boards/new')
   }
 
-  const onClickBoardTitle = (event: MouseEvent<HTMLTableCellElement>): void => {
+  const onClickActionCell = (event: MouseEvent<HTMLTableCellElement>): void => {
     route.push(`/boards/${event.currentTarget.id}`)
   }
 
@@ -93,7 +99,7 @@ export default function BoardList(): JSX.Element {
       setEndDate={setEndDate}
       boards={boards?.fetchBoards}
       onClickAddBoardButton={onClickAddBoardButton}
-      onClickBoardTitle={onClickBoardTitle}
+      onClickActionCell={onClickActionCell}
       onClickPage={onClickPage}
       onClickPrev={onClickPrev}
       onClickNext={onClickNext}
