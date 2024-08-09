@@ -21,8 +21,8 @@ export default function Navigation(): JSX.Element {
     <S.Wrapper>
       <S.Navigation>
         <S.MenuList>
-          {menus.map((menu) => (
-            <Link href={menu.path}>
+          {menus.map((menu, idx) => (
+            <Link href={menu.path} key={idx}>
               <S.MenuButton data-active={basePath === menu.path.replace('/', '')}>
                 {menu.name}
               </S.MenuButton>

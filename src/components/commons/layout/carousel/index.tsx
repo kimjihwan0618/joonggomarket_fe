@@ -24,8 +24,8 @@ export default class SimpleSlider extends Component {
       <S.Wrapper>
         <S.Carousel>
           <Slider {...settings}>
-            {items.map((obj) => (
-              <S.ContentWrapper>
+            {items.map((obj, idx) => (
+              <S.ContentWrapper key={idx}>
                 <Image src={obj.src} alt="Banner Image" layout="fill" objectFit={'cover'} />
                 <S.ContentInner>
                   <S.ContentTitle>{obj.title}</S.ContentTitle>

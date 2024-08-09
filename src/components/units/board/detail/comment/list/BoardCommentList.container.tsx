@@ -6,7 +6,7 @@ import {
   UPDATE_BOARD_COMMENT,
   DELETE_BOARD_COMMENT,
 } from './BoardCommentList.queries'
-import { useEffect, useState, MouseEvent, FormEvent } from 'react'
+import { useState, MouseEvent, FormEvent } from 'react'
 import {
   IMutation,
   IMutationDeleteBoardCommentArgs,
@@ -19,13 +19,13 @@ import { Modal } from 'antd'
 export default function BoardCommentList(): JSX.Element {
   const router = useRouter()
   const boardId = typeof router.query.boardId === 'string' ? router.query.boardId : ''
-  const { data } = useQuery<Pick<IQuery, 'fetchBoardComments'>, IQueryFetchBoardCommentsArgs>(
-    FETCH_BOARD_COMMENTS,
-    {
-      variables: { boardId },
-      skip: !boardId,
-    }
-  )
+  const { data: comments } = useQuery<
+    Pick<IQuery, 'fetchBoardComments'>,
+    IQueryFetchBoardCommentsArgs
+  >(FETCH_BOARD_COMMENTS, {
+    variables: { boardId },
+    skip: !boardId,
+  })
   const [updateBoardComment] = useMutation<
     Pick<IMutation, 'updateBoardComment'>,
     IMutationUpdateBoardCommentArgs
@@ -36,7 +36,6 @@ export default function BoardCommentList(): JSX.Element {
   >(DELETE_BOARD_COMMENT)
   const [isOpen, setIsOpen] = useState(false)
   const [commentId, setCommentId] = useState('')
-  const [comments, setComments] = useState([])
   const [rating, setRating] = useState(0)
   const [contents, setContents] = useState('')
   const [writer, setWriter] = useState('')
@@ -44,19 +43,19 @@ export default function BoardCommentList(): JSX.Element {
   const [passwordCheck, setPasswordCheck] = useState('')
   const [deleteCommentId, setDeleteCommentId] = useState('')
 
-  const onClickCommentEdit = (event: MouseEvent<HTMLButtonElement>): void => {
-    const { currentTarget } = event
-    setCommentId(currentTarget.id)
-    setWriter(currentTarget.getAttribute('data-writer'))
-    setContents(currentTarget.getAttribute('data-contents'))
-    setRating(Number(currentTarget.getAttribute('data-rating')))
-    setComments(
-      comments.map((comment) => ({
-        ...comment,
-        isEdit: comment._id === currentTarget.id ? true : false,
-      }))
-    )
-  }
+  // const onClickCommentEdit = (event: MouseEvent<HTMLButtonElement>): void => {
+  //   const { currentTarget } = event
+  //   setCommentId(currentTarget.id)
+  //   setWriter(currentTarget.getAttribute('data-writer'))
+  //   setContents(currentTarget.getAttribute('data-contents'))
+  //   setRating(Number(currentTarget.getAttribute('data-rating')))
+  //   setComments(
+  //     comments.map((comment) => ({
+  //       ...comment,
+  //       isEdit: comment._id === currentTarget.id ? true : false,
+  //     }))
+  //   )
+  // }
 
   const onClickCommentUpdate = async (): Promise<void> => {
     try {
@@ -150,21 +149,11 @@ export default function BoardCommentList(): JSX.Element {
     setIsOpen((prev) => !prev)
   }
 
-  useEffect(() => {
-    if (data?.fetchBoardComments) {
-      setComments(
-        data?.fetchBoardComments.map((comment) => ({
-          ...comment,
-          isEdit: false,
-        }))
-      )
-    }
-  }, [data])
   if (!boardId) return <></>
   return (
     <BoardCommentListUI
-      comments={comments}
-      onClickCommentEdit={onClickCommentEdit}
+      comments={comments?.fetchBoardComments}
+      // onClickCommentEdit={onClickCommentEdit}
       onClickCommentUpdate={onClickCommentUpdate}
       onClickCommentDeleteOk={onClickCommentDeleteOk}
       onClickCommentDelete={onClickCommentDelete}

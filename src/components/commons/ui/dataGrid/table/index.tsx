@@ -16,7 +16,7 @@ export default function Table(props: ITableProps): JSX.Element {
         <S.TableRow>
           <th>번호</th>
           {props.columns.map((column) => (
-            <th>{column.name}</th>
+            <th key={column.name}>{column.name}</th>
           ))}
         </S.TableRow>
       </S.TableHead>
@@ -26,7 +26,12 @@ export default function Table(props: ITableProps): JSX.Element {
             <td>{(props.activePage - 1) * 10 + idx + 1}</td>
             {props.columns.map((column) =>
               column.isClick ? (
-                <td data-isClick={true} id={el[props.rowKey]} onClick={props.onClickActionCell}>
+                <td
+                  data-isClick={true}
+                  key={el[props.rowKey]}
+                  id={el[props.rowKey]}
+                  onClick={props.onClickActionCell}
+                >
                   {el[column.dataKey]}
                 </td>
               ) : (

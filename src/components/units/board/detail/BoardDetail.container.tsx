@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 import { useMutation, useQuery } from '@apollo/client'
-import { useEffect, useState } from 'react'
 import BoardDetailUI from './BoardDetail.presenter'
 import { DELETE_BOARD, DISLIKE_BOARD, FETCH_BOARD, LIKE_BOARD } from './BoardDetail.queries'
 import {

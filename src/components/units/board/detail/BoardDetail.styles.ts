@@ -92,7 +92,7 @@ export const BoardActionButton = styled.button`
   outline: none;
   cursor: pointer;
   &:hover {
-    background: rgba(255, 214, 0, 1);
+    background: ${({ theme }) => theme.colors.gray06};
   }
 `
 

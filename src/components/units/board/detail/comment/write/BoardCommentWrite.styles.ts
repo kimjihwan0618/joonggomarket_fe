@@ -7,7 +7,7 @@ const InputStyle = css`
 `
 
 export const Wrapper = styled.div`
-  width: ${(props) => (props['data-isEdit'] ? '100%' : '62.5%')};
+  width: ${(props) => props['data-isEdit'] && '100%'};
   min-width: 920px;
   margin: 0 auto;
 `
@@ -90,6 +90,24 @@ export const RegisterButton = styled.button`
   color: ${(props) => (props['data-isEdit'] ? '#000' : 'white')};
   background: ${(props) => (props['data-isEdit'] ? 'rgba(255, 214, 0, 1)' : '#000')};
   cursor: pointer;
+  &:hover {
+    opacity: 0.7;
+  }
+`
+export const CommentButtonsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+`
+
+export const UndoButton = styled.button`
+  border: none;
+  height: 100%;
+  width: 91px;
+  color: #000;
+  background: ${({ theme }) => theme.colors.gray04};
+  cursor: pointer;
+  margin-right: 16px;
   &:hover {
     opacity: 0.7;
   }

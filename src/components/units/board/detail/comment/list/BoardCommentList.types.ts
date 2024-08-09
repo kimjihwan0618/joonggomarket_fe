@@ -2,8 +2,8 @@ import { Dispatch, FormEvent, MouseEvent, SetStateAction } from 'react'
 import { IBoardComment, ICreateBoardCommentInput } from 'src/commons/types/generated/types'
 
 export interface IBoardCommentListUIProps {
-  comments: Array<IBoardComment & { isEdit: boolean }>
-  onClickCommentEdit: (event: MouseEvent<HTMLButtonElement>) => void
+  comments: Array<IBoardComment>
+  // onClickCommentEdit: (event: MouseEvent<HTMLButtonElement>) => void
   onClickCommentUpdate: (event: MouseEvent<HTMLButtonElement>) => void
   onClickCommentDeleteOk: (event: MouseEvent<HTMLButtonElement>) => void
   onClickCommentDelete: (event: MouseEvent<HTMLButtonElement>) => void

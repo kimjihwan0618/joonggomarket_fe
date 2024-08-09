@@ -58,9 +58,12 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps): J
           />
           <S.CommentFooter>
             <S.CommentSizeLimit>{props.contents.length}/100</S.CommentSizeLimit>
-            <S.RegisterButton data-isEdit={props.isEdit} onClick={props.onClickSubmit}>
-              {props.isEdit ? '수정' : '등록'}하기
-            </S.RegisterButton>
+            <S.CommentButtonsWrapper>
+              {props.isEdit && <S.UndoButton>취소</S.UndoButton>}
+              <S.RegisterButton data-isEdit={props.isEdit} onClick={props.onClickSubmit}>
+                {props.isEdit ? '수정' : '등록'}하기
+              </S.RegisterButton>
+            </S.CommentButtonsWrapper>
           </S.CommentFooter>
         </S.CommentWrapper>
       </S.InputWrapper>

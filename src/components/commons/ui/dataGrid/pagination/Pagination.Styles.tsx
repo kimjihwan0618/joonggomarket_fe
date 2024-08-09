@@ -28,17 +28,20 @@ export const PageButton = styled.button`
   cursor: pointer;
   color: ${(props) => (props['data-isActive'] ? props.theme.colors.main : '#000')};
   text-decoration: ${(props) => (props['data-isActive'] ? 'underline' : 'none')};
+  &:hover {
+    text-decoration: underline;
+  }
 `
 
 export const PrevButton = styled.button`
   ${ButtonStyles}
   &:hover {
-    background: ${({ theme }) => theme.colors.main};
+    background: ${({ theme }) => theme.colors.gray06};
   }
 `
 export const NextButton = styled.button`
   ${ButtonStyles}
   &:hover {
-    background: ${({ theme }) => theme.colors.main};
+    background: ${({ theme }) => theme.colors.gray06};
   }
 `

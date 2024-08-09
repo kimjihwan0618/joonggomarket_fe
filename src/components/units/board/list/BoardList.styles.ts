@@ -91,6 +91,6 @@ export const BoardAddButton = styled.button`
     font-weight: 500;
   }
   &:hover {
-    background: rgba(255, 214, 0, 1);
+    background: ${({ theme }) => theme.colors.gray06};
   }
 `

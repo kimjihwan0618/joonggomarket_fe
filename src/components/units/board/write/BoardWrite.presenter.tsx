@@ -133,8 +133,8 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
             <S.UploadButtonWrapper>
               {props.fileInputHandler.imageFiles
                 .sort((a, b) => (a.file ? -1 : 1)) // 파일이 있는 것을 앞에 배치
-                .map((input) => (
-                  <div>
+                .map((input, idx) => (
+                  <div key={idx}>
                     {input.file ? (
                       <>
                         <S.ImageBox>

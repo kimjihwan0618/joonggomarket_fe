@@ -7,7 +7,7 @@ export const Header = styled.header`
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 9999;
+  z-index: 1000;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
 `
 export const HeaderInner = styled.div`

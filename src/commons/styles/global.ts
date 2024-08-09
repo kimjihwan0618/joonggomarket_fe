@@ -1,4 +1,5 @@
 import { css } from '@emotion/react'
+import theme from './theme'
 
 export const globalStyles = css`
   * {
@@ -12,6 +13,37 @@ export const globalStyles = css`
     font-size: 10px;
     font-family: 'NotoSansKR';
     color: #000;
+  }
+  /* 전역스타일 초기화로 ant modal 스타일 조정 */
+  .ant-modal-root * {
+    border: inherit;
+    outline: inherit;
+    list-style: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    color: currentColor;
+    box-sizing: inherit;
+  }
+  .ant-btn-primary {
+    color: white;
+  }
+  /* 전역스타일 초기화로 ant modal 스타일 조정 */
+
+  /* 전체 스크롤바 */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  /* 스크롤바 트랙 */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  /* 스크롤바 핸들 */
+  ::-webkit-scrollbar-thumb {
+    background: ${theme.colors.main};
+    border-radius: 10px;
   }
 
   main {
