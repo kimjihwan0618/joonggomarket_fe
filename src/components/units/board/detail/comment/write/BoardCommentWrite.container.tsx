@@ -73,6 +73,7 @@ export default function BoardCommentWrite(): JSX.Element {
         setPassword('')
         setWriter('')
         setContents('')
+        setRating(0)
       }
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })

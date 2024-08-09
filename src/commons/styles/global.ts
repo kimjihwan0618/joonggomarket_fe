@@ -14,6 +14,9 @@ export const globalStyles = css`
     font-family: 'NotoSansKR';
     color: #000;
   }
+  input[readonly] {
+    background: ${theme.colors.gray06};
+  }
   /* 전역스타일 초기화로 ant modal 스타일 조정 */
   .ant-modal-root * {
     border: inherit;

@@ -20,7 +20,7 @@ import { Modal } from 'antd'
 export default function BoardCommentList(): JSX.Element {
   const router = useRouter()
   const boardId = typeof router.query.boardId === 'string' ? router.query.boardId : ''
-  const { data: comments } = useQuery<
+  const { data: comments, fetchMore } = useQuery<
     Pick<IQuery, 'fetchBoardComments'>,
     IQueryFetchBoardCommentsArgs
   >(FETCH_BOARD_COMMENTS, {
@@ -39,20 +39,32 @@ export default function BoardCommentList(): JSX.Element {
   const [passwordCheck, setPasswordCheck] = useState('')
   const [deleteCommentId, setDeleteCommentId] = useState('')
 
-  const onClickCommentUpdate = async (params): Promise<void> => {
+  const onLoadMore = (): void => {
+    if (comments === undefined) return
+    fetchMore({
+      variables: { page: Math.ceil((comments?.fetchBoardComments.length ?? 10) / 10 + 1), boardId },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult.fetchBoardComments) {
+          return {
+            fetchBoardComments: [...prev.fetchBoardComments],
+          }
+        }
+        return {
+          fetchBoardComments: [...prev.fetchBoardComments, ...fetchMoreResult.fetchBoardComments],
+        }
+      },
+    })
+  }
+
+  const onClickCommentUpdate = async (
+    variables: IMutationUpdateBoardCommentArgs
+  ): Promise<void> => {
     try {
-      if (params.password === '') {
+      if (variables.password === '') {
         throw new Error('비밀번호를 입력해주세요')
       }
       const result = await updateBoardComment({
-        variables: {
-          boardCommentId: params._id,
-          password: params.password,
-          updateBoardCommentInput: {
-            contents: params.contents,
-            rating: Number(params.rating),
-          },
-        },
+        variables,
         refetchQueries: [
           {
             query: FETCH_BOARD_COMMENTS,
@@ -111,6 +123,7 @@ export default function BoardCommentList(): JSX.Element {
       onClickCommentUpdate={onClickCommentUpdate}
       onClickCommentDeleteOk={onClickCommentDeleteOk}
       onClickCommentDelete={onClickCommentDelete}
+      onLoadMore={onLoadMore}
       setPasswordCheck={setPasswordCheck}
       isOpen={isOpen}
       handlePasswordModal={handlePasswordModal}

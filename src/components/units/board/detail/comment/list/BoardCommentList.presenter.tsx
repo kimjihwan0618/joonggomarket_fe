@@ -2,6 +2,7 @@ import * as S from './BoardCommentList.styles'
 import { IBoardCommentListUIProps } from './BoardCommentList.types'
 import { Modal } from 'antd'
 import CommentItem from 'src/components/units/board/detail/comment/item'
+import InfiniteScroll from 'react-infinite-scroller'
 
 export default function BoardCommentListUI(props: IBoardCommentListUIProps): JSX.Element {
   return (
@@ -18,9 +19,11 @@ export default function BoardCommentListUI(props: IBoardCommentListUIProps): JSX
           type="password"
         />
       </Modal>
-      {props?.comments?.map((comment, idx) => (
-        <CommentItem key={comment._id} idx={idx} comment={comment} props={props} />
-      ))}
+      <InfiniteScroll pageStart={0} loadMore={props.onLoadMore} hasMore={true}>
+        {props?.comments?.map((comment, idx) => (
+          <CommentItem key={comment._id} idx={idx} comment={comment} props={props} />
+        ))}
+      </InfiniteScroll>
     </S.Wrapper>
   )
 }

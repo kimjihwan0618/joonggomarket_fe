@@ -13,14 +13,15 @@ export default function CommentItem(props) {
   const [writer, setWriter] = useState(props.comment.writer)
   const [password, setPassword] = useState('')
 
-  const onClickCommentUpdateProps = async () => {
+  const onClickCommentUpdateProps = async (): Promise<void> => {
     try {
       await props.props.onClickCommentUpdate({
-        _id: props.comment._id,
+        boardCommentId: props.comment._id,
         password,
-        writer,
-        contents,
-        rating,
+        updateBoardCommentInput: {
+          contents,
+          rating: Number(rating),
+        },
       })
       setIsEdit(false)
     } catch (error) {
@@ -52,7 +53,7 @@ export default function CommentItem(props) {
     if (id === 'pwInput') setPassword(value)
   }
 
-  const onClickCommentToggle = () => {
+  const onClickCommentToggle = (): void => {
     setWriter(props.comment.writer)
     setRating(props.comment.rating)
     setContents(props.comment.contents)
