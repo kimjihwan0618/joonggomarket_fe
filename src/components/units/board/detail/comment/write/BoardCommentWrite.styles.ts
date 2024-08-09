@@ -7,7 +7,7 @@ const InputStyle = css`
 `
 
 export const Wrapper = styled.div`
-  width: ${(props) => props['data-isEdit'] && '100%'};
+  width: ${(props) => props['data-isedit'] && '100%'};
   min-width: 920px;
   margin: 0 auto;
 `
@@ -61,7 +61,7 @@ export const CommentWrapper = styled.div`
 
 export const CommentTextArea = styled.textarea`
   ${InputStyle}
-  height: ${(props) => (props['data-isEdit'] ? '55px' : '108px')};
+  height: ${(props) => (props['data-isedit'] ? '55px' : '108px')};
   width: 100%;
   border: none;
   resize: none;
@@ -87,8 +87,8 @@ export const RegisterButton = styled.button`
   border: none;
   height: 100%;
   width: 91px;
-  color: ${(props) => (props['data-isEdit'] ? '#000' : 'white')};
-  background: ${(props) => (props['data-isEdit'] ? 'rgba(255, 214, 0, 1)' : '#000')};
+  color: ${(props) => (props['data-isedit'] ? '#000' : 'white')};
+  background: ${(props) => (props['data-isedit'] ? 'rgba(255, 214, 0, 1)' : '#000')};
   cursor: pointer;
   &:hover {
     opacity: 0.7;

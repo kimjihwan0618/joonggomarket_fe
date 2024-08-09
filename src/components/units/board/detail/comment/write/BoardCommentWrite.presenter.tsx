@@ -4,7 +4,7 @@ import { IBoardCommentWriteUIProps } from './BoardCommentWrite.types'
 
 export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps): JSX.Element {
   return (
-    <S.Wrapper data-isEdit={props.isEdit}>
+    <S.Wrapper data-isedit={props.isEdit}>
       {!props.isEdit && (
         <S.CommentTitle>
           <Image src={'/images/ic_comment.png'} width={20} height={20} />
@@ -15,13 +15,14 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps): J
         <S.WriteInput
           value={props.writer}
           id="writerInput"
-          onInput={props.onInputUserInfo}
+          onChange={props.onInputUserInfo}
           placeholder="작성자"
         />
         <S.PasswordInput
           value={props.password}
           id="pwInput"
-          onInput={props.onInputUserInfo}
+          type="password"
+          onChange={props.onInputUserInfo}
           placeholder="비밀번호"
         />
         <S.Rating>
@@ -51,7 +52,7 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps): J
         </S.Rating>
         <S.CommentWrapper>
           <S.CommentTextArea
-            data-isEdit={props.isEdit}
+            data-isedit={props.isEdit}
             value={props.contents}
             onInput={props.onInputContents}
             placeholder="개인정보를 공유 및 요청하거나, 명예 훼손, 무단 광고, 불법 정보 유포시 모니터링 후 삭제될 수 있으며, 이에 대한 민형사상 책임은 게시자에게 있습니다."
@@ -59,8 +60,10 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps): J
           <S.CommentFooter>
             <S.CommentSizeLimit>{props.contents.length}/100</S.CommentSizeLimit>
             <S.CommentButtonsWrapper>
-              {props.isEdit && <S.UndoButton>취소</S.UndoButton>}
-              <S.RegisterButton data-isEdit={props.isEdit} onClick={props.onClickSubmit}>
+              {props.isEdit && (
+                <S.UndoButton onClick={props.onClickCommentToggle}>취소</S.UndoButton>
+              )}
+              <S.RegisterButton data-isedit={props.isEdit} onClick={props.onClickSubmit}>
                 {props.isEdit ? '수정' : '등록'}하기
               </S.RegisterButton>
             </S.CommentButtonsWrapper>
