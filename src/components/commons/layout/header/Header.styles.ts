@@ -11,7 +11,7 @@ export const Header = styled.header`
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
 `
 export const HeaderInner = styled.div`
-  width: 62.5%;
+  width: 70%;
   height: 100%;
   margin: 0 auto;
   display: flex;

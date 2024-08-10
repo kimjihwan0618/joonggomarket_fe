@@ -1,4 +1,4 @@
-import { toYYYYMMDD } from 'src/lib/utils/date'
+import { toYYYYMMDDHHMMSS } from 'src/lib/utils/date'
 import DatePicker from 'react-datepicker'
 import * as S from './BoardList.styles'
 import Image from 'next/image'
@@ -41,7 +41,10 @@ export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
         </S.SearchRightItems>
       </S.SearchWrapper>
       <Table
-        data={props.boards}
+        data={props?.boards?.map((board) => ({
+          ...board,
+          createdAt: toYYYYMMDDHHMMSS(board.createdAt),
+        }))}
         rowKey="_id"
         activePage={props.activePage}
         onClickActionCell={props.onClickActionCell}

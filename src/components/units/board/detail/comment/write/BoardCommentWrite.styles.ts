@@ -8,7 +8,7 @@ const InputStyle = css`
 
 export const Wrapper = styled.div`
   width: ${(props) => props['data-isedit'] && '100%'};
-  min-width: 920px;
+  /* min-width: 920px; */
   margin: 0 auto;
 `
 

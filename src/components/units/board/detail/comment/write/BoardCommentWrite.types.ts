@@ -7,7 +7,7 @@ export interface IBoardCommentWriteUIProps {
   contents: ICreateBoardCommentInput['contents']
   onInputContents: (event: FormEvent<HTMLTextAreaElement>) => void
   onInputUserInfo: (event: FormEvent<HTMLInputElement>) => void
-  onClickCommentToggle?: (event: MouseEvent<HTMLImageElement>) => void
+  onClickCommentToggle?: (event: MouseEvent<HTMLButtonElement>) => void
   onClickSubmit: (event: MouseEvent<HTMLButtonElement>) => void
   password: ICreateBoardCommentInput['password']
   writer: ICreateBoardCommentInput['writer']

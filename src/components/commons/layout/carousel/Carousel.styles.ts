@@ -58,7 +58,7 @@ export const ContentWrapper = styled.div`
 
 export const ContentInner = styled.div`
   height: 100%;
-  width: 62.5%;
+  width: 70%;
   position: relative;
   z-index: 10;
   display: flex;

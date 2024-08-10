@@ -9,11 +9,9 @@ const IconButton = css`
 `
 
 export const ContentWrapper = styled.div`
-  padding: 80px 101px;
-  /* width: 62.5%; */
+  padding: 60px 75px;
   margin: 101px auto;
-  min-width: 920px;
-  min-height: 700px;
+  /* min-width: 920px; */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 `
 
@@ -69,9 +67,8 @@ export const ButtonWrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin: 87px auto 40px;
-  padding: 80px 101px;
-  /* width: 62.5%; */
-  min-width: 920px;
+  padding: 60px 75px;
+  /* min-width: 920px; */
   padding-bottom: 87px;
   border-bottom: 1px solid rgba(189, 189, 189, 1);
 

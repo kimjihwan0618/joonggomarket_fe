@@ -35,6 +35,7 @@ export const globalStyles = css`
   /* 전체 스크롤바 */
   ::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
   }
 
   /* 스크롤바 트랙 */
@@ -45,12 +46,12 @@ export const globalStyles = css`
 
   /* 스크롤바 핸들 */
   ::-webkit-scrollbar-thumb {
-    background: ${theme.colors.main};
+    background: ${theme.colors.gray03};
     border-radius: 10px;
   }
 
   main {
-    width: 62.5%;
+    width: 70%;
     margin: 0 auto;
   }
 

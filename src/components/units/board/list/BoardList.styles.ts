@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 
 export const Wrapper = styled.div`
   margin: 80px auto 0;
-  min-width: 920px;
+  /* min-width: 920px; */
   max-width: 1200px;
 `
 

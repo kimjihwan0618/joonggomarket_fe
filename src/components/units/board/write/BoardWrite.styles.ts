@@ -13,10 +13,9 @@ const ButtonStyle = css`
 `
 
 export const ContentWrapper = styled.div`
-  padding: 60px 101px 100px;
-  /* width: 62.5%; */
+  padding: 40px 75px 60px;
   margin: 101px auto;
-  min-width: 920px;
+  /* min-width: 920px; */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 `
 
@@ -142,6 +141,9 @@ export const RegisterButton = styled.button`
   color: #000;
   cursor: ${(props) => (props.disabled ? '' : 'pointer')};
   background: ${(props) => (props.disabled ? 'rgba(189, 189, 189, 1)' : 'rgba(255, 214, 0, 1)')};
+  &:hover {
+    opacity: ${(props) => !props.disabled && 0.8} !important;
+  }
 `
 
 export const ButtonWrapper = styled.div`
@@ -156,6 +158,9 @@ export const UndoButton = styled.button`
   background: rgba(189, 189, 189, 1);
   color: ${({ theme }) => theme.colors.gray02};
   margin-right: 24px;
+  &:hover {
+    opacity: 0.8;
+  }
 `
 
 export const FormItemError = styled.p`
