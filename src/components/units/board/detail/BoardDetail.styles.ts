@@ -47,7 +47,7 @@ export const Info = styled.dl`
 `
 
 export const ContentsWrapper = styled.div`
-  margin-top: 80px;
+  margin-top: 50px;
 `
 
 export const ContentsTitle = styled.h3`
@@ -142,4 +142,9 @@ export const LinkIcon = styled.button`
 
 export const LocationIcon = styled.button`
   ${IconButton}
+`
+
+export const ImageContainer = styled.div`
+  width: 50%;
+  margin: 20px auto;
 `

@@ -81,6 +81,9 @@ export const ImageUploadButton = styled.button`
     color: ${({ theme }) => theme.colors.gray02};
     padding: 0px;
   }
+  &:hover {
+    background: ${({ theme }) => theme.colors.gray05};
+  }
 `
 
 export const RadioItem = styled.div`

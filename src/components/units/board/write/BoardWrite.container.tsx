@@ -1,7 +1,7 @@
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { CREATE_BOARD, UPDATE_BOARD } from './BoardWrite.queries'
+import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from './BoardWrite.queries'
 import BoardWriteUI from './BoardWrite.presenter'
 import { IBoardWriteProps } from './BoardWrite.types'
 import {
@@ -10,6 +10,7 @@ import {
   IMutationUpdateBoardArgs,
   IUpdateBoardInput,
   ICreateBoardInput,
+  IMutationUploadFileArgs,
 } from 'src/commons/types/generated/types'
 import { Modal } from 'antd'
 import type { Address } from 'react-daum-postcode'
@@ -43,6 +44,9 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
   const [contentsError, setContentsError] = useState('')
   const [formValidation, setFormValidation] = useState(false)
 
+  const [uploadFile] = useMutation<Pick<IMutation, 'uploadFile'>, IMutationUploadFileArgs>(
+    UPLOAD_FILE
+  )
   const [createBoard] = useMutation<Pick<IMutation, 'createBoard'>, IMutationCreateBoardArgs>(
     CREATE_BOARD
   )
@@ -85,9 +89,19 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
       setContentsError('내용을 입력해주세요')
     }
     try {
-      const images = imageFiles
-        .filter((item) => item.file !== null)
-        .map((item) => (item.file as File).name)
+      const images = imageFiles.filter((item) => item.file !== null).map((item) => item.file)
+      const resultImages = []
+      if (images.length > 0) {
+        for (let image of images) {
+          const uploadFileResult = await uploadFile({
+            variables: {
+              file: image,
+            },
+          })
+          uploadFileResult.data?.uploadFile.url &&
+            resultImages.push(uploadFileResult.data?.uploadFile.url)
+        }
+      }
       const boardAddress = {
         address,
         addressDetail,
@@ -98,18 +112,18 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
         password,
         title,
         contents,
-        images,
+        images: resultImages,
         youtubeUrl,
         boardAddress,
       }
-      const result = await createBoard({
+      const createBoardResult = await createBoard({
         variables: {
           createBoardInput,
         },
       })
-      if (result?.data?.createBoard?._id) {
+      if (createBoardResult?.data?.createBoard?._id) {
         Modal.success({ content: '게시글이 등록되었습니다.' })
-        router.push(`/boards/${result?.data?.createBoard?._id}`)
+        router.push(`/boards/${createBoardResult?.data?.createBoard?._id}`)
       }
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })
