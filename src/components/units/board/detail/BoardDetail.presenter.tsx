@@ -40,16 +40,18 @@ export default function BoardDetailUI(props: IBoardDetailUIProps): JSX.Element {
         </S.BoardTitleWrapper>
         <S.ContentsWrapper>
           <S.ContentsTitle>{props.board?.title}</S.ContentsTitle>
-          {props.board?.images.map((imagePath) => (
-            <S.ImageContainer>
-              <Image
-                src={`https://storage.googleapis.com/${imagePath}`}
-                width={5}
-                height={5}
-                layout="responsive"
-              />
-            </S.ImageContainer>
-          ))}
+          {props.board?.images
+            .filter((image) => image !== '')
+            .map((imagePath) => (
+              <S.ImageContainer>
+                <Image
+                  src={`https://storage.googleapis.com/${imagePath}`}
+                  width={5}
+                  height={5}
+                  layout="responsive"
+                />
+              </S.ImageContainer>
+            ))}
           <S.ContentsMain>
             <p>{props.board?.contents}</p>
           </S.ContentsMain>

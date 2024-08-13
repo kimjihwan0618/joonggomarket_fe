@@ -1,31 +1,21 @@
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from './BoardWrite.queries'
+import { CREATE_BOARD, UPDATE_BOARD } from './BoardWrite.queries'
 import BoardWriteUI from './BoardWrite.presenter'
 import { IBoardWriteProps } from './BoardWrite.types'
-import {
+import type {
   IMutation,
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
   IUpdateBoardInput,
   ICreateBoardInput,
-  IMutationUploadFileArgs,
 } from 'src/commons/types/generated/types'
 import { Modal } from 'antd'
 import type { Address } from 'react-daum-postcode'
 
 export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
-  const fileRefs = [
-    useRef<HTMLInputElement>(null),
-    useRef<HTMLInputElement>(null),
-    useRef<HTMLInputElement>(null),
-  ]
-  const [imageFiles, setImageFiles] = useState<{ file: File | null; number: 1 | 2 | 3 }[]>([
-    { file: null, number: 1 },
-    { file: null, number: 2 },
-    { file: null, number: 3 },
-  ])
+  const [fileUrls, setFileUrls] = useState(['', '', ''])
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -44,9 +34,6 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
   const [contentsError, setContentsError] = useState('')
   const [formValidation, setFormValidation] = useState(false)
 
-  const [uploadFile] = useMutation<Pick<IMutation, 'uploadFile'>, IMutationUploadFileArgs>(
-    UPLOAD_FILE
-  )
   const [createBoard] = useMutation<Pick<IMutation, 'createBoard'>, IMutationCreateBoardArgs>(
     CREATE_BOARD
   )
@@ -54,6 +41,18 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
     UPDATE_BOARD
   )
   const router = useRouter()
+
+  const onChangeFileUrls = (fileUrl: string, index: number): void => {
+    const newFileUrls = [...fileUrls]
+    newFileUrls[index] = fileUrl
+    setFileUrls(newFileUrls)
+  }
+
+  const onClickReset = (index: number): void => {
+    const newFileUrls = [...fileUrls]
+    newFileUrls[index] = ''
+    setFileUrls(newFileUrls)
+  }
 
   const onChangeFormInput = (
     event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
@@ -89,19 +88,6 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
       setContentsError('내용을 입력해주세요')
     }
     try {
-      const images = imageFiles.filter((item) => item.file !== null).map((item) => item.file)
-      const resultImages = []
-      if (images.length > 0) {
-        for (let image of images) {
-          const uploadFileResult = await uploadFile({
-            variables: {
-              file: image,
-            },
-          })
-          uploadFileResult.data?.uploadFile.url &&
-            resultImages.push(uploadFileResult.data?.uploadFile.url)
-        }
-      }
       const boardAddress = {
         address,
         addressDetail,
@@ -112,7 +98,7 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
         password,
         title,
         contents,
-        images: resultImages,
+        images: fileUrls,
         youtubeUrl,
         boardAddress,
       }
@@ -131,15 +117,22 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
   }
 
   const onClickUpdate = async (): Promise<void> => {
+    const currentFiles = JSON.stringify(fileUrls)
+    const defaultFiles = JSON.stringify(props.data?.fetchBoard.images)
+    const isChangedFiles = currentFiles !== defaultFiles
     if (
       title === '' &&
       contents === '' &&
       youtubeUrl === '' &&
       address === '' &&
       addressDetail === '' &&
-      zipcode === ''
+      zipcode === '' &&
+      fileUrls[0] === '' &&
+      fileUrls[1] === '' &&
+      fileUrls[2] === ''
     ) {
       Modal.warning({ content: '수정한 내용이 없습니다' })
+      return
     }
     if (password === '') {
       Modal.warning({ content: '비밀번호를 입력해주세요.' })
@@ -148,10 +141,7 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
     const updateBoardInput: IUpdateBoardInput = {}
     if (title) updateBoardInput['title'] = title
     if (contents) updateBoardInput['contents'] = contents
-    const images = imageFiles
-      .filter((item) => item.file !== null)
-      .map((item) => (item.file as File).name)
-    updateBoardInput['images'] = images
+    if (isChangedFiles) updateBoardInput['images'] = fileUrls
     updateBoardInput['youtubeUrl'] = youtubeUrl
     updateBoardInput['boardAddress'] = {
       address,
@@ -179,14 +169,6 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
     }
   }
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const fileNumber = Number(event.currentTarget.getAttribute('data-fileNumber'))
-    const file = event.target.files?.[0]
-    setImageFiles((prev) =>
-      prev.map((image) => (image.number === fileNumber ? { ...image, file } : image))
-    )
-  }
-
   const handleModalOpen = (): void => {
     setIsOpen((prev) => !prev)
   }
@@ -201,20 +183,12 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
     }
   }
 
-  const onClickImageUpload = (fileNumber: 1 | 2 | 3): void => {
-    fileRefs[fileNumber - 1].current.click()
-  }
-
-  const onClickImageReset = (fileNumber: 1 | 2 | 3): void => {
-    setImageFiles((prev) =>
-      prev.map((image) => (image.number === fileNumber ? { ...image, file: null } : image))
-    )
-  }
-
   useEffect(() => {
     const fetchBoard = props?.data?.fetchBoard
     fetchBoard?.boardAddress?.address && setAddress(fetchBoard?.boardAddress?.address)
     fetchBoard?.boardAddress?.zipcode && setZipcode(fetchBoard?.boardAddress?.zipcode)
+    if (fetchBoard?.images !== undefined && fetchBoard?.images !== null)
+      setFileUrls([...fetchBoard?.images])
   }, [props?.data?.fetchBoard])
 
   useEffect(() => {
@@ -250,16 +224,12 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
       onClickSubmit={onClickSubmit}
       onClickUpdate={onClickUpdate}
       onClickUndo={onClickUndo}
+      onChangeFileUrls={onChangeFileUrls}
+      onClickReset={onClickReset}
       formValidation={formValidation}
       isEdit={props.isEdit}
       data={props.data}
-      fileInputHandler={{
-        handleFileChange: handleFileChange,
-        onClickImageUpload: onClickImageUpload,
-        onClickImageReset: onClickImageReset,
-        imageFiles: imageFiles,
-        fileRefs: fileRefs,
-      }}
+      fileUrls={fileUrls}
       addressSearchHandler={{
         isOpen,
         handleModalOpen: handleModalOpen,

@@ -1,14 +1,6 @@
 import type { ChangeEvent, MouseEvent, Dispatch, SetStateAction } from 'react'
-import { IQuery } from 'src/commons/types/generated/types'
+import { IFileManager, IQuery } from 'src/commons/types/generated/types'
 import type { Address } from 'react-daum-postcode'
-
-export interface FileInputHandler {
-  handleFileChange: (event: ChangeEvent<HTMLInputElement>) => void
-  onClickImageUpload: (fileNumber: 1 | 2 | 3) => void
-  onClickImageReset: (fileNumber: 1 | 2 | 3) => void
-  imageFiles: { file: File | null; number: 1 | 2 | 3 }[]
-  fileRefs: React.RefObject<HTMLInputElement>[]
-}
 
 export interface AddressSearchHandler {
   isOpen: boolean
@@ -34,6 +26,8 @@ export interface IBoardWriteUIProps {
   setPasswordError: Dispatch<SetStateAction<string>>
   setTitleError: Dispatch<SetStateAction<string>>
   setContentsError: Dispatch<SetStateAction<string>>
+  fileUrls: string[]
+  onChangeFileUrls: (url: IFileManager['url'], index: number) => void
   onChangeFormInput: (
     event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
     setInput: Dispatch<SetStateAction<string>>,
@@ -41,12 +35,12 @@ export interface IBoardWriteUIProps {
     message: string
   ) => void
   onClickSubmit: (event: MouseEvent<HTMLButtonElement>) => void
+  onClickReset: (index: number) => void
   onClickUpdate: (event: MouseEvent<HTMLButtonElement>) => void
   onClickUndo: (event: MouseEvent<HTMLButtonElement>) => void
   formValidation: boolean
   isEdit: boolean
   data?: Pick<IQuery, 'fetchBoard'>
-  fileInputHandler: FileInputHandler
   addressSearchHandler: AddressSearchHandler
 }
 

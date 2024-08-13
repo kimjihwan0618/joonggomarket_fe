@@ -1,8 +1,9 @@
 import * as S from './BoardWrite.styles'
 import { IBoardWriteUIProps } from './BoardWrite.types'
-import Image from 'next/image'
 import { Modal } from 'antd'
 import DaumPostcodeEmbed from 'react-daum-postcode'
+import { uuid4 } from 'uuid4'
+import Uploads01 from 'src/components/commons/ui/uploads/01/Upload01.container'
 
 export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
   return (
@@ -130,41 +131,17 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
           </S.FormItem>
           <S.FormItem style={{ width: '100%' }}>
             <S.ItemTitle>사진 첨부</S.ItemTitle>
-            <S.UploadButtonWrapper>
-              {props.fileInputHandler.imageFiles
-                .sort((a, b) => (a.file ? -1 : 1)) // 파일이 있는 것을 앞에 배치
-                .map((input, idx) => (
-                  <div key={idx}>
-                    {input.file ? (
-                      <>
-                        <S.ImageBox>
-                          <S.ResetFileButton
-                            onClick={() => props.fileInputHandler.onClickImageReset(input.number)}
-                          >
-                            <Image width={14} height={14} src={'/images/ic_close-dark.png'} />
-                          </S.ResetFileButton>
-                          <Image width={140} height={140} src={URL.createObjectURL(input.file)} />
-                        </S.ImageBox>
-                      </>
-                    ) : (
-                      <S.ImageUploadButton
-                        onClick={() => props.fileInputHandler.onClickImageUpload(input.number)}
-                      >
-                        <span>+</span>
-                        <p>Upload</p>
-                      </S.ImageUploadButton>
-                    )}
-                    <input
-                      data-fileNumber={input.number}
-                      ref={props.fileInputHandler.fileRefs[input.number - 1]}
-                      type="file"
-                      style={{ display: 'none' }}
-                      onChange={props.fileInputHandler.handleFileChange}
-                      accept="image/*"
-                    />
-                  </div>
-                ))}
-            </S.UploadButtonWrapper>
+            <S.ImagesWrapper>
+              {props.fileUrls.map((el, index) => (
+                <Uploads01
+                  key={uuid4()}
+                  index={index}
+                  fileUrl={el}
+                  onChangeFileUrls={props.onChangeFileUrls}
+                  onClickReset={props.onClickReset}
+                />
+              ))}
+            </S.ImagesWrapper>
           </S.FormItem>
           <S.FormItem style={{ width: '100%' }}>
             <S.ItemTitle>메인 설정</S.ItemTitle>

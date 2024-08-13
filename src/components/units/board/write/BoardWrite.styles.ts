@@ -57,7 +57,7 @@ export const ItemInput = styled.input`
   }
 `
 
-export const UploadButtonWrapper = styled.div`
+export const ImagesWrapper = styled.div`
   display: flex;
 `
 export const ImageUploadButton = styled.button`
@@ -170,21 +170,4 @@ export const FormItemError = styled.p`
   color: red;
   font-size: 1.6rem;
   margin-top: 4px;
-`
-
-export const ImageBox = styled.div`
-  width: 180px;
-  height: 180px;
-  margin-right: 24px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-export const ResetFileButton = styled.div`
-  position: absolute;
-  right: 0;
-  top: 0;
-  cursor: pointer;
 `
