@@ -1,57 +1,39 @@
 import { toYYYYMMDDHHMMSS } from 'src/lib/utils/date'
-import DatePicker from 'react-datepicker'
 import * as S from './BoardList.styles'
 import Image from 'next/image'
 import 'react-datepicker/dist/react-datepicker.css'
 import { IBoardListUIProps } from './BoardList.types'
-import Pagination from 'src/components/commons/ui/dataGrid/pagination'
-import Table from 'src/components/commons/ui/dataGrid/table'
+import Pagination from 'src/components/commons/dataGrid/pagination'
+import Table from 'src/components/commons/dataGrid/table'
+import Searchbars01 from 'src/components/commons/searchbars/01/Searchbars01.container'
 
 export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
   return (
     <S.Wrapper>
-      <S.SearchWrapper>
-        <S.SearchInput
-          placeholder="제목을 검색해주세요"
-          type="text"
-          onInput={props.onInputSearch}
-          onKeyDown={props.onKeyDownSearch}
-        />
-        <S.SearchRightItems>
-          <S.DatePickerBox>
-            <DatePicker
-              dateFormat="yyyy.MM.dd"
-              shouldCloseOnSelect
-              minDate={new Date('2000-01-01')}
-              maxDate={new Date(props.endDate)}
-              selected={new Date(props.startDate)}
-              onChange={(date) => props.setStartDate(date)}
-            />
-            <span>~</span>
-            <DatePicker
-              dateFormat="yyyy.MM.dd"
-              shouldCloseOnSelect
-              minDate={new Date('2000-01-01')}
-              maxDate={new Date('2050-01-01')}
-              selected={new Date(props.endDate)}
-              onChange={(date) => props.setEndDate(date)}
-            />
-          </S.DatePickerBox>
-          <S.SearchButton onClick={props.onClickSearchButton}>검색하기</S.SearchButton>
-        </S.SearchRightItems>
-      </S.SearchWrapper>
+      <Searchbars01
+        refetchTableDatas={props.refetchTableDatas}
+        refetchTableDatasCount={props.refetchTableDatasCount}
+        setActivePage={props.setActivePage}
+        setStartPage={props.setStartPage}
+        endDate={props.endDate}
+        startDate={props.startDate}
+        setEndDate={props.setEndDate}
+        setStartDate={props.setStartDate}
+        setKeyword={props.setKeyword}
+      />
       <Table
         data={props?.boards?.map((board) => ({
           ...board,
           createdAt: toYYYYMMDDHHMMSS(board.createdAt),
         }))}
+        keyword={props.keyword}
         rowKey="_id"
         activePage={props.activePage}
         onClickActionCell={props.onClickActionCell}
         columns={[
-          { name: '제목', dataKey: 'title', isClick: true },
-          { name: '작성자', dataKey: 'writer', isClick: false },
-          { name: '날짜', dataKey: 'createdAt', isClick: false },
+          { name: '제목', dataKey: 'title', isSearch: true },
+          { name: '작성자', dataKey: 'writer', isSearch: false },
+          { name: '날짜', dataKey: 'createdAt', isSearch: false },
         ]}
       />
       <S.BottomWrapper>

@@ -10,10 +10,11 @@ import {
   IQueryFetchBoardsArgs,
   IQueryFetchBoardsCountArgs,
 } from 'src/commons/types/generated/types'
+import _ from 'lodash'
 
 export default function BoardList(): JSX.Element {
   const route = useRouter()
-  const [search, setSearch] = useState('')
+  const [keyword, setKeyword] = useState('')
   const [activePage, setActivePage] = useState(1)
   const [startPage, setStartPage] = useState(1)
   const [startDate, setStartDate] = useState(
@@ -32,51 +33,27 @@ export default function BoardList(): JSX.Element {
     variables: {
       endDate,
       startDate,
-      search,
+      search: keyword,
     },
   })
   const lastPage = Math.ceil((boardsCount?.fetchBoardsCount ?? 10) / 10)
 
-  const handleFetchBoardsPageCount = (): void => {
-    refetchBoardsCount({
-      search,
-      startDate,
-      endDate,
-    })
-  }
-
   const onClickPage = (event: MouseEvent<HTMLButtonElement>): void => {
     const page = Number(event.currentTarget.id)
     setActivePage(page)
-    refetchBoards({ page, endDate, startDate, search })
+    refetchBoards({ page, endDate, startDate, search: keyword })
   }
 
   const onClickPrev = (): void => {
     setActivePage(startPage - 10)
-    refetchBoards({ page: startPage - 10, endDate, startDate, search })
+    refetchBoards({ page: startPage - 10, endDate, startDate, search: keyword })
     setStartPage((prev) => prev - 10)
   }
 
   const onClickNext = (): void => {
     setActivePage(startPage + 10)
-    refetchBoards({ page: startPage + 10, endDate, startDate, search })
+    refetchBoards({ page: startPage + 10, endDate, startDate, search: keyword })
     setStartPage((prev) => prev + 10)
-  }
-
-  const onInputSearch = (event: FormEvent<HTMLInputElement>): void => {
-    setSearch(event.currentTarget.value)
-  }
-
-  const onKeyDownSearch = (event: KeyboardEvent<HTMLInputElement>): void => {
-    if (event.key === 'Enter') {
-      onClickSearchButton()
-    }
-  }
-
-  const onClickSearchButton = (): void => {
-    setActivePage(1)
-    setStartPage(1)
-    handleFetchBoardsPageCount()
   }
 
   const onClickAddBoardButton = (): void => {
@@ -89,14 +66,17 @@ export default function BoardList(): JSX.Element {
 
   return (
     <BoardListUI
-      activePage={activePage}
-      startDate={startDate}
-      setStartDate={setStartDate}
-      endDate={endDate}
-      onInputSearch={onInputSearch}
-      onKeyDownSearch={onKeyDownSearch}
-      onClickSearchButton={onClickSearchButton}
       setEndDate={setEndDate}
+      setStartDate={setStartDate}
+      setKeyword={setKeyword}
+      activePage={activePage}
+      setActivePage={setActivePage}
+      setStartPage={setStartPage}
+      refetchTableDatas={refetchBoards}
+      refetchTableDatasCount={refetchBoardsCount}
+      startDate={startDate}
+      endDate={endDate}
+      keyword={keyword}
       boards={boards?.fetchBoards}
       onClickAddBoardButton={onClickAddBoardButton}
       onClickActionCell={onClickActionCell}

@@ -127,9 +127,7 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
       address === '' &&
       addressDetail === '' &&
       zipcode === '' &&
-      fileUrls[0] === '' &&
-      fileUrls[1] === '' &&
-      fileUrls[2] === ''
+      !isChangedFiles
     ) {
       Modal.warning({ content: '수정한 내용이 없습니다' })
       return

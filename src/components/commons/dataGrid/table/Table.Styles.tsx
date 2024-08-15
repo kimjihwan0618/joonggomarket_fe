@@ -21,7 +21,7 @@ export const TableRow = styled.tr`
     border-top: 1px solid ${({ theme }) => theme.colors.gray04};
     font-size: 1.6rem;
   }
-  td[data-isClick='true'] {
+  td[data-isSearch='true'] {
     cursor: pointer;
     &:hover {
       text-decoration: 'underline';

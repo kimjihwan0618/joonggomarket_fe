@@ -3,7 +3,7 @@ import { IBoardWriteUIProps } from './BoardWrite.types'
 import { Modal } from 'antd'
 import DaumPostcodeEmbed from 'react-daum-postcode'
 import { uuid4 } from 'uuid4'
-import Uploads01 from 'src/components/commons/ui/uploads/01/Upload01.container'
+import Uploads01 from 'src/components/commons/uploads/01/Upload01.container'
 
 export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
   return (

@@ -1,15 +1,26 @@
-import type { Dispatch, FormEvent, MouseEvent, SetStateAction, KeyboardEvent } from 'react'
-import { IQuery, IQueryFetchBoardsArgs } from 'src/commons/types/generated/types'
+import { QueryResult } from '@apollo/client'
+import type { Dispatch, MouseEvent, SetStateAction } from 'react'
+import {
+  IQuery,
+  IQueryFetchBoardsArgs,
+  IQueryFetchBoardsCountArgs,
+} from 'src/commons/types/generated/types'
 
 export interface IBoardListUIProps {
   boards: IQuery['fetchBoards']
-  onInputSearch: (event: FormEvent<HTMLInputElement>) => void
-  onKeyDownSearch: (event: KeyboardEvent<HTMLInputElement>) => void
-  onClickSearchButton: (event: MouseEvent<HTMLButtonElement>) => void
+  keyword: string
   startDate: IQueryFetchBoardsArgs['startDate']
+  setKeyword: Dispatch<SetStateAction<string>>
+  setActivePage: Dispatch<SetStateAction<number>>
+  setStartPage: Dispatch<SetStateAction<number>>
   setStartDate: Dispatch<SetStateAction<IQueryFetchBoardsArgs['startDate']>>
-  endDate: IQueryFetchBoardsArgs['endDate']
   setEndDate: Dispatch<SetStateAction<IQueryFetchBoardsArgs['endDate']>>
+  refetchTableDatas: QueryResult<Pick<IQuery, 'fetchBoards'>, IQueryFetchBoardsArgs>['refetch']
+  refetchTableDatasCount: QueryResult<
+    Pick<IQuery, 'fetchBoardsCount'>,
+    IQueryFetchBoardsCountArgs
+  >['refetch']
+  endDate: IQueryFetchBoardsArgs['endDate']
   activePage: IQueryFetchBoardsArgs['page']
   onClickAddBoardButton: (event: MouseEvent<HTMLButtonElement>) => void
   onClickActionCell: (event: MouseEvent<HTMLTableCellElement>) => void
