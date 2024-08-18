@@ -35,6 +35,10 @@ export const LodginButton = styled.button`
   background: white;
   cursor: pointer;
   font-weight: 'bold';
+  &:hover {
+    background: ${({ theme }) => theme.colors.gray06};
+  }
+  margin-right: 8px;
 `
 
 export const JoinButton = styled.button`
@@ -46,4 +50,7 @@ export const JoinButton = styled.button`
   height: 44px;
   cursor: pointer;
   font-weight: 'bold';
+  &:hover {
+    opacity: 0.7;
+  }
 `

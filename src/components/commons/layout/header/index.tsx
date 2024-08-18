@@ -8,7 +8,7 @@ export default function Header(): JSX.Element {
       <S.HeaderInner>
         <Link href="/boards">
           <S.Logo>
-            <Image src="/images/logo.png" alt="App Lo" width={210} height={32} />
+            <Image src="/images/logo_dark.png" alt="joongomarket 로고" width={210} height={32} />
           </S.Logo>
         </Link>
         <S.ButtonWrapper>
