@@ -54,7 +54,7 @@ export const LoginFormBox = styled.div`
 `
 
 export const Logo = styled.h1`
-  margin-bottom: 80px;
+  margin-bottom: 60px;
 `
 export const InputItem = styled.div`
   ${INPUT_ITEM_STYLE}
@@ -69,10 +69,10 @@ export const LoginButton = styled.button`
   height: 64px;
   line-height: 64px;
   width: 100%;
-  color: white;
   border-radius: 10px;
   background: ${(props) =>
     !props['data-disable'] ? props.theme.colors.gray03 : props.theme.colors.main};
+  color: ${(props) => (!props['data-disable'] ? 'white' : 'black')};
   cursor: ${(props) => props['data-disable'] && 'pointer'};
   &:hover {
     opacity: ${(props) => props['data-disable'] && 0.9};

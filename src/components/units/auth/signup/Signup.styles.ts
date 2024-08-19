@@ -73,7 +73,7 @@ export const SignupButton = styled.button`
   height: 64px;
   line-height: 64px;
   width: 100%;
-  color: white;
+  color: ${(props) => (!props['data-disable'] ? 'white' : 'black')};
   border-radius: 10px;
   background: ${(props) =>
     !props['data-disable'] ? props.theme.colors.gray03 : props.theme.colors.main};
