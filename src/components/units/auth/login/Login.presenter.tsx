@@ -28,6 +28,7 @@ export default function LoginUI(props: ILoginUIProps): JSX.Element {
         </S.InputItem>
         <S.InputItem>
           <S.PasswordInput
+            type="password"
             onChange={(e) => {
               props.onChangeFormInput(
                 e,
