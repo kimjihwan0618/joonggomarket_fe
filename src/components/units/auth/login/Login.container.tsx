@@ -33,7 +33,7 @@ export default function Login(): JSX.Element {
         return
       }
       localStorage.setItem('accessToken', accessToken)
-      setAccessToken(accessToken)
+      await setAccessToken(accessToken)
       void router.push('/')
     } catch (error) {
       if (error instanceof Error) Modal.warning({ content: error.message })

@@ -1,4 +1,17 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
+
+export const FETCH_BOARDS_BEST = gql`
+  query {
+    fetchBoardsOfTheBest {
+      _id
+      images
+      likeCount
+      createdAt
+      title
+      writer
+    }
+  }
+`
 
 export const FETCH_BOARDS = gql`
   query fetchBoards($endDate: DateTime, $startDate: DateTime, $search: String, $page: Int) {
@@ -10,10 +23,10 @@ export const FETCH_BOARDS = gql`
       createdAt
     }
   }
-`;
+`
 
 export const FETCH_BOARDS_COUNT = gql`
   query fetchBoardsCount($endDate: DateTime, $startDate: DateTime, $search: String) {
     fetchBoardsCount(endDate: $endDate, startDate: $startDate, search: $search)
   }
-`;
+`

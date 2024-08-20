@@ -8,6 +8,7 @@ import {
 
 export interface IBoardListUIProps {
   boards: IQuery['fetchBoards']
+  boardsBest: IQuery['fetchBoardsOfTheBest']
   keyword: string
   startDate: IQueryFetchBoardsArgs['startDate']
   setKeyword: Dispatch<SetStateAction<string>>

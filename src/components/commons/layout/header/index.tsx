@@ -4,11 +4,25 @@ import Link from 'next/link'
 import { accessTokenState } from 'src/commons/stores'
 import { useRecoilState } from 'recoil'
 import { useEffect, useRef, useState } from 'react'
+import { FETCH_USER_LOGGED_IN, USER_LOGOUT } from './Header.queries'
+import { IMutation, IQuery } from 'src/commons/types/generated/types'
+import { useMutation, useQuery } from '@apollo/client'
+import { Modal } from 'antd'
 
 export default function Header(): JSX.Element {
+  const { data } = useQuery<Pick<IQuery, 'fetchUserLoggedIn'>>(FETCH_USER_LOGGED_IN)
+  const [logoutUser] = useMutation<Pick<IMutation, 'logoutUser'>>(USER_LOGOUT)
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [isHidden, setIsHidden] = useState(false)
   const profileButtonRef = useRef<HTMLButtonElement>(null)
+
+  const onClickLogout = async (): Promise<void> => {
+    try {
+      const result = await logoutUser()
+    } catch (error) {
+      if (error instanceof Error) Modal.error({ content: error.message })
+    }
+  }
 
   const onClickProfileButton = () => {
     setIsHidden((prev) => !prev)
@@ -35,6 +49,14 @@ export default function Header(): JSX.Element {
     }
   }, [])
 
+  useEffect(() => {
+    if (!data && localStorage.getItem('accessToken')) {
+      localStorage.removeItem('accessToken')
+    } else {
+      localStorage.setItem('accessToken', accessToken)
+    }
+  }, [data])
+
   return (
     <S.Header>
       <S.HeaderInner>
@@ -55,15 +77,15 @@ export default function Header(): JSX.Element {
                   <Image src="/images/ic_profile2.png" alt="프로필 이미지" width={48} height={48} />
                 </S.ImgSettingButton>
                 <S.TextWrapper>
-                  <S.Name>노원두</S.Name>
-                  <S.Point>100,000 P</S.Point>
+                  <S.Name>{data?.fetchUserLoggedIn.name}</S.Name>
+                  <S.Point>{data?.fetchUserLoggedIn.userPoint?.amount}P</S.Point>
                 </S.TextWrapper>
               </S.ProfileInfo>
               <S.ProfileButtonWrapper>
                 <S.AddPointButton>
                   <Image src="/images/ic_savings.png" width={24} height={24} /> 충전하기
                 </S.AddPointButton>
-                <S.LogoutButton>
+                <S.LogoutButton onClick={onClickLogout}>
                   <Image src="/images/ic_logout.png" width={24} height={24} />
                   로그아웃
                 </S.LogoutButton>
