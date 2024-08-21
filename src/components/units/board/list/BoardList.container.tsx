@@ -61,7 +61,7 @@ export default function BoardList(): JSX.Element {
     route.push('/boards/new')
   }
 
-  const onClickActionCell = (event: MouseEvent<HTMLTableCellElement>): void => {
+  const onClickBoard = (event: MouseEvent<HTMLTableRowElement>): void => {
     route.push(`/boards/${event.currentTarget.id}`)
   }
 
@@ -81,7 +81,7 @@ export default function BoardList(): JSX.Element {
       boards={boards?.fetchBoards}
       boardsBest={boardsBest?.fetchBoardsOfTheBest}
       onClickAddBoardButton={onClickAddBoardButton}
-      onClickActionCell={onClickActionCell}
+      onClickBoard={onClickBoard}
       onClickPage={onClickPage}
       onClickPrev={onClickPrev}
       onClickNext={onClickNext}

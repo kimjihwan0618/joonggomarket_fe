@@ -53,6 +53,7 @@ export const globalStyles = css`
   main {
     width: 70%;
     margin: 0 auto;
+    min-width: 920px;
   }
 
   @font-face {

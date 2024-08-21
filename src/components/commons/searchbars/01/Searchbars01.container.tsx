@@ -18,7 +18,7 @@ export default function Searchbars01(props: Searchbars01Props): JSX.Element {
     props.refetchTableDatasCount()
     props.setKeyword(value)
     setIsChanging(false)
-  }, 1000)
+  }, 800)
 
   const onInputSearch = (event: FormEvent<HTMLInputElement>) => {
     setIsChanging(true)

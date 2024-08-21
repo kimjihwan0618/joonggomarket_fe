@@ -16,13 +16,33 @@ export const TableHead = styled.thead`
 export const TableBody = styled.tbody``
 
 export const TableRow = styled.tr`
+  cursor: pointer;
   td {
     text-align: center;
     border-top: 1px solid ${({ theme }) => theme.colors.gray04};
     font-size: 1.6rem;
   }
   td[data-isSearch='true'] {
-    cursor: pointer;
+    &:hover {
+      text-decoration: 'underline';
+      color: ${({ theme }) => theme.colors.main};
+    }
+  }
+  th {
+    text-align: center;
+  }
+  height: 52px;
+  &:hover {
+    background: ${({ theme }) => theme.colors.gray06};
+  }
+`
+export const TableHeadRow = styled.tr`
+  td {
+    text-align: center;
+    border-top: 1px solid ${({ theme }) => theme.colors.gray04};
+    font-size: 1.6rem;
+  }
+  td[data-isSearch='true'] {
     &:hover {
       text-decoration: 'underline';
       color: ${({ theme }) => theme.colors.main};

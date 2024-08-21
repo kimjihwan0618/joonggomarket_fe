@@ -50,9 +50,10 @@ export const BestBoardItem = styled.div`
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   height: 257px;
-  width: 282px;
+  width: 25%;
   margin-right: 24px;
   overflow: hidden;
+  cursor: pointer;
   &:last-of-type {
     margin-right: 0px;
   }
@@ -62,9 +63,10 @@ export const ItemImage = styled.div`
   width: 100%;
   height: 120px;
   background: ${(props) =>
-    props['data-src'] ? `url(${props['data-src']}) no-repeat center center` : 'none'};
+    props['data-src']
+      ? `url(${props['data-src']}) no-repeat center center`
+      : `url(./images/ic-noimage.jpg) no-repeat center center`};
   background-size: cover;
-  /* background: ; */
 `
 
 export const BoardInfo = styled.dl`
@@ -75,6 +77,9 @@ export const Title = styled.dt`
   font-size: 1.8rem;
   font-weight: 500;
   margin-bottom: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 export const Detail = styled.dd`
   display: flex;
@@ -86,13 +91,15 @@ export const Detail = styled.dd`
 `
 
 export const Writer = styled.li`
-  margin-left: 4px;
   font-size: 1.6rem;
 `
 export const CreatedAt = styled.li`
   color: ${({ theme }) => theme.colors.gray03};
   font-size: 1.2rem;
   margin-top: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 export const ThumbBox = styled.li``

@@ -5,7 +5,7 @@ interface ITableProps {
   data: {}[]
   columns: { name: string; dataKey: string; isSearch: boolean }[]
   rowKey: string
-  onClickActionCell: (event: MouseEvent<HTMLTableCellElement>) => void
+  onClickRow: (event: MouseEvent<HTMLTableRowElement>) => void
   activePage: number
   keyword: string
 }
@@ -14,25 +14,20 @@ export default function Table(props: ITableProps): JSX.Element {
   return (
     <S.Table>
       <S.TableHead>
-        <S.TableRow>
+        <S.TableHeadRow>
           <th>번호</th>
           {props.columns.map((column) => (
             <th key={column.name}>{column.name}</th>
           ))}
-        </S.TableRow>
+        </S.TableHeadRow>
       </S.TableHead>
       <S.TableBody>
         {props.data?.map((el, idx) => (
-          <S.TableRow key={el[props.rowKey]}>
+          <S.TableRow key={el[props.rowKey]} onClick={props.onClickRow} id={el[props.rowKey]}>
             <td>{(props.activePage - 1) * 10 + idx + 1}</td>
             {props.columns.map((column) =>
               column.isSearch ? (
-                <td
-                  data-isSearch={true}
-                  key={el[props.rowKey]}
-                  id={el[props.rowKey]}
-                  onClick={props.onClickActionCell}
-                >
+                <td data-isSearch={true} key={el[props.rowKey]}>
                   {el[column.dataKey]
                     .replaceAll(props.keyword, `!@#${props.keyword}!@#`)
                     .split('!@#')

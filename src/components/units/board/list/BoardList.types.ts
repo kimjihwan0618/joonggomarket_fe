@@ -24,7 +24,7 @@ export interface IBoardListUIProps {
   endDate: IQueryFetchBoardsArgs['endDate']
   activePage: IQueryFetchBoardsArgs['page']
   onClickAddBoardButton: (event: MouseEvent<HTMLButtonElement>) => void
-  onClickActionCell: (event: MouseEvent<HTMLTableCellElement>) => void
+  onClickBoard: (event: MouseEvent<HTMLTableRowElement>) => void
   onClickPage: (event: MouseEvent<HTMLButtonElement>) => void
   onClickPrev: (event: MouseEvent<HTMLButtonElement>) => void
   onClickNext: (event: MouseEvent<HTMLButtonElement>) => void

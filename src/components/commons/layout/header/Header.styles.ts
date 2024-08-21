@@ -29,6 +29,7 @@ export const Header = styled.header`
 `
 export const HeaderInner = styled.div`
   width: 70%;
+  min-width: 920px;
   height: 100%;
   margin: 0 auto;
   display: flex;
