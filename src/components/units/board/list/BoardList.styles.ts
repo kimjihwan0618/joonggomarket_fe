@@ -67,6 +67,7 @@ export const ItemImage = styled.div`
       ? `url(${props['data-src']}) no-repeat center center`
       : `url(./images/ic-noimage.jpg) no-repeat center center`};
   background-size: cover;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray06};
 `
 
 export const BoardInfo = styled.dl`

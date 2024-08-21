@@ -13,10 +13,10 @@ export default function Layout(props: ILayoutProps): JSX.Element {
   const router = useRouter()
   return (
     <>
-      {!HIDDEN_LAYOUTS.includes(router.asPath) && <Header />}
-      {!HIDDEN_LAYOUTS.includes(router.asPath) && <Banner />}
-      {!HIDDEN_LAYOUTS.includes(router.asPath) && <Navigation />}
-      {!HIDDEN_LAYOUTS.includes(router.asPath) ? (
+      {!HIDDEN_LAYOUTS.includes(router.pathname) && <Header />}
+      {!HIDDEN_LAYOUTS.includes(router.pathname) && <Banner />}
+      {!HIDDEN_LAYOUTS.includes(router.pathname) && <Navigation />}
+      {!HIDDEN_LAYOUTS.includes(router.pathname) ? (
         <main> {props.children}</main>
       ) : (
         <>{props.children}</>

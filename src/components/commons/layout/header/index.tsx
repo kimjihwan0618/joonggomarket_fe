@@ -53,7 +53,7 @@ export default function Header(): JSX.Element {
     if (!data && localStorage.getItem('accessToken')) {
       localStorage.removeItem('accessToken')
     } else {
-      localStorage.setItem('accessToken', accessToken)
+      // localStorage.setItem('accessToken', accessToken)
     }
   }, [data])
 

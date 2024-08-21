@@ -34,7 +34,11 @@ export default function Login(): JSX.Element {
       }
       localStorage.setItem('accessToken', accessToken)
       await setAccessToken(accessToken)
-      void router.push('/')
+      const redirectTo = Array.isArray(router.query.redirect)
+        ? router.query.redirect[0]
+        : router.query.redirect || '/'
+      console.log(redirectTo)
+      void router.push(redirectTo)
     } catch (error) {
       if (error instanceof Error) Modal.warning({ content: error.message })
     }

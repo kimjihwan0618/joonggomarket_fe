@@ -12,7 +12,7 @@ export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
     <S.Wrapper>
       <S.BestBoardsSectionTitle>베스트 게시글</S.BestBoardsSectionTitle>
       <S.BestBoardWrapper>
-        {props.boardsBest.map((el) => (
+        {props.boardsBest?.map((el) => (
           <S.BestBoardItem id={el._id} onClick={props.onClickBoard}>
             <S.ItemImage
               data-src={el.images.length && `https://storage.googleapis.com/${el.images[0]}`}
