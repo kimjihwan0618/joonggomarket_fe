@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/client'
 import BoardListUI from './BoardList.index'
-import { FETCH_BOARDS, FETCH_BOARDS_BEST, FETCH_BOARDS_COUNT } from './BoardList.queries'
 import type { MouseEvent, FormEvent, KeyboardEvent } from 'react'
 import { useState } from 'react'
 import { toYYYYMMDD } from 'src/lib/utils/date'
@@ -21,22 +20,6 @@ export default function BoardList(): JSX.Element {
     toYYYYMMDD(new Date(new Date().setDate(new Date().getDate() - 30)))
   )
   const [endDate, setEndDate] = useState(toYYYYMMDD(new Date()))
-
-  const { data: boardsBest } = useQuery<Pick<IQuery, 'fetchBoardsOfTheBest'>>(FETCH_BOARDS_BEST)
-  const { data: boards, refetch: refetchBoards } = useQuery<
-    Pick<IQuery, 'fetchBoards'>,
-    IQueryFetchBoardsArgs
-  >(FETCH_BOARDS)
-  const { data: boardsCount, refetch: refetchBoardsCount } = useQuery<
-    Pick<IQuery, 'fetchBoardsCount'>,
-    IQueryFetchBoardsCountArgs
-  >(FETCH_BOARDS_COUNT, {
-    variables: {
-      endDate,
-      startDate,
-      search: keyword,
-    },
-  })
 
   const onClickPage = (event: MouseEvent<HTMLButtonElement>): void => {
     const page = Number(event.currentTarget.id)
