@@ -1,8 +1,7 @@
-import { loginCheck } from 'src/components/commons/hocs/loginCheck'
+import { useAuth } from 'src/components/commons/hooks/custom/useAuth'
 import MypageUI from './Mypage.presenter'
 
-function Mypage(): JSX.Element {
+export default function Mypage(): JSX.Element {
+  useAuth()
   return <MypageUI />
 }
-
-export default loginCheck(Mypage)

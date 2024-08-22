@@ -1,11 +1,10 @@
 import * as S from 'src/components/commons/dataGrid/table/Table.Styles'
-import type { MouseEvent } from 'react'
 
 interface ITableProps {
   data: {}[]
   columns: { name: string; dataKey: string; isSearch: boolean }[]
   rowKey: string
-  onClickRow: (event: MouseEvent<HTMLTableRowElement>) => void
+  rowHandler: { onClickRow: (path: string) => () => void | (() => void); path: string }
   activePage: number
   keyword: string
 }
@@ -23,7 +22,11 @@ export default function Table(props: ITableProps): JSX.Element {
       </S.TableHead>
       <S.TableBody>
         {props.data?.map((el, idx) => (
-          <S.TableRow key={el[props.rowKey]} onClick={props.onClickRow} id={el[props.rowKey]}>
+          <S.TableRow
+            key={el[props.rowKey]}
+            onClick={props.rowHandler.onClickRow(`${props.rowHandler.path}/${el[props.rowKey]}`)}
+            id={el[props.rowKey]}
+          >
             <td>{(props.activePage - 1) * 10 + idx + 1}</td>
             {props.columns.map((column) =>
               column.isSearch ? (

@@ -4,7 +4,7 @@ import type { MouseEvent } from 'react'
 
 interface IPaginationProps {
   startPage: number
-  lastPage: number
+  count: number
   activePage: number
   onClickPrev: (event: MouseEvent<HTMLButtonElement>) => void
   onClickNext: (event: MouseEvent<HTMLButtonElement>) => void
@@ -12,6 +12,8 @@ interface IPaginationProps {
 }
 
 export default function Pagination(props: IPaginationProps): JSX.Element {
+  const lastPage = Math.ceil((props?.count ?? 10) / 10)
+
   return (
     <S.Pagination>
       {!(props.startPage === 1) && (
@@ -21,7 +23,7 @@ export default function Pagination(props: IPaginationProps): JSX.Element {
       )}
       {new Array(10).fill('').map(
         (_, index) =>
-          index + props.startPage <= props.lastPage && (
+          index + props.startPage <= lastPage && (
             <S.PageButton
               key={index}
               id={String(index + props.startPage)}
@@ -32,7 +34,7 @@ export default function Pagination(props: IPaginationProps): JSX.Element {
             </S.PageButton>
           )
       )}
-      {props.startPage + 10 <= props.lastPage && (
+      {props.startPage + 10 <= lastPage && (
         <S.NextButton onClick={props.onClickNext}>
           <Image src={'/images/ic_page_next.png'} width={7.41} height={12} />
         </S.NextButton>

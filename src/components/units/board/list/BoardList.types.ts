@@ -23,8 +23,6 @@ export interface IBoardListUIProps {
   >['refetch']
   endDate: IQueryFetchBoardsArgs['endDate']
   activePage: IQueryFetchBoardsArgs['page']
-  onClickAddBoardButton: (event: MouseEvent<HTMLButtonElement>) => void
-  onClickBoard: (event: MouseEvent<HTMLTableRowElement>) => void
   onClickPage: (event: MouseEvent<HTMLButtonElement>) => void
   onClickPrev: (event: MouseEvent<HTMLButtonElement>) => void
   onClickNext: (event: MouseEvent<HTMLButtonElement>) => void

@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import BoardListUI from './BoardList.index'
+import BoardListUI from './BoardList.presenter'
 import { FETCH_BOARDS, FETCH_BOARDS_BEST, FETCH_BOARDS_COUNT } from './BoardList.queries'
 import type { MouseEvent, FormEvent, KeyboardEvent } from 'react'
 import { useState } from 'react'
@@ -37,6 +37,7 @@ export default function BoardList(): JSX.Element {
       search: keyword,
     },
   })
+  const lastPage = Math.ceil((boardsCount?.fetchBoardsCount ?? 10) / 10)
 
   const onClickPage = (event: MouseEvent<HTMLButtonElement>): void => {
     const page = Number(event.currentTarget.id)
@@ -56,6 +57,14 @@ export default function BoardList(): JSX.Element {
     setStartPage((prev) => prev + 10)
   }
 
+  const onClickAddBoardButton = (): void => {
+    route.push('/boards/new')
+  }
+
+  const onClickBoard = (event: MouseEvent<HTMLTableRowElement>): void => {
+    route.push(`/boards/${event.currentTarget.id}`)
+  }
+
   return (
     <BoardListUI
       setEndDate={setEndDate}
@@ -71,10 +80,13 @@ export default function BoardList(): JSX.Element {
       keyword={keyword}
       boards={boards?.fetchBoards}
       boardsBest={boardsBest?.fetchBoardsOfTheBest}
+      onClickAddBoardButton={onClickAddBoardButton}
+      onClickBoard={onClickBoard}
       onClickPage={onClickPage}
       onClickPrev={onClickPrev}
       onClickNext={onClickNext}
       startPage={startPage}
+      lastPage={lastPage}
     />
   )
 }
