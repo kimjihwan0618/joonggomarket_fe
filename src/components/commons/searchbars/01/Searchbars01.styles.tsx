@@ -25,24 +25,30 @@ export const SearchInput = styled.input`
 export const SearchRightItems = styled.div`
   display: flex;
   align-items: center;
+  height: 100%;
 `
 
 export const DatePickerBox = styled.div`
   margin: 0 0px 0 42px;
-  padding: 14px 16px;
+  /* padding: 14px 16px; */
   display: flex;
+  height: 100%;
   align-items: center;
-  border: 1px solid ${({ theme }) => theme.colors.gray04};
+  /* border: 1px solid ${({ theme }) => theme.colors.gray04}; */
   span {
     margin: 0 8px;
   }
+  .ant-picker {
+    height: 100%;
+    width: 140px;
+  }
   input {
-    border: none;
+    /* border: none;
     width: 82px;
     height: 24px;
     outline: none;
     font-size: 1.6rem;
     padding: 0px;
-    margin: 0px;
+    margin: 0px; */
   }
 `

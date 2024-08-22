@@ -1,6 +1,6 @@
 import * as S from './Searchbars01.styles'
 import { Searchbars01UIProps } from './Searchbars01.types'
-import DatePicker from 'react-datepicker'
+import { DatePicker } from 'antd'
 
 export default function Searchbars01UI(props: Searchbars01UIProps): JSX.Element {
   return (
@@ -14,21 +14,15 @@ export default function Searchbars01UI(props: Searchbars01UIProps): JSX.Element 
       <S.SearchRightItems>
         <S.DatePickerBox>
           <DatePicker
-            dateFormat="yyyy.MM.dd"
-            shouldCloseOnSelect
-            minDate={new Date('2000-01-01')}
-            maxDate={new Date(props.endDate)}
-            selected={new Date(props.startDate)}
-            onChange={(date) => props.setStartDate(date)}
+            onChange={(value, dateString) => {
+              props.setStartDate(Array.isArray(dateString) || dateString === '' ? null : dateString)
+            }}
           />
           <span>~</span>
           <DatePicker
-            dateFormat="yyyy.MM.dd"
-            shouldCloseOnSelect
-            minDate={new Date('2000-01-01')}
-            maxDate={new Date('2050-01-01')}
-            selected={new Date(props.endDate)}
-            onChange={(date) => props.setEndDate(date)}
+            onChange={(value, dateString) => {
+              props.setEndDate(Array.isArray(dateString) || dateString === '' ? null : dateString)
+            }}
           />
         </S.DatePickerBox>
       </S.SearchRightItems>

@@ -1,5 +1,5 @@
-import BoardList from 'src/components/units/board/list/BoardList.container';
+import BoardListUI from 'src/components/units/board/list/BoardList.index'
 
 export default function BoardListPage() {
-  return <BoardList />;
+  return <BoardListUI />
 }

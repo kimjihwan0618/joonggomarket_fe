@@ -2,7 +2,6 @@ import { toYYYYMMDD, toYYYYMMDDHHMMSS } from 'src/lib/utils/date'
 import * as S from './BoardList.styles'
 import Image from 'next/image'
 import 'react-datepicker/dist/react-datepicker.css'
-import { IBoardListUIProps } from './BoardList.types'
 import Pagination from 'src/components/commons/dataGrid/pagination'
 import Table from 'src/components/commons/dataGrid/table'
 import Searchbars01 from 'src/components/commons/searchbars/01/Searchbars01.container'
@@ -10,11 +9,24 @@ import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage
 import { useQueryFetchBoards } from 'src/components/commons/hooks/quires/useQueryFetchBoards'
 import { useQueryFetchBoardsCount } from 'src/components/commons/hooks/quires/useQueryFetchBoardsCount'
 import { useQueryFetchBoardsOfTheBest } from 'src/components/commons/hooks/quires/useQueryFetchBoardsOfTheBest'
+import { useSearch } from 'src/components/commons/hooks/custom/useSearch'
 
-export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
+export default function BoardListUI(): JSX.Element {
   const { moveToPage } = useMoveToPage()
   const { data: boardsBest } = useQueryFetchBoardsOfTheBest()
   const { data: boards, refetch: refetchBoards } = useQueryFetchBoards()
+  const {
+    keyword,
+    onChangeKeyword,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    selectedPage,
+    setSelectedPage,
+    startPage,
+    setStartPage,
+  } = useSearch()
   const { data: boardsCount, refetch: refetchBoardsCount } = useQueryFetchBoardsCount()
 
   return (
@@ -43,15 +55,15 @@ export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
         ))}
       </S.BestBoardWrapper>
       <Searchbars01
-        refetchTableDatas={refetchBoards}
-        refetchTableDatasCount={refetchBoardsCount}
-        setActivePage={props.setActivePage}
-        setStartPage={props.setStartPage}
-        endDate={props.endDate}
-        startDate={props.startDate}
-        setEndDate={props.setEndDate}
-        setStartDate={props.setStartDate}
-        setKeyword={props.setKeyword}
+        refetchTableData={refetchBoards}
+        refetchTableDataCount={refetchBoardsCount}
+        setSelectedPage={setSelectedPage}
+        setStartPage={setStartPage}
+        endDate={endDate}
+        startDate={startDate}
+        setEndDate={setEndDate}
+        setStartDate={setStartDate}
+        onChangeKeyword={onChangeKeyword}
       />
       <Table
         rowKey="_id"
@@ -59,8 +71,8 @@ export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
           ...board,
           createdAt: toYYYYMMDDHHMMSS(board.createdAt),
         }))}
-        keyword={props.keyword}
-        activePage={props.activePage}
+        keyword={keyword}
+        activePage={selectedPage}
         rowHandler={{ onClickRow: moveToPage, path: '/boards' }}
         columns={[
           { name: '제목', dataKey: 'title', isSearch: true },
@@ -70,11 +82,14 @@ export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
       />
       <S.BottomWrapper>
         <Pagination
-          onClickPage={props.onClickPage}
-          onClickPrev={props.onClickPrev}
-          onClickNext={props.onClickNext}
-          activePage={props.activePage}
-          startPage={props.startPage}
+          selectedPage={selectedPage}
+          setSelectedPage={setSelectedPage}
+          startPage={startPage}
+          setStartPage={setStartPage}
+          startDate={startDate}
+          endDate={endDate}
+          refetch={refetchBoards}
+          keyword={keyword}
           count={boardsCount?.fetchBoardsCount}
         />
         <S.BoardAddButton onClick={moveToPage('/boards/new')}>
