@@ -11,6 +11,12 @@ import { useQueryFetchBoardsCount } from 'src/components/commons/hooks/quires/us
 import { useQueryFetchBoardsOfTheBest } from 'src/components/commons/hooks/quires/useQueryFetchBoardsOfTheBest'
 import { useSearch } from 'src/components/commons/hooks/custom/useSearch'
 
+const TABLE_COLUMNS = [
+  { name: '제목', dataKey: 'title', isSearch: true },
+  { name: '작성자', dataKey: 'writer', isSearch: false },
+  { name: '날짜', dataKey: 'createdAt', isSearch: false },
+]
+
 export default function BoardListUI(): JSX.Element {
   const { moveToPage } = useMoveToPage()
   const { data: boardsBest } = useQueryFetchBoardsOfTheBest()
@@ -74,11 +80,7 @@ export default function BoardListUI(): JSX.Element {
         keyword={keyword}
         activePage={selectedPage}
         rowHandler={{ onClickRow: moveToPage, path: '/boards' }}
-        columns={[
-          { name: '제목', dataKey: 'title', isSearch: true },
-          { name: '작성자', dataKey: 'writer', isSearch: false },
-          { name: '날짜', dataKey: 'createdAt', isSearch: false },
-        ]}
+        columns={TABLE_COLUMNS}
       />
       <S.BottomWrapper>
         <Pagination
@@ -93,7 +95,7 @@ export default function BoardListUI(): JSX.Element {
           count={boardsCount?.fetchBoardsCount}
         />
         <S.BoardAddButton onClick={moveToPage('/boards/new')}>
-          <Image src={'/images/ic_create.png'} width={18} height={18} />
+          <Image src={'/images/ic_pencil.png'} width={18} height={18} />
           <p>게시글 등록</p>
         </S.BoardAddButton>
       </S.BottomWrapper>

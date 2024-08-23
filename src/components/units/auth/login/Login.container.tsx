@@ -7,7 +7,7 @@ import { LOGIN_USER } from './Login.queries'
 import { useRouter } from 'next/router'
 import { Modal } from 'antd'
 import { useRecoilState } from 'recoil'
-import { accessTokenState } from 'src/commons/stores'
+import { accessTokenState, vistedPageState } from 'src/commons/stores'
 
 export default function Login(): JSX.Element {
   const router = useRouter()
@@ -17,6 +17,7 @@ export default function Login(): JSX.Element {
   const [passwordError, setPasswordError] = useState('')
   const [formValidation, setFormValidation] = useState(false)
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
+  const [vistedPage, setVisitedPage] = useRecoilState(vistedPageState)
   const [loginUser] = useMutation<Pick<IMutation, 'loginUser'>, IMutationLoginUserArgs>(LOGIN_USER)
 
   const onClickLogin = async (): Promise<void> => {
@@ -34,11 +35,7 @@ export default function Login(): JSX.Element {
       }
       localStorage.setItem('accessToken', accessToken)
       await setAccessToken(accessToken)
-      const redirectTo = Array.isArray(router.query.redirect)
-        ? router.query.redirect[0]
-        : router.query.redirect || '/'
-      console.log(redirectTo)
-      void router.push(redirectTo)
+      void router.push(vistedPage)
     } catch (error) {
       if (error instanceof Error) Modal.warning({ content: error.message })
     }
