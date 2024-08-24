@@ -73,13 +73,12 @@ export const SignupButton = styled.button`
   height: 64px;
   line-height: 64px;
   width: 100%;
-  color: ${(props) => (!props['data-disable'] ? 'white' : 'black')};
+  color: ${(props) => (!props.disabled ? 'white' : 'black')};
   border-radius: 10px;
-  background: ${(props) =>
-    !props['data-disable'] ? props.theme.colors.gray03 : props.theme.colors.main};
-  cursor: ${(props) => props['data-disable'] && 'pointer'};
+  background: ${(props) => (!props.disabled ? props.theme.colors.gray03 : props.theme.colors.main)};
+  cursor: ${(props) => props.disabled && 'pointer'};
   &:hover {
-    opacity: ${(props) => props['data-disable'] && 0.9};
+    opacity: ${(props) => props.disabled && 0.9};
   }
   margin-top: 20px;
 `

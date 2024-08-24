@@ -14,7 +14,7 @@ export const SearchInput = styled.input`
   border: none;
   outline: none;
   background-color: ${({ theme }) => theme.colors.gray06};
-  background-image: ${(props) => (props['data-isChanging'] ? '' : 'url(/images/ic_search.png)')};
+  background-image: ${(props) => (props['data-ischanged'] ? '' : 'url(/images/ic_search.png)')};
   background-repeat: no-repeat;
   background-position: 16px 50%;
   &::placeholder {

@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 
 export const Table = styled.table`
-  margin: 40px 0 54px;
+  margin: 40px 0 20px;
   width: 100%;
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
@@ -22,7 +22,7 @@ export const TableRow = styled.tr`
     border-top: 1px solid ${({ theme }) => theme.colors.gray04};
     font-size: 1.6rem;
   }
-  td[data-isSearch='true'] {
+  td[data-issearch='true'] {
     &:hover {
       text-decoration: 'underline';
       color: ${({ theme }) => theme.colors.main};
@@ -42,7 +42,7 @@ export const TableHeadRow = styled.tr`
     border-top: 1px solid ${({ theme }) => theme.colors.gray04};
     font-size: 1.6rem;
   }
-  td[data-isSearch='true'] {
+  td[data-issearch='true'] {
     &:hover {
       text-decoration: 'underline';
       color: ${({ theme }) => theme.colors.main};

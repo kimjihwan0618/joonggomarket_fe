@@ -63,21 +63,6 @@ export const EmailInput = styled.input``
 export const PasswordInput = styled.input``
 export const ValidationText = styled.p``
 
-export const LoginButton = styled.button`
-  font-size: 1.6rem;
-  font-weight: bold;
-  height: 64px;
-  line-height: 64px;
-  width: 100%;
-  border-radius: 10px;
-  background: ${(props) =>
-    !props['data-disable'] ? props.theme.colors.gray03 : props.theme.colors.main};
-  color: ${(props) => (!props['data-disable'] ? 'white' : 'black')};
-  cursor: ${(props) => props['data-disable'] && 'pointer'};
-  &:hover {
-    opacity: ${(props) => props['data-disable'] && 0.9};
-  }
-`
 export const ButtonListWrapper = styled.ul`
   padding-top: 29px;
   margin-top: 40px;

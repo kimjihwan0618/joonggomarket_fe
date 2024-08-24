@@ -1,17 +1,6 @@
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 
-const ButtonStyle = css`
-  padding: 14px 16px;
-  margin-left: 16px;
-  white-space: nowrap;
-  height: 52px;
-  width: 179px;
-  font-weight: 500;
-  outline: none;
-  border: none;
-`
-
 export const ContentWrapper = styled.div`
   padding: 40px 75px 60px;
   margin: 101px auto;
@@ -123,6 +112,9 @@ export const PostSearchItem = styled.div`
     margin-top: 16px;
     margin-bottom: 30px;
   }
+  & > button {
+    margin-left: 16px;
+  }
 `
 export const DetailAddressInput = styled.input`
   font-size: 1.6rem;
@@ -130,39 +122,13 @@ export const DetailAddressInput = styled.input`
   padding: 14px 16px;
   height: 52px;
 `
-export const PostSearchButton = styled.button`
-  background: #000;
-  padding: 14px 16px;
-  margin-left: 16px;
-  color: white;
-  white-space: nowrap;
-  height: 52px;
-  cursor: pointer;
-`
-export const RegisterButton = styled.button`
-  ${ButtonStyle}
-  color: #000;
-  cursor: ${(props) => (props.disabled ? '' : 'pointer')};
-  background: ${(props) => (props.disabled ? 'rgba(189, 189, 189, 1)' : 'rgba(255, 214, 0, 1)')};
-  &:hover {
-    opacity: ${(props) => !props.disabled && 0.8} !important;
-  }
-`
 
 export const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
-
-export const UndoButton = styled.button`
-  ${ButtonStyle}
-  cursor: pointer;
-  background: rgba(189, 189, 189, 1);
-  color: ${({ theme }) => theme.colors.gray02};
-  margin-right: 24px;
-  &:hover {
-    opacity: 0.8;
+  button:first-of-type {
+    margin-right: 16px;
   }
 `
 

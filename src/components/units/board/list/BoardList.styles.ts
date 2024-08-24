@@ -9,31 +9,10 @@ export const Wrapper = styled.div`
 export const BottomWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
 `
 
-export const BoardAddButton = styled.button`
-  position: absolute;
-  right: 0;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  padding: 14px 16px;
-  background: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 52px;
-  cursor: pointer;
-  p {
-    margin-left: 8px;
-    font-weight: 500;
-  }
-  &:hover {
-    background: ${({ theme }) => theme.colors.gray06};
-  }
-`
 export const BestBoardsSectionTitle = styled.h3`
   font-size: 3.6rem;
   font-weight: bold;

@@ -6,7 +6,7 @@ export default function Searchbars01UI(props: Searchbars01UIProps): JSX.Element 
   return (
     <S.SearchWrapper>
       <S.SearchInput
-        data-isChanging={props.isChanging}
+        data-ischanged={props.ischanged}
         placeholder="제목을 검색해주세요"
         type="text"
         onInput={props.onInputSearch}

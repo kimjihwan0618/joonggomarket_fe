@@ -19,5 +19,5 @@ export interface Searchbars01UIProps {
   startDate: string
   setEndDate: Dispatch<SetStateAction<string | null>>
   setStartDate: Dispatch<SetStateAction<string | null>>
-  isChanging: boolean
+  ischanged: boolean
 }

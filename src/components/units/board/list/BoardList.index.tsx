@@ -10,6 +10,8 @@ import { useQueryFetchBoards } from 'src/components/commons/hooks/quires/useQuer
 import { useQueryFetchBoardsCount } from 'src/components/commons/hooks/quires/useQueryFetchBoardsCount'
 import { useQueryFetchBoardsOfTheBest } from 'src/components/commons/hooks/quires/useQueryFetchBoardsOfTheBest'
 import { useSearch } from 'src/components/commons/hooks/custom/useSearch'
+import Button01 from 'src/components/commons/buttons/01/Button01.index'
+import theme from 'src/commons/styles/theme'
 
 const TABLE_COLUMNS = [
   { name: '제목', dataKey: 'title', isSearch: true },
@@ -94,10 +96,14 @@ export default function BoardListUI(): JSX.Element {
           keyword={keyword}
           count={boardsCount?.fetchBoardsCount}
         />
-        <S.BoardAddButton onClick={moveToPage('/boards/new')}>
-          <Image src={'/images/ic_pencil.png'} width={18} height={18} />
-          <p>게시글 등록</p>
-        </S.BoardAddButton>
+        {
+          <Button01
+            onClick={moveToPage('/boards/new')}
+            background={theme.colors.main}
+            iconSrc={'/images/ic_pencil.png'}
+            name="게시글 등록"
+          />
+        }
       </S.BottomWrapper>
     </S.Wrapper>
   )

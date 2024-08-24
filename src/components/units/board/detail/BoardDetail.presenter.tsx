@@ -3,6 +3,8 @@ import * as S from './BoardDetail.styles'
 import Image from 'next/image'
 import { IBoardDetailUIProps } from './BoardDetail.types'
 import { Tooltip } from 'antd'
+import Button01 from 'src/components/commons/buttons/01/Button01.index'
+import theme from 'src/commons/styles/theme'
 
 export default function BoardDetailUI(props: IBoardDetailUIProps): JSX.Element {
   return (
@@ -81,9 +83,9 @@ export default function BoardDetailUI(props: IBoardDetailUIProps): JSX.Element {
         </S.ContentsWrapper>
       </S.ContentWrapper>
       <S.ButtonWrapper>
-        <S.BoardActionButton onClick={props.onClickBoardsButton}>목록으로</S.BoardActionButton>
-        <S.BoardActionButton onClick={props.onClickUpdateButton}>수정하기</S.BoardActionButton>
-        <S.BoardActionButton onClick={props.onClickDeleteButton}>삭제하기</S.BoardActionButton>
+        <Button01 onClick={props.onClickBoardsButton} name={'목록으로'} width="04" />
+        <Button01 onClick={props.onClickUpdateButton} name={'수정하기'} width="04" />
+        <Button01 onClick={props.onClickDeleteButton} name={'삭제하기'} width="04" />
       </S.ButtonWrapper>
     </>
   )

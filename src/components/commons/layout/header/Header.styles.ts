@@ -44,34 +44,11 @@ export const Logo = styled.h1`
 export const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
-`
-export const LodginButton = styled.button`
-  font-size: 1.6rem;
-  width: 92px;
-  height: 44px;
-  border-radius: 10px;
-  background: white;
-  cursor: pointer;
-  font-weight: 'bold';
-  &:hover {
-    background: ${({ theme }) => theme.colors.gray06};
+  button:first-of-type {
+    margin-right: 16px;
   }
-  margin-right: 8px;
 `
 
-export const JoinButton = styled.button`
-  background: ${({ theme }) => theme.colors.main};
-  font-weight: bold;
-  font-size: 1.6rem;
-  border-radius: 10px;
-  padding: 10px 16px;
-  height: 44px;
-  cursor: pointer;
-  font-weight: 'bold';
-  &:hover {
-    opacity: 0.7;
-  }
-`
 export const ProfileBoxWrapper = styled.div`
   position: relative;
 `

@@ -4,6 +4,8 @@ import { Modal } from 'antd'
 import DaumPostcodeEmbed from 'react-daum-postcode'
 import { uuid4 } from 'uuid4'
 import Uploads01 from 'src/components/commons/uploads/01/Upload01.container'
+import Button01 from 'src/components/commons/buttons/01/Button01.index'
+import theme from 'src/commons/styles/theme'
 
 export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
   return (
@@ -97,9 +99,12 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
                 placeholder="07251"
               />
             </S.FormItem>
-            <S.PostSearchButton onClick={props.addressSearchHandler.handleModalOpen}>
-              우편번호 검색
-            </S.PostSearchButton>
+            <Button01
+              onClick={props.addressSearchHandler.handleModalOpen}
+              name={'우편번호 검색'}
+              color="white"
+              background={theme.colors.dark01}
+            />
             <S.FormItem style={{ width: '100%' }}>
               <S.DetailAddressInput value={props.addressSearchHandler.address} readOnly />
             </S.FormItem>
@@ -154,13 +159,19 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
           </S.FormItem>
         </S.FormWrapper>
         <S.ButtonWrapper>
-          <S.UndoButton onClick={props.onClickUndo}>취소하기</S.UndoButton>
-          <S.RegisterButton
+          <Button01
+            onClick={props.onClickUndo}
+            background={theme.colors.gray04}
+            name={'취소하기'}
+            width="03"
+          />
+          <Button01
             disabled={!props.formValidation}
             onClick={props.isEdit ? props.onClickUpdate : props.onClickSubmit}
-          >
-            {props.isEdit ? '수정' : '등록'}하기
-          </S.RegisterButton>
+            background={!props.formValidation ? theme.colors.gray04 : theme.colors.main}
+            name={`${props.isEdit ? '수정' : '등록'}하기`}
+            width="03"
+          />
         </S.ButtonWrapper>
       </S.ContentWrapper>
     </>

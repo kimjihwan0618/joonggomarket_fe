@@ -2,6 +2,8 @@ import { useRouter } from 'next/router'
 import * as S from './Signup.styles'
 import Image from 'next/image'
 import { ISignupUIProps } from './Signup.type'
+import Button02 from 'src/components/commons/buttons/02/Button02.index'
+import theme from 'src/commons/styles/theme'
 
 export default function SignupUI(props: ISignupUIProps): JSX.Element {
   const router = useRouter()
@@ -66,9 +68,14 @@ export default function SignupUI(props: ISignupUIProps): JSX.Element {
           />
           <S.ValidationText>{props.passwordCheckError}</S.ValidationText>
         </S.InputItem>
-        <S.SignupButton onClick={props.onClickSignup} data-disable={props.formValidation}>
-          회원가입하기
-        </S.SignupButton>
+        <Button02
+          background={!props.formValidation ? theme.colors.gray03 : theme.colors.main}
+          disabled={!props.formValidation}
+          name="회원가입하기"
+          onClick={props.onClickSignup}
+          color={!props.formValidation && 'white'}
+          fullWidth={true}
+        />
       </S.SignupFormBox>
     </S.Wrapper>
   )

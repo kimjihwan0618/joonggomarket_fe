@@ -30,7 +30,7 @@ export default function Table(props: ITableProps): JSX.Element {
             <td>{(props.activePage - 1) * 10 + idx + 1}</td>
             {props.columns.map((column) =>
               column.isSearch ? (
-                <td data-isSearch={true} key={el[props.rowKey]}>
+                <td data-issearch={true} key={el[props.rowKey]}>
                   {el[column.dataKey]
                     .replaceAll(props.keyword, `!@#${props.keyword}!@#`)
                     .split('!@#')

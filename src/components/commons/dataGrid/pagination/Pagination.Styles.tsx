@@ -26,8 +26,8 @@ export const PageButton = styled.button`
   padding: 0;
   font-size: 1.6rem;
   cursor: pointer;
-  color: ${(props) => (props['data-isActive'] ? props.theme.colors.main : '#000')};
-  text-decoration: ${(props) => (props['data-isActive'] ? 'underline' : 'none')};
+  color: ${(props) => (props['data-isactive'] ? props.theme.colors.main : '#000')};
+  text-decoration: ${(props) => (props['data-isactive'] ? 'underline' : 'none')};
   &:hover {
     text-decoration: underline;
   }

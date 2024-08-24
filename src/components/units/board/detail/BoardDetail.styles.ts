@@ -76,22 +76,6 @@ export const ButtonWrapper = styled.div`
     margin: 0 24px;
   }
 `
-export const BoardActionButton = styled.button`
-  padding: 14px 16px;
-  color: white;
-  white-space: nowrap;
-  height: 52px;
-  width: 179px;
-  background: #ffffff;
-  border: 1px solid rgba(189, 189, 189, 1);
-  color: #000;
-  font-weight: 500;
-  outline: none;
-  cursor: pointer;
-  &:hover {
-    background: ${({ theme }) => theme.colors.gray06};
-  }
-`
 
 export const ThumbsWrapper = styled.ul`
   display: flex;

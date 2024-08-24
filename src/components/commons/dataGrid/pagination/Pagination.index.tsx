@@ -70,7 +70,7 @@ export default function Pagination(props: IPaginationProps): JSX.Element {
               key={index}
               id={String(index + props.startPage)}
               onClick={onClickPage}
-              data-isActive={index + props.startPage === props.selectedPage}
+              data-isactive={index + props.startPage === props.selectedPage}
             >
               {index + props.startPage}
             </S.PageButton>

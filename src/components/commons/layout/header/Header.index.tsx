@@ -8,12 +8,16 @@ import { FETCH_USER_LOGGED_IN, USER_LOGOUT } from './Header.queries'
 import { IMutation, IQuery } from 'src/commons/types/generated/types'
 import { useMutation, useQuery } from '@apollo/client'
 import { Modal } from 'antd'
+import { useMoveToPage } from '../../hooks/custom/useMoveToPage'
+import Button02 from '../../buttons/02/Button02.index'
+import theme from 'src/commons/styles/theme'
 
 export default function Header(): JSX.Element {
   const { data } = useQuery<Pick<IQuery, 'fetchUserLoggedIn'>>(FETCH_USER_LOGGED_IN)
   const [logoutUser] = useMutation<Pick<IMutation, 'logoutUser'>>(USER_LOGOUT)
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [isHidden, setIsHidden] = useState(false)
+  const { moveToPage } = useMoveToPage()
   const profileButtonRef = useRef<HTMLButtonElement>(null)
 
   const onClickLogout = async (): Promise<void> => {
@@ -94,12 +98,12 @@ export default function Header(): JSX.Element {
           </S.ProfileBoxWrapper>
         ) : (
           <S.ButtonWrapper>
-            <Link href="/login">
-              <S.LodginButton>로그인</S.LodginButton>
-            </Link>
-            <Link href="/signup">
-              <S.JoinButton>회원가입</S.JoinButton>
-            </Link>
+            <Button02 onClick={moveToPage('/login')} name={'로그인'} />
+            <Button02
+              onClick={moveToPage('/signup')}
+              background={theme.colors.main}
+              name={'회원가입'}
+            />
           </S.ButtonWrapper>
         )}
       </S.HeaderInner>

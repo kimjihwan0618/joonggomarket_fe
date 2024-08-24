@@ -3,6 +3,8 @@ import * as S from './Login.styles'
 import Image from 'next/image'
 import { ILoginUIProps } from './Login.type'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
+import Button02 from 'src/components/commons/buttons/02/Button02.index'
+import theme from 'src/commons/styles/theme'
 
 export default function LoginUI(props: ILoginUIProps): JSX.Element {
   const router = useRouter()
@@ -43,9 +45,14 @@ export default function LoginUI(props: ILoginUIProps): JSX.Element {
           />
           <S.ValidationText>{props.passwordError}</S.ValidationText>
         </S.InputItem>
-        <S.LoginButton onClick={props.onClickLogin} data-disable={props.formValidation}>
-          로그인하기
-        </S.LoginButton>
+        <Button02
+          background={!props.formValidation ? theme.colors.gray03 : theme.colors.main}
+          disabled={!props.formValidation}
+          name="로그인하기"
+          onClick={props.onClickLogin}
+          color={!props.formValidation && 'white'}
+          fullWidth={true}
+        />
         <S.ButtonListWrapper>
           <S.BottomButton>이메일 찾기</S.BottomButton>
           <S.BottomButton>비밀번호 찾기</S.BottomButton>

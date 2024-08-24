@@ -82,33 +82,11 @@ export const CommentFooter = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.gray06};
   height: 52px;
 `
-
-export const RegisterButton = styled.button`
-  border: none;
-  height: 100%;
-  width: 91px;
-  color: ${(props) => (props['data-isedit'] ? '#000' : 'white')};
-  background: ${(props) => (props['data-isedit'] ? 'rgba(255, 214, 0, 1)' : '#000')};
-  cursor: pointer;
-  &:hover {
-    opacity: 0.7;
-  }
-`
 export const CommentButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
-`
-
-export const UndoButton = styled.button`
-  border: none;
-  height: 100%;
-  width: 91px;
-  color: #000;
-  background: ${({ theme }) => theme.colors.gray04};
-  cursor: pointer;
-  margin-right: 16px;
-  &:hover {
-    opacity: 0.7;
+  button:last-of-type {
+    margin-left: 16px;
   }
 `
