@@ -51,7 +51,7 @@ export default function Header(): JSX.Element {
 
   useEffect(() => {
     if (!data && localStorage.getItem('accessToken')) {
-      localStorage.removeItem('accessToken')
+      // localStorage.removeItem('accessToken')
     } else {
       // localStorage.setItem('accessToken', accessToken)
     }

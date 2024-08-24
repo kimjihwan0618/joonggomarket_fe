@@ -12,8 +12,9 @@ export const useMoveToPage = (): IUseMoveToPageReturn => {
   const [vistedPage, setVisitedPage] = useRecoilState(vistedPageState)
 
   const moveToPage = (path: string) => () => {
-    if (path !== '/login' && path !== 'sign-up') setVisitedPage(path)
-    // localStorage.setItem("vistedPage", path) 로컬스토리지도 가능
+    if (path !== '/login' && path !== '/signup') {
+      setVisitedPage(path)
+    }
     void router.push(path)
   }
 

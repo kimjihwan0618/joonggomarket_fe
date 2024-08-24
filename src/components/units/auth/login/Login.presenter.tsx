@@ -2,9 +2,11 @@ import { useRouter } from 'next/router'
 import * as S from './Login.styles'
 import Image from 'next/image'
 import { ILoginUIProps } from './Login.type'
+import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 
 export default function LoginUI(props: ILoginUIProps): JSX.Element {
   const router = useRouter()
+  const { moveToPage } = useMoveToPage()
 
   return (
     <S.Wrapper>
@@ -47,7 +49,7 @@ export default function LoginUI(props: ILoginUIProps): JSX.Element {
         <S.ButtonListWrapper>
           <S.BottomButton>이메일 찾기</S.BottomButton>
           <S.BottomButton>비밀번호 찾기</S.BottomButton>
-          <S.BottomButton onClick={() => router.push('/signup')}>회원가입</S.BottomButton>
+          <S.BottomButton onClick={moveToPage('/signup')}>회원가입</S.BottomButton>
         </S.ButtonListWrapper>
       </S.LoginFormBox>
     </S.Wrapper>

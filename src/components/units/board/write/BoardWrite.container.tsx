@@ -13,8 +13,10 @@ import type {
 } from 'src/commons/types/generated/types'
 import { Modal } from 'antd'
 import type { Address } from 'react-daum-postcode'
+import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 
 export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
+  const { moveToPage } = useMoveToPage()
   const [fileUrls, setFileUrls] = useState(['', '', ''])
 
   const [isOpen, setIsOpen] = useState(false)
@@ -71,7 +73,7 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
   }
 
   const onClickUndo = (): void => {
-    props.isEdit ? router.push(`/boards/${props?.data?.fetchBoard?._id}`) : router.push(`/boards`)
+    props.isEdit ? moveToPage(`/boards/${props?.data?.fetchBoard?._id}`)() : moveToPage(`/boards`)()
   }
 
   const onClickSubmit = async (): Promise<void> => {
@@ -109,7 +111,7 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
       })
       if (createBoardResult?.data?.createBoard?._id) {
         Modal.success({ content: '게시글이 등록되었습니다.' })
-        router.push(`/boards/${createBoardResult?.data?.createBoard?._id}`)
+        moveToPage(`/boards/${createBoardResult?.data?.createBoard?._id}`)()
       }
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })
@@ -160,7 +162,7 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
       })
       if (result?.data?.updateBoard?._id) {
         Modal.success({ content: '게시글이 수정되었습니다.' })
-        router.push(`/boards/${result?.data?.updateBoard?._id}`)
+        moveToPage(`/boards/${result?.data?.updateBoard?._id}`)()
       }
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })

@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import * as S from 'src/components/commons/layout/navigation/Navigation.styles'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { useMoveToPage } from '../../hooks/custom/useMoveToPage'
 
 const menus = [
   { name: '자유게시판', path: '/boards' },
@@ -12,6 +13,7 @@ const menus = [
 export default function Navigation(): JSX.Element {
   const { pathname } = useRouter()
   const [basePath, setBasePath] = useState('')
+  const { moveToPage } = useMoveToPage()
 
   useEffect(() => {
     setBasePath(pathname.split('/')[1])
@@ -22,11 +24,12 @@ export default function Navigation(): JSX.Element {
       <S.Navigation>
         <S.MenuList>
           {menus.map((menu, idx) => (
-            <Link href={menu.path} key={idx}>
-              <S.MenuButton data-active={basePath === menu.path.replace('/', '')}>
-                {menu.name}
-              </S.MenuButton>
-            </Link>
+            <S.MenuButton
+              onClick={moveToPage(menu.path)}
+              data-active={basePath === menu.path.replace('/', '')}
+            >
+              {menu.name}
+            </S.MenuButton>
           ))}
         </S.MenuList>
       </S.Navigation>

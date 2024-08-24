@@ -12,9 +12,11 @@ import {
 } from 'src/commons/types/generated/types'
 import { MouseEvent } from 'react'
 import { Modal } from 'antd'
+import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 
 export default function BoardDetail(): JSX.Element {
   const router = useRouter()
+  const { moveToPage } = useMoveToPage()
   const boardId = typeof router.query.boardId === 'string' ? router.query.boardId : ''
   const [deleteBoard] = useMutation<Pick<IMutation, 'deleteBoard'>, IMutationDeleteBoardArgs>(
     DELETE_BOARD
@@ -58,11 +60,11 @@ export default function BoardDetail(): JSX.Element {
   }
 
   const onClickUpdateButton = (): void => {
-    router.push(`/boards/${router.query.boardId}/edit`)
+    moveToPage(`/boards/${router.query.boardId}/edit`)()
   }
 
   const onClickBoardsButton = (): void => {
-    router.push('/boards')
+    moveToPage('/boards')()
   }
 
   const onClickDeleteButton = async (): Promise<void> => {
@@ -74,7 +76,7 @@ export default function BoardDetail(): JSX.Element {
       })
       if (result?.data?.deleteBoard) {
         Modal.success({ content: '해당 게시글이 삭제되었습니다.' })
-        router.push('/boards')
+        moveToPage('/boards')()
       }
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })

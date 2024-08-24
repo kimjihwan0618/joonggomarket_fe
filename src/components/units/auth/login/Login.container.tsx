@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { Modal } from 'antd'
 import { useRecoilState } from 'recoil'
 import { accessTokenState, vistedPageState } from 'src/commons/stores'
+import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 
 export default function Login(): JSX.Element {
   const router = useRouter()
@@ -18,6 +19,7 @@ export default function Login(): JSX.Element {
   const [formValidation, setFormValidation] = useState(false)
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [vistedPage, setVisitedPage] = useRecoilState(vistedPageState)
+  const { moveToPage } = useMoveToPage()
   const [loginUser] = useMutation<Pick<IMutation, 'loginUser'>, IMutationLoginUserArgs>(LOGIN_USER)
 
   const onClickLogin = async (): Promise<void> => {
@@ -33,9 +35,10 @@ export default function Login(): JSX.Element {
         Modal.error({ content: '로그인에 실패했습니다!. 다시 시도해 주세요!' })
         return
       }
+      console.log(localStorage)
       localStorage.setItem('accessToken', accessToken)
-      await setAccessToken(accessToken)
-      void router.push(vistedPage)
+      setAccessToken(accessToken)
+      !vistedPage ? moveToPage('/')() : moveToPage(vistedPage)()
     } catch (error) {
       if (error instanceof Error) Modal.warning({ content: error.message })
     }

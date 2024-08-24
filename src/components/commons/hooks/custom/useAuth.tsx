@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { useMoveToPage } from './useMoveToPage'
 
 export const useAuth = (): void => {
-  const router = useRouter()
+  const { moveToPage } = useMoveToPage()
   useEffect(() => {
     if (localStorage.getItem('accessToken') === null) {
-      void router.replace(`/login?redirect=${router.asPath}`)
+      moveToPage(`/login`)()
     }
   }, [])
 }

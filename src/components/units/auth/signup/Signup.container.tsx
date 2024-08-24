@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/client'
 import { IMutation, IMutationCreateUserArgs } from 'src/commons/types/generated/types'
 import { CREATE_USER } from './Signup.queries'
 import { useRouter } from 'next/router'
+import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 
 export default function Signup(): JSX.Element {
   const router = useRouter()
@@ -18,6 +19,7 @@ export default function Signup(): JSX.Element {
   const [passwordError, setPasswordError] = useState('')
   const [passwordCheckError, setPasswordCheckError] = useState('')
   const [formValidation, setFormValidation] = useState(false)
+  const { moveToPage } = useMoveToPage()
   const [createUser] = useMutation<Pick<IMutation, 'createUser'>, IMutationCreateUserArgs>(
     CREATE_USER
   )
@@ -50,7 +52,7 @@ export default function Signup(): JSX.Element {
         },
       })
       Modal.success({ content: '회원가입이 완료되었습니다.' })
-      router.push('/login')
+      moveToPage('/login')()
     } catch (error) {
       if (error instanceof Error) Modal.warning({ content: error.message })
     }

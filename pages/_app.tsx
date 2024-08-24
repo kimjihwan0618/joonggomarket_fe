@@ -4,7 +4,7 @@ import { globalStyles } from 'src/commons/styles/global'
 import { ThemeProvider } from '@emotion/react'
 import { Global } from '@emotion/react'
 import theme from 'src/commons/styles/theme'
-import Layout from 'src/components/commons/layout'
+import Layout from 'src/components/commons/layout/Layout.index'
 import { RecoilRoot } from 'recoil'
 
 function MyApp({ Component }: AppProps) {

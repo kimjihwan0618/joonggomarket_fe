@@ -1,6 +1,6 @@
-import Header from 'src/components/commons/layout/header'
-import Banner from 'src/components/commons/layout/carousel'
-import Navigation from 'src/components/commons/layout/navigation'
+import Header from 'src/components/commons/layout/header/Header.index'
+import Banner from 'src/components/commons/layout/carousel/Carousel.index'
+import Navigation from 'src/components/commons/layout/navigation/Navigation.index'
 import { useRouter } from 'next/router'
 
 interface ILayoutProps {
