@@ -13,3 +13,10 @@ declare module '@emotion/react' {
     }
   }
 }
+
+declare module 'react' {
+  interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+    // 모든 data-* 속성 정의
+    [key: `data-${string}`]: any
+  }
+}
