@@ -79,11 +79,3 @@ export const Rating = styled.div`
     margin-right: 0px;
   }
 `
-
-export const PasswordInput = styled.input`
-  padding: 14px 20px;
-  outline: none;
-  height: 52px;
-  width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.gray04};
-`

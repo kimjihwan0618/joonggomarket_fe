@@ -1,5 +1,5 @@
-import BoardWrite from "src/components/units/board/write/BoardWrite.container"
+import BoardWriteUI from 'src/components/units/board/write/BoardWrite.presenter'
 
 export default function BoardAddPage() {
-  return <BoardWrite isEdit={false} />
+  return <BoardWriteUI isEdit={false} />
 }

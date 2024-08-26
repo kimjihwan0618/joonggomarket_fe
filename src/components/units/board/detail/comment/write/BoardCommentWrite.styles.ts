@@ -27,19 +27,9 @@ export const InputWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-`
-
-export const WriteInput = styled.input`
-  ${InputStyle}
-  height: 52px;
-  border: 1px solid ${({ theme }) => theme.colors.gray04};
-`
-
-export const PasswordInput = styled.input`
-  ${InputStyle}
-  height: 52px;
-  margin: 0 24px;
-  border: 1px solid ${({ theme }) => theme.colors.gray04};
+  input:nth-of-type(2) {
+    margin: 0 24px;
+  }
 `
 
 export const Rating = styled.div`

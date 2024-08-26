@@ -14,27 +14,35 @@ import type {
 import { Modal } from 'antd'
 import type { Address } from 'react-daum-postcode'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { IBoardWriterForm, schema } from './BoardWrite.schema'
 
 export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
   const { moveToPage } = useMoveToPage()
-  const [fileUrls, setFileUrls] = useState(['', '', ''])
+  // const { register, handleSubmit, formState, setValue } = useForm<IBoardWriterForm>({
+  //   resolver: yupResolver(schema),
+  //   mode: 'onChange',
+  // })
 
-  const [isOpen, setIsOpen] = useState(false)
+  // const [fileUrls, setFileUrls] = useState(['', '', ''])
 
-  const [writer, setWriter] = useState('')
-  const [password, setPassword] = useState('')
-  const [title, setTitle] = useState('')
-  const [contents, setContents] = useState('')
-  const [youtubeUrl, setYoutubeUrl] = useState('')
-  const [address, setAddress] = useState('')
-  const [addressDetail, setAddressDetail] = useState('')
-  const [zipcode, setZipcode] = useState('')
+  // const [isOpen, setIsOpen] = useState(false)
 
-  const [writerError, setWriterError] = useState('')
-  const [passwordError, setPasswordError] = useState('')
-  const [titleError, setTitleError] = useState('')
-  const [contentsError, setContentsError] = useState('')
-  const [formValidation, setFormValidation] = useState(false)
+  // // const [writer, setWriter] = useState('')
+  // const [password, setPassword] = useState('')
+  // const [title, setTitle] = useState('')
+  // const [contents, setContents] = useState('')
+  // const [youtubeUrl, setYoutubeUrl] = useState('')
+  // const [address, setAddress] = useState('')
+  // const [addressDetail, setAddressDetail] = useState('')
+  // const [zipcode, setZipcode] = useState('')
+
+  // const [writerError, setWriterError] = useState('')
+  // const [passwordError, setPasswordError] = useState('')
+  // const [titleError, setTitleError] = useState('')
+  // const [contentsError, setContentsError] = useState('')
+  // const [formValidation, setFormValidation] = useState(false)
 
   const [createBoard] = useMutation<Pick<IMutation, 'createBoard'>, IMutationCreateBoardArgs>(
     CREATE_BOARD
@@ -76,112 +84,112 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
     props.isEdit ? moveToPage(`/boards/${props?.data?.fetchBoard?._id}`)() : moveToPage(`/boards`)()
   }
 
-  const onClickSubmit = async (): Promise<void> => {
-    if (!writer) {
-      setWriterError('작성자를 입력해주세요')
-    }
-    if (!password) {
-      setPasswordError('비밀번호를 입력해주세요')
-    }
-    if (!title) {
-      setTitleError('제목을 입력해주세요')
-    }
-    if (!contents) {
-      setContentsError('내용을 입력해주세요')
-    }
-    try {
-      const boardAddress = {
-        address,
-        addressDetail,
-        zipcode,
-      }
-      const createBoardInput: ICreateBoardInput = {
-        writer,
-        password,
-        title,
-        contents,
-        images: fileUrls,
-        youtubeUrl,
-        boardAddress,
-      }
-      const createBoardResult = await createBoard({
-        variables: {
-          createBoardInput,
-        },
-      })
-      if (createBoardResult?.data?.createBoard?._id) {
-        Modal.success({ content: '게시글이 등록되었습니다.' })
-        moveToPage(`/boards/${createBoardResult?.data?.createBoard?._id}`)()
-      }
-    } catch (error) {
-      if (error instanceof Error) Modal.error({ content: error.message })
-    }
-  }
+  // const onClickSubmit = async (): Promise<void> => {
+  //   if (!writer) {
+  //     setWriterError('작성자를 입력해주세요')
+  //   }
+  //   if (!password) {
+  //     setPasswordError('비밀번호를 입력해주세요')
+  //   }
+  //   if (!title) {
+  //     setTitleError('제목을 입력해주세요')
+  //   }
+  //   if (!contents) {
+  //     setContentsError('내용을 입력해주세요')
+  //   }
+  //   try {
+  //     const boardAddress = {
+  //       address,
+  //       addressDetail,
+  //       zipcode,
+  //     }
+  //     const createBoardInput: ICreateBoardInput = {
+  //       writer,
+  //       password,
+  //       title,
+  //       contents,
+  //       images: fileUrls,
+  //       youtubeUrl,
+  //       boardAddress,
+  //     }
+  //     const createBoardResult = await createBoard({
+  //       variables: {
+  //         createBoardInput,
+  //       },
+  //     })
+  //     if (createBoardResult?.data?.createBoard?._id) {
+  //       Modal.success({ content: '게시글이 등록되었습니다.' })
+  //       moveToPage(`/boards/${createBoardResult?.data?.createBoard?._id}`)()
+  //     }
+  //   } catch (error) {
+  //     if (error instanceof Error) Modal.error({ content: error.message })
+  //   }
+  // }
 
-  const onClickUpdate = async (): Promise<void> => {
-    const currentFiles = JSON.stringify(fileUrls)
-    const defaultFiles = JSON.stringify(props.data?.fetchBoard.images)
-    const isChangedFiles = currentFiles !== defaultFiles
-    if (
-      title === '' &&
-      contents === '' &&
-      youtubeUrl === '' &&
-      address === '' &&
-      addressDetail === '' &&
-      zipcode === '' &&
-      !isChangedFiles
-    ) {
-      Modal.warning({ content: '수정한 내용이 없습니다' })
-      return
-    }
-    if (password === '') {
-      Modal.warning({ content: '비밀번호를 입력해주세요.' })
-      return
-    }
-    const updateBoardInput: IUpdateBoardInput = {}
-    if (title) updateBoardInput['title'] = title
-    if (contents) updateBoardInput['contents'] = contents
-    if (isChangedFiles) updateBoardInput['images'] = fileUrls
-    updateBoardInput['youtubeUrl'] = youtubeUrl
-    updateBoardInput['boardAddress'] = {
-      address,
-      addressDetail,
-      zipcode,
-    }
-    try {
-      if (typeof router.query.boardId !== 'string') {
-        Modal.error({ content: '시스템에 문제가 있습니다.' })
-        return
-      }
-      const result = await updateBoard({
-        variables: {
-          boardId: router.query.boardId,
-          password: password,
-          updateBoardInput,
-        },
-      })
-      if (result?.data?.updateBoard?._id) {
-        Modal.success({ content: '게시글이 수정되었습니다.' })
-        moveToPage(`/boards/${result?.data?.updateBoard?._id}`)()
-      }
-    } catch (error) {
-      if (error instanceof Error) Modal.error({ content: error.message })
-    }
-  }
+  // const onClickUpdate = async (): Promise<void> => {
+  //   const currentFiles = JSON.stringify(fileUrls)
+  //   const defaultFiles = JSON.stringify(props.data?.fetchBoard.images)
+  //   const isChangedFiles = currentFiles !== defaultFiles
+  //   if (
+  //     title === '' &&
+  //     contents === '' &&
+  //     youtubeUrl === '' &&
+  //     address === '' &&
+  //     addressDetail === '' &&
+  //     zipcode === '' &&
+  //     !isChangedFiles
+  //   ) {
+  //     Modal.warning({ content: '수정한 내용이 없습니다' })
+  //     return
+  //   }
+  //   if (password === '') {
+  //     Modal.warning({ content: '비밀번호를 입력해주세요.' })
+  //     return
+  //   }
+  //   const updateBoardInput: IUpdateBoardInput = {}
+  //   if (title) updateBoardInput['title'] = title
+  //   if (contents) updateBoardInput['contents'] = contents
+  //   if (isChangedFiles) updateBoardInput['images'] = fileUrls
+  //   updateBoardInput['youtubeUrl'] = youtubeUrl
+  //   updateBoardInput['boardAddress'] = {
+  //     address,
+  //     addressDetail,
+  //     zipcode,
+  //   }
+  //   try {
+  //     if (typeof router.query.boardId !== 'string') {
+  //       Modal.error({ content: '시스템에 문제가 있습니다.' })
+  //       return
+  //     }
+  //     const result = await updateBoard({
+  //       variables: {
+  //         boardId: router.query.boardId,
+  //         password: password,
+  //         updateBoardInput,
+  //       },
+  //     })
+  //     if (result?.data?.updateBoard?._id) {
+  //       Modal.success({ content: '게시글이 수정되었습니다.' })
+  //       moveToPage(`/boards/${result?.data?.updateBoard?._id}`)()
+  //     }
+  //   } catch (error) {
+  //     if (error instanceof Error) Modal.error({ content: error.message })
+  //   }
+  // }
 
-  const handleModalOpen = (): void => {
-    setIsOpen((prev) => !prev)
-  }
+  // const handleModalOpen = (): void => {
+  //   setIsOpen((prev) => !prev)
+  // }
 
-  const handleGetAddress = (data: Address): void => {
-    setIsOpen((prev) => !prev)
-    if (data) {
-      setAddress(data.address)
-      setZipcode(data.zonecode)
-    } else {
-      Modal.warning({ content: '주소를 정상적으로 읽어오지 못했습니다.' })
-    }
-  }
+  // const handleGetAddress = (data: Address): void => {
+  //   setIsOpen((prev) => !prev)
+  //   if (data) {
+  //     setAddress(data.address)
+  //     setZipcode(data.zonecode)
+  //   } else {
+  //     Modal.warning({ content: '주소를 정상적으로 읽어오지 못했습니다.' })
+  //   }
+  // }
 
   useEffect(() => {
     const fetchBoard = props?.data?.fetchBoard
@@ -199,9 +207,7 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
       (contents || fetchBoard?.contents) &&
       password
     ) {
-      setFormValidation(true)
     } else {
-      setFormValidation(false)
     }
   }, [writer, password, title, contents])
 

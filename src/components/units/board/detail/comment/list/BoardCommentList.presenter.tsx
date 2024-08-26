@@ -3,6 +3,7 @@ import { IBoardCommentListUIProps } from './BoardCommentList.types'
 import { Modal } from 'antd'
 import CommentItem from 'src/components/units/board/detail/comment/item'
 import InfiniteScroll from 'react-infinite-scroller'
+import Input01 from 'src/components/commons/inputs/01/Input01.index'
 
 export default function BoardCommentListUI(props: IBoardCommentListUIProps): JSX.Element {
   return (
@@ -13,10 +14,11 @@ export default function BoardCommentListUI(props: IBoardCommentListUIProps): JSX
         onOk={props.onClickCommentDeleteOk}
         onCancel={props.handlePasswordModal}
       >
-        <S.PasswordInput
-          value={props.passwordCheck}
-          onChange={(e) => props.setPasswordCheck(e.target.value)}
+        <Input01
           type="password"
+          onChange={(e) => props.setPasswordCheck(e.target.value)}
+          value={props.passwordCheck}
+          fullWidth={true}
         />
       </Modal>
       <InfiniteScroll pageStart={0} loadMore={props.onLoadMore} hasMore={true}>

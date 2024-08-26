@@ -36,10 +36,10 @@ export default function BoardCommentWrite(): JSX.Element {
 
   const onInputUserInfo = (event: FormEvent<HTMLInputElement>): void => {
     const {
-      currentTarget: { value, id },
+      currentTarget: { value, type },
     } = event
-    if (id === 'writerInput') setWriter(value)
-    if (id === 'pwInput') setPassword(value)
+    if (type === 'text') setWriter(value)
+    if (type === 'password') setPassword(value)
   }
 
   const onClickSubmit = async (): Promise<void> => {

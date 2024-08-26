@@ -46,11 +46,10 @@ export default function CommentItem(props) {
 
   const onInputUserInfo = (event: FormEvent<HTMLInputElement>): void => {
     const {
-      currentTarget: { value, id },
+      currentTarget: { value, type },
     } = event
-    console.log(value)
-    if (id === 'writerInput') setWriter(value)
-    if (id === 'pwInput') setPassword(value)
+    if (type === 'text') setWriter(value)
+    if (type === 'password') setPassword(value)
   }
 
   const onClickCommentToggle = (): void => {

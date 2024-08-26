@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { IBoardCommentWriteUIProps } from './BoardCommentWrite.types'
 import Button01 from 'src/components/commons/buttons/01/Button01.index'
 import theme from 'src/commons/styles/theme'
+import Input01 from 'src/components/commons/inputs/01/Input01.index'
 
 export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps): JSX.Element {
   return (
@@ -14,17 +15,15 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps): J
         </S.CommentTitle>
       )}
       <S.InputWrapper>
-        <S.WriteInput
+        <Input01
           value={props.writer}
-          id="writerInput"
           readOnly={props.isEdit}
           onChange={props.onInputUserInfo}
           placeholder="작성자"
         />
-        <S.PasswordInput
-          value={props.password}
-          id="pwInput"
+        <Input01
           type="password"
+          value={props.password}
           onChange={props.onInputUserInfo}
           placeholder="비밀번호"
         />
