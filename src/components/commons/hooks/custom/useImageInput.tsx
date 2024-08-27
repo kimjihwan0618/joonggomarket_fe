@@ -19,5 +19,6 @@ export const useImageInput = () => {
     fileUrls,
     onChangeFileUrls,
     onClickReset,
+    setFileUrls,
   }
 }

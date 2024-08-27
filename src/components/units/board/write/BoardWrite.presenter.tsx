@@ -8,19 +8,21 @@ import Button01 from 'src/components/commons/buttons/01/Button01.index'
 import theme from 'src/commons/styles/theme'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useForm } from 'react-hook-form'
-import { IBoardWriterForm, schema } from './BoardWrite.schema'
+import { schema } from './BoardWrite.schema'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Address } from 'react-daum-postcode'
 import { useImageInput } from 'src/components/commons/hooks/custom/useImageInput'
+import { useMutationCreateBoard } from 'src/components/commons/hooks/mutations/useMutationCreateBoard'
 
 export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
   const { moveToPage } = useMoveToPage()
-  const { fileUrls, onChangeFileUrls, onClickReset } = useImageInput()
-  const { register, handleSubmit, formState, setValue } = useForm<IBoardWriterForm>({
+  const { fileUrls, onChangeFileUrls, onClickReset, setFileUrls } = useImageInput()
+  const { register, handleSubmit, formState, setValue, getValues } = useForm({
     resolver: yupResolver(schema),
     mode: 'onChange',
   })
+  const { createBoard } = useMutationCreateBoard(getValues)
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -42,6 +44,10 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
     props.isEdit ? moveToPage(`/boards/${props?.data?.fetchBoard?._id}`)() : moveToPage(`/boards`)()
   }
 
+  useEffect(() => {
+    props.data?.fetchBoard?.images.length > 0 && setFileUrls(props.data?.fetchBoard?.images)
+  }, [])
+
   return (
     <>
       {isOpen && (
@@ -55,9 +61,9 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
           <S.FormItem style={{ width: '48.78%' }}>
             <S.ItemTitle>작성자</S.ItemTitle>
             <S.ItemInput
-              // disabled={!!props.data?.fetchBoard.writer}
-              // readOnly={!!props.data?.fetchBoard.writer}
-              // defaultValue={props.data?.fetchBoard.writer ?? ''}
+              disabled={!!props.data?.fetchBoard.writer}
+              readOnly={!!props.data?.fetchBoard.writer}
+              defaultValue={props.data?.fetchBoard.writer ?? ''}
               {...register('writer')}
               placeholder="이름을 적어주세요."
             />
@@ -75,7 +81,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
           <S.FormItem style={{ width: '100%' }}>
             <S.ItemTitle>제목</S.ItemTitle>
             <S.ItemInput
-              // defaultValue={props.data?.fetchBoard.title}
+              defaultValue={props.data?.fetchBoard.title ?? ''}
               placeholder="제목을 작성해주세요."
               {...register('title')}
             />
@@ -84,7 +90,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
           <S.FormItem style={{ width: '100%' }}>
             <S.ItemTitle>내용</S.ItemTitle>
             <S.ItemTextArea
-              // defaultValue={props.data?.fetchBoard.contents}
+              defaultValue={props.data?.fetchBoard.contents ?? ''}
               placeholder="내용을 작성해주세요."
               {...register('contents')}
             />
@@ -93,7 +99,12 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
           <S.PostSearchItem>
             <S.FormItem style={{ width: '78px' }}>
               <S.ItemTitle>주소</S.ItemTitle>
-              <S.ItemInput {...register('zipcode')} readOnly placeholder="우편번호" />
+              <S.ItemInput
+                defaultValue={props.data?.fetchBoard?.boardAddress?.zipcode ?? ''}
+                {...register('zipcode')}
+                readOnly
+                placeholder="우편번호"
+              />
             </S.FormItem>
             <Button01
               onClick={handleModalOpen}
@@ -106,7 +117,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
             </S.FormItem>
             <S.FormItem style={{ width: '100%' }}>
               <S.DetailAddressInput
-                // defaultValue={props.data?.fetchBoard?.boardAddress?.addressDetail}
+                defaultValue={props.data?.fetchBoard?.boardAddress?.addressDetail ?? ''}
                 placeholder="상세주소를 입력해주세요."
                 {...register('addressDetail')}
               />
@@ -115,7 +126,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
           <S.FormItem style={{ width: '100%' }}>
             <S.ItemTitle>유튜브</S.ItemTitle>
             <S.ItemInput
-              // defaultValue={props.data?.fetchBoard?.youtubeUrl}
+              defaultValue={props.data?.fetchBoard?.youtubeUrl ?? ''}
               placeholder="링크를 복사해주세요."
               {...register('youtubeUrl')}
             />

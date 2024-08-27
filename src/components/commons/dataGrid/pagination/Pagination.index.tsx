@@ -7,19 +7,17 @@ import { IQuery } from 'src/commons/types/generated/types'
 interface IPaginationProps {
   selectedPage: number
   setSelectedPage: Dispatch<SetStateAction<number>>
-  startDate: string
+  startDate: string | null
   startPage: number
   setStartPage: Dispatch<SetStateAction<number>>
-  endDate: string
+  endDate: string | null
   refetch: (variables?: Partial<any>) => Promise<ApolloQueryResult<any>>
   keyword: string
   count: number
 }
 
 export default function Pagination(props: IPaginationProps): JSX.Element {
-  const lastPage = props.count ? Math.ceil(props.count / 10) : 0
-  // const [startPage, setStartPage] = useState(1)
-
+  const lastPage = props.count
   const onClickPage = (event: MouseEvent<HTMLButtonElement>): void => {
     const page = Number(event.currentTarget.id)
     props.setSelectedPage(page)

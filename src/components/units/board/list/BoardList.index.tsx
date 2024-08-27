@@ -44,7 +44,7 @@ export default function BoardListUI(): JSX.Element {
         {boardsBest?.fetchBoardsOfTheBest.map((el) => (
           <S.BestBoardItem id={el._id} onClick={moveToPage(`/boards/${el._id}`)}>
             <S.ItemImage
-              data-src={el.images.length && `https://storage.googleapis.com/${el.images[0]}`}
+              data-src={el.images?.length !== 0 && `https://storage.googleapis.com/${el.images[0]}`}
             />
             <S.BoardInfo>
               <S.Title>{el.title}</S.Title>
@@ -94,7 +94,7 @@ export default function BoardListUI(): JSX.Element {
           endDate={endDate}
           refetch={refetchBoards}
           keyword={keyword}
-          count={boardsCount?.fetchBoardsCount}
+          count={boardsCount?.fetchBoardsCount ?? 0}
         />
         {
           <Button01
