@@ -12,15 +12,16 @@ export const Label = styled.dt`
   margin-bottom: 21px;
 `
 
-export const InputItem = styled.dd`
+export const TextAreaItem = styled.dd`
   font-size: 1.6rem;
   margin-bottom: 21px;
 `
 
-export const Input = styled.input`
+export const TextArea = styled.textarea`
   border: 1px solid ${({ theme }) => theme.colors.gray04};
+  height: ${(props) => props['data-height']};
   padding: 14px 16px;
-  height: 52px;
+  font-size: 1.6rem;
   width: 100%;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {

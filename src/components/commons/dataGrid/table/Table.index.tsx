@@ -1,4 +1,4 @@
-import * as S from 'src/components/commons/dataGrid/table/Table.Styles'
+import * as S from 'src/components/commons/datagrid/table/Table.Styles'
 
 interface ITableProps {
   data: {}[]

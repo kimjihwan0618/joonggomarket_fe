@@ -1,7 +1,7 @@
 import { gql, useQuery } from '@apollo/client'
 import { IQuery } from 'src/commons/types/generated/types'
 
-const FETCH_BOARDS_BEST = gql`
+export const FETCH_BOARDS_BEST = gql`
   query {
     fetchBoardsOfTheBest {
       _id

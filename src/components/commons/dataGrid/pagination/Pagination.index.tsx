@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import * as S from 'src/components/commons/dataGrid/pagination/Pagination.Styles'
+import * as S from 'src/components/commons/datagrid/pagination/Pagination.Styles'
 import { Dispatch, SetStateAction, useState, type MouseEvent } from 'react'
 import { ApolloQueryResult } from '@apollo/client'
 import { IQuery } from 'src/commons/types/generated/types'

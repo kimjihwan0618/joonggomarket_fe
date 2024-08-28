@@ -1,16 +1,16 @@
 import { useState } from 'react'
 
-export const useImageInput = () => {
-  const [fileUrls, setFileUrls] = useState(['', '', ''])
+export const useImageInput = (count: number) => {
+  const [fileUrls, setFileUrls] = useState<string[]>(new Array(count).fill('').map(() => ''))
 
   const onChangeFileUrls = (fileUrl: string, index: number): void => {
-    const newFileUrls = [...fileUrls]
+    const newFileUrls: string[] = [...fileUrls]
     newFileUrls[index] = fileUrl
     setFileUrls(newFileUrls)
   }
 
   const onClickReset = (index: number): void => {
-    const newFileUrls = [...fileUrls]
+    const newFileUrls: string[] = [...fileUrls]
     newFileUrls[index] = ''
     setFileUrls(newFileUrls)
   }

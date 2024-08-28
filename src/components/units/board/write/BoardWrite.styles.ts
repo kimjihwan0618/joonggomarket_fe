@@ -101,11 +101,11 @@ export const ItemTextArea = styled.textarea`
 
 export const PostSearchItem = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   width: 100%;
   margin-bottom: 40px;
   flex-wrap: wrap;
-  & > div {
+  & > dl {
     margin-bottom: 0px;
   }
   & > div:nth-of-type(2) {

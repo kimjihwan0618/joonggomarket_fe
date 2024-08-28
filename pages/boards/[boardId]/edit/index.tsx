@@ -2,7 +2,7 @@ import { FETCH_BOARD } from 'src/components/units/board/detail/BoardDetail.queri
 import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { IQuery, IQueryFetchBoardArgs } from 'src/commons/types/generated/types'
-import BoardWriteUI from 'src/components/units/board/write/BoardWrite.presenter'
+import BoardWriteUI from 'src/components/units/board/write/BoardWrite.index'
 
 export default function BoardEditPage() {
   const router = useRouter()

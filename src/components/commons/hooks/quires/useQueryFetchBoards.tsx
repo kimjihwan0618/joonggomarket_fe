@@ -1,7 +1,7 @@
 import { gql, useQuery } from '@apollo/client'
 import { IQuery, IQueryFetchBoardsArgs } from 'src/commons/types/generated/types'
 
-const FETCH_BOARDS = gql`
+export const FETCH_BOARDS = gql`
   query fetchBoards($endDate: DateTime, $startDate: DateTime, $search: String, $page: Int) {
     fetchBoards(endDate: $endDate, startDate: $startDate, search: $search, page: $page) {
       _id
