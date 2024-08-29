@@ -1,4 +1,9 @@
-import { gql } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client'
+import {
+  IQuery,
+  IQueryFetchBoardArgs,
+  IQueryFetchBoardsArgs,
+} from 'src/commons/types/generated/types'
 
 export const FETCH_BOARD = gql`
   query fetchBoard($boardId: ID!) {
@@ -31,22 +36,13 @@ export const FETCH_BOARD = gql`
       }
     }
   }
-`;
+`
 
-export const DELETE_BOARD = gql`
-  mutation deleteBoard($boardId: ID!) {
-    deleteBoard(boardId: $boardId)
-  }
-`;
+export const useQueryFetchBoard = (boardId) => {
+  const { data } = useQuery<Pick<IQuery, 'fetchBoard'>, IQueryFetchBoardArgs>(FETCH_BOARD, {
+    variables: { boardId },
+    skip: !boardId,
+  })
 
-export const LIKE_BOARD = gql`
-  mutation likeBoard($boardId: ID!) {
-    likeBoard(boardId: $boardId)
-  }
-`;
-
-export const DISLIKE_BOARD = gql`
-  mutation dislikeBoard($boardId: ID!) {
-    dislikeBoard(boardId: $boardId)
-  }
-`;
+  return { data }
+}

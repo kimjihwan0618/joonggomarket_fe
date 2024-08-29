@@ -7,7 +7,7 @@ import InputWithError from 'src/components/commons/inputs/02/InputWithError.inde
 import { useForm } from 'react-hook-form'
 import { ILoginForm, schema } from './Login.schema'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useMutationLoginUser } from 'src/components/commons/hooks/mutations/useMutationLoginUser'
+import { useMutationLoginUser } from 'src/components/commons/hooks/mutations/user/useMutationLoginUser'
 
 export default function LoginUI(): JSX.Element {
   const { moveToPage } = useMoveToPage()

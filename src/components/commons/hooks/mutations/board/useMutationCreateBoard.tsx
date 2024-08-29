@@ -7,9 +7,8 @@ import type {
 } from 'src/commons/types/generated/types'
 import { IBoardWriterForm } from 'src/components/units/board/write/BoardWrite.schema'
 import type { UseFormGetValues } from 'react-hook-form'
-import { useMoveToPage } from '../custom/useMoveToPage'
-import { Address } from 'react-daum-postcode'
-import { FETCH_BOARDS } from '../quires/useQueryFetchBoards'
+import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
+import { FETCH_BOARDS } from 'src/components/commons/hooks/quires/board/useQueryFetchBoards'
 
 interface IuseMutationCreateBoardProps {
   getValues: UseFormGetValues<IBoardWriterForm>

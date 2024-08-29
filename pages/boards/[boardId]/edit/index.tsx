@@ -1,4 +1,4 @@
-import { FETCH_BOARD } from 'src/components/units/board/detail/BoardDetail.queries'
+import { FETCH_BOARD } from 'src/components/commons/hooks/quires/board/useQueryFetchBoard'
 import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { IQuery, IQueryFetchBoardArgs } from 'src/commons/types/generated/types'

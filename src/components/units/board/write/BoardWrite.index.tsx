@@ -8,14 +8,14 @@ import { IBoardWriterForm, schema } from './BoardWrite.schema'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useEffect } from 'react'
 import { useImageInput } from 'src/components/commons/hooks/custom/useImageInput'
-import { useMutationCreateBoard } from 'src/components/commons/hooks/mutations/useMutationCreateBoard'
-import { useMutationUpdateBoard } from 'src/components/commons/hooks/mutations/useMutationUpdateBoard'
+import { useMutationCreateBoard } from 'src/components/commons/hooks/mutations/board/useMutationCreateBoard'
+import { useMutationUpdateBoard } from 'src/components/commons/hooks/mutations/board/useMutationUpdateBoard'
 import { useRouter } from 'next/router'
 import { useUpdateForm } from 'src/components/commons/hooks/custom/useUpdateForm'
 import { useDaumPostModal } from 'src/components/commons/hooks/custom/useDaumPostModal'
 import { IQuery } from 'src/commons/types/generated/types'
 import InputWithError from 'src/components/commons/inputs/02/InputWithError.index'
-import TextAreaWithError from 'src/components/commons/testareas/01/TextAreaWithError.index'
+import TextAreaWithError from 'src/components/commons/textareas/01/TextAreaWithError.index'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 
 export interface IBoardWriteUIProps {
@@ -158,7 +158,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
         </S.FormWrapper>
         <S.ButtonWrapper>
           <Button01
-            onClick={() => moveToBack(`/boards/${router.query.boardId}`)}
+            onClick={moveToBack(`/boards/${router.query.boardId}`)}
             background={theme.colors.gray04}
             name={'취소하기'}
             width="03"

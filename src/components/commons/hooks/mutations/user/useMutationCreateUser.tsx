@@ -1,19 +1,15 @@
 import { gql, useMutation } from '@apollo/client'
 import { Modal } from 'antd'
-import type {
-  IMutation,
-  IMutationCreateUserArgs,
-  IMutationLoginUserArgs,
-} from 'src/commons/types/generated/types'
-import { IBoardWriterForm } from 'src/components/units/board/write/BoardWrite.schema'
+import type { IMutation, IMutationCreateUserArgs } from 'src/commons/types/generated/types'
 import type { UseFormGetValues } from 'react-hook-form'
-import { useMoveToPage } from '../custom/useMoveToPage'
+import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useRouter } from 'next/router'
 import { useRecoilState } from 'recoil'
 import { accessTokenState, vistedPageState } from 'src/commons/stores'
+import { ICreateUserForm } from 'src/components/units/auth/signup/Signup.schema'
 
 interface IUseMutationCreateUserProps {
-  getValues: UseFormGetValues<IBoardWriterForm>
+  getValues: UseFormGetValues<ICreateUserForm>
 }
 
 export const CREATE_USER = gql`
@@ -25,7 +21,7 @@ export const CREATE_USER = gql`
   }
 `
 
-export const useMutationCreateUser = (props) => {
+export const useMutationCreateUser = (props: IUseMutationCreateUserProps) => {
   const router = useRouter()
   const { moveToPage } = useMoveToPage()
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)

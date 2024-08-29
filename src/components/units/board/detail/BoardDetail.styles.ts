@@ -87,7 +87,7 @@ export const ThumbsWrapper = styled.ul`
   }
 `
 
-export const Thumbs = styled.dl<ThumbsUIProps>`
+export const Thumbs = styled.dl`
   display: flex;
   flex-direction: column;
   align-items: center;
