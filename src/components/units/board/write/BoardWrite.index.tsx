@@ -16,6 +16,7 @@ import { useDaumPostModal } from 'src/components/commons/hooks/custom/useDaumPos
 import { IQuery } from 'src/commons/types/generated/types'
 import InputWithError from 'src/components/commons/inputs/02/InputWithError.index'
 import TextAreaWithError from 'src/components/commons/testareas/01/TextAreaWithError.index'
+import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 
 export interface IBoardWriteUIProps {
   isEdit: boolean
@@ -33,6 +34,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
     setAddress,
     setZoneCode,
   } = useDaumPostModal()
+  const { moveToBack } = useMoveToPage()
   const { fileUrls, onChangeFileUrls, onClickReset, setFileUrls } = useImageInput(3)
   const { register, formState, setValue, getValues } = useForm<IBoardWriterForm>({
     resolver: yupResolver(schema),
@@ -156,7 +158,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
         </S.FormWrapper>
         <S.ButtonWrapper>
           <Button01
-            onClick={() => router.back()}
+            onClick={() => moveToBack(`/boards/${router.query.boardId}`)}
             background={theme.colors.gray04}
             name={'취소하기'}
             width="03"

@@ -19,6 +19,7 @@ export const InputItem = styled.dd`
 
 export const Input = styled.input`
   border: 1px solid ${({ theme }) => theme.colors.gray04};
+  color: ${(props) => props.color};
   padding: 14px 16px;
   font-size: 1.6rem;
   height: 52px;

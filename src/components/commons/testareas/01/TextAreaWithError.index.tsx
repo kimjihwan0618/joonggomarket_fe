@@ -3,7 +3,7 @@ import * as S from './TextAreaWithError.styles'
 import type { ChangeEvent } from 'react'
 
 interface ITextAreaWithErrorProps {
-  onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void
+  // onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void
   register: UseFormRegisterReturn
   disabled?: boolean
   readOnly?: boolean
@@ -21,7 +21,6 @@ export default function TextAreaWithError(props: ITextAreaWithErrorProps): JSX.E
       <S.TextAreaItem>
         <S.TextArea
           {...props.register}
-          onChange={props.onChange}
           disabled={props.disabled ?? false}
           readOnly={props.readOnly ?? false}
           placeholder={props.placeholder ?? ''}

@@ -1,10 +1,9 @@
 import { UseFormRegisterReturn } from 'react-hook-form'
 import * as S from './InputWithError.styles'
 import type { ChangeEvent } from 'react'
-import { DefaultValue } from 'recoil'
 
 interface IInputWithErrorProps {
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void
+  // onChange?: (event: ChangeEvent<HTMLInputElement>) => void
   register: UseFormRegisterReturn
   type?: 'number' | 'text' | 'password' | 'email'
   value?: number | string
@@ -14,6 +13,7 @@ interface IInputWithErrorProps {
   label?: string
   error?: string
   width?: string
+  color?: string
 }
 
 export default function InputWithError(props: IInputWithErrorProps): JSX.Element {
@@ -22,8 +22,9 @@ export default function InputWithError(props: IInputWithErrorProps): JSX.Element
       {props.label && <S.Label>{props.label}</S.Label>}
       <S.InputItem>
         <S.Input
+          // onChange={props.onChange}
+          color={props.color ?? '#000'}
           {...props.register}
-          onChange={props.onChange}
           type={props.type ?? 'text'}
           disabled={props.disabled ?? false}
           readOnly={props.readOnly ?? false}

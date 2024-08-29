@@ -1,27 +1,4 @@
-import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-
-const INPUT_ITEM_STYLE = css`
-  margin-bottom: 20px;
-  width: 100%;
-  color: white;
-  input {
-    font-size: 1.6rem;
-    color: white;
-    width: 100%;
-    border-radius: 10px;
-    padding: 20px 16px;
-    background: none;
-    border: 1px solid rgba(255, 255, 255, 1);
-  }
-  p {
-    font-size: 1.4rem;
-    color: rgba(255, 0, 0, 1);
-    margin-top: 4px;
-    font-weight: bold;
-    margin-left: 16px;
-  }
-`
 
 export const Wrapper = styled.div`
   width: 100vw;
@@ -50,18 +27,12 @@ export const LoginFormBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 384px;
+  width: 420px;
 `
 
 export const Logo = styled.h1`
   margin-bottom: 60px;
 `
-export const InputItem = styled.div`
-  ${INPUT_ITEM_STYLE}
-`
-export const EmailInput = styled.input``
-export const PasswordInput = styled.input``
-export const ValidationText = styled.p``
 
 export const ButtonListWrapper = styled.ul`
   padding-top: 29px;
@@ -70,6 +41,7 @@ export const ButtonListWrapper = styled.ul`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 `
 
 export const BottomButton = styled.li`

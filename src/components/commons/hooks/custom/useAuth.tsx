@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useMoveToPage } from './useMoveToPage'
 
