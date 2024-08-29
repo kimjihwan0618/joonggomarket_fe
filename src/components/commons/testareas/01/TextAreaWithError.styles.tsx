@@ -27,6 +27,7 @@ export const TextArea = styled.textarea`
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
+  resize: none;
 `
 
 export const Error = styled.p`

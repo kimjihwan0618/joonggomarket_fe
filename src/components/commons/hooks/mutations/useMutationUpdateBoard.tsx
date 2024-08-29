@@ -15,8 +15,6 @@ import { FETCH_BOARD } from 'src/components/units/board/detail/BoardDetail.queri
 interface IUseMutationUpdateBoardProps {
   getValues: UseFormGetValues<IBoardWriterForm>
   fileUrls: string[]
-  address: Address['address']
-  zonecode: Address['zonecode']
 }
 
 export const UPDATE_BOARD = gql`
@@ -39,13 +37,13 @@ export const useMutationUpdateBoard = (props: IUseMutationUpdateBoardProps) => {
   >(UPDATE_BOARD)
 
   const updateBoard = async (): Promise<void> => {
-    const { addressDetail, password, title, contents, youtubeUrl } = props.getValues()
-    console.log(addressDetail)
+    const { addressDetail, password, title, contents, youtubeUrl, address, zipcode } =
+      props.getValues()
     try {
       const boardAddress = {
-        address: props.address,
+        address,
         addressDetail,
-        zipcode: props.zonecode,
+        zipcode,
       }
       const updateBoardInput: IUpdateBoardInput = {
         title,

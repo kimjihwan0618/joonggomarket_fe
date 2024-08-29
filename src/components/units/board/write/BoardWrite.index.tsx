@@ -38,13 +38,18 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
     resolver: yupResolver(schema),
     mode: 'onChange',
   })
-  const { createBoard } = useMutationCreateBoard({ getValues, fileUrls, address, zonecode })
-  const { updateBoard } = useMutationUpdateBoard({ getValues, fileUrls, address, zonecode })
+  const { createBoard } = useMutationCreateBoard({ getValues, fileUrls })
+  const { updateBoard } = useMutationUpdateBoard({ getValues, fileUrls })
   const { handleFormUpdate } = useUpdateForm({
     setValue,
     updateKeys: ['writer', 'title', 'contents', 'boardAddress.addressDetail', 'youtubeUrl'],
     fetchData: props.data?.fetchBoard,
   })
+
+  useEffect(() => {
+    setValue('zipcode', zonecode)
+    setValue('address', address)
+  }, [address, zonecode])
 
   useEffect(() => {
     const fetchBoard = props.data?.fetchBoard
@@ -98,10 +103,10 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
             height="480px"
             error={formState.errors.contents?.message}
           />
-          <S.PostSearchItem>
+          <S.PostAddressWrapper>
             <InputWithError
               register={register('zipcode')}
-              placeholder="우편번호."
+              placeholder="우편번호"
               width="100px"
               readOnly
               label={'주소'}
@@ -112,26 +117,19 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
               color="white"
               background={theme.colors.dark01}
             />
-            <S.FormItem style={{ width: '100%' }}>
-              <S.DetailAddressInput value={address} {...register('address')} readOnly />
-            </S.FormItem>
-            <S.FormItem style={{ width: '100%' }}>
-              <S.DetailAddressInput
-                defaultValue={props.data?.fetchBoard?.boardAddress?.addressDetail ?? ''}
-                readOnly={zonecode === null ? true : false}
-                placeholder="상세주소를 입력해주세요."
-                {...register('addressDetail')}
-              />
-            </S.FormItem>
-          </S.PostSearchItem>
-          <S.FormItem style={{ width: '100%' }}>
-            <S.ItemTitle>유튜브</S.ItemTitle>
-            <S.ItemInput
-              defaultValue={props.data?.fetchBoard?.youtubeUrl ?? ''}
-              placeholder="링크를 복사해주세요."
-              {...register('youtubeUrl')}
+            <InputWithError register={register('address')} readOnly />
+            <InputWithError
+              register={register('addressDetail')}
+              readOnly={zonecode === null ? true : false}
+              placeholder="상세주소를 입력해주세요."
             />
-          </S.FormItem>
+          </S.PostAddressWrapper>
+          <InputWithError
+            label={'유튜브'}
+            register={register('youtubeUrl')}
+            placeholder="유튜브 링크를 입력해주세요"
+            error={formState.errors.youtubeUrl?.message}
+          />
           <S.FormItem style={{ width: '100%' }}>
             <S.ItemTitle>사진 첨부</S.ItemTitle>
             <S.ImagesWrapper>
@@ -146,7 +144,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
               ))}
             </S.ImagesWrapper>
           </S.FormItem>
-          <S.FormItem style={{ width: '100%' }}>
+          {/* <S.FormItem style={{ width: '100%' }}>
             <S.ItemTitle>메인 설정</S.ItemTitle>
             <S.RadioItem>
               <input id="youtube" type="radio" value={'유튜브'} name="main-set"></input>
@@ -154,7 +152,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
               <input id="photo" type="radio" value={'사진'} name="main-set"></input>
               <label htmlFor="photo">사진</label>
             </S.RadioItem>
-          </S.FormItem>
+          </S.FormItem> */}
         </S.FormWrapper>
         <S.ButtonWrapper>
           <Button01

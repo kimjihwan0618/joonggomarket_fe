@@ -35,44 +35,8 @@ export const ItemTitle = styled.div`
   margin-bottom: 21px;
 `
 
-export const ItemInput = styled.input`
-  font-size: 1.6rem;
-  border: 1px solid ${({ theme }) => theme.colors.gray04};
-  padding: 14px 16px;
-  height: 52px;
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-  }
-`
-
 export const ImagesWrapper = styled.div`
   display: flex;
-`
-export const ImageUploadButton = styled.button`
-  width: 78px;
-  height: 78px;
-  background: ${({ theme }) => theme.colors.gray04};
-  margin-right: 24px;
-  border: none;
-  display: flex;
-  cursor: pointer;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  span {
-    color: ${({ theme }) => theme.colors.gray02};
-    font-size: 2.4rem;
-  }
-  p {
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: ${({ theme }) => theme.colors.gray02};
-    padding: 0px;
-  }
-  &:hover {
-    background: ${({ theme }) => theme.colors.gray05};
-  }
 `
 
 export const RadioItem = styled.div`
@@ -91,36 +55,15 @@ export const RadioItem = styled.div`
   }
 `
 
-export const ItemTextArea = styled.textarea`
-  font-size: 1.6rem;
-  border: 1px solid ${({ theme }) => theme.colors.gray04};
-  padding: 14px 16px;
-  min-height: 480px;
-  resize: none;
-`
-
-export const PostSearchItem = styled.div`
+export const PostAddressWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  margin-bottom: 40px;
   flex-wrap: wrap;
-  & > dl {
-    margin-bottom: 0px;
-  }
-  & > div:nth-of-type(2) {
-    margin-top: 16px;
-    margin-bottom: 30px;
-  }
   & > button {
     margin-left: 16px;
+    margin-top: 21px;
   }
-`
-export const DetailAddressInput = styled.input`
-  font-size: 1.6rem;
-  border: 1px solid ${({ theme }) => theme.colors.gray04};
-  padding: 14px 16px;
-  height: 52px;
 `
 
 export const ButtonWrapper = styled.div`
@@ -130,10 +73,4 @@ export const ButtonWrapper = styled.div`
   button:first-of-type {
     margin-right: 16px;
   }
-`
-
-export const FormItemError = styled.p`
-  color: red;
-  font-size: 1.6rem;
-  margin-top: 4px;
 `

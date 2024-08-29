@@ -11,7 +11,7 @@ interface IInputWithErrorProps {
   disabled?: boolean
   readOnly?: boolean
   placeholder?: string
-  label: string
+  label?: string
   error?: string
   width?: string
 }
@@ -19,7 +19,7 @@ interface IInputWithErrorProps {
 export default function InputWithError(props: IInputWithErrorProps): JSX.Element {
   return (
     <S.Wrapper data-width={props.width ?? '100%'}>
-      <S.Label>{props.label}</S.Label>
+      {props.label && <S.Label>{props.label}</S.Label>}
       <S.InputItem>
         <S.Input
           {...props.register}

@@ -14,8 +14,6 @@ import { FETCH_BOARDS } from '../quires/useQueryFetchBoards'
 interface IuseMutationCreateBoardProps {
   getValues: UseFormGetValues<IBoardWriterForm>
   fileUrls: string[]
-  address: Address['address']
-  zonecode: Address['zonecode']
 }
 
 export const CREATE_BOARD = gql`
@@ -34,12 +32,13 @@ export const useMutationCreateBoard = (props: IuseMutationCreateBoardProps) => {
   >(CREATE_BOARD)
 
   const createBoard = async (): Promise<void> => {
-    const { addressDetail, writer, password, title, contents, youtubeUrl } = props.getValues()
+    const { addressDetail, writer, password, title, contents, youtubeUrl, address, zipcode } =
+      props.getValues()
     try {
       const boardAddress = {
-        address: props.address,
+        address,
         addressDetail,
-        zipcode: props.zonecode,
+        zipcode,
       }
       const createBoardInput: ICreateBoardInput = {
         writer,
