@@ -28,6 +28,9 @@ export const TextArea = styled.textarea`
     -webkit-appearance: none;
   }
   resize: none;
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.gray04};
+  }
 `
 
 export const Error = styled.p`

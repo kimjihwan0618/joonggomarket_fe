@@ -30,6 +30,9 @@ export const InputWrapper = styled.div`
   input:nth-of-type(2) {
     margin: 0 24px;
   }
+  dl {
+    margin-right: 16px;
+  }
 `
 
 export const Rating = styled.div`
@@ -46,7 +49,6 @@ export const Rating = styled.div`
 export const CommentWrapper = styled.div`
   width: 100%;
   margin-top: 20px;
-  border: 1px solid ${({ theme }) => theme.colors.gray04};
 `
 
 export const CommentTextArea = styled.textarea`

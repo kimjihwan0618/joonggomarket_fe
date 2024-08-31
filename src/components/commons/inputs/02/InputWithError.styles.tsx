@@ -14,7 +14,6 @@ export const Label = styled.dt`
 
 export const InputItem = styled.dd`
   font-size: 1.6rem;
-  margin-bottom: 21px;
 `
 
 export const Input = styled.input`
@@ -27,6 +26,9 @@ export const Input = styled.input`
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
+  }
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.gray04};
   }
 `
 

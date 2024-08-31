@@ -166,7 +166,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
           <Button01
             disabled={!formState.isValid}
             onClick={props.isEdit ? updateBoard : createBoard}
-            background={!formState.isValid ? theme.colors.gray04 : theme.colors.main}
+            background={theme.colors.main}
             name={`${props.isEdit ? '수정' : '등록'}하기`}
             width="03"
           />

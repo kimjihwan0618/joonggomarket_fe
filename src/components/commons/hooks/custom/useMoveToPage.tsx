@@ -22,10 +22,12 @@ export const useMoveToPage = (): IUseMoveToPageReturn => {
   }
 
   const moveToBack = (path: string) => () => {
-    const back = vistedPage ? vistedPage : path
-    console.log(back)
-    setVisitedPage(back)
-    void router.push(back)
+    if (!vistedPage) {
+      setVisitedPage(path)
+      void router.push(path)
+    } else {
+      window.history.go(-1)
+    }
   }
 
   return {

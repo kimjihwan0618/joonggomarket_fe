@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { css } from '@emotion/react'
 
 export const ContentWrapper = styled.div`
   padding: 40px 75px 60px;
@@ -21,6 +20,9 @@ export const FormWrapper = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
+  dl {
+    margin-bottom: 21px;
+  }
 `
 
 export const FormItem = styled.div`

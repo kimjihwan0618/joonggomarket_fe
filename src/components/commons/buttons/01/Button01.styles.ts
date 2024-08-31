@@ -9,7 +9,7 @@ const width = {
 
 export const Button = styled.button`
   padding: ${(props) => width[props['data-width']]};
-  background: ${(props) => props['data-background']};
+  background: ${(props) => (props.disabled ? props.theme.colors.gray04 : props['data-background'])};
   border: ${(props) => props['data-background'] === 'white' && '1px solid rgba(189, 189, 189, 1)'};
   display: flex;
   align-items: center;

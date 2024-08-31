@@ -114,8 +114,8 @@ export const Thumbs = styled.dl`
 
 export const YoutubePlayer = styled(ReactPlayer)`
   margin: 120px auto 0;
-  width: 486px !important;
-  height: 240px !important;
+  /* width: 486px !important;
+  height: 240px !important; */
 `
 
 export const LinkIcon = styled.button`

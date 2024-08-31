@@ -28,6 +28,9 @@ export const LoginFormBox = styled.div`
   flex-direction: column;
   align-items: center;
   width: 420px;
+  dl {
+    margin-bottom: 21px;
+  }
 `
 
 export const Logo = styled.h1`

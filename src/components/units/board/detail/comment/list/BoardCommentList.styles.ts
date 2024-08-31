@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 export const Wrapper = styled.div`
   margin-top: 31px;
   /* min-width: 920px; */
-  margin: 87px auto 0;
+  margin: 0;
 `
 
 export const CommentBox = styled.div`

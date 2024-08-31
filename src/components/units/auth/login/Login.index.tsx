@@ -1,4 +1,5 @@
 import * as S from './Login.styles'
+import * as S2 from '../signup/Signup.styles'
 import Image from 'next/image'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import Button02 from 'src/components/commons/buttons/02/Button02.index'
@@ -10,7 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutationLoginUser } from 'src/components/commons/hooks/mutations/user/useMutationLoginUser'
 
 export default function LoginUI(): JSX.Element {
-  const { moveToPage } = useMoveToPage()
+  const { moveToPage, moveToBack } = useMoveToPage()
   const { register, formState, setValue, getValues } = useForm<ILoginForm>({
     resolver: yupResolver(schema),
     mode: 'onChange',
@@ -19,6 +20,9 @@ export default function LoginUI(): JSX.Element {
 
   return (
     <S.Wrapper>
+      <S2.PageBackButton onClick={moveToBack('/boards')}>
+        <Image src="/images/ic_close-white.png" width={24} height={24} alt="이전 페이지 버튼" />
+      </S2.PageBackButton>
       <S.LoginFormBox>
         <S.Logo>
           <Image src="/images/logo_light.png" alt="joongomarket 로고" width={288} height={44} />
