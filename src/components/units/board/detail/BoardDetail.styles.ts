@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { ThumbsUIProps } from './BoardDetail.types'
 import ReactPlayer from 'react-player'
 import { css } from '@emotion/react'
 

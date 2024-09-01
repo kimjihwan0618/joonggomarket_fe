@@ -8,21 +8,22 @@ import { useState } from 'react'
 import Button01 from 'src/components/commons/buttons/01/Button01.index'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import theme from 'src/commons/styles/theme'
+import InfiniteScroll from 'react-infinite-scroller'
 
 export default function UsedItemListUI(): JSX.Element {
   const { moveToPage } = useMoveToPage()
   const { data: usedItemsBest } = useQueryFetchUsedItemsOfTheBest()
   const { keyword, onChangeKeyword, startDate, setStartDate, endDate, setEndDate } = useSearch()
-  const { data: usedItems, refetch: refetchUsedItems } = useQueryFetchUsedItems()
-  const [isSoldout, setIsSoldout] = useState(false)
+  const { data: usedItems, refetch: refetchUsedItems, fetchMore } = useQueryFetchUsedItems()
+  const [isSoldout, setIsSoldout] = useState(true)
 
   const onClickTab = async (tabName: string): Promise<void> => {
     switch (tabName) {
       case '판매중상품':
-        await setIsSoldout(false)
+        await setIsSoldout(true)
         break
       case '판매된상품':
-        await setIsSoldout(true)
+        await setIsSoldout(false)
         break
       default:
     }
@@ -30,6 +31,27 @@ export default function UsedItemListUI(): JSX.Element {
       search: keyword,
       page: 1,
       isSoldout,
+    })
+  }
+
+  const onLoadMore = (): void => {
+    if (usedItems === undefined) return
+    fetchMore({
+      variables: {
+        page: Math.ceil((usedItems?.fetchUseditems.length ?? 10) / 10 + 1),
+        search: keyword,
+        isSoldout,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult.fetchUseditems) {
+          return {
+            fetchUseditems: [...prev.fetchUseditems],
+          }
+        }
+        return {
+          fetchUseditems: [...prev?.fetchUseditems, ...fetchMoreResult?.fetchUseditems],
+        }
+      },
     })
   }
 
@@ -68,10 +90,10 @@ export default function UsedItemListUI(): JSX.Element {
       <S.UsedItemSearchWrapper>
         <S.SearchWrapper>
           <S.TabsItem>
-            <S.Tab onClick={() => onClickTab('판매중상품')} data-isactive={!isSoldout}>
+            <S.Tab onClick={() => onClickTab('판매중상품')} data-isactive={isSoldout}>
               판매중상품
             </S.Tab>
-            <S.Tab onClick={() => onClickTab('판매된상품')} data-isactive={isSoldout}>
+            <S.Tab onClick={() => onClickTab('판매된상품')} data-isactive={!isSoldout}>
               판매된상품
             </S.Tab>
           </S.TabsItem>
@@ -86,49 +108,51 @@ export default function UsedItemListUI(): JSX.Element {
           />
         </S.SearchWrapper>
         <S.UsedItemsWrapper>
-          {usedItems?.fetchUseditems.map((el) => (
-            <S.UsedItem>
-              <S.ItemImageBox2>
-                <Image
-                  src={
-                    el.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))
-                      .length !== 0
-                      ? `https://storage.googleapis.com/${el.images[0]}`
-                      : '/images/ic-noimage.jpg'
-                  }
-                  objectFit="cover"
-                  layout="fill"
-                />
-              </S.ItemImageBox2>
-              <S.UsedItemInfo2>
-                <S.LeftInfo>
-                  <S.Title2>{el.name}</S.Title2>
-                  <S.Remarks2>{el.remarks}</S.Remarks2>
-                  <S.Tags>{el.tags}</S.Tags>
-                  <S.SellerPicked>
-                    <S.Seller>
-                      <Image
-                        src={
-                          el.seller.picture !== '' && el.seller.picture?.includes('.')
-                            ? `https://storage.googleapis.com/${el.seller.picture}`
-                            : '/images/ic_profile2.png'
-                        }
-                        width={24}
-                        height={24}
-                        alt="프로필 아이콘"
-                      />
-                      &nbsp;&nbsp;{el.seller.name}
-                    </S.Seller>
-                    <S.Picked>
-                      <Image src={'/images/ic_favorite.png'} width={24} height={24} alt="하트" />
-                      &nbsp;&nbsp;{el.pickedCount}
-                    </S.Picked>
-                  </S.SellerPicked>
-                </S.LeftInfo>
-                <S.Price2>{new Intl.NumberFormat('en-US').format(el.price)}원</S.Price2>
-              </S.UsedItemInfo2>
-            </S.UsedItem>
-          ))}
+          <InfiniteScroll pageStart={0} loadMore={onLoadMore} hasMore={true} useWindow={false}>
+            {usedItems?.fetchUseditems.map((el) => (
+              <S.UsedItem>
+                <S.ItemImageBox2>
+                  <Image
+                    src={
+                      el.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))
+                        .length !== 0
+                        ? `https://storage.googleapis.com/${el.images[0]}`
+                        : '/images/ic-noimage.jpg'
+                    }
+                    objectFit="cover"
+                    layout="fill"
+                  />
+                </S.ItemImageBox2>
+                <S.UsedItemInfo2>
+                  <S.LeftInfo>
+                    <S.Title2>{el.name}</S.Title2>
+                    <S.Remarks2>{el.remarks}</S.Remarks2>
+                    <S.Tags>{el.tags}</S.Tags>
+                    <S.SellerPicked>
+                      <S.Seller>
+                        <Image
+                          src={
+                            el.seller.picture !== '' && el.seller.picture?.includes('.')
+                              ? `https://storage.googleapis.com/${el.seller.picture}`
+                              : '/images/ic_profile2.png'
+                          }
+                          width={24}
+                          height={24}
+                          alt="프로필 아이콘"
+                        />
+                        &nbsp;&nbsp;{el.seller.name}
+                      </S.Seller>
+                      <S.Picked>
+                        <Image src={'/images/ic_favorite.png'} width={24} height={24} alt="하트" />
+                        &nbsp;&nbsp;{el.pickedCount}
+                      </S.Picked>
+                    </S.SellerPicked>
+                  </S.LeftInfo>
+                  <S.Price2>{new Intl.NumberFormat('en-US').format(el.price)}원</S.Price2>
+                </S.UsedItemInfo2>
+              </S.UsedItem>
+            ))}
+          </InfiniteScroll>
         </S.UsedItemsWrapper>
         <S.Bottom>
           <Button01
