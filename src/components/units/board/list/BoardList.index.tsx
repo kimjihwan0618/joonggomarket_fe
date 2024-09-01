@@ -43,9 +43,18 @@ export default function BoardListUI(): JSX.Element {
       <S.BestBoardWrapper>
         {boardsBest?.fetchBoardsOfTheBest.map((el) => (
           <S.BestBoardItem id={el._id} onClick={moveToPage(`/boards/${el._id}`)}>
-            <S.ItemImage
-              data-src={el.images?.length !== 0 && `https://storage.googleapis.com/${el.images[0]}`}
-            />
+            <S.ItemImageBox>
+              <Image
+                src={
+                  el.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))
+                    .length !== 0
+                    ? `https://storage.googleapis.com/${el.images[0]}`
+                    : '/images/ic-noimage.jpg'
+                }
+                objectFit="cover"
+                layout="fill"
+              />
+            </S.ItemImageBox>
             <S.BoardInfo>
               <S.Title>{el.title}</S.Title>
               <S.Detail>
@@ -63,8 +72,8 @@ export default function BoardListUI(): JSX.Element {
         ))}
       </S.BestBoardWrapper>
       <Searchbars01
-        refetchTableData={refetchBoards}
-        refetchTableDataCount={refetchBoardsCount}
+        refetchData={refetchBoards}
+        refetchDataCount={refetchBoardsCount}
         setSelectedPage={setSelectedPage}
         setStartPage={setStartPage}
         endDate={endDate}
@@ -96,14 +105,12 @@ export default function BoardListUI(): JSX.Element {
           keyword={keyword}
           count={boardsCount?.fetchBoardsCount ?? 0}
         />
-        {
-          <Button01
-            onClick={moveToPage('/boards/new')}
-            background={theme.colors.main}
-            iconSrc={'/images/ic_pencil.png'}
-            name="게시글 등록"
-          />
-        }
+        <Button01
+          onClick={moveToPage('/boards/new')}
+          background={theme.colors.main}
+          iconSrc={'/images/ic_pencil.png'}
+          name="게시글 등록"
+        />
       </S.BottomWrapper>
     </S.Wrapper>
   )

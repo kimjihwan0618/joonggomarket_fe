@@ -24,7 +24,9 @@ export default function Button01(props: IButton01Props): JSX.Element {
       data-width={props.width ?? '01'}
     >
       {props.iconSrc && <Image src={props.iconSrc} width={18} height={18} />}
-      <S.Text data-color={props.color ?? theme.colors.dark01}>{props.name}</S.Text>
+      <S.Text data-disabled={props.disabled} data-color={props.color ?? theme.colors.dark01}>
+        {props.name}
+      </S.Text>
     </S.Button>
   )
 }

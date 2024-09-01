@@ -52,7 +52,7 @@ export const globalStyles = css`
 
   main {
     width: 70%;
-    margin: 0 auto;
+    margin: 80px auto 60px;
     min-width: 920px;
   }
 

@@ -7,20 +7,24 @@ export default function Searchbars01(props: Searchbars01Props): JSX.Element {
   const [ischanged, setIschanged] = useState(false)
 
   const getDebounce = _.debounce((value: string) => {
-    void props.refetchTableData({
-      search: value,
-      endDate: props.endDate,
-      startDate: props.startDate,
-      page: 1,
+    void props.refetchData({
+      ...{
+        search: value,
+        endDate: props.endDate,
+        startDate: props.startDate,
+        page: 1,
+      },
+      ...(props.fetchOptions ?? {}),
     })
-    props.refetchTableDataCount({
-      search: value,
-      endDate: props.endDate,
-      startDate: props.startDate,
-    })
+    props.refetchDataCount &&
+      props.refetchDataCount({
+        search: value,
+        endDate: props.endDate,
+        startDate: props.startDate,
+      })
     props.onChangeKeyword(value)
-    props.setStartPage(1)
-    props.setSelectedPage(1)
+    props.setStartPage && props.setStartPage(1)
+    props.setSelectedPage && props.setSelectedPage(1)
     setIschanged(false)
   }, 800)
 

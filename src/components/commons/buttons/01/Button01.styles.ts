@@ -25,5 +25,5 @@ export const Button = styled.button`
 `
 export const Text = styled.p`
   font-weight: 500;
-  color: ${(props) => props['data-color']};
+  color: ${(props) => (props['data-disabled'] ? 'black' : props['data-color'])};
 `

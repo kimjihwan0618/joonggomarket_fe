@@ -22,13 +22,9 @@ export default function BoardCommentItem(props): JSX.Element {
               <S.Rating>
                 {Array.from({ length: 5 }, (_, index) =>
                   props.comment.rating < index + 1 ? (
-                    <div key={index}>
-                      <Image src={'/images/ic_star-gray.png'} width={20} height={20} />
-                    </div>
+                    <Image key={index} src={'/images/ic_star-gray.png'} width={20} height={20} />
                   ) : (
-                    <div key={index}>
-                      <Image src={'/images/ic_star-yellow.png'} width={20} height={20} />
-                    </div>
+                    <Image key={index} src={'/images/ic_star-yellow.png'} width={20} height={20} />
                   )
                 )}
               </S.Rating>

@@ -1,9 +1,6 @@
 import styled from '@emotion/styled'
-import { url } from 'inspector'
-import { repeat } from 'lodash'
 
 export const Wrapper = styled.div`
-  margin: 80px auto 0;
   max-width: 1200px;
 `
 export const BottomWrapper = styled.div`
@@ -38,14 +35,10 @@ export const BestBoardItem = styled.div`
   }
 `
 
-export const ItemImage = styled.div`
+export const ItemImageBox = styled.div`
+  position: relative;
   width: 100%;
   height: 120px;
-  background: ${(props) =>
-    props['data-src']
-      ? `url(${props['data-src']}) no-repeat center center`
-      : `url(./images/ic-noimage.jpg) no-repeat center center`};
-  background-size: cover;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray06};
 `
 

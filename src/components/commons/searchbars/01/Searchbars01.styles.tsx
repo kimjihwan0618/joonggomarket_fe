@@ -29,7 +29,7 @@ export const SearchRightItems = styled.div`
 `
 
 export const DatePickerBox = styled.div`
-  margin: 0 0px 0 42px;
+  margin: 0 0px 0 28px;
   /* padding: 14px 16px; */
   display: flex;
   height: 100%;

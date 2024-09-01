@@ -10,7 +10,6 @@ const IconButton = css`
 
 export const ContentWrapper = styled.div`
   padding: 60px 75px;
-  margin: 101px auto;
   /* min-width: 920px; */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 `
