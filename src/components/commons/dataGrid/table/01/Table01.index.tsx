@@ -1,4 +1,4 @@
-import * as S from 'src/components/commons/datagrid/table/Table.Styles'
+import * as S from 'src/components/commons/dataGrid/table/01/Table01.Styles'
 
 interface ITableProps {
   data: {}[]
@@ -34,7 +34,7 @@ export default function Table(props: ITableProps): JSX.Element {
                   {el[column.dataKey]
                     .replaceAll(props.keyword, `!@#${props.keyword}!@#`)
                     .split('!@#')
-                    .map((el2) => (
+                    .map((el2: string) => (
                       <span style={{ color: el2 === props.keyword ? 'red' : 'black' }}>{el2}</span>
                     ))}
                 </td>

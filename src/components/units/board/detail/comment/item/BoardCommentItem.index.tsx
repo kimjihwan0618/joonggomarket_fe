@@ -17,20 +17,27 @@ export default function BoardCommentItem(props): JSX.Element {
         <S.CommentBox key={`${props.idx}`}>
           <S.CommentInfo>
             <Image src={'/images/ic_profile.png'} width={40} height={40} />
-            <div>
-              <S.UserName>{props.comment.writer}</S.UserName>
-              <S.Rating>
-                {Array.from({ length: 5 }, (_, index) =>
-                  props.comment.rating < index + 1 ? (
-                    <Image key={index} src={'/images/ic_star-gray.png'} width={20} height={20} />
-                  ) : (
-                    <Image key={index} src={'/images/ic_star-yellow.png'} width={20} height={20} />
-                  )
-                )}
-              </S.Rating>
+            <S.InfoBox>
+              <S.WriterRating>
+                <S.Writer>{props.comment.writer}</S.Writer>
+                <S.Rating>
+                  {Array.from({ length: 5 }, (_, index) =>
+                    props.comment.rating < index + 1 ? (
+                      <Image key={index} src={'/images/ic_star-gray.png'} width={20} height={20} />
+                    ) : (
+                      <Image
+                        key={index}
+                        src={'/images/ic_star-yellow.png'}
+                        width={20}
+                        height={20}
+                      />
+                    )
+                  )}
+                </S.Rating>
+              </S.WriterRating>
               <S.Comment>{props.comment.contents}</S.Comment>
               <S.Date>{toYYYYMMDD(new Date(props.comment.updatedAt))}</S.Date>
-            </div>
+            </S.InfoBox>
           </S.CommentInfo>
           <S.Buttons>
             <button

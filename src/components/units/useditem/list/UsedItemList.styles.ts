@@ -79,19 +79,22 @@ export const SearchWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 16px;
 `
 export const TabsItem = styled.ul`
   display: flex;
   align-items: center;
+  margin-left: 28px;
 `
 export const Tab = styled.li`
   font-size: 1.8rem;
+  white-space: nowrap;
   font-weight: ${(props) => (props['data-isactive'] ? 'bold' : '400')};
   color: ${(props) => (props['data-isactive'] ? '#000' : props.theme.colors.gray04)};
   border-bottom: 2px solid
     ${(props) => (props['data-isactive'] ? props.theme.colors.main : 'white')};
   margin-right: 20px;
-  & > :last-of-type {
+  &:last-of-type {
     margin-right: 0px;
   }
   cursor: ${(props) => !props['data-isactive'] && 'pointer'};
@@ -108,11 +111,11 @@ export const UsedItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 20px;
   border-top: 1px solid ${({ theme }) => theme.colors.gray04};
-  padding-top: 20px;
-  & > :first-of-type {
-    margin-top: 0px;
+  padding: 20px 0;
+  cursor: pointer;
+  &:hover {
+    background: ${({ theme }) => theme.colors.gray07};
   }
   height: 160px;
 `
@@ -137,6 +140,10 @@ export const Title2 = styled.li`
   margin-bottom: 4px;
   font-weight: 500;
   font-size: 2.4rem;
+  span {
+    font-weight: 500;
+    font-size: 2.4rem;
+  }
 `
 
 export const Remarks2 = styled.li`

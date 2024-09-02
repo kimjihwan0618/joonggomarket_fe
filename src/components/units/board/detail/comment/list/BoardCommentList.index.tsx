@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useQueryFetchBoardComments } from 'src/components/commons/hooks/quires/board/comment/useQueryFetchBoardComments'
 import { useMutationDeleteBoardComment } from 'src/components/commons/hooks/mutations/board/comment/useMutationDeleteBoardComment'
+import { useFetchMoreScroll } from 'src/components/commons/hooks/custom/useFetchMoreScroll'
 
 export default function BoardCommentListUI(): JSX.Element {
   const router = useRouter()
@@ -20,6 +21,14 @@ export default function BoardCommentListUI(): JSX.Element {
     boardId,
     deleteCommentId,
     passwordCheck,
+  })
+  const { onLoadMore } = useFetchMoreScroll({
+    fetchData: data,
+    fetchListName: 'fetchBoardComments',
+    fetchMore,
+    variables: {
+      boardId,
+    },
   })
 
   const onClickDeleteOk = async (): Promise<void> => {
@@ -36,26 +45,6 @@ export default function BoardCommentListUI(): JSX.Element {
     setIsOpen((prev) => !prev)
     setDeleteCommentId(commentId ?? '')
     setPasswordCheck('')
-  }
-
-  const onLoadMore = (): void => {
-    if (data === undefined) return
-    fetchMore({
-      variables: {
-        page: Math.ceil((data?.fetchBoardComments.length ?? 10) / 10 + 1),
-        boardId,
-      },
-      updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult.fetchBoardComments) {
-          return {
-            fetchBoardComments: [...prev.fetchBoardComments],
-          }
-        }
-        return {
-          fetchBoardComments: [...prev.fetchBoardComments, ...fetchMoreResult.fetchBoardComments],
-        }
-      },
-    })
   }
 
   return (

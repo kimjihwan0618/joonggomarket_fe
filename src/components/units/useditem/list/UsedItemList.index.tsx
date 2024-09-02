@@ -2,20 +2,30 @@ import Image from 'next/image'
 import * as S from './UsedItemList.styles'
 import { useQueryFetchUsedItemsOfTheBest } from 'src/components/commons/hooks/quires/usedItem/useQueryFetchBoardsOfTheBest'
 import { useSearch } from 'src/components/commons/hooks/custom/useSearch'
-import Searchbars01 from 'src/components/commons/searchbars/01/Searchbars01.container'
 import { useQueryFetchUsedItems } from 'src/components/commons/hooks/quires/usedItem/useQueryFetchUsedItems'
 import { useState } from 'react'
 import Button01 from 'src/components/commons/buttons/01/Button01.index'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import theme from 'src/commons/styles/theme'
 import InfiniteScroll from 'react-infinite-scroller'
+import Searchbars01UI from 'src/components/commons/searchbars/01/Searchbars01.index'
+import { useFetchMoreScroll } from 'src/components/commons/hooks/custom/useFetchMoreScroll'
 
 export default function UsedItemListUI(): JSX.Element {
   const { moveToPage } = useMoveToPage()
   const { data: usedItemsBest } = useQueryFetchUsedItemsOfTheBest()
-  const { keyword, onChangeKeyword, startDate, setStartDate, endDate, setEndDate } = useSearch()
+  const { keyword, onChangeKeyword, setStartDate, setEndDate } = useSearch()
   const { data: usedItems, refetch: refetchUsedItems, fetchMore } = useQueryFetchUsedItems()
   const [isSoldout, setIsSoldout] = useState(true)
+  const { onLoadMore } = useFetchMoreScroll({
+    fetchData: usedItems,
+    fetchListName: 'fetchUseditems',
+    fetchMore,
+    variables: {
+      search: keyword,
+      isSoldout,
+    },
+  })
 
   const onClickTab = async (tabName: string): Promise<void> => {
     switch (tabName) {
@@ -31,27 +41,6 @@ export default function UsedItemListUI(): JSX.Element {
       search: keyword,
       page: 1,
       isSoldout,
-    })
-  }
-
-  const onLoadMore = (): void => {
-    if (usedItems === undefined) return
-    fetchMore({
-      variables: {
-        page: Math.ceil((usedItems?.fetchUseditems.length ?? 10) / 10 + 1),
-        search: keyword,
-        isSoldout,
-      },
-      updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult.fetchUseditems) {
-          return {
-            fetchUseditems: [...prev.fetchUseditems],
-          }
-        }
-        return {
-          fetchUseditems: [...prev?.fetchUseditems, ...fetchMoreResult?.fetchUseditems],
-        }
-      },
     })
   }
 
@@ -89,6 +78,13 @@ export default function UsedItemListUI(): JSX.Element {
       </S.BestUsedItemWrapper>
       <S.UsedItemSearchWrapper>
         <S.SearchWrapper>
+          <Searchbars01UI
+            refetchData={refetchUsedItems}
+            refetchVariables={{ isSoldout }}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+            onChangeKeyword={onChangeKeyword}
+          />
           <S.TabsItem>
             <S.Tab onClick={() => onClickTab('판매중상품')} data-isactive={isSoldout}>
               판매중상품
@@ -97,20 +93,11 @@ export default function UsedItemListUI(): JSX.Element {
               판매된상품
             </S.Tab>
           </S.TabsItem>
-          <Searchbars01
-            refetchData={refetchUsedItems}
-            fetchOptions={{ isSoldout }}
-            startDate={startDate}
-            endDate={endDate}
-            setStartDate={setStartDate}
-            setEndDate={setEndDate}
-            onChangeKeyword={onChangeKeyword}
-          />
         </S.SearchWrapper>
         <S.UsedItemsWrapper>
           <InfiniteScroll pageStart={0} loadMore={onLoadMore} hasMore={true} useWindow={false}>
             {usedItems?.fetchUseditems.map((el) => (
-              <S.UsedItem>
+              <S.UsedItem onClick={moveToPage(`/markets/${el._id}`)}>
                 <S.ItemImageBox2>
                   <Image
                     src={
@@ -125,7 +112,14 @@ export default function UsedItemListUI(): JSX.Element {
                 </S.ItemImageBox2>
                 <S.UsedItemInfo2>
                   <S.LeftInfo>
-                    <S.Title2>{el.name}</S.Title2>
+                    <S.Title2>
+                      {el.name
+                        .replaceAll(keyword, `!@#${keyword}!@#`)
+                        .split('!@#')
+                        .map((el2: string) => (
+                          <span style={{ color: el2 === keyword ? 'red' : 'black' }}>{el2}</span>
+                        ))}
+                    </S.Title2>
                     <S.Remarks2>{el.remarks}</S.Remarks2>
                     <S.Tags>{el.tags}</S.Tags>
                     <S.SellerPicked>

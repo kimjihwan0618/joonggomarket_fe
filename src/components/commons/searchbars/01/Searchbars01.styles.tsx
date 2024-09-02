@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 export const SearchWrapper = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
   justify-content: space-between;
 `
 

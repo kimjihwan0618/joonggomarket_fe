@@ -9,6 +9,7 @@ import { useMutationDisLikeBoard } from 'src/components/commons/hooks/mutations/
 import { useMutationLikeBoard } from 'src/components/commons/hooks/mutations/board/useMutationLikeBoard'
 import { useQueryFetchBoard } from 'src/components/commons/hooks/quires/board/useQueryFetchBoard'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
+import { useTextCopy } from 'src/components/commons/hooks/custom/useTextCopy'
 
 export default function BoardDetailUI(): JSX.Element {
   const router = useRouter()
@@ -18,18 +19,7 @@ export default function BoardDetailUI(): JSX.Element {
   const { disLikeBoard } = useMutationDisLikeBoard(boardId)
   const { likeBoard } = useMutationLikeBoard(boardId)
   const { data } = useQueryFetchBoard(boardId)
-
-  const onClickCopyLink = (): void => {
-    const url = window.location.href
-    navigator.clipboard
-      .writeText(url)
-      .then(() => {
-        Modal.success({ content: 'URL이 클립보드에 복사되었습니다!' })
-      })
-      .catch((err) => {
-        Modal.error({ content: '클립보드 복사에 실패했습니다.' })
-      })
-  }
+  const { onCopyLink } = useTextCopy()
 
   return (
     <>
@@ -48,7 +38,7 @@ export default function BoardDetailUI(): JSX.Element {
                 </S.Info>
               </S.WriterInfo>
               <S.IconInfo>
-                <S.LinkIcon onClick={onClickCopyLink}>
+                <S.LinkIcon onClick={onCopyLink}>
                   <Image width={34} height={34} src={'/images/ic_link.png'} />
                 </S.LinkIcon>
                 {(data?.fetchBoard?.boardAddress?.address ||

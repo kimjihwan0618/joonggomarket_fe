@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import * as S from 'src/components/commons/datagrid/pagination/Pagination.Styles'
+import * as S from 'src/components/commons/dataGrid/pagination/01/Pagination01.Styles'
 import { Dispatch, SetStateAction, useState, type MouseEvent } from 'react'
 import { ApolloQueryResult } from '@apollo/client'
 import { IQuery } from 'src/commons/types/generated/types'
@@ -17,7 +17,7 @@ interface IPaginationProps {
 }
 
 export default function Pagination(props: IPaginationProps): JSX.Element {
-  const lastPage = props.count
+  const lastPage = Math.ceil(props.count / 10)
   const onClickPage = (event: MouseEvent<HTMLButtonElement>): void => {
     const page = Number(event.currentTarget.id)
     props.setSelectedPage(page)

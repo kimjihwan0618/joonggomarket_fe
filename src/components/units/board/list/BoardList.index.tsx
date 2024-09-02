@@ -2,9 +2,8 @@ import { toYYYYMMDD, toYYYYMMDDHHMMSS } from 'src/lib/utils/date'
 import * as S from './BoardList.styles'
 import Image from 'next/image'
 import 'react-datepicker/dist/react-datepicker.css'
-import Pagination from 'src/components/commons/datagrid/pagination/Pagination.index'
-import Table from 'src/components/commons/datagrid/table/Table.index'
-import Searchbars01 from 'src/components/commons/searchbars/01/Searchbars01.container'
+import Pagination from 'src/components/commons/dataGrid/pagination/01/Pagination01.index'
+import Table from 'src/components/commons/dataGrid/table/01/Table01.index'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useQueryFetchBoards } from 'src/components/commons/hooks/quires/board/useQueryFetchBoards'
 import { useQueryFetchBoardsCount } from 'src/components/commons/hooks/quires/board/useQueryFetchBoardsCount'
@@ -12,6 +11,7 @@ import { useQueryFetchBoardsOfTheBest } from 'src/components/commons/hooks/quire
 import { useSearch } from 'src/components/commons/hooks/custom/useSearch'
 import Button01 from 'src/components/commons/buttons/01/Button01.index'
 import theme from 'src/commons/styles/theme'
+import Searchbars01UI from 'src/components/commons/searchbars/01/Searchbars01.index'
 
 const TABLE_COLUMNS = [
   { name: '제목', dataKey: 'title', isSearch: true },
@@ -71,16 +71,16 @@ export default function BoardListUI(): JSX.Element {
           </S.BestBoardItem>
         ))}
       </S.BestBoardWrapper>
-      <Searchbars01
+      <Searchbars01UI
         refetchData={refetchBoards}
+        refetchVariables={{ startDate, endDate }}
         refetchDataCount={refetchBoardsCount}
         setSelectedPage={setSelectedPage}
         setStartPage={setStartPage}
-        endDate={endDate}
-        startDate={startDate}
         setEndDate={setEndDate}
         setStartDate={setStartDate}
         onChangeKeyword={onChangeKeyword}
+        dateUsed={true}
       />
       <Table
         rowKey="_id"

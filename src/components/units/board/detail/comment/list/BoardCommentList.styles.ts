@@ -23,7 +23,12 @@ export const TopItems = styled.div`
   align-items: flex-start;
 `
 
-export const UserName = styled.p`
+export const WriterRating = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const Writer = styled.p`
   margin: 0px;
   margin-right: 18px;
   display: inline-block;
@@ -36,7 +41,7 @@ export const Comment = styled.p`
 
 export const Date = styled.p`
   color: ${({ theme }) => theme.colors.gray04};
-  margin-top: 20px;
+  margin-top: 12px;
   font-size: 1.2rem;
 `
 
@@ -79,3 +84,5 @@ export const Rating = styled.div`
     margin-right: 0px;
   }
 `
+
+export const InfoBox = styled.div``

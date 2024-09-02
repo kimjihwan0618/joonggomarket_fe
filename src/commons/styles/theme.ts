@@ -9,6 +9,7 @@ const theme = {
     gray04: '#bdbdbd',
     gray05: '#e0e0e0',
     gray06: '#f2f2f2',
+    gray07: '#f5f5f5',
     dark01: '#161616',
   },
 } as const

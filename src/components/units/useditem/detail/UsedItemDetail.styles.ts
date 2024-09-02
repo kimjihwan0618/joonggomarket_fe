@@ -13,7 +13,7 @@ export const ContentWrapper = styled.div`
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 `
 
-export const BoardTitleWrapper = styled.div`
+export const UsedItemTitleWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -48,9 +48,42 @@ export const ContentsWrapper = styled.div`
   margin-top: 20px;
 `
 
-export const ContentsTitle = styled.h3`
-  font-weight: 700;
+export const ContentsTitleBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100% !important;
+`
+
+export const TextBox = styled.div``
+
+export const Remarks = styled.h5`
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: ${({ theme }) => theme.colors.gray04};
+`
+
+export const Name = styled.h4`
+  font-size: 2.4rem;
+  font-weight: bold;
+`
+
+export const PickItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+export const PickCount = styled.span`
+  font-size: 1.8rem;
+  font-weight: 500;
+`
+
+export const Price = styled.p`
+  font-weight: bold;
   font-size: 3.6rem;
+  margin-top: 8px;
 `
 
 export const ContentsMain = styled.div`
@@ -58,6 +91,13 @@ export const ContentsMain = styled.div`
   p {
     font-size: 1.6rem;
   }
+`
+
+export const Tags = styled.p`
+  color: ${({ theme }) => theme.colors.gray04};
+  font-weight: 500;
+  font-size: 1.6rem;
+  margin-top: 20px;
 `
 
 export const ButtonWrapper = styled.div`
@@ -75,47 +115,6 @@ export const ButtonWrapper = styled.div`
   }
 `
 
-export const ThumbsWrapper = styled.ul`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 120px;
-  li:nth-of-type(1) {
-    margin-right: 40px;
-  }
-`
-
-export const Thumbs = styled.dl`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0px;
-  cursor: pointer;
-  dt {
-    display: flex;
-    justify-content: center;
-  }
-  dd {
-    margin: 0px;
-    font-weight: 400;
-    font-size: 1.8rem;
-    text-align: center;
-    color: ${(props) => (props['data-up'] ? props.theme.colors.main : props.theme.colors.gray03)};
-  }
-  &[data-up='true'] {
-    color: rgba(255, 214, 0, 1);
-  }
-  &[data-up='fasle'] {
-    color: rgba(130, 130, 130, 1);
-  }
-`
-
-export const YoutubePlayer = styled(ReactPlayer)`
-  margin: 120px auto 0;
-  /* width: 486px !important;
-  height: 240px !important; */
-`
-
 export const LinkIcon = styled.button`
   ${IconButton}
   margin-right: 20px;
@@ -124,9 +123,4 @@ export const LinkIcon = styled.button`
 
 export const LocationIcon = styled.button`
   ${IconButton}
-`
-
-export const ImageContainer = styled.div`
-  width: 50%;
-  margin: 20px auto;
 `

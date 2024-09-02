@@ -10,6 +10,7 @@ declare module '@emotion/react' {
       gray04: string
       gray05: string
       gray06: string
+      gray07: string
     }
   }
 }
