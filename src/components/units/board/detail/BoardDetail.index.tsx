@@ -75,7 +75,14 @@ export default function BoardDetailUI(): JSX.Element {
                   </S.ImageContainer>
                 ))}
               <S.ContentsMain>
-                <p>{data?.fetchBoard?.contents}</p>
+                <p>
+                  {data?.fetchBoard?.contents.split('\n').map((line, index) => (
+                    <>
+                      {line}
+                      <br />
+                    </>
+                  ))}
+                </p>
               </S.ContentsMain>
               {data?.fetchBoard?.youtubeUrl && (
                 <S.YoutubePlayer url={data?.fetchBoard?.youtubeUrl} />

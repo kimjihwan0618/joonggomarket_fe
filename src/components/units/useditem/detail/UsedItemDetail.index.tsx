@@ -80,7 +80,14 @@ export default function UsedItemDetailUI(): JSX.Element {
                 {new Intl.NumberFormat('en-US').format(data?.fetchUseditem?.price)}원
               </S.Price>
               <S.ContentsMain>
-                <p>{data?.fetchUseditem?.contents}</p>
+                <p>
+                  {data?.fetchUseditem?.contents.split('\n').map((line, index) => (
+                    <>
+                      {line}
+                      <br />
+                    </>
+                  ))}
+                </p>
               </S.ContentsMain>
               <S.Tags>{data?.fetchUseditem?.tags}</S.Tags>
             </S.ContentsWrapper>

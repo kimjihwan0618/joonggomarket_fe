@@ -8,23 +8,19 @@ import { Modal } from 'antd'
 import { FETCH_USED_ITEM_QUESTIONS } from '../../../quires/usedItem/question/useQueryFetchUsedItemQuestions'
 
 export const DELETE_USED_ITEM_QUESTION = gql`
-  mutation deleteBoardComment($boardCommentId: ID!, $password: String) {
-    deleteBoardComment(boardCommentId: $boardCommentId, password: $password)
+  mutation deleteUseditemQuestion($useditemQuestionId: ID!) {
+    deleteUseditemQuestion(useditemQuestionId: $useditemQuestionId)
   }
 `
 
 export const useMutationDeleteUsedItemQuestion = (props) => {
-  const [deleteUsedItemMutation] = useMutation<
+  const [deleteUsedItemMutation, { loading }] = useMutation<
     Pick<IMutation, 'deleteUseditemQuestion'>,
     IMutationDeleteUseditemQuestionArgs
   >(DELETE_USED_ITEM_QUESTION)
 
   const deleteUsedItemQuestion = async (): Promise<void> => {
     try {
-      if (props.passwordCheck === '') {
-        Modal.warning({ content: '비밀번호를 입력해주세요.' })
-        return
-      }
       const result = await deleteUsedItemMutation({
         variables: {
           useditemQuestionId: props.deleteQuestionId,
@@ -32,7 +28,7 @@ export const useMutationDeleteUsedItemQuestion = (props) => {
         refetchQueries: [
           {
             query: FETCH_USED_ITEM_QUESTIONS,
-            variables: { useditemQuestionId: props.useditemQuestionId },
+            variables: { useditemId: props.useditemId },
           },
         ],
       })
@@ -41,5 +37,5 @@ export const useMutationDeleteUsedItemQuestion = (props) => {
     }
   }
 
-  return { deleteUsedItemQuestion }
+  return { deleteUsedItemQuestion, loading }
 }

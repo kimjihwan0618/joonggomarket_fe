@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   display: ${(props) => props['data-isedit'] && 'flex'};
   align-items: ${(props) => props['data-isedit'] && 'flex-start'};
   /* min-width: 920px; */
-  margin: 0 auto;
+  margin: 40px auto;
 `
 
 export const CommentTitle = styled.div`

@@ -5,15 +5,14 @@ import type {
   IMutationUpdateUseditemQuestionArgs,
   IQueryFetchUseditemQuestionsArgs,
 } from 'src/commons/types/generated/types'
-import { IUsedItemQuestionWriteForm } from 'src/components/units/useditem/detail/question/write/UsedItemQuestionWrite.schema'
 import { FETCH_USED_ITEM_QUESTIONS } from '../../../quires/usedItem/question/useQueryFetchUsedItemQuestions'
 
 export const UDATE_USED_ITEM_COMMENTS = gql`
-  mutation createUseditemQuestion(
+  mutation updateUseditemQuestion(
     $useditemQuestionId: ID!
     $updateUseditemQuestionInput: UpdateUseditemQuestionInput!
   ) {
-    createUseditemQuestion(
+    updateUseditemQuestion(
       useditemQuestionId: $useditemQuestionId
       updateUseditemQuestionInput: $updateUseditemQuestionInput
     ) {

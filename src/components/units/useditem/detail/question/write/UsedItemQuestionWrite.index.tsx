@@ -78,7 +78,7 @@ export default function UsedItemQuestionWriteUI(props: IUsedItemQuestionWriteUIP
         </S.UserImageBox>
       )}
       <S.InputWrapper data-isedit={props.isEdit}>
-        {props.isEdit && <S.Writer>유저명</S.Writer>}
+        {props.isEdit && <S.Writer>{data?.fetchUserLoggedIn.name}</S.Writer>}
         <S.CommentWrapper>
           <TextAreaWithError
             style={{ border: 'none' }}

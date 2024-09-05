@@ -15,9 +15,8 @@ export default function BoardCommentListUI(): JSX.Element {
   const [isOpen, setIsOpen] = useState(false)
   const [passwordCheck, setPasswordCheck] = useState('')
   const [deleteCommentId, setDeleteCommentId] = useState('')
-  const [confirmLoading, setConfirmLoading] = useState(false)
   const { data, fetchMore } = useQueryFetchBoardComments(boardId)
-  const { deleteBoardComment } = useMutationDeleteBoardComment({
+  const { deleteBoardComment, loading } = useMutationDeleteBoardComment({
     boardId,
     deleteCommentId,
     passwordCheck,
@@ -32,11 +31,9 @@ export default function BoardCommentListUI(): JSX.Element {
   })
 
   const onClickDeleteOk = async (): Promise<void> => {
-    setConfirmLoading(true)
     await deleteBoardComment()
     setPasswordCheck('')
     setDeleteCommentId('')
-    setConfirmLoading(false)
     setIsOpen(false)
   }
 
@@ -54,8 +51,8 @@ export default function BoardCommentListUI(): JSX.Element {
         open={isOpen}
         onOk={onClickDeleteOk}
         onCancel={handlePasswordModal}
-        okButtonProps={{ disabled: passwordCheck === '' }}
-        confirmLoading={confirmLoading}
+        okButtonProps={{ disabled: passwordCheck === '' || loading }}
+        confirmLoading={loading}
         okText="확인"
         cancelText="취소"
       >

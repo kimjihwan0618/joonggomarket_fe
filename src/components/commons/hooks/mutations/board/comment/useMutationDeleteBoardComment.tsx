@@ -10,7 +10,7 @@ export const DELETE_BOARD_COMMENT = gql`
 `
 
 export const useMutationDeleteBoardComment = (props) => {
-  const [deleteBoardCommentMutation] = useMutation<
+  const [deleteBoardCommentMutation, { loading }] = useMutation<
     Pick<IMutation, 'deleteBoardComment'>,
     IMutationDeleteBoardCommentArgs
   >(DELETE_BOARD_COMMENT)
@@ -38,5 +38,5 @@ export const useMutationDeleteBoardComment = (props) => {
     }
   }
 
-  return { deleteBoardComment }
+  return { deleteBoardComment, loading }
 }

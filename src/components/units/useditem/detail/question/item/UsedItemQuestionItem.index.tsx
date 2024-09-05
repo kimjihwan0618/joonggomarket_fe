@@ -44,7 +44,7 @@ export default function BoardCommentItem(props): JSX.Element {
               </button>
               <button
                 id={props.question._id}
-                onClick={() => props.handleQuestionDeleteConfirm(props.question._id)}
+                onClick={() => props.onClickQuestionDelete(props.question._id)}
               >
                 <Image src={'/images/ic_close-gray.png'} width={14} height={14} />
               </button>
