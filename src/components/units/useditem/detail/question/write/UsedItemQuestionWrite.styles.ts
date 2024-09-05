@@ -8,6 +8,8 @@ const InputStyle = css`
 
 export const Wrapper = styled.div`
   width: ${(props) => props['data-isedit'] && '100%'};
+  display: ${(props) => props['data-isedit'] && 'flex'};
+  align-items: ${(props) => props['data-isedit'] && 'flex-start'};
   /* min-width: 920px; */
   margin: 0 auto;
 `
@@ -23,9 +25,10 @@ export const CommentTitle = styled.div`
 `
 
 export const InputWrapper = styled.div`
-  margin: 20px auto;
+  margin: ${(props) => !props['data-isedit'] && '20px auto'};
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
   align-items: center;
   input:nth-of-type(2) {
     margin: 0 24px;
@@ -82,4 +85,19 @@ export const CommentButtonsWrapper = styled.div`
   button:last-of-type {
     margin-left: 16px;
   }
+`
+
+export const Writer = styled.p`
+  font-weight: 500;
+  font-size: 1.6rem;
+  margin-bottom: 6px;
+`
+
+export const UserImageBox = styled.div`
+  margin-right: 16px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `

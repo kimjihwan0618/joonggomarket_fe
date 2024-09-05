@@ -7,7 +7,7 @@ import type {
   IQueryFetchBoardCommentsArgs,
 } from 'src/commons/types/generated/types'
 import { FETCH_BOARD_COMMENTS } from 'src/components/commons/hooks/quires/board/comment/useQueryFetchBoardComments'
-import { IBoardCommentWriterForm } from 'src/components/units/board/detail/comment/write/BoardCommentWriter.schema'
+import { IBoardCommentWriterForm } from 'src/components/units/board/detail/comment/write/BoardCommentWrite.schema'
 
 export const CREATE_BOARD_COMMENT = gql`
   mutation createBoardComment($boardId: ID!, $createBoardCommentInput: CreateBoardCommentInput!) {

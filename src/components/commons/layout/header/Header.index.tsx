@@ -4,17 +4,16 @@ import Link from 'next/link'
 import { accessTokenState } from 'src/commons/stores'
 import { useRecoilState } from 'recoil'
 import { useEffect, useRef, useState } from 'react'
-import { FETCH_USER_LOGGED_IN, USER_LOGOUT } from './Header.queries'
-import { IMutation, IQuery } from 'src/commons/types/generated/types'
-import { useMutation, useQuery } from '@apollo/client'
 import { Modal } from 'antd'
 import { useMoveToPage } from '../../hooks/custom/useMoveToPage'
 import Button02 from '../../buttons/02/Button02.index'
 import theme from 'src/commons/styles/theme'
+import { useQueryFetchUserLoggedIn } from '../../hooks/quires/user/useQueryFetchUserLoggedIn'
+import { useMutationLogoutUser } from '../../hooks/mutations/user/useMutationLogout'
 
 export default function Header(): JSX.Element {
-  const { data } = useQuery<Pick<IQuery, 'fetchUserLoggedIn'>>(FETCH_USER_LOGGED_IN)
-  const [logoutUser] = useMutation<Pick<IMutation, 'logoutUser'>>(USER_LOGOUT)
+  const { data } = useQueryFetchUserLoggedIn()
+  const { logoutUser } = useMutationLogoutUser()
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [isHidden, setIsHidden] = useState(false)
   const { moveToPage } = useMoveToPage()

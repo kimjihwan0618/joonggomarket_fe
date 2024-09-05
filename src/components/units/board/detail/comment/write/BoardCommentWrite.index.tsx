@@ -10,7 +10,7 @@ import type { Dispatch, MouseEvent } from 'react'
 import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { IBoardCommentWriterForm, schema } from './BoardCommentWriter.schema'
+import { IBoardCommentWriterForm, schema } from './BoardCommentWrite.schema'
 import InputWithError from 'src/components/commons/inputs/02/InputWithError.index'
 import TextAreaWithError from 'src/components/commons/textareas/01/TextAreaWithError.index'
 import { useUpdateForm } from 'src/components/commons/hooks/custom/useUpdateForm'
@@ -103,6 +103,7 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps): J
         </S.Rating>
         <S.CommentWrapper>
           <TextAreaWithError
+            style={{ border: 'none' }}
             register={register('contents')}
             height={'108px'}
             placeholder="개인정보를 공유 및 요청하거나, 명예 훼손, 무단 광고, 불법 정보 유포시 모니터링 후 삭제될 수 있으며, 이에 대한 민형사상 책임은 게시자에게 있습니다."
