@@ -15,7 +15,7 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 52px;
+  height: 42px;
   width: ${(props) => props['data-fullwidth'] && '100%'};
   cursor: ${(props) => !props.disabled && 'pointer'};
   &:hover {

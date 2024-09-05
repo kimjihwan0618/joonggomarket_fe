@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 
 export const Wrapper = styled.div`
   height: 400px;
-  margin-top: 100px;
+  margin-top: 70px;
 `
 
 export const Carousel = styled.div`
@@ -23,11 +23,10 @@ export const Carousel = styled.div`
     right: 18%; /* 우측 위치 조정 */
     z-index: 1; /* 버튼이 슬라이드 위에 표시되도록 설정 */
   }
-  .slick-next:before {
-    font-size: 48px;
-  }
+  .slick-next:before,
   .slick-prev:before {
     font-size: 48px;
+    color: white;
   }
   .slick-dots {
     bottom: 40px;

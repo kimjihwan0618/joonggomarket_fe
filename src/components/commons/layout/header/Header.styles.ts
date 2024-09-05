@@ -2,9 +2,9 @@ import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 
 const ProfileButtonStyles = css`
-  height: 64px;
+  height: 50px;
   line-height: 64px;
-  padding: 20px 36px;
+  padding: 10px 36px;
   border-bottom: 1px solid rgba(239, 239, 239, 1);
   font-weight: bold;
   font-size: 1.4rem;
@@ -18,8 +18,8 @@ const ProfileButtonStyles = css`
 `
 
 export const Header = styled.header`
-  background: white;
-  height: 100px;
+  background: rgba(255, 255, 255, 0.95);
+  height: 70px;
   width: 100%;
   position: fixed;
   left: 0;
@@ -39,6 +39,7 @@ export const HeaderInner = styled.div`
 
 export const Logo = styled.h1`
   cursor: pointer;
+  margin-right: 36px;
 `
 
 export const ButtonWrapper = styled.div`
@@ -46,6 +47,30 @@ export const ButtonWrapper = styled.div`
   align-items: center;
   button:first-of-type {
     margin-right: 16px;
+  }
+`
+
+export const LogoNavigationWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const Navigation = styled.nav``
+
+export const MenuList = styled.ul`
+  display: flex;
+  align-items: center;
+`
+
+export const Menu = styled.li`
+  font-size: 1.6rem;
+  font-weight: ${(props) => (props['data-active'] ? 700 : 500)};
+  color: ${(props) =>
+    props['data-active'] ? props.theme.colors.gray01 : props.theme.colors.gray04};
+  margin-right: 16px;
+  cursor: pointer;
+  &:last-of-type {
+    margin-right: 0px;
   }
 `
 
@@ -69,7 +94,7 @@ export const ProfileBox = styled.div`
   position: absolute;
   display: ${(props) => (!props['data-hidden'] ? 'none' : 'block')};
   right: 0;
-  bottom: -340%;
+  bottom: -380%;
   border-radius: 16px;
   background: white;
   width: 258px;
@@ -127,4 +152,7 @@ export const LogoutButton = styled.button`
   &:hover {
     background: ${({ theme }) => theme.colors.gray06};
   }
+`
+export const MypageButton = styled.button`
+  ${ProfileButtonStyles}
 `

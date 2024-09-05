@@ -8,6 +8,8 @@ import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage
 import { useQueryFetchUsedItem } from 'src/components/commons/hooks/quires/usedItem/useQueryFetchUsedItem'
 import { useTextCopy } from 'src/components/commons/hooks/custom/useTextCopy'
 import theme from 'src/commons/styles/theme'
+import Slider from 'react-slick'
+import { useRef, useState } from 'react'
 
 export default function UsedItemDetailUI(): JSX.Element {
   const router = useRouter()
@@ -15,6 +17,21 @@ export default function UsedItemDetailUI(): JSX.Element {
   const { moveToPage } = useMoveToPage()
   const { data } = useQueryFetchUsedItem(useditemId)
   const { onCopyLink } = useTextCopy()
+  const [imageIndex, setImageIndex] = useState(0)
+  const sliderRef = useRef(null)
+
+  const handleBeforeChange = (oldIndex, newIndex) => {
+    setImageIndex(newIndex)
+  }
+
+  const SETTINGS = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    beforeChange: handleBeforeChange,
+  }
 
   return (
     <>
@@ -79,6 +96,40 @@ export default function UsedItemDetailUI(): JSX.Element {
               <S.Price>
                 {new Intl.NumberFormat('en-US').format(data?.fetchUseditem?.price)}원
               </S.Price>
+              <S.CarouselWrapper>
+                <S.Carousel>
+                  <Slider
+                    {...{ ...SETTINGS, infinite: data?.fetchUseditem?.images.length > 1 ?? false }}
+                    ref={sliderRef}
+                  >
+                    {data?.fetchUseditem?.images.map((image) => (
+                      <S.ImageWrapper>
+                        <S.ImageBox>
+                          <Image
+                            src={`https://storage.googleapis.com/${image}`}
+                            alt="상품 이미지"
+                            width={296}
+                            height={296}
+                          />
+                        </S.ImageBox>
+                      </S.ImageWrapper>
+                    ))}
+                  </Slider>
+                </S.Carousel>
+              </S.CarouselWrapper>
+              <S.PreviewImageList>
+                {data?.fetchUseditem?.images.map((image, index) => (
+                  <S.PreviewItem
+                    onClick={() => {
+                      sliderRef.current.slickGoTo(index)
+                      setImageIndex(index)
+                    }}
+                    data-selected={index === imageIndex}
+                  >
+                    <Image src={`https://storage.googleapis.com/${image}`} width={78} height={78} />
+                  </S.PreviewItem>
+                ))}
+              </S.PreviewImageList>
               <S.ContentsMain>
                 <p>
                   {data?.fetchUseditem?.contents.split('\n').map((line, index) => (

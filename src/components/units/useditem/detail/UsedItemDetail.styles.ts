@@ -21,6 +21,63 @@ export const UsedItemTitleWrapper = styled.div`
   border-bottom: 1px solid rgba(189, 189, 189, 1);
 `
 
+export const CarouselWrapper = styled.div`
+  margin: 60px auto 0px;
+  width: 360px;
+`
+
+export const Carousel = styled.div`
+  position: relative;
+  margin: 0 auto;
+  p,
+  h3 {
+    color: white;
+  }
+  .slick-prev {
+    z-index: 1; /* 버튼이 슬라이드 위에 표시되도록 설정 */
+  }
+
+  .slick-next {
+    z-index: 1; /* 버튼이 슬라이드 위에 표시되도록 설정 */
+  }
+  .slick-next:before,
+  .slick-prev:before {
+    font-size: 36px;
+    color: ${({ theme }) => theme.colors.gray03};
+  }
+  .slick-dots {
+    bottom: 20px;
+  }
+  .slick-dots button {
+    font-size: 0; /* 버튼 텍스트 제거 */
+    border-radius: 50%;
+    padding: 0;
+    border: 1px solid white;
+    cursor: pointer;
+    outline: none;
+  }
+  .slick-dots button:before {
+    color: ${({ theme }) => theme.colors.gray03};
+  }
+  .slick-dots li button:hover:before {
+    color: ${({ theme }) => theme.colors.gray04} !important;
+  }
+  .slick-dots li.slick-active button:before {
+    color: ${({ theme }) => theme.colors.main}; /* 활성화된 동그라미 버튼 색상 */
+  }
+`
+
+export const ImageWrapper = styled.div`
+  position: relative;
+  height: 360px;
+  overflow: hidden; /* 이미지가 컨테이너를 벗어나지 않도록 설정 */
+`
+
+export const ImageBox = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
 export const WriterInfo = styled.div`
   display: flex;
   align-items: center;
@@ -97,7 +154,7 @@ export const Tags = styled.p`
   color: ${({ theme }) => theme.colors.gray04};
   font-weight: 500;
   font-size: 1.6rem;
-  margin-top: 20px;
+  margin-top: 40px;
 `
 
 export const ButtonWrapper = styled.div`
@@ -123,4 +180,29 @@ export const LinkIcon = styled.button`
 
 export const LocationIcon = styled.button`
   ${IconButton}
+`
+export const PreviewImageList = styled.ul`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+export const PreviewItem = styled.li`
+  position: relative;
+  margin-right: 24px;
+  border: ${(props) => props['data-selected'] && `1px solid ${props.theme.colors.main}`};
+  &:last-of-type {
+    margin-right: 0px;
+  }
+  &:after {
+    cursor: pointer;
+    position: absolute;
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: ${(props) => props['data-selected'] && props.theme.colors.main};
+    opacity: 0.1;
+  }
 `

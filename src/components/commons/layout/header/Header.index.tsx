@@ -10,12 +10,20 @@ import Button02 from '../../buttons/02/Button02.index'
 import theme from 'src/commons/styles/theme'
 import { useQueryFetchUserLoggedIn } from '../../hooks/quires/user/useQueryFetchUserLoggedIn'
 import { useMutationLogoutUser } from '../../hooks/mutations/user/useMutationLogout'
+import { useRouter } from 'next/router'
+
+const menus = [
+  { name: '자유게시판', path: '/boards' },
+  { name: '중고마켓', path: '/markets' },
+]
 
 export default function Header(): JSX.Element {
   const { data } = useQueryFetchUserLoggedIn()
   const { logoutUser } = useMutationLogoutUser()
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [isHidden, setIsHidden] = useState(false)
+  const { pathname } = useRouter()
+  const [basePath, setBasePath] = useState('')
   const { moveToPage } = useMoveToPage()
   const profileButtonRef = useRef<HTMLButtonElement>(null)
 
@@ -53,6 +61,10 @@ export default function Header(): JSX.Element {
   }, [])
 
   useEffect(() => {
+    setBasePath(pathname.split('/')[1])
+  }, [pathname])
+
+  useEffect(() => {
     if (!data && localStorage.getItem('accessToken')) {
       // localStorage.removeItem('accessToken')
     } else {
@@ -63,11 +75,25 @@ export default function Header(): JSX.Element {
   return (
     <S.Header>
       <S.HeaderInner>
-        <Link href="/boards">
-          <S.Logo>
-            <Image src="/images/logo_dark.png" alt="joongomarket 로고" width={210} height={32} />
-          </S.Logo>
-        </Link>
+        <S.LogoNavigationWrapper>
+          <Link href="/boards">
+            <S.Logo>
+              <Image src="/images/logo_dark.png" alt="joongomarket 로고" width={160} height={24} />
+            </S.Logo>
+          </Link>
+          <S.Navigation>
+            <S.MenuList>
+              {menus.map((menu, idx) => (
+                <S.Menu
+                  onClick={moveToPage(menu.path)}
+                  data-active={basePath === menu.path.replace('/', '')}
+                >
+                  {menu.name}
+                </S.Menu>
+              ))}
+            </S.MenuList>
+          </S.Navigation>
+        </S.LogoNavigationWrapper>
         {accessToken ? (
           <S.ProfileBoxWrapper>
             <S.ProfileButton ref={profileButtonRef} onClick={onClickProfileButton}>
@@ -85,6 +111,7 @@ export default function Header(): JSX.Element {
                 </S.TextWrapper>
               </S.ProfileInfo>
               <S.ProfileButtonWrapper>
+                <S.LogoutButton onClick={moveToPage('/mypage/market')}>마이페이지</S.LogoutButton>
                 <S.AddPointButton>
                   <Image src="/images/ic_savings.png" width={24} height={24} /> 충전하기
                 </S.AddPointButton>
