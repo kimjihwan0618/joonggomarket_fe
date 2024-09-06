@@ -5,8 +5,8 @@ export interface Searchbars01UIProps {
   refetchData: QueryResult['refetch']
   refetchDataCount?: QueryResult['refetch']
   setStartPage?: Dispatch<SetStateAction<number>>
-  setEndDate: Dispatch<SetStateAction<string | null>>
-  setStartDate: Dispatch<SetStateAction<string | null>>
+  setEndDate?: Dispatch<SetStateAction<string | null>>
+  setStartDate?: Dispatch<SetStateAction<string | null>>
   setSelectedPage?: Dispatch<SetStateAction<number>>
   onChangeKeyword: (value: string) => void
   refetchVariables: object

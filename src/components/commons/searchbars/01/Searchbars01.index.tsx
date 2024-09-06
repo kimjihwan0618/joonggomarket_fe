@@ -14,7 +14,6 @@ export default function Searchbars01UI(props: Searchbars01UIProps): JSX.Element 
       },
       ...(props.refetchVariables ?? {}),
     })
-    console.log(props.refetchVariables)
     props.refetchDataCount &&
       props.refetchDataCount({
         ...{

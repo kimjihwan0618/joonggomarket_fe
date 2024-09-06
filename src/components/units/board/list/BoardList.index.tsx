@@ -99,8 +99,11 @@ export default function BoardListUI(): JSX.Element {
           setSelectedPage={setSelectedPage}
           startPage={startPage}
           setStartPage={setStartPage}
-          startDate={startDate}
-          endDate={endDate}
+          refetchVariables={{
+            endDate,
+            startDate,
+            search: keyword,
+          }}
           refetch={refetchBoards}
           keyword={keyword}
           count={boardsCount?.fetchBoardsCount ?? 0}
