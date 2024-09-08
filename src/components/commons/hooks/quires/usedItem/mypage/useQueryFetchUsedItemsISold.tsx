@@ -1,18 +1,22 @@
 import { gql, useQuery } from '@apollo/client'
-import {
-  IQuery,
-  IQueryFetchUseditemsArgs,
-  IQueryFetchUseditemsISoldArgs,
-} from 'src/commons/types/generated/types'
+import { IQuery, IQueryFetchUseditemsISoldArgs } from 'src/commons/types/generated/types'
 
 export const FETCH_USED_ITEMS_I_SOLD = gql`
   query fetchUseditemsISold($search: String, $page: Int) {
     fetchUseditemsISold(search: $search, page: $page) {
       _id
       name
+      images
+      pickedCount
       price
+      updatedAt
+      remarks
+      tags
       soldAt
-      createdAt
+      seller {
+        name
+        picture
+      }
     }
   }
 `

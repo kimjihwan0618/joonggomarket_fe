@@ -10,13 +10,14 @@ import theme from 'src/commons/styles/theme'
 import InfiniteScroll from 'react-infinite-scroller'
 import Searchbars01UI from 'src/components/commons/searchbars/01/Searchbars01.index'
 import { useFetchMoreScroll } from 'src/components/commons/hooks/custom/useFetchMoreScroll'
+import UsedItemUI from '../item/UsedItem.index'
 
 export default function UsedItemListUI(): JSX.Element {
   const { moveToPage } = useMoveToPage()
   const { data: usedItemsBest } = useQueryFetchUsedItemsOfTheBest()
   const { keyword, onChangeKeyword, setStartDate, setEndDate } = useSearch()
   const { data: usedItems, refetch: refetchUsedItems, fetchMore } = useQueryFetchUsedItems()
-  const [isSoldout, setIsSoldout] = useState(true)
+  const [isSoldout, setIsSoldout] = useState(false)
   const { onLoadMore } = useFetchMoreScroll({
     fetchData: usedItems,
     fetchListName: 'fetchUseditems',
@@ -28,19 +29,12 @@ export default function UsedItemListUI(): JSX.Element {
   })
 
   const onClickTab = async (tabName: string): Promise<void> => {
-    switch (tabName) {
-      case '판매중상품':
-        await setIsSoldout(true)
-        break
-      case '판매된상품':
-        await setIsSoldout(false)
-        break
-      default:
-    }
+    const toggleSoldout = tabName === '판매중상품' ? false : true
+    setIsSoldout(toggleSoldout)
     await refetchUsedItems({
       search: keyword,
       page: 1,
-      isSoldout,
+      isSoldout: toggleSoldout,
     })
   }
 
@@ -49,7 +43,7 @@ export default function UsedItemListUI(): JSX.Element {
       <S.BestUsedItemSectionTitle>베스트 상품</S.BestUsedItemSectionTitle>
       <S.BestUsedItemWrapper>
         {usedItemsBest?.fetchUseditemsOfTheBest.map((el) => (
-          <S.BestUsedItem>
+          <S.BestUsedItem onClick={moveToPage(`/markets/${el._id}`)}>
             <S.ItemImageBox>
               <Image
                 src={
@@ -86,10 +80,10 @@ export default function UsedItemListUI(): JSX.Element {
             onChangeKeyword={onChangeKeyword}
           />
           <S.TabsItem>
-            <S.Tab onClick={() => onClickTab('판매중상품')} data-isactive={isSoldout}>
+            <S.Tab onClick={() => onClickTab('판매중상품')} data-isactive={!isSoldout}>
               판매중상품
             </S.Tab>
-            <S.Tab onClick={() => onClickTab('판매된상품')} data-isactive={!isSoldout}>
+            <S.Tab onClick={() => onClickTab('판매된상품')} data-isactive={isSoldout}>
               판매된상품
             </S.Tab>
           </S.TabsItem>
@@ -97,54 +91,11 @@ export default function UsedItemListUI(): JSX.Element {
         <S.UsedItemsWrapper>
           <InfiniteScroll pageStart={0} loadMore={onLoadMore} hasMore={true} useWindow={false}>
             {usedItems?.fetchUseditems.map((el) => (
-              <S.UsedItem onClick={moveToPage(`/markets/${el._id}`)}>
-                <S.ItemImageBox2>
-                  <Image
-                    src={
-                      el.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))
-                        .length !== 0
-                        ? `https://storage.googleapis.com/${el.images[0]}`
-                        : '/images/ic-noimage.jpg'
-                    }
-                    objectFit="cover"
-                    layout="fill"
-                  />
-                </S.ItemImageBox2>
-                <S.UsedItemInfo2>
-                  <S.LeftInfo>
-                    <S.Title2>
-                      {el.name
-                        .replaceAll(keyword, `!@#${keyword}!@#`)
-                        .split('!@#')
-                        .map((el2: string) => (
-                          <span style={{ color: el2 === keyword ? 'red' : 'black' }}>{el2}</span>
-                        ))}
-                    </S.Title2>
-                    <S.Remarks2>{el.remarks}</S.Remarks2>
-                    <S.Tags>{el.tags}</S.Tags>
-                    <S.SellerPicked>
-                      <S.Seller>
-                        <Image
-                          src={
-                            el.seller.picture !== '' && el.seller.picture?.includes('.')
-                              ? `https://storage.googleapis.com/${el.seller.picture}`
-                              : '/images/ic_profile2.png'
-                          }
-                          width={24}
-                          height={24}
-                          alt="프로필 아이콘"
-                        />
-                        &nbsp;&nbsp;{el.seller.name}
-                      </S.Seller>
-                      <S.Picked>
-                        <Image src={'/images/ic_favorite.png'} width={24} height={24} alt="하트" />
-                        &nbsp;&nbsp;{el.pickedCount}
-                      </S.Picked>
-                    </S.SellerPicked>
-                  </S.LeftInfo>
-                  <S.Price2>{new Intl.NumberFormat('en-US').format(el.price)}원</S.Price2>
-                </S.UsedItemInfo2>
-              </S.UsedItem>
+              <UsedItemUI
+                onClick={moveToPage(`/markets/${el._id}`)}
+                usedItem={el}
+                keyword={keyword}
+              />
             ))}
           </InfiniteScroll>
         </S.UsedItemsWrapper>

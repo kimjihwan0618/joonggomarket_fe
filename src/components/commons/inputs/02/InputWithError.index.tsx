@@ -14,6 +14,7 @@ interface IInputWithErrorProps {
   error?: string
   width?: string
   color?: string
+  style?: object
 }
 
 export default function InputWithError(props: IInputWithErrorProps): JSX.Element {
@@ -28,6 +29,7 @@ export default function InputWithError(props: IInputWithErrorProps): JSX.Element
           type={props.type ?? 'text'}
           disabled={props.disabled ?? false}
           readOnly={props.readOnly ?? false}
+          style={props.style && props.style}
           placeholder={props.placeholder ?? ''}
         />
         {props.error && <S.Error>{props.error}</S.Error>}

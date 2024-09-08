@@ -12,6 +12,7 @@ export const FETCH_USED_ITEMS = gql`
       updatedAt
       remarks
       tags
+      soldAt
       seller {
         name
         picture

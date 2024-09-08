@@ -89,12 +89,15 @@ export const ProfileButton = styled.button`
   &:hover {
     background: ${({ theme }) => theme.colors.gray06};
   }
+  & > span {
+    border-radius: 100px;
+  }
 `
 export const ProfileBox = styled.div`
   position: absolute;
   display: ${(props) => (!props['data-hidden'] ? 'none' : 'block')};
   right: 0;
-  bottom: -380%;
+  bottom: -300%;
   border-radius: 16px;
   background: white;
   width: 258px;
@@ -106,21 +109,18 @@ export const ProfileInfo = styled.div`
   align-items: center;
   padding: 20px 26px;
   border-bottom: 1px solid black;
+  cursor: pointer;
+  &:hover {
+    background: ${({ theme }) => theme.colors.gray06};
+  }
 `
 export const ImgSettingButton = styled.button`
   position: relative;
   width: 48px;
   height: 48px;
   margin-right: 12px;
-  &:after {
-    content: '';
-    display: block;
-    width: 16px;
-    height: 16px;
-    background: url(/images/ic_profile_img_setting.png) no-repeat 50% 50%;
-    position: absolute;
-    right: 0;
-    bottom: 0;
+  & > span {
+    border-radius: 100px;
   }
 `
 export const TextWrapper = styled.dl``

@@ -2,51 +2,59 @@ import Searchbars01UI from 'src/components/commons/searchbars/01/Searchbars01.in
 import * as S from './Market.styles'
 import { useState } from 'react'
 import { useSearch } from 'src/components/commons/hooks/custom/useSearch'
-import Table from 'src/components/commons/dataGrid/table/01/Table01.index'
-import { toYYYYMMDDHHMMSS } from 'src/lib/utils/date'
-import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
-import Pagination from 'src/components/commons/dataGrid/pagination/01/Pagination01.index'
 import { useQueryFetchUsedItemsISold } from 'src/components/commons/hooks/quires/usedItem/mypage/useQueryFetchUsedItemsISold'
-import { useQueryFetchUsedItemsISoldCount } from 'src/components/commons/hooks/quires/usedItem/mypage/useQueryFetchUsedItemsISoldCount'
-
-const TABLE_COLUMNS = [
-  { name: '상품명', dataKey: 'name', isSearch: true },
-  { name: '', dataKey: 'soldAtConvert', isSearch: false },
-  { name: '판매가격', dataKey: 'price', isSearch: false },
-  { name: '날짜', dataKey: 'createdAt', isSearch: false },
-]
+import { useQueryFetchUseditemsIPicked } from 'src/components/commons/hooks/quires/usedItem/mypage/useQueryFetchUseditemsIPicked'
+import InfiniteScroll from 'react-infinite-scroller'
+import { useFetchMoreScroll } from 'src/components/commons/hooks/custom/useFetchMoreScroll'
+import * as S2 from 'src/components/units/useditem/list/UsedItemList.styles'
+import UsedItemUI from '../../useditem/item/UsedItem.index'
 
 export default function MyMarketUI(): JSX.Element {
-  const { moveToPage } = useMoveToPage()
   const [selectedTab, setSelectedTab] = useState('나의상품')
-  const { keyword, onChangeKeyword, selectedPage, setSelectedPage, startPage, setStartPage } =
-    useSearch()
-  const { data: usedItemsISold, refetch: refetchUsedItemsISold } = useQueryFetchUsedItemsISold()
-  const { data: usedItemsISoldCount } = useQueryFetchUsedItemsISoldCount()
+  const { keyword, onChangeKeyword } = useSearch()
+  const {
+    data: usedItemsISold,
+    refetch: refetchUsedItemsISold,
+    fetchMore: fetchMore01,
+  } = useQueryFetchUsedItemsISold()
+  const {
+    data: usedItemsIPicked,
+    refetch: refetchUsedItemsIPicked,
+    fetchMore: fetchMore02,
+  } = useQueryFetchUseditemsIPicked()
+  const { onLoadMore } = useFetchMoreScroll({
+    fetchData: selectedTab === '나의상품' ? usedItemsISold : usedItemsIPicked,
+    fetchListName: selectedTab === '나의상품' ? 'fetchUseditemsISold' : 'fetchUseditemsIPicked',
+    fetchMore: selectedTab === '나의상품' ? fetchMore01 : fetchMore02,
+    variables: {
+      search: keyword,
+    },
+  })
 
   const onClickTab = async (tabName: string): Promise<void> => {
     setSelectedTab(tabName)
     switch (tabName) {
       case '나의상품':
+        await refetchUsedItemsISold({
+          search: keyword,
+          page: 1,
+        })
         break
       case '마이찜':
+        await refetchUsedItemsIPicked({
+          search: keyword,
+          page: 1,
+        })
         break
     }
-    // await refetchUsedItems({
-    //   search: keyword,
-    //   page: 1,
-    //   isSoldout,
-    // })
   }
 
   return (
     <S.Wrapper>
       <S.SearchWrapper>
         <Searchbars01UI
-          refetchData={refetchUsedItemsISold}
+          refetchData={selectedTab === '나의상품' ? refetchUsedItemsISold : refetchUsedItemsIPicked}
           refetchVariables={{}}
-          setSelectedPage={setSelectedPage}
-          setStartPage={setStartPage}
           onChangeKeyword={onChangeKeyword}
         />
         <S.TabsItem>
@@ -58,31 +66,26 @@ export default function MyMarketUI(): JSX.Element {
           </S.Tab>
         </S.TabsItem>
       </S.SearchWrapper>
-      <Table
-        rowKey="_id"
-        data={usedItemsISold?.fetchUseditemsISold.map((usedItem) => ({
-          ...usedItem,
-          soldAtConvert: usedItem.soldAt ? '판매완료' : '',
-          createdAt: toYYYYMMDDHHMMSS(usedItem.createdAt),
-          price: `￦${new Intl.NumberFormat('en-US').format(usedItem.price)}원`,
-        }))}
-        keyword={keyword}
-        activePage={selectedPage}
-        rowHandler={{ onClickRow: moveToPage, path: '/markets' }}
-        columns={TABLE_COLUMNS}
-      />
-      <Pagination
-        selectedPage={selectedPage}
-        setSelectedPage={setSelectedPage}
-        startPage={startPage}
-        setStartPage={setStartPage}
-        refetchVariables={{
-          search: keyword,
-        }}
-        refetch={refetchUsedItemsISold}
-        keyword={keyword}
-        count={usedItemsISoldCount?.fetchUseditemsCountISold ?? 0}
-      />
+      <S2.UsedItemsWrapper>
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={onLoadMore}
+          hasMore={
+            selectedTab === '나의상품'
+              ? usedItemsISold?.fetchUseditemsISold.length > 0
+              : usedItemsIPicked?.fetchUseditemsIPicked.length > 0
+          }
+          useWindow={false}
+        >
+          {selectedTab === '나의상품'
+            ? usedItemsISold?.fetchUseditemsISold.map((el) => (
+                <UsedItemUI usedItem={el} keyword={keyword} />
+              ))
+            : usedItemsIPicked?.fetchUseditemsIPicked.map((el) => (
+                <UsedItemUI usedItem={el} keyword={keyword} />
+              ))}
+        </InfiniteScroll>
+      </S2.UsedItemsWrapper>
     </S.Wrapper>
   )
 }

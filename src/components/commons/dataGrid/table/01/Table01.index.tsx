@@ -38,6 +38,8 @@ export default function Table(props: ITableProps): JSX.Element {
                       <span style={{ color: el2 === props.keyword ? 'red' : 'black' }}>{el2}</span>
                     ))}
                 </td>
+              ) : column.dataKey.includes('.') ? (
+                <td>{column.dataKey.split('.').reduce((acc, key) => acc?.[key], el)}</td>
               ) : (
                 <td>{el[column.dataKey]}</td>
               )

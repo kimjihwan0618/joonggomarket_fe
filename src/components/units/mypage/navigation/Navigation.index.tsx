@@ -1,6 +1,10 @@
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import * as S from './Navigation.styles'
 import Image from 'next/image'
+import { useQueryFetchUserLoggedIn } from 'src/components/commons/hooks/quires/user/useQueryFetchUserLoggedIn'
+import { ChangeEvent, useRef } from 'react'
+import { useMutationUploadFile } from 'src/components/commons/hooks/mutations/file/useMutationUploadFile'
+import { useMutationUpdateUser } from 'src/components/commons/hooks/mutations/user/useMutationUpdateUser'
 
 const MAPAGE_SUB_PAGES = [
   { link: '/market', name: '내 장터', icon: '/ic_shopping_cart_02' },
@@ -14,18 +18,45 @@ interface IMypageNavigationUIProps {
 
 export default function MypageNavigation(props: IMypageNavigationUIProps): JSX.Element {
   const { moveToPage } = useMoveToPage()
+  const fileRef = useRef<HTMLInputElement>(null)
+  const { uploadFile } = useMutationUploadFile()
+  const { data } = useQueryFetchUserLoggedIn()
+  const { updateUser } = useMutationUpdateUser()
+
+  const onChangeFile = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
+    const file = event.target.files?.[0]
+    const result = await uploadFile({ file })
+    result?.data?.uploadFile.url && updateUser({ picture: result?.data?.uploadFile.url })
+  }
 
   return (
     <S.Wrapper>
+      <S.UploadFileHidden type="file" ref={fileRef} onChange={onChangeFile} />
       <S.PageTitle>MYPAGE</S.PageTitle>
       <S.ProfileImageBox>
-        <Image src="/images/ic_profile.png" width={80} height={80} />
+        <S.ImageBox>
+          {data?.fetchUserLoggedIn?.picture ? (
+            <Image
+              onClick={() => fileRef.current?.click()}
+              src={`https://storage.googleapis.com/${data?.fetchUserLoggedIn?.picture}`}
+              width={80}
+              height={80}
+            />
+          ) : (
+            <Image
+              onClick={() => fileRef.current?.click()}
+              src="/images/ic_profile.png"
+              width={80}
+              height={80}
+            />
+          )}
+        </S.ImageBox>
       </S.ProfileImageBox>
       <S.InfoBox>
-        <S.Name>노원두</S.Name>
+        <S.Name>{data?.fetchUserLoggedIn.name}</S.Name>
         <S.PointText>
           <Image src="/images/ic_savings_02_on.png" width={24} height={24} />
-          <S.Point>100,000</S.Point>
+          <S.Point>{data?.fetchUserLoggedIn.userPoint?.amount}</S.Point>
         </S.PointText>
       </S.InfoBox>
       <S.SubMenuList>

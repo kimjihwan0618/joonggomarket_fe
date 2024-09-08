@@ -97,13 +97,36 @@ export default function Header(): JSX.Element {
         {accessToken ? (
           <S.ProfileBoxWrapper>
             <S.ProfileButton ref={profileButtonRef} onClick={onClickProfileButton}>
-              <Image src="/images/ic_profile2.png" alt="프로필 아이콘" width={48} height={48} />
+              {data?.fetchUserLoggedIn?.picture ? (
+                <Image
+                  src={`https://storage.googleapis.com/${data?.fetchUserLoggedIn?.picture}`}
+                  width={48}
+                  height={48}
+                  alt="프로필 이미지"
+                />
+              ) : (
+                <Image src="/images/ic_profile2.png" width={48} height={48} alt="프로필 이미지" />
+              )}
               <Image src="/images/ic_more.png" alt="아래방향 화살표" width={24} height={24} />
             </S.ProfileButton>
             <S.ProfileBox data-hidden={isHidden}>
-              <S.ProfileInfo>
+              <S.ProfileInfo onClick={moveToPage('/mypage/market')}>
                 <S.ImgSettingButton>
-                  <Image src="/images/ic_profile2.png" alt="프로필 아이콘" width={48} height={48} />
+                  {data?.fetchUserLoggedIn?.picture ? (
+                    <Image
+                      src={`https://storage.googleapis.com/${data?.fetchUserLoggedIn?.picture}`}
+                      width={40}
+                      height={40}
+                      alt="프로필 이미지"
+                    />
+                  ) : (
+                    <Image
+                      src="/images/ic_profile2.png"
+                      width={40}
+                      height={40}
+                      alt="프로필 이미지"
+                    />
+                  )}
                 </S.ImgSettingButton>
                 <S.TextWrapper>
                   <S.Name>{data?.fetchUserLoggedIn.name}</S.Name>
@@ -111,7 +134,6 @@ export default function Header(): JSX.Element {
                 </S.TextWrapper>
               </S.ProfileInfo>
               <S.ProfileButtonWrapper>
-                <S.LogoutButton onClick={moveToPage('/mypage/market')}>마이페이지</S.LogoutButton>
                 <S.AddPointButton>
                   <Image src="/images/ic_savings.png" width={24} height={24} /> 충전하기
                 </S.AddPointButton>

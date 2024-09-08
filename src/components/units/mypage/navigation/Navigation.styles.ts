@@ -18,6 +18,26 @@ export const ProfileImageBox = styled.div`
   height: 96px;
   text-align: center;
 `
+export const ImageBox = styled.div`
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  cursor: pointer;
+  &:after {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 28px;
+    background: url(/images/ic_profile_img_setting_on.png) no-repeat 50% 50%;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+  & > span {
+    border-radius: 100px;
+  }
+`
 export const InfoBox = styled.div``
 export const Name = styled.h4`
   font-weight: bold;
@@ -52,4 +72,8 @@ export const Text = styled.p`
   font-weight: ${(props) => (props['data-active'] ? 'bold' : '500')};
   font-size: 1.8rem;
   white-space: nowrap;
+`
+
+export const UploadFileHidden = styled.input`
+  display: none;
 `
