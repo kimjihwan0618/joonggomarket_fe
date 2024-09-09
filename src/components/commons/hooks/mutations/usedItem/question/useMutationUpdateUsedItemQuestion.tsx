@@ -21,6 +21,12 @@ export const UDATE_USED_ITEM_COMMENTS = gql`
     }
   }
 `
+
+interface IUpdateUsedItemQuestionProps {
+  useditemQuestionId: IMutationUpdateUseditemQuestionArgs['useditemQuestionId']
+  contents: IMutationUpdateUseditemQuestionArgs['updateUseditemQuestionInput']['contents']
+}
+
 export const useMutationUpdateUsedItemQuestion = (
   useditemId: IQueryFetchUseditemQuestionsArgs['useditemId']
 ) => {
@@ -29,14 +35,13 @@ export const useMutationUpdateUsedItemQuestion = (
     IMutationUpdateUseditemQuestionArgs
   >(UDATE_USED_ITEM_COMMENTS)
 
-  const updateUsedItemQuestion = async (props): Promise<void> => {
+  const updateUsedItemQuestion = async (props: IUpdateUsedItemQuestionProps): Promise<void> => {
     try {
-      const { contents } = props.getValues()
       const result = await updateUsedItemQuestionMutation({
         variables: {
           useditemQuestionId: props.useditemQuestionId,
           updateUseditemQuestionInput: {
-            contents,
+            contents: props.contents,
           },
         },
         refetchQueries: [

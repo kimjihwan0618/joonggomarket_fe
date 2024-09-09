@@ -3,6 +3,7 @@ import type {
   IMutation,
   IMutationDeleteBoardCommentArgs,
   IMutationDeleteUseditemQuestionArgs,
+  IQueryFetchUseditemQuestionsArgs,
 } from 'src/commons/types/generated/types'
 import { Modal } from 'antd'
 import { FETCH_USED_ITEM_QUESTIONS } from '../../../quires/usedItem/question/useQueryFetchUsedItemQuestions'
@@ -13,7 +14,12 @@ export const DELETE_USED_ITEM_QUESTION = gql`
   }
 `
 
-export const useMutationDeleteUsedItemQuestion = (props) => {
+interface IDeleteUsedItemQuestionProps {
+  useditemId: IQueryFetchUseditemQuestionsArgs['useditemId']
+  deleteQuestionId: IMutationDeleteUseditemQuestionArgs['useditemQuestionId']
+}
+
+export const useMutationDeleteUsedItemQuestion = (props: IDeleteUsedItemQuestionProps) => {
   const [deleteUsedItemMutation, { loading }] = useMutation<
     Pick<IMutation, 'deleteUseditemQuestion'>,
     IMutationDeleteUseditemQuestionArgs

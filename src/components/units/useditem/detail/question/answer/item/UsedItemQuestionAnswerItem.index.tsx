@@ -1,11 +1,25 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import * as S from 'src/components/units/useditem/detail/question/answer/list/UsedItemQuestionAnswerList.styles'
 import Image from 'next/image'
 import { toYYYYMMDD } from 'src/lib/utils/date'
 import { useQueryFetchUserLoggedIn } from 'src/components/commons/hooks/quires/user/useQueryFetchUserLoggedIn'
 import UsedItemQuestionAnswerWriteUI from '../write/UsedItemQuestionAnswerWrite.index'
+import { IUseditemQuestion, IUseditemQuestionAnswer } from 'src/commons/types/generated/types'
 
-export default function UsedItemQuestionAnswerItem(props): JSX.Element {
+interface IUsedItemQuestionAnswerItemProps {
+  key: IUseditemQuestionAnswer['_id']
+  idx: number
+  answer: IUseditemQuestionAnswer
+  question: IUseditemQuestion
+  onClickQuestionAnswerDelete: (_id: IUseditemQuestionAnswer['_id']) => void
+  onClickAnswerToggle: () => void
+  answerIsEdit: boolean
+  setAnswerIsEdit: Dispatch<SetStateAction<boolean>>
+}
+
+export default function UsedItemQuestionAnswerItem(
+  props: IUsedItemQuestionAnswerItemProps
+): JSX.Element {
   const { data } = useQueryFetchUserLoggedIn()
   const [isEdit, setIsEdit] = useState(false)
 
@@ -52,7 +66,8 @@ export default function UsedItemQuestionAnswerItem(props): JSX.Element {
                   </button>
                 </>
               )}
-              {data?.fetchUserLoggedIn?._id === props?.question?.user?._id && !props.isEdit && (
+              {/* {data?.fetchUserLoggedIn?._id === props?.question?.user?._id && !props.isEdit && ( */}
+              {data?.fetchUserLoggedIn?._id === props?.question?.user?._id && (
                 <button onClick={props.onClickAnswerToggle}>
                   <Image src={'/images/ic_answer.png'} width={18} height={18} />
                 </button>

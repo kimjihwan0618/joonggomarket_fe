@@ -1,9 +1,5 @@
 import { gql, useQuery } from '@apollo/client'
-import {
-  IQuery,
-  IQueryFetchBoardArgs,
-  IQueryFetchBoardsArgs,
-} from 'src/commons/types/generated/types'
+import { IQuery, IQueryFetchBoardArgs } from 'src/commons/types/generated/types'
 
 export const FETCH_BOARD = gql`
   query fetchBoard($boardId: ID!) {

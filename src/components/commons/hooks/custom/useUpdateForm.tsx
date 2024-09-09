@@ -3,8 +3,13 @@ const ACTIVE_OPTION = {
   shouldValidate: true,
 }
 
-// setValue, updateKeys: string[], fetchData: object
-export const useUpdateForm = (props) => {
+interface IUseUpdateFormProps {
+  updateKeys: string[]
+  fetchData: {}
+  setValue: (key: string, value: any, options: object) => void
+}
+
+export const useUpdateForm = (props: IUseUpdateFormProps) => {
   const handleFormUpdate = () => {
     props.updateKeys.forEach((key: string) => {
       if (key.includes('.')) {

@@ -28,8 +28,8 @@ export default function UsedItemQuestionItem(props): JSX.Element {
     <>
       {!isEdit ? (
         <>
-          <S.CommentBox key={`${props.idx}`}>
-            <S.CommentInfo>
+          <S.QuestionBox key={`${props.idx}`}>
+            <S.QuestionInfo>
               <Image
                 src={
                   props.question?.user?.picture
@@ -41,24 +41,17 @@ export default function UsedItemQuestionItem(props): JSX.Element {
               />
               <S.InfoBox>
                 <S.Writer>{props.question.user.name}</S.Writer>
-                <S.Comment>{props.question.contents}</S.Comment>
+                <S.Question>{props.question.contents}</S.Question>
                 <S.Date>{toYYYYMMDD(new Date(props.question.updatedAt))}</S.Date>
               </S.InfoBox>
-            </S.CommentInfo>
+            </S.QuestionInfo>
             <S.Buttons>
               {data?.fetchUserLoggedIn?._id === props.question?.user._id && (
                 <>
-                  <button
-                    id={props.question._id}
-                    data-contents={props.question.contents}
-                    onClick={handleCommentToggle}
-                  >
+                  <button onClick={handleCommentToggle}>
                     <Image src={'/images/ic_pencil-gray.png'} width={18} height={18} />
                   </button>
-                  <button
-                    id={props.question._id}
-                    onClick={() => props.onClickQuestionDelete(props.question._id)}
-                  >
+                  <button onClick={() => props.onClickQuestionDelete(props.question._id)}>
                     <Image src={'/images/ic_close-gray.png'} width={18} height={18} />
                   </button>
                 </>
@@ -70,7 +63,7 @@ export default function UsedItemQuestionItem(props): JSX.Element {
                   </button>
                 )}
             </S.Buttons>
-          </S.CommentBox>
+          </S.QuestionBox>
           <UsedItemQuestionAnswerListUI
             onClickAnswerToggle={onClickAnswerToggle}
             useditemQuestion={props?.question}

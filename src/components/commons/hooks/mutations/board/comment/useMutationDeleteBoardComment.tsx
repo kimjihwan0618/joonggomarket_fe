@@ -1,5 +1,9 @@
 import { gql, useMutation } from '@apollo/client'
-import type { IMutation, IMutationDeleteBoardCommentArgs } from 'src/commons/types/generated/types'
+import type {
+  IMutation,
+  IMutationDeleteBoardCommentArgs,
+  IQueryFetchBoardCommentsArgs,
+} from 'src/commons/types/generated/types'
 import { FETCH_BOARD_COMMENTS } from 'src/components/commons/hooks/quires/board/comment/useQueryFetchBoardComments'
 import { Modal } from 'antd'
 
@@ -9,7 +13,13 @@ export const DELETE_BOARD_COMMENT = gql`
   }
 `
 
-export const useMutationDeleteBoardComment = (props) => {
+interface IDeleteBoardCommentProps {
+  boardId: IQueryFetchBoardCommentsArgs['boardId']
+  deleteCommentId: IMutationDeleteBoardCommentArgs['boardCommentId']
+  passwordCheck: IMutationDeleteBoardCommentArgs['password']
+}
+
+export const useMutationDeleteBoardComment = (props: IDeleteBoardCommentProps) => {
   const [deleteBoardCommentMutation, { loading }] = useMutation<
     Pick<IMutation, 'deleteBoardComment'>,
     IMutationDeleteBoardCommentArgs

@@ -4,8 +4,6 @@ import type { IMutation, IMutationCreateUserArgs } from 'src/commons/types/gener
 import type { UseFormGetValues } from 'react-hook-form'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useRouter } from 'next/router'
-import { useRecoilState } from 'recoil'
-import { accessTokenState, vistedPageState } from 'src/commons/stores'
 import { ICreateUserForm } from 'src/components/units/auth/signup/Signup.schema'
 
 interface IUseMutationCreateUserProps {
@@ -24,8 +22,6 @@ export const CREATE_USER = gql`
 export const useMutationCreateUser = (props: IUseMutationCreateUserProps) => {
   const router = useRouter()
   const { moveToPage } = useMoveToPage()
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
-  const [vistedPage, setVisitedPage] = useRecoilState(vistedPageState)
   const [createUserMutation] = useMutation<Pick<IMutation, 'createUser'>, IMutationCreateUserArgs>(
     CREATE_USER
   )

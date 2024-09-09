@@ -3,7 +3,6 @@ import { Modal } from 'antd'
 import type { IMutation, IMutationLoginUserArgs } from 'src/commons/types/generated/types'
 import type { UseFormGetValues } from 'react-hook-form'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
-import { useRouter } from 'next/router'
 import { useRecoilState } from 'recoil'
 import { accessTokenState, vistedPageState } from 'src/commons/stores'
 import { ILoginForm } from 'src/components/units/auth/login/Login.schema'
@@ -21,7 +20,6 @@ export const LOGIN_USER = gql`
 `
 
 export const useMutationLoginUser = (props: IUseMutationLoginUserProps) => {
-  const router = useRouter()
   const { moveToPage } = useMoveToPage()
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [vistedPage, setVisitedPage] = useRecoilState(vistedPageState)

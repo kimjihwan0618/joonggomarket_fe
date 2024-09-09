@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   margin: 0;
 `
 
-export const CommentBox = styled.div`
+export const QuestionBox = styled.div`
   padding: 9px 0 20px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray04};
   display: flex;
@@ -23,18 +23,13 @@ export const TopItems = styled.div`
   align-items: flex-start;
 `
 
-export const WriterRating = styled.div`
-  display: flex;
-  align-items: center;
-`
-
 export const Writer = styled.p`
   margin: 0px;
   margin-right: 18px;
   display: inline-block;
 `
 
-export const Comment = styled.p`
+export const Question = styled.p`
   margin: 0px;
   margin-top: 4px;
 `
@@ -45,7 +40,7 @@ export const Date = styled.p`
   font-size: 1.2rem;
 `
 
-export const CommentInfo = styled.div`
+export const QuestionInfo = styled.div`
   display: flex;
   align-items: flex-start;
   & > div {

@@ -2,6 +2,7 @@ import { gql, useMutation } from '@apollo/client'
 import type {
   IMutation,
   IMutationDeleteUseditemQuestionAnswerArgs,
+  IQueryFetchUseditemQuestionAnswersArgs,
 } from 'src/commons/types/generated/types'
 import { Modal } from 'antd'
 import { FETCH_USED_ITEM_QUESTION_ANSWERS } from 'src/components/commons/hooks/quires/usedItem/question/answer/useQueryFetchUsedItemQuestionAnswers'
@@ -12,7 +13,14 @@ export const DELETE_USED_ITEM_QUESTION_ANSWER = gql`
   }
 `
 
-export const useMutationDeleteUseditemQuestionAnswer = (props) => {
+interface IDeleteUseditemQuestionAnswerProps {
+  useditemQuestionId: IQueryFetchUseditemQuestionAnswersArgs['useditemQuestionId']
+  deleteQuestionAnswerId: IMutationDeleteUseditemQuestionAnswerArgs['useditemQuestionAnswerId']
+}
+
+export const useMutationDeleteUseditemQuestionAnswer = (
+  props: IDeleteUseditemQuestionAnswerProps
+) => {
   const [deleteUsedItemQuestionAnswerMutation, { loading }] = useMutation<
     Pick<IMutation, 'deleteUseditemQuestionAnswer'>,
     IMutationDeleteUseditemQuestionAnswerArgs

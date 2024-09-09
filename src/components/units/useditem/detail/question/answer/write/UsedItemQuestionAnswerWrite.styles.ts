@@ -16,16 +16,6 @@ export const Inner = styled.div`
   width: 90%;
 `
 
-export const CommentTitle = styled.div`
-  align-items: center;
-  display: flex;
-  h3 {
-    font-size: 1.8rem;
-    font-weight: 500;
-    margin-left: 14px;
-  }
-`
-
 export const InputWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -39,47 +29,25 @@ export const InputWrapper = styled.div`
   }
 `
 
-export const Rating = styled.div`
-  display: flex;
-  align-items: center;
-  div {
-    margin-right: 4px;
-  }
-  div:last-of-type {
-    margin-right: 0px;
-  }
-`
-
-export const CommentWrapper = styled.div`
+export const QuestionAnswerWrapper = styled.div`
   width: 100%;
   margin-top: 20px;
   border: 1px solid ${({ theme }) => theme.colors.gray04};
 `
 
-export const CommentTextArea = styled.textarea`
-  ${InputStyle}
-  height: ${(props) => (props['data-isedit'] ? '55px' : '108px')};
-  width: 100%;
-  border: none;
-  resize: none;
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.gray04};
-  }
-`
-
-export const CommentSizeLimit = styled.p`
+export const QuestionAnswerSizeLimit = styled.p`
   margin-left: 20px;
   color: ${({ theme }) => theme.colors.gray04};
 `
 
-export const CommentFooter = styled.div`
+export const QuestionAnswerFooter = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid ${({ theme }) => theme.colors.gray06};
   height: 52px;
 `
-export const CommentButtonsWrapper = styled.div`
+export const QuestionAnswerButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 100%;

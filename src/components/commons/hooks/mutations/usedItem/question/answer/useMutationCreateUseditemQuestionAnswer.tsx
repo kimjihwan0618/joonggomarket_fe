@@ -3,6 +3,7 @@ import { Modal } from 'antd'
 import type {
   IMutation,
   IMutationCreateUseditemQuestionAnswerArgs,
+  IQueryFetchUseditemQuestionAnswersArgs,
 } from 'src/commons/types/generated/types'
 import { FETCH_USED_ITEM_QUESTION_ANSWERS } from 'src/components/commons/hooks/quires/usedItem/question/answer/useQueryFetchUsedItemQuestionAnswers'
 
@@ -23,13 +24,20 @@ export const CREATE_USED_ITEM_QUESTION_ANSWER = gql`
     }
   }
 `
+interface ICreateUsedItemQuestioAnswerProps {
+  contents: IMutationCreateUseditemQuestionAnswerArgs['createUseditemQuestionAnswerInput']['contents']
+  useditemQuestionId: IQueryFetchUseditemQuestionAnswersArgs['useditemQuestionId']
+}
+
 export const useMutationCreateUseditemQuestionAnswer = () => {
   const [createUsedItemQuestionAnswerMutation] = useMutation<
     Pick<IMutation, 'createUseditemQuestionAnswer'>,
     IMutationCreateUseditemQuestionAnswerArgs
   >(CREATE_USED_ITEM_QUESTION_ANSWER)
 
-  const createUsedItemQuestionAnswer = async (props): Promise<void> => {
+  const createUsedItemQuestionAnswer = async (
+    props: ICreateUsedItemQuestioAnswerProps
+  ): Promise<void> => {
     try {
       const { useditemQuestionId, contents } = props
       const result = await createUsedItemQuestionAnswerMutation({

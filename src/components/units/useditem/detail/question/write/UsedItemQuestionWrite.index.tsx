@@ -44,7 +44,7 @@ export default function UsedItemQuestionWriteUI(props: IUsedItemQuestionWriteUIP
   })
 
   const onClickQuestionUpdate = async (): Promise<void> => {
-    updateUsedItemQuestion({ getValues, useditemQuestionId: props.data._id })
+    updateUsedItemQuestion({ contents: getValues('contents'), useditemQuestionId: props.data._id })
     props.setIsEdit(false)
   }
 
@@ -60,10 +60,10 @@ export default function UsedItemQuestionWriteUI(props: IUsedItemQuestionWriteUIP
   return (
     <S.Wrapper data-isedit={props.isEdit}>
       {!props.isEdit ? (
-        <S.CommentTitle>
+        <S.QuestionTitle>
           <Image src={'/images/ic_comment.png'} width={20} height={20} />
           <h3>문의하기</h3>
-        </S.CommentTitle>
+        </S.QuestionTitle>
       ) : (
         <S.UserImageBox>
           <Image
@@ -79,16 +79,16 @@ export default function UsedItemQuestionWriteUI(props: IUsedItemQuestionWriteUIP
       )}
       <S.InputWrapper data-isedit={props.isEdit}>
         {props.isEdit && <S.Writer>{data?.fetchUserLoggedIn.name}</S.Writer>}
-        <S.CommentWrapper>
+        <S.QuestionWrapper>
           <TextAreaWithError
             style={{ border: 'none' }}
             register={register('contents')}
             height={'108px'}
             placeholder="개인정보를 공유 및 요청하거나, 명예 훼손, 무단 광고, 불법 정보 유포시 모니터링 후 삭제될 수 있으며, 이에 대한 민형사상 책임은 게시자에게 있습니다."
           />
-          <S.CommentFooter>
-            <S.CommentSizeLimit>{watch('contents')?.length ?? 0}/100</S.CommentSizeLimit>
-            <S.CommentButtonsWrapper>
+          <S.QuestionFooter>
+            <S.QuestionSizeLimit>{watch('contents')?.length ?? 0}/100</S.QuestionSizeLimit>
+            <S.QuestionButtonsWrapper>
               {props.isEdit && (
                 <Button01
                   onClick={props.handleCommentToggle}
@@ -105,9 +105,9 @@ export default function UsedItemQuestionWriteUI(props: IUsedItemQuestionWriteUIP
                 name={`${props.isEdit ? '수정' : '등록'}하기`}
                 width="02"
               />
-            </S.CommentButtonsWrapper>
-          </S.CommentFooter>
-        </S.CommentWrapper>
+            </S.QuestionButtonsWrapper>
+          </S.QuestionFooter>
+        </S.QuestionWrapper>
       </S.InputWrapper>
     </S.Wrapper>
   )

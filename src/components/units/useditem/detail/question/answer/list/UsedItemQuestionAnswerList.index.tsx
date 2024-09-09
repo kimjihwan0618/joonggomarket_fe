@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { useFetchMoreScroll } from 'src/components/commons/hooks/custom/useFetchMoreScroll'
 import { Modal } from 'antd'
 import UsedItemQuestionAnswerItem from '../item/UsedItemQuestionAnswerItem.index'
-import { IUseditemQuestion } from 'src/commons/types/generated/types'
+import { IUseditemQuestion, IUseditemQuestionAnswer } from 'src/commons/types/generated/types'
 import { useQueryFetchUsedItemQuestionAnswers } from 'src/components/commons/hooks/quires/usedItem/question/answer/useQueryFetchUsedItemQuestionAnswers'
 import UsedItemQuestionAnswerWriteUI from '../write/UsedItemQuestionAnswerWrite.index'
 import { useMutationDeleteUseditemQuestionAnswer } from 'src/components/commons/hooks/mutations/usedItem/question/answer/useMutationDeleteUseditemQuestionAnswer'
@@ -41,7 +41,7 @@ export default function UsedItemQuestionAnswerListUI(
     setIsOpen(false)
   }
 
-  const handleQuestionAnswerDelete = (answerId): void => {
+  const handleQuestionAnswerDelete = (answerId: IUseditemQuestionAnswer['_id']): void => {
     event.stopPropagation()
     setDeleteQuestionAnswerId(answerId ?? '')
     setIsOpen((prev) => !prev)
@@ -57,7 +57,7 @@ export default function UsedItemQuestionAnswerListUI(
         title="해당 문의 답변을 삭제하시겠습니까?"
         open={isOpen}
         onOk={onClickDeleteOk}
-        onCancel={handleQuestionAnswerDelete}
+        onCancel={() => handleQuestionAnswerDelete('')}
         okButtonProps={{ disabled: loading }}
         confirmLoading={loading}
         okText="확인"

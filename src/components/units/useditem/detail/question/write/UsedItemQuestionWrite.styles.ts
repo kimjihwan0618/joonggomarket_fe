@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
   margin: 40px auto;
 `
 
-export const CommentTitle = styled.div`
+export const QuestionTitle = styled.div`
   align-items: center;
   display: flex;
   h3 {
@@ -49,36 +49,25 @@ export const Rating = styled.div`
   }
 `
 
-export const CommentWrapper = styled.div`
+export const QuestionWrapper = styled.div`
   width: 100%;
   margin-top: 20px;
   border: 1px solid ${({ theme }) => theme.colors.gray04};
 `
 
-export const CommentTextArea = styled.textarea`
-  ${InputStyle}
-  height: ${(props) => (props['data-isedit'] ? '55px' : '108px')};
-  width: 100%;
-  border: none;
-  resize: none;
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.gray04};
-  }
-`
-
-export const CommentSizeLimit = styled.p`
+export const QuestionSizeLimit = styled.p`
   margin-left: 20px;
   color: ${({ theme }) => theme.colors.gray04};
 `
 
-export const CommentFooter = styled.div`
+export const QuestionFooter = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid ${({ theme }) => theme.colors.gray06};
   height: 52px;
 `
-export const CommentButtonsWrapper = styled.div`
+export const QuestionButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 100%;

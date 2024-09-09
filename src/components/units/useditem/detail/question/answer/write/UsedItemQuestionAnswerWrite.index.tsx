@@ -85,16 +85,18 @@ export default function UsedItemQuestionAnswerWriteUI(
           <S.Writer>{data?.fetchUserLoggedIn?.name}</S.Writer>
         </S.UserImageBox>
         <S.InputWrapper>
-          <S.CommentWrapper>
+          <S.QuestionAnswerWrapper>
             <TextAreaWithError
               style={{ border: 'none' }}
               register={register('contents')}
               height={'108px'}
               placeholder="개인정보를 공유 및 요청하거나, 명예 훼손, 무단 광고, 불법 정보 유포시 모니터링 후 삭제될 수 있으며, 이에 대한 민형사상 책임은 게시자에게 있습니다."
             />
-            <S.CommentFooter>
-              <S.CommentSizeLimit>{watch('contents')?.length ?? 0}/100</S.CommentSizeLimit>
-              <S.CommentButtonsWrapper>
+            <S.QuestionAnswerFooter>
+              <S.QuestionAnswerSizeLimit>
+                {watch('contents')?.length ?? 0}/100
+              </S.QuestionAnswerSizeLimit>
+              <S.QuestionAnswerButtonsWrapper>
                 <Button01
                   onClick={props.isEdit ? props.updateAnswerToggle : props.createAnswerToggle}
                   background={theme.colors.gray05}
@@ -109,9 +111,9 @@ export default function UsedItemQuestionAnswerWriteUI(
                   name={`${props.isEdit ? '수정' : '등록'}하기`}
                   width="02"
                 />
-              </S.CommentButtonsWrapper>
-            </S.CommentFooter>
-          </S.CommentWrapper>
+              </S.QuestionAnswerButtonsWrapper>
+            </S.QuestionAnswerFooter>
+          </S.QuestionAnswerWrapper>
         </S.InputWrapper>
       </S.Inner>
     </S.Wrapper>

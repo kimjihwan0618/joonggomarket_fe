@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { useQueryFetchBoardComments } from 'src/components/commons/hooks/quires/board/comment/useQueryFetchBoardComments'
 import { useMutationDeleteBoardComment } from 'src/components/commons/hooks/mutations/board/comment/useMutationDeleteBoardComment'
 import { useFetchMoreScroll } from 'src/components/commons/hooks/custom/useFetchMoreScroll'
+import { IBoardComment } from 'src/commons/types/generated/types'
 
 export default function BoardCommentListUI(): JSX.Element {
   const router = useRouter()
@@ -37,7 +38,7 @@ export default function BoardCommentListUI(): JSX.Element {
     setIsOpen(false)
   }
 
-  const handlePasswordModal = (commentId): void => {
+  const handlePasswordModal = (commentId: IBoardComment['_id']): void => {
     event.stopPropagation()
     setIsOpen((prev) => !prev)
     setDeleteCommentId(commentId ?? '')
@@ -50,7 +51,7 @@ export default function BoardCommentListUI(): JSX.Element {
         title="비밀번호를 입력해주세요."
         open={isOpen}
         onOk={onClickDeleteOk}
-        onCancel={handlePasswordModal}
+        onCancel={() => handlePasswordModal('')}
         okButtonProps={{ disabled: passwordCheck === '' || loading }}
         confirmLoading={loading}
         okText="확인"
