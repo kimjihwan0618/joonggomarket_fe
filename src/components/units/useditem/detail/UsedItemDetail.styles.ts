@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import ReactPlayer from 'react-player'
 import { css } from '@emotion/react'
 
 const IconButton = css`
@@ -81,6 +80,9 @@ export const ImageBox = styled.div`
 export const WriterInfo = styled.div`
   display: flex;
   align-items: center;
+  & > span {
+    border-radius: 100px;
+  }
 `
 
 export const IconInfo = styled.div`
@@ -147,11 +149,9 @@ export const Price = styled.p`
   margin-top: 8px;
 `
 
-export const ContentsMain = styled.div`
+export const ContentsMain = styled.p`
   margin-top: 40px;
-  p {
-    font-size: 1.6rem;
-  }
+  font-size: 1.6rem;
 `
 
 export const Tags = styled.p`

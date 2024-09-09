@@ -1,56 +1,83 @@
 import { useState } from 'react'
-import * as S from 'src/components/units/board/detail/comment/list/BoardCommentList.styles'
+import * as S from 'src/components/units/useditem/detail/question/list/UsedItemQuestionList.styles'
 import Image from 'next/image'
 import { toYYYYMMDD } from 'src/lib/utils/date'
 import UsedItemQuestionWriteUI from '../write/UsedItemQuestionWrite.index'
 import { useQueryFetchUserLoggedIn } from 'src/components/commons/hooks/quires/user/useQueryFetchUserLoggedIn'
+import { useRouter } from 'next/router'
+import { useQueryFetchUsedItem } from 'src/components/commons/hooks/quires/usedItem/useQueryFetchUsedItem'
+import UsedItemQuestionAnswerListUI from '../answer/list/UsedItemQuestionAnswerList.index'
 
-export default function BoardCommentItem(props): JSX.Element {
+export default function UsedItemQuestionItem(props): JSX.Element {
+  const router = useRouter()
   const [isEdit, setIsEdit] = useState(false)
+  const [answerIsEdit, setAnswerIsEdit] = useState(false)
   const { data } = useQueryFetchUserLoggedIn()
+  const useditemId = typeof router.query.useditemId === 'string' ? router.query.useditemId : ''
+  const { data: useditem } = useQueryFetchUsedItem(useditemId)
 
   const handleCommentToggle = (): void => {
     setIsEdit((prev) => !prev)
   }
 
+  const onClickAnswerToggle = (): void => {
+    setAnswerIsEdit((prev) => !prev)
+  }
+
   return (
     <>
       {!isEdit ? (
-        <S.CommentBox key={`${props.idx}`}>
-          <S.CommentInfo>
-            <Image
-              src={
-                props.question?.user?.picture
-                  ? `https://storage.googleapis.com/${props.question?.user?.picture}`
-                  : '/images/ic_profile.png'
-              }
-              width={40}
-              height={40}
-            />
-            <S.InfoBox>
-              <S.Writer>{props.question.user.name}</S.Writer>
-              <S.Comment>{props.question.contents}</S.Comment>
-              <S.Date>{toYYYYMMDD(new Date(props.question.updatedAt))}</S.Date>
-            </S.InfoBox>
-          </S.CommentInfo>
-          {data?.fetchUserLoggedIn?._id === props.question?.user._id && (
+        <>
+          <S.CommentBox key={`${props.idx}`}>
+            <S.CommentInfo>
+              <Image
+                src={
+                  props.question?.user?.picture
+                    ? `https://storage.googleapis.com/${props.question?.user?.picture}`
+                    : '/images/ic_profile.png'
+                }
+                width={40}
+                height={40}
+              />
+              <S.InfoBox>
+                <S.Writer>{props.question.user.name}</S.Writer>
+                <S.Comment>{props.question.contents}</S.Comment>
+                <S.Date>{toYYYYMMDD(new Date(props.question.updatedAt))}</S.Date>
+              </S.InfoBox>
+            </S.CommentInfo>
             <S.Buttons>
-              <button
-                id={props.question._id}
-                data-contents={props.question.contents}
-                onClick={handleCommentToggle}
-              >
-                <Image src={'/images/ic_pencil-gray.png'} width={18} height={18} />
-              </button>
-              <button
-                id={props.question._id}
-                onClick={() => props.onClickQuestionDelete(props.question._id)}
-              >
-                <Image src={'/images/ic_close-gray.png'} width={14} height={14} />
-              </button>
+              {data?.fetchUserLoggedIn?._id === props.question?.user._id && (
+                <>
+                  <button
+                    id={props.question._id}
+                    data-contents={props.question.contents}
+                    onClick={handleCommentToggle}
+                  >
+                    <Image src={'/images/ic_pencil-gray.png'} width={18} height={18} />
+                  </button>
+                  <button
+                    id={props.question._id}
+                    onClick={() => props.onClickQuestionDelete(props.question._id)}
+                  >
+                    <Image src={'/images/ic_close-gray.png'} width={18} height={18} />
+                  </button>
+                </>
+              )}
+              {data?.fetchUserLoggedIn?._id === useditem?.fetchUseditem?.seller?._id &&
+                !answerIsEdit && (
+                  <button onClick={onClickAnswerToggle}>
+                    <Image src={'/images/ic_answer.png'} width={18} height={18} />
+                  </button>
+                )}
             </S.Buttons>
-          )}
-        </S.CommentBox>
+          </S.CommentBox>
+          <UsedItemQuestionAnswerListUI
+            onClickAnswerToggle={onClickAnswerToggle}
+            useditemQuestion={props?.question}
+            answerIsEdit={answerIsEdit}
+            setAnswerIsEdit={setAnswerIsEdit}
+          />
+        </>
       ) : (
         <UsedItemQuestionWriteUI
           data={props.question}

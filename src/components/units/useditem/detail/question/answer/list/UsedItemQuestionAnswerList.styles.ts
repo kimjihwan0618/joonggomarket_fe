@@ -6,8 +6,15 @@ export const Wrapper = styled.div`
   margin: 0;
 `
 
-export const CommentBox = styled.div`
-  padding: 9px 0 20px;
+export const AnswerWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  background: url(/images/ic_answer_arrow.png) no-repeat 6% 12px;
+`
+
+export const AnswerBox = styled.div`
+  padding: 12px 0;
+  width: 90%;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray04};
   display: flex;
   justify-content: space-between;
@@ -34,7 +41,7 @@ export const Writer = styled.p`
   display: inline-block;
 `
 
-export const Comment = styled.p`
+export const Answer = styled.p`
   margin: 0px;
   margin-top: 4px;
 `
@@ -45,7 +52,7 @@ export const Date = styled.p`
   font-size: 1.2rem;
 `
 
-export const CommentInfo = styled.div`
+export const AnswerInfo = styled.div`
   display: flex;
   align-items: flex-start;
   & > div {

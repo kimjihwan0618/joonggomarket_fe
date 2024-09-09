@@ -6,11 +6,11 @@ import Button01 from 'src/components/commons/buttons/01/Button01.index'
 import { useRouter } from 'next/router'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useQueryFetchUsedItem } from 'src/components/commons/hooks/quires/usedItem/useQueryFetchUsedItem'
+import { useMutationToggleUsedItemPick } from 'src/components/commons/hooks/mutations/usedItem/useMutationToggleUsedItemPick'
 import { useTextCopy } from 'src/components/commons/hooks/custom/useTextCopy'
 import theme from 'src/commons/styles/theme'
 import Slider from 'react-slick'
 import { useRef, useState } from 'react'
-import { useMutationToggleUsedItemPick } from 'src/components/commons/hooks/mutations/usedItem/useMutationToggleUseditemPick'
 
 export default function UsedItemDetailUI(): JSX.Element {
   const router = useRouter()
@@ -135,16 +135,14 @@ export default function UsedItemDetailUI(): JSX.Element {
                 ))}
               </S.PreviewImageList>
               <S.ContentsMain>
-                <p>
-                  {data?.fetchUseditem?.contents.split('\n').map((line, index) => (
-                    <>
-                      {line}
-                      <br />
-                    </>
-                  ))}
-                </p>
+                {data?.fetchUseditem?.contents.split('\n').map((line, index) => (
+                  <>
+                    {line}
+                    <br />
+                  </>
+                ))}
               </S.ContentsMain>
-              <S.Tags>{data?.fetchUseditem?.tags}</S.Tags>
+              <S.Tags>{data?.fetchUseditem?.tags.map((tag) => <>{tag}&nbsp;</>)}</S.Tags>
             </S.ContentsWrapper>
           </S.ContentWrapper>
           <S.ButtonWrapper>
