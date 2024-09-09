@@ -10,10 +10,12 @@ import { useTextCopy } from 'src/components/commons/hooks/custom/useTextCopy'
 import theme from 'src/commons/styles/theme'
 import Slider from 'react-slick'
 import { useRef, useState } from 'react'
+import { useMutationToggleUsedItemPick } from 'src/components/commons/hooks/mutations/usedItem/useMutationToggleUseditemPick'
 
 export default function UsedItemDetailUI(): JSX.Element {
   const router = useRouter()
   const useditemId = typeof router.query.useditemId === 'string' ? router.query.useditemId : ''
+  const { toggleUsedItemPick } = useMutationToggleUsedItemPick(useditemId)
   const { moveToPage } = useMoveToPage()
   const { data } = useQueryFetchUsedItem(useditemId)
   const { onCopyLink } = useTextCopy()
@@ -89,7 +91,9 @@ export default function UsedItemDetailUI(): JSX.Element {
                   <S.Name>{data?.fetchUseditem?.name}</S.Name>
                 </S.TextBox>
                 <S.PickItem>
-                  <Image src={'/images/ic_favorite.png'} width={36} height={36} />
+                  <S.Heart onClick={toggleUsedItemPick}>
+                    <Image src={'/images/ic_favorite.png'} width={36} height={36} />
+                  </S.Heart>
                   <S.PickCount>{data?.fetchUseditem?.pickedCount}</S.PickCount>
                 </S.PickItem>
               </S.ContentsTitleBar>

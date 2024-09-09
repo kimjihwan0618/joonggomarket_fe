@@ -132,6 +132,10 @@ export const PickItem = styled.div`
   align-items: center;
 `
 
+export const Heart = styled.div`
+  cursor: pointer;
+`
+
 export const PickCount = styled.span`
   font-size: 1.8rem;
   font-weight: 500;
