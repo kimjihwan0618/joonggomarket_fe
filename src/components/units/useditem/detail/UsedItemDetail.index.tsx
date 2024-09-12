@@ -11,6 +11,8 @@ import { useTextCopy } from 'src/components/commons/hooks/custom/useTextCopy'
 import theme from 'src/commons/styles/theme'
 import Slider from 'react-slick'
 import { useRef, useState } from 'react'
+import { Map } from 'react-kakao-maps-sdk'
+import KakaoMapUI from 'src/components/commons/kakaomap/KakaomapUI'
 
 export default function UsedItemDetailUI(): JSX.Element {
   const router = useRouter()
@@ -100,27 +102,32 @@ export default function UsedItemDetailUI(): JSX.Element {
               <S.Price>
                 {new Intl.NumberFormat('en-US').format(data?.fetchUseditem?.price)}원
               </S.Price>
-              <S.CarouselWrapper>
-                <S.Carousel>
-                  <Slider
-                    {...{ ...SETTINGS, infinite: data?.fetchUseditem?.images.length > 1 ?? false }}
-                    ref={sliderRef}
-                  >
-                    {data?.fetchUseditem?.images.map((image) => (
-                      <S.ImageWrapper>
-                        <S.ImageBox>
-                          <Image
-                            src={`https://storage.googleapis.com/${image}`}
-                            alt="상품 이미지"
-                            width={296}
-                            height={296}
-                          />
-                        </S.ImageBox>
-                      </S.ImageWrapper>
-                    ))}
-                  </Slider>
-                </S.Carousel>
-              </S.CarouselWrapper>
+              {data?.fetchUseditem?.images.length !== 0 && (
+                <S.CarouselWrapper>
+                  <S.Carousel>
+                    <Slider
+                      {...{
+                        ...SETTINGS,
+                        infinite: data?.fetchUseditem?.images.length > 1 ?? false,
+                      }}
+                      ref={sliderRef}
+                    >
+                      {data?.fetchUseditem?.images.map((image) => (
+                        <S.ImageWrapper>
+                          <S.ImageBox>
+                            <Image
+                              src={`https://storage.googleapis.com/${image}`}
+                              alt="상품 이미지"
+                              width={296}
+                              height={296}
+                            />
+                          </S.ImageBox>
+                        </S.ImageWrapper>
+                      ))}
+                    </Slider>
+                  </S.Carousel>
+                </S.CarouselWrapper>
+              )}
               <S.PreviewImageList>
                 {data?.fetchUseditem?.images.map((image, index) => (
                   <S.PreviewItem
@@ -144,6 +151,12 @@ export default function UsedItemDetailUI(): JSX.Element {
               </S.ContentsMain>
               <S.Tags>{data?.fetchUseditem?.tags.map((tag) => <>{tag}&nbsp;</>)}</S.Tags>
             </S.ContentsWrapper>
+            {data?.fetchUseditem?.useditemAddress?.lat &&
+              data?.fetchUseditem?.useditemAddress?.lng && (
+                <S.KakaoMapWrapper>
+                  <KakaoMapUI lat={37.5665} lng={126.978} />
+                </S.KakaoMapWrapper>
+              )}
           </S.ContentWrapper>
           <S.ButtonWrapper>
             <Button01

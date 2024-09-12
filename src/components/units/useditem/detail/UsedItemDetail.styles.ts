@@ -178,12 +178,12 @@ export const ButtonWrapper = styled.div`
 
 export const LinkIcon = styled.button`
   ${IconButton}
-  margin-right: 20px;
   cursor: pointer;
 `
 
 export const LocationIcon = styled.button`
   ${IconButton}
+  margin-left: 20px;
 `
 export const PreviewImageList = styled.ul`
   display: flex;
@@ -209,4 +209,12 @@ export const PreviewItem = styled.li`
     background: ${(props) => props['data-selected'] && props.theme.colors.main};
     opacity: 0.1;
   }
+`
+
+export const KakaoMapWrapper = styled.div`
+  width: 100%;
+  height: 360px;
+  padding-top: 60px;
+  margin-top: 30px;
+  border-top: 1px solid ${({ theme }) => theme.colors.gray04};
 `

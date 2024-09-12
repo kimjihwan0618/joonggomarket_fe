@@ -118,11 +118,11 @@ export const YoutubePlayer = styled(ReactPlayer)`
 
 export const LinkIcon = styled.button`
   ${IconButton}
-  margin-right: 20px;
   cursor: pointer;
 `
 
 export const LocationIcon = styled.button`
+  margin-left: 20px;
   ${IconButton}
 `
 
