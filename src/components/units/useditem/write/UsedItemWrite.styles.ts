@@ -45,27 +45,34 @@ export const RadioItem = styled.div`
   & > label {
     margin-left: 8px;
   }
-  & > label:first-of-type {
+  & > label {
     margin-right: 20px;
   }
+  & > label:last-of-type {
+    margin-right: 0px;
+  }
   & > input[type='radio'] {
-    width: 20px;
-    height: 20px;
-    accent-color: ${({ theme }) => theme.colors.main};
-    background-color: ${({ theme }) => theme.colors.main};
+    width: 16px;
+    height: 16px;
+    appearance: none;
+    transition: border 0.1s ease-in-out;
+    vertical-align: middle;
+    appearance: none;
+    border: max(2px, 0.1em) solid gray;
+    border-radius: 50%;
+  }
+  & > input[type='radio']:checked {
+    border: 0.4em solid ${({ theme }) => theme.colors.main};
+  }
+  & > input[type='radio']:focus-visible {
+    outline: max(2px, 0.1em) dotted ${({ theme }) => theme.colors.main};
+    outline-offset: max(2px, 0.1em);
   }
 `
 
-export const PostAddressWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  flex-wrap: wrap;
-  & > button {
-    margin-left: 16px;
-    margin-top: 21px;
-  }
-`
+export const MapAddressWrapper = styled.div``
+export const MapWrapper = styled.div``
+export const AddressWrapper = styled.div``
 
 export const ButtonWrapper = styled.div`
   display: flex;
@@ -74,4 +81,16 @@ export const ButtonWrapper = styled.div`
   button:first-of-type {
     margin-right: 16px;
   }
+`
+
+export const TextEditorWrapper = styled.div`
+  width: 100%;
+  margin-bottom: 21px;
+  height: 320px;
+`
+
+export const TextEditorLabel = styled.label`
+  display: block;
+  font-size: 1.6rem;
+  margin-bottom: 21px;
 `

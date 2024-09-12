@@ -14,6 +14,8 @@ import { useDaumPostModal } from 'src/components/commons/hooks/custom/useDaumPos
 import { IQuery } from 'src/commons/types/generated/types'
 import InputWithError from 'src/components/commons/inputs/02/InputWithError.index'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
+import TextEditorUI from 'src/components/commons/toast-ui-editor/TextEditorUI'
+import KakaoMapUI from 'src/components/commons/kakaomap/KakaomapUI'
 
 export interface IUsedItemWriteUIProps {
   isEdit: boolean
@@ -78,6 +80,10 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
             label={'상품명'}
             error={formState.errors.name?.message}
           />
+          <S.TextEditorWrapper>
+            <S.TextEditorLabel>상품설명</S.TextEditorLabel>
+            <TextEditorUI />
+          </S.TextEditorWrapper>
           <InputWithError
             register={register('remarks')}
             placeholder="한줄요약을 작성해주세요."
@@ -89,16 +95,22 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
             type="number"
             register={register('price')}
             placeholder="판매 가격을 입력해주세요."
-            label={'판매 가격'}
+            label={'판매가격'}
             error={formState.errors.price?.message}
           />
           <InputWithError
             width="48.78%"
             register={register('tags')}
             placeholder="#태그 #태그 #태그"
-            label={'판매 가격'}
+            label={'태그입력'}
             error={formState.errors.price?.message}
           />
+          <S.MapAddressWrapper>
+            {/* <S.MapWrapper>
+              <KakaoMapUI lat={0} lng={0} />
+            </S.MapWrapper> */}
+            <S.AddressWrapper></S.AddressWrapper>
+          </S.MapAddressWrapper>
           {/* <S.PostAddressWrapper>
             <InputWithError
               register={register('zipcode')}
@@ -134,15 +146,17 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
               ))}
             </S.ImagesWrapper>
           </S.FormItem>
-          {/* <S.FormItem style={{ width: '100%' }}>
-            <S.ItemTitle>메인 설정</S.ItemTitle>
+          <S.FormItem style={{ width: '100%' }}>
+            <S.ItemTitle>메인 사진 설정</S.ItemTitle>
             <S.RadioItem>
-              <input id="youtube" type="radio" value={'유튜브'} name="main-set"></input>
-              <label htmlFor="youtube">유튜브</label>
-              <input id="photo" type="radio" value={'사진'} name="main-set"></input>
-              <label htmlFor="photo">사진</label>
+              <input id="main-photo1" type="radio" value={'사진1'} name="main-set" />
+              <label htmlFor="main-photo1">사진1</label>
+              <input id="main-photo2" type="radio" value={'사진2'} name="main-set" />
+              <label htmlFor="main-photo2">사진2</label>
+              <input id="main-photo3" type="radio" value={'사진3'} name="main-set" />
+              <label htmlFor="main-photo3">사진3</label>
             </S.RadioItem>
-          </S.FormItem> */}
+          </S.FormItem>
         </S.FormWrapper>
         <S.ButtonWrapper>
           <Button01
