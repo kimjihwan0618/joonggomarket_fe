@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { IQuery, IQueryFetchUseditemArgs } from 'src/commons/types/generated/types'
 import UsedItemWriteUI from 'src/components/units/useditem/write/UsedItemWrite.index'
+import { useAuth } from 'src/components/commons/hooks/custom/useAuth'
 
 export default function UsedItemEditPage() {
   const router = useRouter()
@@ -14,6 +15,7 @@ export default function UsedItemEditPage() {
       skip: !router.query.useditemId,
     }
   )
+  useAuth()
   if (!useditemId) return <></>
   return <UsedItemWriteUI isEdit={true} data={data} />
 }

@@ -23,7 +23,6 @@ export const useMutationUpdateUser = () => {
 
   const updateUser = async (props: IUpdateUserInput): Promise<void> => {
     try {
-      console.log(props)
       const result = await updateUserMutation({
         variables: {
           updateUserInput: {

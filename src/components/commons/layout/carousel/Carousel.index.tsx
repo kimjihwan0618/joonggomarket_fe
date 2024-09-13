@@ -13,7 +13,7 @@ const items = [
 
 export default function SimpleSlider(): JSX.Element {
   const handleBeforeChange = (oldIndex, newIndex) => {
-    console.log(`슬라이드가 변경됩니다: ${oldIndex} -> ${newIndex}`)
+    // console.log(`슬라이드가 변경됩니다: ${oldIndex} -> ${newIndex}`)
   }
 
   const SETTINGS = {

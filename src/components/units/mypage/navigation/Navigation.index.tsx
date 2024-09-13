@@ -13,7 +13,7 @@ const MAPAGE_SUB_PAGES = [
 ]
 
 interface IMypageNavigationUIProps {
-  page: '/market' | '/point' | 'profile'
+  page: '/market' | '/point' | '/profile'
 }
 
 export default function MypageNavigation(props: IMypageNavigationUIProps): JSX.Element {

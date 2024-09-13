@@ -41,7 +41,6 @@ export const useMutationLoginUser = (props: IUseMutationLoginUserProps) => {
         Modal.error({ content: '로그인에 실패했습니다!. 다시 시도해 주세요!' })
         return
       }
-      localStorage.setItem('accessToken', accessToken)
       setAccessToken(accessToken)
       !vistedPage ? moveToPage('/')() : moveToPage(vistedPage)()
     } catch (error) {

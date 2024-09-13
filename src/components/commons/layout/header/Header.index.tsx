@@ -11,6 +11,7 @@ import theme from 'src/commons/styles/theme'
 import { useQueryFetchUserLoggedIn } from '../../hooks/quires/user/useQueryFetchUserLoggedIn'
 import { useMutationLogoutUser } from '../../hooks/mutations/user/useMutationLogout'
 import { useRouter } from 'next/router'
+import { useAuth } from '../../hooks/custom/useAuth'
 
 const menus = [
   { name: '자유게시판', path: '/boards' },
@@ -18,6 +19,7 @@ const menus = [
 ]
 
 export default function Header(): JSX.Element {
+  const router = useRouter()
   const { data } = useQueryFetchUserLoggedIn()
   const { logoutUser } = useMutationLogoutUser()
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
@@ -30,6 +32,9 @@ export default function Header(): JSX.Element {
   const onClickLogout = async (): Promise<void> => {
     try {
       const result = await logoutUser()
+      if (result?.data?.logoutUser) {
+        router.reload()
+      }
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })
     }
@@ -63,14 +68,6 @@ export default function Header(): JSX.Element {
   useEffect(() => {
     setBasePath(pathname.split('/')[1])
   }, [pathname])
-
-  useEffect(() => {
-    if (!data && localStorage.getItem('accessToken')) {
-      // localStorage.removeItem('accessToken')
-    } else {
-      // localStorage.setItem('accessToken', accessToken)
-    }
-  }, [data])
 
   return (
     <S.Header>
