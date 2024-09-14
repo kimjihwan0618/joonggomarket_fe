@@ -1,25 +1,14 @@
 import dynamic from 'next/dynamic'
-import '@toast-ui/editor/toastui-editor.css'
+import 'react-quill/dist/quill.snow.css'
 
 interface Props {
   content?: string
+  onChange: (value: string) => void
+  value: string
 }
 
-const toolbar = [['heading', 'bold', 'italic', 'strike'], ['hr', 'quote', 'ul', 'ol'], ['image']]
-
-const Editor = dynamic(() => import('@toast-ui/react-editor').then((mod) => mod.Editor), {
-  ssr: false,
-})
+const ReactQuill = dynamic(async () => await import('react-quill'), { ssr: false })
 
 export default function TextEditorUI(props: Props) {
-  return (
-    <Editor
-      initialValue={props.content ?? ' '}
-      initialEditType="wysiwyg"
-      autofocus={false}
-      toolbarItems={toolbar}
-      hideModeSwitch
-      height="100%"
-    />
-  )
+  return <ReactQuill value={props.value} onChange={props.onChange} style={{ height: '270px' }} />
 }

@@ -6,7 +6,7 @@ import theme from 'src/commons/styles/theme'
 import { useForm } from 'react-hook-form'
 import { IUsedItemWriteForm, schema } from './UsedItemWrite.schema'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useImageInput } from 'src/components/commons/hooks/custom/useImageInput'
 import { useRouter } from 'next/router'
 import { useUpdateForm } from 'src/components/commons/hooks/custom/useUpdateForm'
@@ -32,6 +32,10 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
     zonecode,
     setAddress,
     setZoneCode,
+    lat,
+    lng,
+    setLat,
+    setLng,
   } = useDaumPostModal()
   const { moveToBack } = useMoveToPage()
   const { fileUrls, onChangeFileUrls, onClickReset, setFileUrls } = useImageInput(3)
@@ -40,17 +44,23 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
     mode: 'onChange',
   })
   // const { createBoard } = useMutationCreateBoard({ getValues, fileUrls })
-  // const { updateBoard } = useMutationUpdateBoard({ getValues, fileUrls })
+  // const { updateUsedItem } = useMutationUpdateUsedItem({ getValues, fileUrls })
   const { handleFormUpdate } = useUpdateForm({
     setValue,
-    updateKeys: ['name', 'remarks', 'price', 'tags'],
+    updateKeys: ['name', 'remarks', 'price', 'tags', 'useditemAddress.addressDetail'],
     fetchData: props.data?.fetchUseditem,
   })
 
-  // useEffect(() => {
-  //   setValue('zipcode', zonecode)
-  //   setValue('address', address)
-  // }, [address, zonecode])
+  const onChangeContents = (value: string) => {
+    setValue('contents', value === '<p><br></p>' ? '<p>최소 내용을 입력해주세요!!</p>' : value)
+  }
+
+  useEffect(() => {
+    setValue('zipcode', zonecode)
+    setValue('address', address)
+    setValue('lat', lat)
+    setValue('lng', lng)
+  }, [address, zonecode, lat, lng])
 
   useEffect(() => {
     const fetchUseditem = props.data?.fetchUseditem
@@ -62,10 +72,14 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
       const filledImages: string[] = [images[0] || '', images[1] || '', images[2] || '']
       setFileUrls(filledImages)
     }
-    // const fetchAddress = fetchUseditem?.boardAddress?.address
-    // const fetchZipCode = fetchUseditem?.boardAddress?.zipcode
-    // fetchAddress && setAddress(fetchAddress)
-    // fetchZipCode && setZoneCode(fetchZipCode)
+    const fetchAddress = fetchUseditem?.useditemAddress?.address
+    const fetchZipCode = fetchUseditem?.useditemAddress?.zipcode
+    const fetchLat = fetchUseditem?.useditemAddress?.lat
+    const fetchLng = fetchUseditem?.useditemAddress?.lng
+    fetchAddress && setAddress(fetchAddress)
+    fetchZipCode && setZoneCode(fetchZipCode)
+    fetchLat && setLat(fetchLat)
+    fetchLng && setLng(fetchLng)
   }, [props.data?.fetchUseditem])
 
   return (
@@ -80,10 +94,6 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
             label={'상품명'}
             error={formState.errors.name?.message}
           />
-          <S.TextEditorWrapper>
-            <S.TextEditorLabel>상품설명</S.TextEditorLabel>
-            <TextEditorUI />
-          </S.TextEditorWrapper>
           <InputWithError
             register={register('remarks')}
             placeholder="한줄요약을 작성해주세요."
@@ -103,35 +113,64 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
             register={register('tags')}
             placeholder="#태그 #태그 #태그"
             label={'태그입력'}
-            error={formState.errors.price?.message}
+            error={formState.errors.tags?.message}
           />
+          <S.TextEditorWrapper>
+            <S.TextEditorLabel>상품설명</S.TextEditorLabel>
+            <TextEditorUI value={getValues('contents')} onChange={onChangeContents} />
+          </S.TextEditorWrapper>
+
           <S.MapAddressWrapper>
-            {/* <S.MapWrapper>
-              <KakaoMapUI lat={0} lng={0} />
-            </S.MapWrapper> */}
-            <S.AddressWrapper></S.AddressWrapper>
+            <S.MapWrapper>
+              <KakaoMapUI draggable={false} lat={lat} lng={lng} />
+            </S.MapWrapper>
+            <S.AddressWrapper>
+              <S.GpsWrapper>
+                <S.PostItem>
+                  <InputWithError
+                    register={register('zipcode')}
+                    placeholder="우편번호"
+                    width="100px"
+                    readOnly
+                    label={'주소'}
+                  />
+                  <Button01
+                    onClick={handleModalToggle}
+                    name={'우편번호 검색'}
+                    color="white"
+                    background={theme.colors.dark01}
+                  />
+                </S.PostItem>
+                <S.LatLng>
+                  <InputWithError
+                    register={register('lat')}
+                    readOnly={true}
+                    type="number"
+                    placeholder="위도(LAT)"
+                    label="위도"
+                    width="100px"
+                  />
+                  <InputWithError
+                    register={register('lng')}
+                    readOnly={true}
+                    type="number"
+                    placeholder="경도(LNG)"
+                    label="경도"
+                    width="100px"
+                  />
+                </S.LatLng>
+              </S.GpsWrapper>
+              <S.Address>
+                <InputWithError width="100%" label="주소" register={register('address')} readOnly />
+                <InputWithError
+                  width="100%"
+                  register={register('addressDetail')}
+                  readOnly={zonecode === null ? true : false}
+                  placeholder="상세주소를 입력해주세요."
+                />
+              </S.Address>
+            </S.AddressWrapper>
           </S.MapAddressWrapper>
-          {/* <S.PostAddressWrapper>
-            <InputWithError
-              register={register('zipcode')}
-              placeholder="우편번호"
-              width="100px"
-              readOnly
-              label={'주소'}
-            />
-            <Button01
-              onClick={handleModalToggle}
-              name={'우편번호 검색'}
-              color="white"
-              background={theme.colors.dark01}
-            />
-            <InputWithError register={register('address')} readOnly />
-            <InputWithError
-              register={register('addressDetail')}
-              readOnly={zonecode === null ? true : false}
-              placeholder="상세주소를 입력해주세요."
-            />
-          </S.PostAddressWrapper> */}
           <S.FormItem style={{ width: '100%' }}>
             <S.ItemTitle>사진 첨부</S.ItemTitle>
             <S.ImagesWrapper>
@@ -160,15 +199,15 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
         </S.FormWrapper>
         <S.ButtonWrapper>
           <Button01
-            onClick={moveToBack(`/boards/${router.query.boardId}`)}
+            onClick={moveToBack(`/markets/${router.query.useditemId}`)}
             background={theme.colors.gray04}
             name={'취소하기'}
             width="03"
           />
           <Button01
             disabled={!formState.isValid}
-            // onClick={props.isEdit ? updateBoard : createBoard}
-            onClick={() => console.log('굿')}
+            // onClick={props.isEdit ? updateUsedItem : createUsedItem}
+            onClick={() => console.log('ㅇ')}
             background={theme.colors.main}
             name={`${props.isEdit ? '수정' : '등록'}하기`}
             width="03"

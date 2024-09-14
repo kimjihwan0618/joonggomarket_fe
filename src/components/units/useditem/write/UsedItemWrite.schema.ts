@@ -4,11 +4,18 @@ export const schema = yup
   .object({
     name: yup.string().required('상품명을 작성해주세요.'),
     remarks: yup.string().required('한줄요약을 작성해주세요.'),
-    price: yup.number().required('판매 가격을 입력해주세요.'),
+    price: yup
+      .number()
+      .typeError('판매 가격을 확인해주세요.')
+      .required('판매 가격을 작성해주세요.')
+      .required('판매 가격을 입력해주세요.'),
     tags: yup.string().required('태그를 한개 이상 입력해주세요.'),
     address: yup.string().notRequired(),
     addressDetail: yup.string().notRequired(),
-    // zipcode: yup.string().notRequired(),
+    zipcode: yup.string().notRequired(),
+    lat: yup.number().notRequired(),
+    lng: yup.number().notRequired(),
+    contents: yup.string().required('내용을 작성해주세요.'),
   })
   .required()
 
@@ -19,4 +26,8 @@ export interface IUsedItemWriteForm {
   tags?: string
   address?: string
   addressDetail?: string
+  zipcode?: string
+  lat?: number
+  lng?: number
+  contents?: string
 }

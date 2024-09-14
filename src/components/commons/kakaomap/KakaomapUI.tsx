@@ -1,18 +1,23 @@
 import { useEffect, useRef, useState } from 'react'
 
-export default function KakaoMapUI({ lat, lng }) {
+declare const window: typeof globalThis & {
+  kakao: any
+}
+
+export default function KakaoMapUI({ lat, lng, draggable = true }) {
   const mapContainer = useRef(null)
   const [map, setMap] = useState(null)
   const [marker, setMarker] = useState(null)
 
   useEffect(() => {
     const script = document.createElement('script')
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8292b4a2cbcab98c0266432f2f42247b&autoload=false`
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8292b4a2cbcab98c0266432f2f42247b&autoload=false&libraries=services`
     script.onload = () => {
       window.kakao.maps.load(() => {
         const options = {
           center: new window.kakao.maps.LatLng(lat, lng), // 초기 지도 중심
           level: 3, // 지도 줌 레벨
+          draggable,
         }
         const map = new window.kakao.maps.Map(mapContainer.current, options)
         setMap(map)

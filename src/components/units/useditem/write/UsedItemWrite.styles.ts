@@ -70,9 +70,49 @@ export const RadioItem = styled.div`
   }
 `
 
-export const MapAddressWrapper = styled.div``
-export const MapWrapper = styled.div``
-export const AddressWrapper = styled.div``
+export const MapAddressWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 400px;
+`
+export const MapWrapper = styled.div`
+  width: 40%;
+  height: 75%;
+  border: 1px solid ${({ theme }) => theme.colors.gray05};
+`
+export const AddressWrapper = styled.div`
+  width: calc(60% - 24px);
+`
+
+export const LatLng = styled.div`
+  display: flex;
+  align-items: flex-end;
+  & > dl:first-of-type {
+    margin-right: 18px;
+  }
+`
+
+export const GpsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+export const Address = styled.div`
+  width: 100%;
+`
+
+export const PostItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  button {
+    margin-top: 24px;
+    margin-left: 18px;
+  }
+`
 
 export const ButtonWrapper = styled.div`
   display: flex;
