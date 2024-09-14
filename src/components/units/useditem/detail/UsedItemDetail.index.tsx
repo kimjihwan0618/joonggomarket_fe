@@ -11,8 +11,8 @@ import { useTextCopy } from 'src/components/commons/hooks/custom/useTextCopy'
 import theme from 'src/commons/styles/theme'
 import Slider from 'react-slick'
 import { useRef, useState } from 'react'
-import { Map } from 'react-kakao-maps-sdk'
 import KakaoMapUI from 'src/components/commons/kakaomap/KakaomapUI'
+import { useQueryFetchUserLoggedIn } from 'src/components/commons/hooks/quires/user/useQueryFetchUserLoggedIn'
 
 export default function UsedItemDetailUI(): JSX.Element {
   const router = useRouter()
@@ -20,6 +20,7 @@ export default function UsedItemDetailUI(): JSX.Element {
   const { toggleUsedItemPick } = useMutationToggleUsedItemPick(useditemId)
   const { moveToPage } = useMoveToPage()
   const { data } = useQueryFetchUsedItem(useditemId)
+  const { data: userLoggedin } = useQueryFetchUserLoggedIn()
   const { onCopyLink } = useTextCopy()
   const [imageIndex, setImageIndex] = useState(0)
   const sliderRef = useRef(null)
@@ -165,12 +166,14 @@ export default function UsedItemDetailUI(): JSX.Element {
               name={'목록으로'}
               width="04"
             />
-            <Button01
-              onClick={moveToPage(`/markets/${useditemId}/edit`)}
-              name={'수정하기'}
-              width="04"
-              background={theme.colors.main}
-            />
+            {data?.fetchUseditem?.seller?._id === userLoggedin?.fetchUserLoggedIn?._id && (
+              <Button01
+                onClick={moveToPage(`/markets/${useditemId}/edit`)}
+                name={'수정하기'}
+                width="04"
+                background={theme.colors.main}
+              />
+            )}
           </S.ButtonWrapper>
         </>
       )}

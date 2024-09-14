@@ -165,7 +165,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 87px auto 40px;
+  margin: 40px auto;
   padding: 60px 75px;
   /* min-width: 920px; */
   padding-bottom: 87px;
