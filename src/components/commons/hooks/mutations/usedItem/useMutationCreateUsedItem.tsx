@@ -41,12 +41,16 @@ export const useMutationCreateUsedItem = (props: IUseMutationCreateUsedItemProps
       address,
       addressDetail,
       zipcode,
+      lat,
+      lng,
     } = props.getValues()
     try {
       const useditemAddress = {
         address,
         addressDetail,
         zipcode,
+        lat: Number(lat),
+        lng: Number(lng),
       }
       const tags = strTags
         .split('#')

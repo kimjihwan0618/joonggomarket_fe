@@ -149,7 +149,7 @@ export const Price = styled.p`
   margin-top: 8px;
 `
 
-export const ContentsMain = styled.p`
+export const ContentsMain = styled.div`
   margin-top: 40px;
   font-size: 1.6rem;
 `

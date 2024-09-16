@@ -14,7 +14,7 @@ export const useUpdateForm = (props: IUseUpdateFormProps) => {
     props.updateKeys.forEach((key: string) => {
       if (key.includes('.')) {
         props.setValue(
-          key,
+          key.split('.')[1],
           props.fetchData?.[key.split('.')[0]]?.[key.split('.')[1]],
           ACTIVE_OPTION
         )

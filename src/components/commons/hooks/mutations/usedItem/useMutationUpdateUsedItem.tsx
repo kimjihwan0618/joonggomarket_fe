@@ -1,57 +1,69 @@
 import { gql, useMutation } from '@apollo/client'
 import { Modal } from 'antd'
 import type {
-  IUpdateBoardInput,
   IMutation,
-  IMutationUpdateBoardArgs,
-  IMutationUpdateUseditemArgs,
   IUpdateUseditemInput,
+  IMutationUpdateUseditemArgs,
 } from 'src/commons/types/generated/types'
-import { IBoardWriterForm } from 'src/components/units/board/write/BoardWrite.schema'
 import type { UseFormGetValues } from 'react-hook-form'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useRouter } from 'next/router'
-import { FETCH_BOARD } from 'src/components/commons/hooks/quires/board/useQueryFetchBoard'
+import { IUsedItemWriteForm } from 'src/components/units/useditem/write/UsedItemWrite.schema'
 import { FETCH_USED_ITEM } from '../../quires/usedItem/useQueryFetchUsedItem'
 
-interface IUseMutationUpdateBoardProps {
-  getValues: UseFormGetValues<IBoardWriterForm>
+interface IUseMutationUpdateUsedItemProps {
+  getValues: UseFormGetValues<IUsedItemWriteForm>
   fileUrls: string[]
 }
 
-export const UPDATE_BOARD = gql`
-  mutation updateBoard($updateBoardInput: UpdateBoardInput!, $boardId: ID!, $password: String!) {
-    updateBoard(updateBoardInput: $updateBoardInput, boardId: $boardId, password: $password) {
+export const UPDATE_USED_ITEM = gql`
+  mutation updateUseditem($updateUseditemInput: UpdateUseditemInput!, $useditemId: ID!) {
+    updateUseditem(updateUseditemInput: $updateUseditemInput, useditemId: $useditemId) {
       _id
-      title
-      contents
-      writer
     }
   }
 `
 
-export const useMutationUpdateUsedItem = (props: IUseMutationUpdateBoardProps) => {
+export const useMutationUpdateUsedItem = (props: IUseMutationUpdateUsedItemProps) => {
   const router = useRouter()
   const { moveToPage } = useMoveToPage()
   const [updateUsedItemMutation] = useMutation<
-    Pick<IMutation, 'updateBoard'>,
+    Pick<IMutation, 'updateUseditem'>,
     IMutationUpdateUseditemArgs
-  >(UPDATE_BOARD)
+  >(UPDATE_USED_ITEM)
 
   const updateUsedItem = async (): Promise<void> => {
-    const { addressDetail, title, contents, address, zipcode } = props.getValues()
+    const {
+      name,
+      remarks,
+      contents,
+      price,
+      tags: strTags,
+      address,
+      addressDetail,
+      zipcode,
+      lat,
+      lng,
+    } = props.getValues()
     try {
       const useditemAddress = {
         address,
         addressDetail,
         zipcode,
+        lat: Number(lat),
+        lng: Number(lng),
       }
+      const tags = strTags
+        .split('#')
+        .filter((tag) => tag !== '')
+        .map((tag) => `#${tag}`)
+
       const updateUseditemInput: IUpdateUseditemInput = {
         name,
         remarks,
-        price,
-        tags,
         contents,
+        price: Number(price),
+        tags,
         useditemAddress,
         images: props.fileUrls,
       }
@@ -61,8 +73,8 @@ export const useMutationUpdateUsedItem = (props: IUseMutationUpdateBoardProps) =
       }
       const result = await updateUsedItemMutation({
         variables: {
-          useditemId: router.query.useditemId,
           updateUseditemInput,
+          useditemId: router.query.useditemId,
         },
         refetchQueries: [
           {
@@ -71,9 +83,9 @@ export const useMutationUpdateUsedItem = (props: IUseMutationUpdateBoardProps) =
           },
         ],
       })
-      if (result?.data?.updateBoard?._id) {
+      if (result?.data?.updateUseditem?._id) {
         Modal.success({ content: '상품이 수정되었습니다.' })
-        moveToPage(`/markets/${result?.data?.updateBoard?._id}`)()
+        moveToPage(`/markets/${result?.data?.updateUseditem?._id}`)()
       }
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })

@@ -13,6 +13,7 @@ import Slider from 'react-slick'
 import { useRef, useState } from 'react'
 import KakaoMapUI from 'src/components/commons/kakaomap/KakaomapUI'
 import { useQueryFetchUserLoggedIn } from 'src/components/commons/hooks/quires/user/useQueryFetchUserLoggedIn'
+import 'react-quill/dist/quill.snow.css'
 
 export default function UsedItemDetailUI(): JSX.Element {
   const router = useRouter()
@@ -109,47 +110,52 @@ export default function UsedItemDetailUI(): JSX.Element {
                     <Slider
                       {...{
                         ...SETTINGS,
-                        infinite: data?.fetchUseditem?.images.length > 1 ?? false,
+                        infinite:
+                          data?.fetchUseditem?.images.filter((image) => image !== '').length > 1 ??
+                          false,
                       }}
                       ref={sliderRef}
                     >
-                      {data?.fetchUseditem?.images.map((image) => (
-                        <S.ImageWrapper>
-                          <S.ImageBox>
-                            <Image
-                              src={`https://storage.googleapis.com/${image}`}
-                              alt="상품 이미지"
-                              width={296}
-                              height={296}
-                            />
-                          </S.ImageBox>
-                        </S.ImageWrapper>
-                      ))}
+                      {data?.fetchUseditem?.images
+                        .filter((image) => image !== '')
+                        .map((image) => (
+                          <S.ImageWrapper>
+                            <S.ImageBox>
+                              <Image
+                                src={`https://storage.googleapis.com/${image}`}
+                                alt="상품 이미지"
+                                width={296}
+                                height={296}
+                              />
+                            </S.ImageBox>
+                          </S.ImageWrapper>
+                        ))}
                     </Slider>
                   </S.Carousel>
                 </S.CarouselWrapper>
               )}
               <S.PreviewImageList>
-                {data?.fetchUseditem?.images.map((image, index) => (
-                  <S.PreviewItem
-                    onClick={() => {
-                      sliderRef.current.slickGoTo(index)
-                      setImageIndex(index)
-                    }}
-                    data-selected={index === imageIndex}
-                  >
-                    <Image src={`https://storage.googleapis.com/${image}`} width={78} height={78} />
-                  </S.PreviewItem>
-                ))}
+                {data?.fetchUseditem?.images
+                  .filter((image) => image !== '')
+                  .map((image, index) => (
+                    <S.PreviewItem
+                      onClick={() => {
+                        sliderRef.current.slickGoTo(index)
+                        setImageIndex(index)
+                      }}
+                      data-selected={index === imageIndex}
+                    >
+                      <Image
+                        src={`https://storage.googleapis.com/${image}`}
+                        width={78}
+                        height={78}
+                      />
+                    </S.PreviewItem>
+                  ))}
               </S.PreviewImageList>
-              <S.ContentsMain>
-                {data?.fetchUseditem?.contents.split('\n').map((line, index) => (
-                  <>
-                    {line}
-                    <br />
-                  </>
-                ))}
-              </S.ContentsMain>
+              <S.ContentsMain
+                dangerouslySetInnerHTML={{ __html: data?.fetchUseditem?.contents }}
+              ></S.ContentsMain>
               <S.Tags>{data?.fetchUseditem?.tags.map((tag) => <>{tag}&nbsp;</>)}</S.Tags>
             </S.ContentsWrapper>
             {data?.fetchUseditem?.useditemAddress?.lat &&

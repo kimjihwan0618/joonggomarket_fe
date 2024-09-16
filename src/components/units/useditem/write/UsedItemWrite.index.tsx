@@ -17,6 +17,12 @@ import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage
 import TextEditorUI from 'src/components/commons/toast-ui-editor/TextEditorUI'
 import KakaoMapUI from 'src/components/commons/kakaomap/KakaomapUI'
 import { useMutationCreateUsedItem } from 'src/components/commons/hooks/mutations/usedItem/useMutationCreateUsedItem'
+import { useMutationUpdateUsedItem } from 'src/components/commons/hooks/mutations/usedItem/useMutationUpdateUsedItem'
+
+const ACTIVE_OPTION = {
+  shouldDirty: true,
+  shouldValidate: true,
+}
 
 export interface IUsedItemWriteUIProps {
   isEdit: boolean
@@ -45,10 +51,10 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
     mode: 'onChange',
   })
   const { createUsedItem } = useMutationCreateUsedItem({ getValues, fileUrls })
-  // const { updateUsedItem } = useMutationUpdateUsedItem({ getValues, fileUrls })
+  const { updateUsedItem } = useMutationUpdateUsedItem({ getValues, fileUrls })
   const { handleFormUpdate } = useUpdateForm({
     setValue,
-    updateKeys: ['name', 'remarks', 'price', 'tags', 'useditemAddress.addressDetail'],
+    updateKeys: ['name', 'remarks', 'price', 'tags', 'contents', 'useditemAddress.addressDetail'],
     fetchData: props.data?.fetchUseditem,
   })
 
@@ -77,10 +83,12 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
     const fetchZipCode = fetchUseditem?.useditemAddress?.zipcode
     const fetchLat = fetchUseditem?.useditemAddress?.lat
     const fetchLng = fetchUseditem?.useditemAddress?.lng
+    const fetchTags = fetchUseditem?.tags
     fetchAddress && setAddress(fetchAddress)
     fetchZipCode && setZoneCode(fetchZipCode)
     fetchLat && setLat(fetchLat)
     fetchLng && setLng(fetchLng)
+    fetchTags && setValue('tags', fetchTags.join(''), ACTIVE_OPTION)
   }, [props.data?.fetchUseditem])
 
   return (
@@ -196,7 +204,7 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
           />
           <Button01
             disabled={!formState.isValid}
-            onClick={props.isEdit ? createUsedItem : createUsedItem}
+            onClick={props.isEdit ? updateUsedItem : createUsedItem}
             background={theme.colors.main}
             name={`${props.isEdit ? '수정' : '등록'}하기`}
             width="03"
