@@ -6,7 +6,7 @@ import theme from 'src/commons/styles/theme'
 import { useForm } from 'react-hook-form'
 import { IUsedItemWriteForm, schema } from './UsedItemWrite.schema'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useImageInput } from 'src/components/commons/hooks/custom/useImageInput'
 import { useRouter } from 'next/router'
 import { useUpdateForm } from 'src/components/commons/hooks/custom/useUpdateForm'
@@ -16,6 +16,7 @@ import InputWithError from 'src/components/commons/inputs/02/InputWithError.inde
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import TextEditorUI from 'src/components/commons/toast-ui-editor/TextEditorUI'
 import KakaoMapUI from 'src/components/commons/kakaomap/KakaomapUI'
+import { useMutationCreateUsedItem } from 'src/components/commons/hooks/mutations/usedItem/useMutationCreateUsedItem'
 
 export interface IUsedItemWriteUIProps {
   isEdit: boolean
@@ -43,7 +44,7 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
     resolver: yupResolver(schema),
     mode: 'onChange',
   })
-  // const { createBoard } = useMutationCreateBoard({ getValues, fileUrls })
+  const { createUsedItem } = useMutationCreateUsedItem({ getValues, fileUrls })
   // const { updateUsedItem } = useMutationUpdateUsedItem({ getValues, fileUrls })
   const { handleFormUpdate } = useUpdateForm({
     setValue,
@@ -185,17 +186,6 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
               ))}
             </S.ImagesWrapper>
           </S.FormItem>
-          <S.FormItem style={{ width: '100%' }}>
-            <S.ItemTitle>메인 사진 설정</S.ItemTitle>
-            <S.RadioItem>
-              <input id="main-photo1" type="radio" value={'사진1'} name="main-set" />
-              <label htmlFor="main-photo1">사진1</label>
-              <input id="main-photo2" type="radio" value={'사진2'} name="main-set" />
-              <label htmlFor="main-photo2">사진2</label>
-              <input id="main-photo3" type="radio" value={'사진3'} name="main-set" />
-              <label htmlFor="main-photo3">사진3</label>
-            </S.RadioItem>
-          </S.FormItem>
         </S.FormWrapper>
         <S.ButtonWrapper>
           <Button01
@@ -206,8 +196,7 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
           />
           <Button01
             disabled={!formState.isValid}
-            // onClick={props.isEdit ? updateUsedItem : createUsedItem}
-            onClick={() => console.log('ㅇ')}
+            onClick={props.isEdit ? createUsedItem : createUsedItem}
             background={theme.colors.main}
             name={`${props.isEdit ? '수정' : '등록'}하기`}
             width="03"
