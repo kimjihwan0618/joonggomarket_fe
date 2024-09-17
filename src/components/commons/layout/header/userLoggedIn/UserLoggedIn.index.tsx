@@ -1,13 +1,17 @@
+import type { Dispatch, SetStateAction } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { accessTokenState } from 'src/commons/stores'
 import ProfileUI from './Profile/Profile.index'
 import ButtonsUI from './Buttons/Buttons.index'
 
-export default function UserLoggedIn(): JSX.Element {
+interface IUserLoggedInProps {
+  setPointModalisOpen: Dispatch<SetStateAction<boolean>>
+}
+
+export default function UserLoggedIn(props: IUserLoggedInProps): JSX.Element {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [isHidden, setIsHidden] = useState(false)
-
   const profileButtonRef = useRef<HTMLButtonElement>(null)
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -39,6 +43,7 @@ export default function UserLoggedIn(): JSX.Element {
           profileButtonRef={profileButtonRef}
           isHidden={isHidden}
           setIsHidden={setIsHidden}
+          setPointModalisOpen={props.setPointModalisOpen}
         />
       ) : (
         <ButtonsUI />

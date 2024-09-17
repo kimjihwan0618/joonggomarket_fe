@@ -5,8 +5,16 @@ import { useRouter } from 'next/router'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useMutationLogoutUser } from 'src/components/commons/hooks/mutations/user/useMutationLogout'
 import { Modal } from 'antd'
+import type { Dispatch, RefObject, SetStateAction } from 'react'
 
-export default function PorfileUI(props): JSX.Element {
+interface IProfileUIProps {
+  isHidden: boolean
+  setIsHidden: Dispatch<SetStateAction<boolean>>
+  setPointModalisOpen: Dispatch<SetStateAction<boolean>>
+  profileButtonRef: RefObject<HTMLButtonElement>
+}
+
+export default function ProfileUI(props: IProfileUIProps): JSX.Element {
   const router = useRouter()
   const { data } = useQueryFetchUserLoggedIn()
   const { moveToPage } = useMoveToPage()
@@ -62,7 +70,7 @@ export default function PorfileUI(props): JSX.Element {
           </S.TextWrapper>
         </S.ProfileInfo>
         <S.ProfileButtonWrapper>
-          <S.AddPointButton>
+          <S.AddPointButton onClick={() => props.setPointModalisOpen(true)}>
             <Image src="/images/ic_savings.png" width={24} height={24} /> 충전하기
           </S.AddPointButton>
           <S.LogoutButton onClick={onClickLogout}>
