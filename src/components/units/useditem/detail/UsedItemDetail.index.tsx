@@ -14,6 +14,7 @@ import { useRef, useState } from 'react'
 import KakaoMapUI from 'src/components/commons/kakaomap/KakaomapUI'
 import { useQueryFetchUserLoggedIn } from 'src/components/commons/hooks/quires/user/useQueryFetchUserLoggedIn'
 import 'react-quill/dist/quill.snow.css'
+import { useMutationCreatePointTransactionOfBuyingAndSelling } from 'src/components/commons/hooks/mutations/usedItem/useMutationCreatePointTransactionOfBuyingAndSelling'
 
 export default function UsedItemDetailUI(): JSX.Element {
   const router = useRouter()
@@ -22,9 +23,17 @@ export default function UsedItemDetailUI(): JSX.Element {
   const { moveToPage } = useMoveToPage()
   const { data } = useQueryFetchUsedItem(useditemId)
   const { data: userLoggedin } = useQueryFetchUserLoggedIn()
+  const { createPointTransactionBuySelling, loading } =
+    useMutationCreatePointTransactionOfBuyingAndSelling()
   const { onCopyLink } = useTextCopy()
+  const [isOpen, setIsOpen] = useState(false)
   const [imageIndex, setImageIndex] = useState(0)
   const sliderRef = useRef(null)
+
+  const onClickSellingOk = async (): Promise<void> => {
+    await createPointTransactionBuySelling()
+    setIsOpen(false)
+  }
 
   const handleBeforeChange = (oldIndex, newIndex) => {
     setImageIndex(newIndex)
@@ -43,6 +52,16 @@ export default function UsedItemDetailUI(): JSX.Element {
     <>
       {useditemId && (
         <>
+          <Modal
+            title="해당 제품을 구입하시겠습니까?"
+            open={isOpen}
+            onOk={onClickSellingOk}
+            onCancel={() => setIsOpen(false)}
+            okButtonProps={{ disabled: loading }}
+            confirmLoading={loading}
+            okText="확인"
+            cancelText="취소"
+          />
           <S.ContentWrapper>
             <S.UsedItemTitleWrapper>
               <S.WriterInfo>
@@ -180,6 +199,15 @@ export default function UsedItemDetailUI(): JSX.Element {
                 background={theme.colors.main}
               />
             )}
+            {data?.fetchUseditem?.seller?._id !== userLoggedin?.fetchUserLoggedIn?._id &&
+              !data?.fetchUseditem?.soldAt && (
+                <Button01
+                  onClick={() => setIsOpen(true)}
+                  name={'구매하기'}
+                  width="04"
+                  background={theme.colors.main}
+                />
+              )}
           </S.ButtonWrapper>
         </>
       )}

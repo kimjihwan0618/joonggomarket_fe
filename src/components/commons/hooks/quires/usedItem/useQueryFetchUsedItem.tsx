@@ -6,6 +6,7 @@ export const FETCH_USED_ITEM = gql`
     fetchUseditem(useditemId: $useditemId) {
       _id
       name
+      soldAt
       seller {
         _id
         name
