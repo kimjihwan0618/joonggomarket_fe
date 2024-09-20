@@ -26,7 +26,7 @@ export default function PointModalUI(props: IPointModalUIProps): JSX.Element {
 
   const onClickAddPoint = () => {
     const IMP = window.IMP
-    IMP.init('imp31236121')
+    IMP.init('imp49910675')
     IMP.request_pay(
       {
         pg: 'kakaopay',
