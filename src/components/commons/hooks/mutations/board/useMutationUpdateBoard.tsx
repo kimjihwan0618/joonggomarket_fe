@@ -10,11 +10,12 @@ import type { UseFormGetValues } from 'react-hook-form'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useRouter } from 'next/router'
 import { FETCH_BOARD } from 'src/components/commons/hooks/quires/board/useQueryFetchBoard'
+import { useMutationUploadFile } from '../file/useMutationUploadFile'
 
 interface IUseMutationUpdateBoardProps {
   getValues: UseFormGetValues<IBoardWriterForm>
-  fileUrls: string[]
   files: File[]
+  fileUrls: string[]
 }
 
 export const UPDATE_BOARD = gql`
@@ -30,6 +31,7 @@ export const UPDATE_BOARD = gql`
 
 export const useMutationUpdateBoard = (props: IUseMutationUpdateBoardProps) => {
   const router = useRouter()
+  const { uploadFile } = useMutationUploadFile()
   const { moveToPage } = useMoveToPage()
   const [updateBoardMutation] = useMutation<
     Pick<IMutation, 'updateBoard'>,
@@ -40,6 +42,16 @@ export const useMutationUpdateBoard = (props: IUseMutationUpdateBoardProps) => {
     const { addressDetail, password, title, contents, youtubeUrl, address, zipcode } =
       props.getValues()
     try {
+      const imagesResult = await (
+        await Promise.all(props.files.map((el) => el instanceof File && uploadFile({ file: el })))
+      ).map((res) => res?.data?.uploadFile.url ?? '')
+      const images = props.fileUrls.map((el, index) => {
+        if (imagesResult[index]) {
+          return imagesResult[index]
+        } else {
+          return el.replace('https://storage.googleapis.com/', '')
+        }
+      })
       const boardAddress = {
         address,
         addressDetail,
@@ -48,7 +60,7 @@ export const useMutationUpdateBoard = (props: IUseMutationUpdateBoardProps) => {
       const updateBoardInput: IUpdateBoardInput = {
         title,
         contents,
-        images: props.fileUrls,
+        images,
         youtubeUrl,
         boardAddress,
       }

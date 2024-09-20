@@ -18,8 +18,11 @@ export const useImageInput = (count: number) => {
 
   const onClickReset = (index: number): void => {
     const newFileUrls: string[] = [...fileUrls]
+    const newFiles: File[] = [...files]
     newFileUrls[index] = ''
+    newFiles[index] = null
     setFileUrls(newFileUrls)
+    setFiles(newFiles)
   }
 
   return {
