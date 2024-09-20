@@ -10,9 +10,11 @@ import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage
 import { useRouter } from 'next/router'
 import { IUsedItemWriteForm } from 'src/components/units/useditem/write/UsedItemWrite.schema'
 import { FETCH_USED_ITEM } from '../../quires/usedItem/useQueryFetchUsedItem'
+import { useMutationUploadFile } from '../file/useMutationUploadFile'
 
 interface IUseMutationUpdateUsedItemProps {
   getValues: UseFormGetValues<IUsedItemWriteForm>
+  files: File[]
   fileUrls: string[]
 }
 
@@ -26,6 +28,7 @@ export const UPDATE_USED_ITEM = gql`
 
 export const useMutationUpdateUsedItem = (props: IUseMutationUpdateUsedItemProps) => {
   const router = useRouter()
+  const { uploadFile } = useMutationUploadFile()
   const { moveToPage } = useMoveToPage()
   const [updateUsedItemMutation] = useMutation<
     Pick<IMutation, 'updateUseditem'>,
@@ -46,6 +49,16 @@ export const useMutationUpdateUsedItem = (props: IUseMutationUpdateUsedItemProps
       lng,
     } = props.getValues()
     try {
+      const imagesResult = await (
+        await Promise.all(props.files.map((el) => el instanceof File && uploadFile({ file: el })))
+      ).map((res) => res?.data?.uploadFile.url ?? '')
+      const images = props.fileUrls.map((el, index) => {
+        if (imagesResult[index]) {
+          return imagesResult[index]
+        } else {
+          return el.replace('https://storage.googleapis.com/', '')
+        }
+      })
       const useditemAddress = {
         address,
         addressDetail,
@@ -65,7 +78,7 @@ export const useMutationUpdateUsedItem = (props: IUseMutationUpdateUsedItemProps
         price: Number(price),
         tags,
         useditemAddress,
-        images: props.fileUrls,
+        images,
       }
       if (typeof router.query.useditemId !== 'string') {
         Modal.error({ content: '시스템에 문제가 있습니다.' })

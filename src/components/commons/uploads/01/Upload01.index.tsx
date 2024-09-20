@@ -2,7 +2,6 @@ import Image from 'next/image'
 import * as S from './Upload01.styles'
 import { ChangeEvent, useRef } from 'react'
 import { IFileManager } from 'src/commons/types/generated/types'
-import { useMutationUploadFile } from '../../hooks/mutations/file/useMutationUploadFile'
 
 interface IUploads01UIProps {
   key: string
@@ -15,7 +14,6 @@ interface IUploads01UIProps {
 
 export default function Uploads01UI(props: IUploads01UIProps): JSX.Element {
   const fileRef = useRef<HTMLInputElement>(null)
-  // const { uploadFile } = useMutationUploadFile()
 
   const onClickUpload = (): void => {
     fileRef.current?.click()

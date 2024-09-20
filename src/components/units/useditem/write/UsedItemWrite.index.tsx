@@ -45,13 +45,14 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
     setLng,
   } = useDaumPostModal()
   const { moveToBack } = useMoveToPage()
-  const { fileUrls, onChangeFileUrls, onClickReset, setFileUrls } = useImageInput(3)
+  const { fileUrls, onChangeFileUrls, onClickReset, setFileUrls, onChangeFile, files } =
+    useImageInput(3)
   const { register, formState, setValue, getValues } = useForm<IUsedItemWriteForm>({
     resolver: yupResolver(schema),
     mode: 'onChange',
   })
-  const { createUsedItem } = useMutationCreateUsedItem({ getValues, fileUrls })
-  const { updateUsedItem } = useMutationUpdateUsedItem({ getValues, fileUrls })
+  const { createUsedItem } = useMutationCreateUsedItem({ getValues, files })
+  const { updateUsedItem } = useMutationUpdateUsedItem({ getValues, fileUrls, files })
   const { handleFormUpdate } = useUpdateForm({
     setValue,
     updateKeys: ['name', 'remarks', 'price', 'tags', 'contents', 'useditemAddress.addressDetail'],
@@ -76,7 +77,9 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
     }
     if (fetchUseditem?.images?.length > 0) {
       const images = fetchUseditem.images
-      const filledImages: string[] = [images[0] || '', images[1] || '', images[2] || '']
+      const filledImages: string[] = [images[0] || '', images[1] || '', images[2] || ''].map(
+        (image) => (image !== '' ? `https://storage.googleapis.com/${image}` : '')
+      )
       setFileUrls(filledImages)
     }
     const fetchAddress = fetchUseditem?.useditemAddress?.address
@@ -189,6 +192,7 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
                   index={index}
                   fileUrl={el}
                   onChangeFileUrls={onChangeFileUrls}
+                  onChangeFile={onChangeFile}
                   onClickReset={onClickReset}
                 />
               ))}
@@ -198,7 +202,8 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
         <S.ButtonWrapper>
           <Button01
             onClick={moveToBack(`/markets/${router.query.useditemId}`)}
-            background={theme.colors.gray04}
+            background={theme.colors.dark01}
+            color={'white'}
             name={'취소하기'}
             width="03"
           />

@@ -9,7 +9,7 @@ const width = {
 
 export const Button = styled.button`
   padding: ${(props) => width[props['data-width']]};
-  background: ${(props) => (props.disabled ? props.theme.colors.gray04 : props['data-background'])};
+  background: ${(props) => (props.disabled ? props.theme.colors.gray05 : props['data-background'])};
   border: ${(props) => props['data-background'] === 'white' && '1px solid rgba(189, 189, 189, 1)'};
   display: flex;
   align-items: center;
@@ -25,6 +25,6 @@ export const Button = styled.button`
 `
 export const Text = styled.p`
   font-weight: 500;
-  color: ${(props) => (props['data-disabled'] ? 'white' : props['data-color'])};
+  color: ${(props) => (props['data-disabled'] ? props.theme.colors.gray03 : props['data-color'])};
   /* color: ${(props) => props['data-color']}; */
 `

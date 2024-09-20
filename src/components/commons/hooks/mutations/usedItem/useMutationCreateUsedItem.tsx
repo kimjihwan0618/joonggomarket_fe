@@ -10,10 +10,11 @@ import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage
 import { useRouter } from 'next/router'
 import { IUsedItemWriteForm } from 'src/components/units/useditem/write/UsedItemWrite.schema'
 import { FETCH_USED_ITEMS } from '../../quires/usedItem/useQueryFetchUsedItems'
+import { useMutationUploadFile } from '../file/useMutationUploadFile'
 
 interface IUseMutationCreateUsedItemProps {
   getValues: UseFormGetValues<IUsedItemWriteForm>
-  fileUrls: string[]
+  files: File[]
 }
 
 export const CREATE_USED_ITEM = gql`
@@ -26,6 +27,7 @@ export const CREATE_USED_ITEM = gql`
 
 export const useMutationCreateUsedItem = (props: IUseMutationCreateUsedItemProps) => {
   const { moveToPage } = useMoveToPage()
+  const { uploadFile } = useMutationUploadFile()
   const [createUsedItemMutation] = useMutation<
     Pick<IMutation, 'createUseditem'>,
     IMutationCreateUseditemArgs
@@ -45,6 +47,9 @@ export const useMutationCreateUsedItem = (props: IUseMutationCreateUsedItemProps
       lng,
     } = props.getValues()
     try {
+      const images = await (
+        await Promise.all(props.files.map((el) => uploadFile({ file: el })))
+      ).map((res) => res?.data?.uploadFile.url ?? '')
       const useditemAddress = {
         address,
         addressDetail,
@@ -64,7 +69,7 @@ export const useMutationCreateUsedItem = (props: IUseMutationCreateUsedItemProps
         price: Number(price),
         tags,
         useditemAddress,
-        images: props.fileUrls,
+        images,
       }
       const result = await createUsedItemMutation({
         variables: {
