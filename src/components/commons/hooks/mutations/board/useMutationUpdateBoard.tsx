@@ -14,6 +14,7 @@ import { FETCH_BOARD } from 'src/components/commons/hooks/quires/board/useQueryF
 interface IUseMutationUpdateBoardProps {
   getValues: UseFormGetValues<IBoardWriterForm>
   fileUrls: string[]
+  files: File[]
 }
 
 export const UPDATE_BOARD = gql`

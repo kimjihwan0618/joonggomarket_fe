@@ -9,12 +9,13 @@ interface IUploads01UIProps {
   index: number
   fileUrl: string
   onChangeFileUrls: (url: IFileManager['url'], index: number) => void
+  onChangeFile: (file: File, index: number) => void
   onClickReset: (index: number) => void
 }
 
 export default function Uploads01UI(props: IUploads01UIProps): JSX.Element {
   const fileRef = useRef<HTMLInputElement>(null)
-  const { uploadFile } = useMutationUploadFile()
+  // const { uploadFile } = useMutationUploadFile()
 
   const onClickUpload = (): void => {
     fileRef.current?.click()
@@ -26,9 +27,15 @@ export default function Uploads01UI(props: IUploads01UIProps): JSX.Element {
 
   const onChangeFile = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
     const file = event.target.files?.[0]
-    const result = await uploadFile({ file })
-    result?.data?.uploadFile.url &&
-      props.onChangeFileUrls(result?.data?.uploadFile.url, props.index)
+    if (file === undefined) return
+    const fileReader = new FileReader()
+    fileReader.readAsDataURL(file)
+    fileReader.onload = (event) => {
+      if (typeof event.target?.result === 'string') {
+        props.onChangeFileUrls(event.target?.result, props.index)
+        props.onChangeFile(file, props.index)
+      }
+    }
   }
 
   return (
@@ -38,7 +45,7 @@ export default function Uploads01UI(props: IUploads01UIProps): JSX.Element {
           <S.ResetFileButton onClick={onClickReset}>
             <Image width={11} height={11} src={'/images/ic_close-dark.png'} />
           </S.ResetFileButton>
-          <Image width={78} height={78} src={`https://storage.googleapis.com/${props.fileUrl}`} />
+          <Image width={78} height={78} src={`${props.fileUrl}`} />
         </S.ImageBox>
       ) : (
         <S.ImageUploadButton onClick={onClickUpload}>

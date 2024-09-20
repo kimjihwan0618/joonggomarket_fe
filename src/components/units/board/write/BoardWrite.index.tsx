@@ -35,13 +35,14 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
     setZoneCode,
   } = useDaumPostModal()
   const { moveToBack } = useMoveToPage()
-  const { fileUrls, onChangeFileUrls, onClickReset, setFileUrls } = useImageInput(3)
+  const { fileUrls, onChangeFileUrls, onClickReset, setFileUrls, files, onChangeFile } =
+    useImageInput(3)
   const { register, formState, setValue, getValues } = useForm<IBoardWriterForm>({
     resolver: yupResolver(schema),
     mode: 'onChange',
   })
-  const { createBoard } = useMutationCreateBoard({ getValues, fileUrls })
-  const { updateBoard } = useMutationUpdateBoard({ getValues, fileUrls })
+  const { createBoard } = useMutationCreateBoard({ getValues, files })
+  const { updateBoard } = useMutationUpdateBoard({ getValues, fileUrls, files })
   const { handleFormUpdate } = useUpdateForm({
     setValue,
     updateKeys: ['writer', 'title', 'contents', 'boardAddress.addressDetail', 'youtubeUrl'],
@@ -60,7 +61,9 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
     }
     if (fetchBoard?.images?.length > 0) {
       const images = fetchBoard.images
-      const filledImages: string[] = [images[0] || '', images[1] || '', images[2] || '']
+      const filledImages: string[] = [images[0] || '', images[1] || '', images[2] || ''].map(
+        (image) => (image !== '' ? `https://storage.googleapis.com/${image}` : '')
+      )
       setFileUrls(filledImages)
     }
     const fetchAddress = fetchBoard?.boardAddress?.address
@@ -141,20 +144,12 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
                   index={index}
                   fileUrl={el}
                   onChangeFileUrls={onChangeFileUrls}
+                  onChangeFile={onChangeFile}
                   onClickReset={onClickReset}
                 />
               ))}
             </S.ImagesWrapper>
           </S.FormItem>
-          {/* <S.FormItem style={{ width: '100%' }}>
-            <S.ItemTitle>메인 설정</S.ItemTitle>
-            <S.RadioItem>
-              <input id="youtube" type="radio" value={'유튜브'} name="main-set"></input>
-              <label htmlFor="youtube">유튜브</label>
-              <input id="photo" type="radio" value={'사진'} name="main-set"></input>
-              <label htmlFor="photo">사진</label>
-            </S.RadioItem>
-          </S.FormItem> */}
         </S.FormWrapper>
         <S.ButtonWrapper>
           <Button01
