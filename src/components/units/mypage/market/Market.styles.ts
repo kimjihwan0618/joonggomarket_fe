@@ -29,3 +29,11 @@ export const Tab = styled.li`
   }
   cursor: ${(props) => !props['data-isactive'] && 'pointer'};
 `
+
+export const NoneDataNotice = styled.p`
+  font-size: 2.2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 64px;
+  color: ${({ theme }) => theme.colors.gray04};
+`

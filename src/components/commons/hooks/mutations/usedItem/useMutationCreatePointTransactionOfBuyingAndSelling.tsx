@@ -6,6 +6,9 @@ import type {
 } from 'src/commons/types/generated/types'
 import { useRouter } from 'next/router'
 import { FETCH_USED_ITEM } from '../../quires/usedItem/useQueryFetchUsedItem'
+import { FETCH_USER_LOGGEDIN } from '../../quires/user/useQueryFetchUserLoggedIn'
+import { FETCH_POINT_TRANSACTIONS } from '../../quires/usedItem/mypage/useQueryFetchPointTransactions'
+import { FETCH_POINT_TRANSACTIONS_OF_BUYING } from '../../quires/usedItem/mypage/useQueryFetchPointTransactionsOfBuying'
 
 export const CREATE_POINT_TRANSACTION_BUY_SELLING = gql`
   mutation createPointTransactionOfBuyingAndSelling($useritemId: ID!) {
@@ -36,6 +39,15 @@ export const useMutationCreatePointTransactionOfBuyingAndSelling = () => {
           {
             query: FETCH_USED_ITEM,
             variables: { useditemId: router.query.useditemId },
+          },
+          {
+            query: FETCH_USER_LOGGEDIN,
+          },
+          {
+            query: FETCH_POINT_TRANSACTIONS,
+          },
+          {
+            query: FETCH_POINT_TRANSACTIONS_OF_BUYING,
           },
         ],
       })

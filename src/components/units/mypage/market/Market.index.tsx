@@ -67,24 +67,35 @@ export default function MyMarketUI(): JSX.Element {
         </S.TabsItem>
       </S.SearchWrapper>
       <S2.UsedItemsWrapper>
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={onLoadMore}
-          hasMore={
-            selectedTab === '나의상품'
-              ? usedItemsISold?.fetchUseditemsISold.length > 0
-              : usedItemsIPicked?.fetchUseditemsIPicked.length > 0
-          }
-          useWindow={false}
-        >
-          {selectedTab === '나의상품'
-            ? usedItemsISold?.fetchUseditemsISold.map((el) => (
-                <UsedItemUI usedItem={el} keyword={keyword} />
-              ))
-            : usedItemsIPicked?.fetchUseditemsIPicked.map((el) => (
-                <UsedItemUI usedItem={el} keyword={keyword} />
+        {selectedTab === '나의상품' ? (
+          usedItemsISold?.fetchUseditemsISold?.length === 0 ? (
+            <S.NoneDataNotice>나의상품 데이터가 존재하지 않습니다.</S.NoneDataNotice>
+          ) : (
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={onLoadMore}
+              hasMore={usedItemsISold?.fetchUseditemsISold.length > 0}
+              useWindow={false}
+            >
+              {usedItemsISold?.fetchUseditemsISold.map((el) => (
+                <UsedItemUI key={el._id} usedItem={el} keyword={keyword} />
               ))}
-        </InfiniteScroll>
+            </InfiniteScroll>
+          )
+        ) : usedItemsIPicked?.fetchUseditemsIPicked?.length === 0 ? (
+          <S.NoneDataNotice>마이찜 데이터가 존재하지 않습니다.</S.NoneDataNotice>
+        ) : (
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={onLoadMore}
+            hasMore={usedItemsIPicked?.fetchUseditemsIPicked.length > 0}
+            useWindow={false}
+          >
+            {usedItemsIPicked?.fetchUseditemsIPicked.map((el) => (
+              <UsedItemUI key={el._id} usedItem={el} keyword={keyword} />
+            ))}
+          </InfiniteScroll>
+        )}
       </S2.UsedItemsWrapper>
     </S.Wrapper>
   )

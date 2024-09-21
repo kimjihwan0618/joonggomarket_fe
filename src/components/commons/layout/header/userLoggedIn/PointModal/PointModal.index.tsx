@@ -74,6 +74,10 @@ export default function PointModalUI(props: IPointModalUIProps): JSX.Element {
               <S.Point value={500}>500</S.Point>
               <S.Point value={2000}>2,000</S.Point>
               <S.Point value={5000}>5,000</S.Point>
+              <S.Point value={10000}>10,000</S.Point>
+              <S.Point value={30000}>30,000</S.Point>
+              <S.Point value={50000}>50,000</S.Point>
+              <S.Point value={100000}>100,000</S.Point>
             </S.PointSelect>
             <S.Bottom>
               <Button02
