@@ -5,6 +5,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { IUserUpdateForm, schema } from './Profile.schema'
 import theme from 'src/commons/styles/theme'
 import Button01 from 'src/components/commons/buttons/01/Button01.index'
+import { useQueryFetchUserLoggedIn } from 'src/components/commons/hooks/quires/user/useQueryFetchUserLoggedIn'
+import { useMutationResetUserPassword } from 'src/components/commons/hooks/mutations/user/useMutationResetUserPassword'
 
 export default function MyProfileUI(): JSX.Element {
   const { register, formState, setValue, getValues } = useForm<IUserUpdateForm>({
@@ -12,7 +14,12 @@ export default function MyProfileUI(): JSX.Element {
     mode: 'onChange',
   })
 
-  const onClickTest = () => {}
+  const { data } = useQueryFetchUserLoggedIn()
+  const { resetUserPassword } = useMutationResetUserPassword({
+    email: data?.fetchUserLoggedIn.email,
+    password: getValues('password'),
+    newPassword: getValues('newPassword'),
+  })
 
   return (
     <S.Wrapper>
@@ -54,7 +61,7 @@ export default function MyProfileUI(): JSX.Element {
         <S.Bottom>
           <Button01
             disabled={!formState.isValid}
-            onClick={onClickTest}
+            onClick={resetUserPassword}
             background={theme.colors.main}
             name={`비밀번호 변경`}
             width="03"

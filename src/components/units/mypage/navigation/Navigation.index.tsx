@@ -56,7 +56,9 @@ export default function MypageNavigation(props: IMypageNavigationUIProps): JSX.E
         <S.Name>{data?.fetchUserLoggedIn.name}</S.Name>
         <S.PointText>
           <Image src="/images/ic_savings_02_on.png" width={24} height={24} />
-          <S.Point>{data?.fetchUserLoggedIn.userPoint?.amount}</S.Point>
+          <S.Point>
+            {new Intl.NumberFormat('en-US').format(data?.fetchUserLoggedIn.userPoint?.amount)}P
+          </S.Point>
         </S.PointText>
       </S.InfoBox>
       <S.SubMenuList>

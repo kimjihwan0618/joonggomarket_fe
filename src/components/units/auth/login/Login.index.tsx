@@ -16,7 +16,15 @@ export default function LoginUI(): JSX.Element {
     resolver: yupResolver(schema),
     mode: 'onChange',
   })
-  const { loginUser } = useMutationLoginUser({ getValues })
+  const { loginUser } = useMutationLoginUser()
+
+  const onClickLogin = () => {
+    loginUser({
+      email: getValues('email'),
+      password: getValues('password'),
+      pageMoveFlag: true,
+    })
+  }
 
   return (
     <S.Wrapper>
@@ -44,7 +52,7 @@ export default function LoginUI(): JSX.Element {
           background={!formState.isValid ? theme.colors.gray03 : theme.colors.main}
           disabled={!formState.isValid}
           name="로그인하기"
-          onClick={loginUser}
+          onClick={onClickLogin}
           color={!formState.isValid && 'white'}
           fullWidth={true}
         />

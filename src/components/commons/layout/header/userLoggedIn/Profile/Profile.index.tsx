@@ -66,7 +66,9 @@ export default function ProfileUI(props: IProfileUIProps): JSX.Element {
           </S.ImgSettingButton>
           <S.TextWrapper>
             <S.Name>{data?.fetchUserLoggedIn.name}</S.Name>
-            <S.Point>{data?.fetchUserLoggedIn.userPoint?.amount}P</S.Point>
+            <S.Point>
+              {new Intl.NumberFormat('en-US').format(data?.fetchUserLoggedIn.userPoint?.amount)}P
+            </S.Point>
           </S.TextWrapper>
         </S.ProfileInfo>
         <S.ProfileButtonWrapper>
