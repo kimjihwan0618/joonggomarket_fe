@@ -12,14 +12,13 @@ export const LOADING_COLUMNS = [
 ]
 export const BUYING_COLUMNS = [
   { name: '거래일', dataKey: 'createdAt', isSearch: false },
-  { name: '상품명', dataKey: 'useditem.name', isSearch: true },
+  { name: '상품명', dataKey: 'useditem_name', isSearch: true },
   { name: '거래내역', dataKey: 'statusDetail', isSearch: false },
-  { name: '거래 후 잔액', dataKey: 'amount', isSearch: false },
-  { name: '판매자', dataKey: 'useditem.seller.name', isSearch: false },
+  { name: '거래 후 잔액', dataKey: 'balance', isSearch: false },
 ]
 export const SELLING_COLUMNS = [
-  { name: '거래일', dataKey: 'createdAt', isSearch: false },
-  { name: '상품명', dataKey: 'useditem.name', isSearch: true },
+  { name: '판매일', dataKey: 'createdAt', isSearch: false },
+  { name: '상품명', dataKey: 'useditem_name', isSearch: true },
   { name: '거래내역', dataKey: 'statusDetail', isSearch: false },
-  { name: '거래 후 잔액', dataKey: 'amount', isSearch: false },
+  { name: '거래 후 잔액', dataKey: 'balance', isSearch: false },
 ]

@@ -6,14 +6,14 @@ export const Wrapper = styled.div`
 export const SearchWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   margin-bottom: 16px;
 `
 export const TabsItem = styled.ul`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  margin-left: 28px;
+  justify-content: flex-start;
+  /* margin-left: 28px; */
 `
 export const Tab = styled.li`
   font-size: 1.8rem;

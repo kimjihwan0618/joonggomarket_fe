@@ -11,6 +11,7 @@ interface IUseFetchMoreScroll {
 
 export const useFetchMoreScroll = (props: IUseFetchMoreScroll) => {
   const onLoadMore = (): void => {
+    console.log(props)
     if (props.fetchData === undefined) return
     props.fetchMore({
       variables: {

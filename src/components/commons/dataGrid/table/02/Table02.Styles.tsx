@@ -25,6 +25,9 @@ export const TableRow = styled.tr`
     text-align: center;
     border-top: 1px solid ${({ theme }) => theme.colors.gray04};
     font-size: 1.6rem;
+    span {
+      font-size: 1.6rem;
+    }
   }
   td[data-issearch='true'] {
     &:hover {

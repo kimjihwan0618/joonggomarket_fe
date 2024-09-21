@@ -42,7 +42,6 @@ export default function PointModalUI(props: IPointModalUIProps): JSX.Element {
         m_redirect_url: 'http://localhost:3000/markets', // 모바일에서는 결제시, 페이지 주소가 바뀜. 따라서, 결제 끝나고 돌아갈 주소 입력해야함
       },
       async function (response: any) {
-        console.log(response)
         const { success, imp_uid } = response
         if (success) {
           await createPointTransactionOfLoading(imp_uid)

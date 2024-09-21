@@ -6,14 +6,11 @@ export const FETCH_POINT_TRANSACTIONS_OF_BUYING = gql`
     fetchPointTransactionsOfBuying(search: $search, page: $page) {
       _id
       createdAt
+      balance
       useditem {
         name
-        seller {
-          name
-        }
       }
       statusDetail
-      amount
     }
   }
 `

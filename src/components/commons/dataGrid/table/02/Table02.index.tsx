@@ -37,8 +37,6 @@ export default function Table02UI(props: ITableProps): JSX.Element {
                           </span>
                         ))}
                     </td>
-                  ) : column.dataKey.includes('.') ? (
-                    <td>{column.dataKey.split('.').reduce((acc, key) => acc?.[key], el)}</td>
                   ) : (
                     <td>{el[column.dataKey]}</td>
                   )
