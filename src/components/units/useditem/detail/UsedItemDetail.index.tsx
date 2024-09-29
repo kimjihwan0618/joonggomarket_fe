@@ -130,8 +130,7 @@ export default function UsedItemDetailUI(): JSX.Element {
                       {...{
                         ...SETTINGS,
                         infinite:
-                          data?.fetchUseditem?.images.filter((image) => image !== '').length > 1 ??
-                          false,
+                          data?.fetchUseditem?.images.filter((image) => image !== '').length > 1,
                       }}
                       ref={sliderRef}
                     >
