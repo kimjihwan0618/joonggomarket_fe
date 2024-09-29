@@ -60,7 +60,7 @@ export default function ApolloSetting(props: IApolloSettingProps): JSX.Element {
   })
 
   const client = new ApolloClient({
-    link: ApolloLink.from([errorLink, uploadLink]),
+    link: ApolloLink.from([errorLink, uploadLink as unknown as ApolloLink]),
     cache: GLOBAL_STATE,
   })
 
