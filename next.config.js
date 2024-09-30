@@ -18,7 +18,7 @@ module.exports = {
   }),
   images: {
     loader: 'akamai',
-    path: '/',
+    path: process.env.NODE_ENV === 'production' ? 'https://joonggomarket.site' : '',
     domains: ['storage.googleapis.com'], // 외부 호스트 추가
   },
 }
