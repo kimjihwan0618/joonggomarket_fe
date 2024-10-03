@@ -22,7 +22,8 @@ export default function ApolloSetting(props: IApolloSettingProps): JSX.Element {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const refreshToken = useRecoilValueLoadable(restoreAccessTokenLoadable)
   const uploadLink = createUploadLink({
-    uri: 'https://backend-practice.codebootcamp.co.kr/graphql',
+    // uri: 'http://localhost:3456/graphql',
+    uri: 'https://backendonline.codebootcamp.co.kr/graphql',
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
