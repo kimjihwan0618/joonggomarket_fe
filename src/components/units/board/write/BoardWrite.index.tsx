@@ -33,7 +33,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
     zonecode,
     setAddress,
     setZoneCode,
-  } = useDaumPostModal()
+  } = useDaumPostModal(false)
   const { moveToBack } = useMoveToPage()
   const { fileUrls, onChangeFileUrls, onClickReset, setFileUrls, files, onChangeFile } =
     useImageInput(3)

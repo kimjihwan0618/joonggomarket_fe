@@ -6,7 +6,7 @@ declare const window: typeof globalThis & {
   kakao: any
 }
 
-export const useDaumPostModal = () => {
+export const useDaumPostModal = (mapUsed: boolean) => {
   const [postModalOpen, setPostModalOpen] = useState(false)
   const [address, setAddress] = useState<Address['address']>(null)
   const [zonecode, setZoneCode] = useState<Address['zonecode']>(null)
@@ -18,19 +18,21 @@ export const useDaumPostModal = () => {
 
   const handleGetAddress = (data: Address): void => {
     setPostModalOpen((prev) => !prev)
-    if (data) {
-      const geocoder = new window.kakao.maps.services.Geocoder()
-      geocoder.addressSearch(data.roadAddress, (result, status) => {
-        if (status === window.kakao.maps.services.Status.OK) {
-          setLat(result[0].y)
-          setLng(result[0].x)
-        }
-      })
-
+    try {
+      if (data && mapUsed) {
+        const geocoder = new window.kakao.maps.services.Geocoder()
+        geocoder.addressSearch(data.roadAddress, (result, status) => {
+          if (status === window.kakao.maps.services.Status.OK) {
+            setLat(result[0].y)
+            setLng(result[0].x)
+          }
+        })
+      }
       setAddress(data.address)
       setZoneCode(data.zonecode)
-    } else {
-      Modal.warning({ content: '주소를 정상적으로 읽어오지 못했습니다.' })
+    } catch (error) {
+      if (error instanceof Error)
+        Modal.warning({ content: '주소를 정상적으로 읽어오지 못했습니다.' })
     }
   }
 

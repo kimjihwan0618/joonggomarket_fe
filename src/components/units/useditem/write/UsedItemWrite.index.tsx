@@ -43,7 +43,7 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
     lng,
     setLat,
     setLng,
-  } = useDaumPostModal()
+  } = useDaumPostModal(true)
   const { moveToBack } = useMoveToPage()
   const { fileUrls, onChangeFileUrls, onClickReset, setFileUrls, onChangeFile, files } =
     useImageInput(3)
