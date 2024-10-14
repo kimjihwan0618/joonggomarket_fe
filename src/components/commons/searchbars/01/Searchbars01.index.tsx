@@ -45,15 +45,21 @@ export default function Searchbars01UI(props: Searchbars01UIProps): JSX.Element 
           <S.DatePickerBox>
             <DatePicker
               onChange={(value, dateString) => {
-                props.setStartDate(
-                  Array.isArray(dateString) || dateString === '' ? null : dateString
-                )
+                const date =
+                  Array.isArray(dateString) || dateString === ''
+                    ? null
+                    : new Date(dateString).toISOString()
+                props.setStartDate(date)
               }}
             />
             <span>~</span>
             <DatePicker
               onChange={(value, dateString) => {
-                props.setEndDate(Array.isArray(dateString) || dateString === '' ? null : dateString)
+                const date =
+                  Array.isArray(dateString) || dateString === ''
+                    ? null
+                    : new Date(dateString).toISOString()
+                props.setEndDate(date)
               }}
             />
           </S.DatePickerBox>
