@@ -20,7 +20,13 @@ export default function SignupUI(): JSX.Element {
   return (
     <S.Wrapper>
       <S.PageBackButton onClick={moveToBack('/login')}>
-        <Image src="/images/ic_close-white.png" width={24} height={24} alt="이전 페이지 버튼" />
+        <Image
+          unoptimized
+          src="/images/ic_close-white.png"
+          width={24}
+          height={24}
+          alt="이전 페이지 버튼"
+        />
       </S.PageBackButton>
       <S.SignupFormBox>
         <S.PageTitle>회원가입</S.PageTitle>

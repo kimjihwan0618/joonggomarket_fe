@@ -44,6 +44,7 @@ export default function MypageNavigation(props: IMypageNavigationUIProps): JSX.E
             />
           ) : (
             <Image
+              unoptimized
               onClick={() => fileRef.current?.click()}
               src="/images/ic_profile.png"
               width={80}
@@ -55,7 +56,7 @@ export default function MypageNavigation(props: IMypageNavigationUIProps): JSX.E
       <S.InfoBox>
         <S.Name>{data?.fetchUserLoggedIn.name}</S.Name>
         <S.PointText>
-          <Image src="/images/ic_savings_02_on.png" width={24} height={24} />
+          <Image unoptimized src="/images/ic_savings_02_on.png" width={24} height={24} />
           <S.Point>
             {new Intl.NumberFormat('en-US').format(data?.fetchUserLoggedIn.userPoint?.amount)}P
           </S.Point>
@@ -65,6 +66,7 @@ export default function MypageNavigation(props: IMypageNavigationUIProps): JSX.E
         {MAPAGE_SUB_PAGES.map((menu) => (
           <S.MenuItem onClick={moveToPage(`/mypage${menu.link}`)}>
             <Image
+              unoptimized
               src={
                 props.page === menu.link ? `/images${menu.icon}_on.png` : `/images${menu.icon}.png`
               }

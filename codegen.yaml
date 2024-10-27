@@ -1,6 +1,6 @@
 # schema: https://backendonline.codebootcamp.co.kr/graphql
-# schema: https://backendonline.codebootcamp.co.kr/graphql
-schema: http://localhost:3456/graphql
+schema: https://backendonline.codebootcamp.co.kr/graphql
+# schema: http://localhost:3456/graphql
 generates:
   ./src/commons/types/generated/types.ts:
     plugins:

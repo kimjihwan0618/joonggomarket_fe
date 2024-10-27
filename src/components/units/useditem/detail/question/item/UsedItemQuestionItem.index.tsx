@@ -31,6 +31,7 @@ export default function UsedItemQuestionItem(props): JSX.Element {
           <S.QuestionBox key={`${props.idx}`}>
             <S.QuestionInfo>
               <Image
+                unoptimized
                 src={
                   props.question?.user?.picture
                     ? `https://storage.googleapis.com/${props.question?.user?.picture}`
@@ -49,17 +50,17 @@ export default function UsedItemQuestionItem(props): JSX.Element {
               {data?.fetchUserLoggedIn?._id === props.question?.user._id && (
                 <>
                   <button onClick={handleCommentToggle}>
-                    <Image src={'/images/ic_pencil-gray.png'} width={18} height={18} />
+                    <Image unoptimized src={'/images/ic_pencil-gray.png'} width={18} height={18} />
                   </button>
                   <button onClick={() => props.onClickQuestionDelete(props.question._id)}>
-                    <Image src={'/images/ic_close-gray.png'} width={18} height={18} />
+                    <Image unoptimized src={'/images/ic_close-gray.png'} width={18} height={18} />
                   </button>
                 </>
               )}
               {data?.fetchUserLoggedIn?._id === useditem?.fetchUseditem?.seller?._id &&
                 !answerIsEdit && (
                   <button onClick={onClickAnswerToggle}>
-                    <Image src={'/images/ic_answer.png'} width={18} height={18} />
+                    <Image unoptimized src={'/images/ic_answer.png'} width={18} height={18} />
                   </button>
                 )}
             </S.Buttons>

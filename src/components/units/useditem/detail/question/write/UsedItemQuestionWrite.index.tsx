@@ -61,12 +61,13 @@ export default function UsedItemQuestionWriteUI(props: IUsedItemQuestionWriteUIP
     <S.Wrapper data-isedit={props.isEdit}>
       {!props.isEdit ? (
         <S.QuestionTitle>
-          <Image src={'/images/ic_comment.png'} width={20} height={20} />
+          <Image unoptimized src={'/images/ic_comment.png'} width={20} height={20} />
           <h3>문의하기</h3>
         </S.QuestionTitle>
       ) : (
         <S.UserImageBox>
           <Image
+            unoptimized
             src={
               data?.fetchUserLoggedIn?.picture
                 ? `https://storage.googleapis.com/${data?.fetchUserLoggedIn?.picture}`

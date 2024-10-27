@@ -28,7 +28,7 @@ export default function BoardDetailUI(): JSX.Element {
           <S.ContentWrapper>
             <S.BoardTitleWrapper>
               <S.WriterInfo>
-                <Image src={'/images/ic_profile.png'} width={56} height={56} />
+                <Image unoptimized src={'/images/ic_profile.png'} width={56} height={56} />
                 <S.Info>
                   <dt>{data?.fetchBoard?.writer}</dt>
                   <dd>
@@ -39,7 +39,7 @@ export default function BoardDetailUI(): JSX.Element {
               </S.WriterInfo>
               <S.IconInfo>
                 <S.LinkIcon onClick={onCopyLink}>
-                  <Image width={34} height={34} src={'/images/ic_link.png'} />
+                  <Image unoptimized width={34} height={34} src={'/images/ic_link.png'} />
                 </S.LinkIcon>
                 {(data?.fetchBoard?.boardAddress?.address ||
                   data?.fetchBoard?.boardAddress?.addressDetail) && (
@@ -54,7 +54,7 @@ export default function BoardDetailUI(): JSX.Element {
                     }
                   >
                     <S.LocationIcon>
-                      <Image width={34} height={34} src={'/images/ic_location.png'} />
+                      <Image unoptimized width={34} height={34} src={'/images/ic_location.png'} />
                     </S.LocationIcon>
                   </Tooltip>
                 )}
@@ -92,7 +92,7 @@ export default function BoardDetailUI(): JSX.Element {
                   <S.Thumbs data-up={true} onClick={likeBoard}>
                     <dl>
                       <dt>
-                        <Image src={'/images/ic_thumb_up.png'} width={24} height={24} />
+                        <Image unoptimized src={'/images/ic_thumb_up.png'} width={24} height={24} />
                       </dt>
                       <dd>{data?.fetchBoard?.likeCount}</dd>
                     </dl>
@@ -102,7 +102,12 @@ export default function BoardDetailUI(): JSX.Element {
                   <S.Thumbs data-up={false} onClick={disLikeBoard}>
                     <dl>
                       <dt>
-                        <Image src={'/images/ic_thumb_down.png'} width={24} height={24} />
+                        <Image
+                          unoptimized
+                          src={'/images/ic_thumb_down.png'}
+                          width={24}
+                          height={24}
+                        />
                       </dt>
                       <dd>{data?.fetchBoard?.dislikeCount}</dd>
                     </dl>

@@ -46,6 +46,7 @@ export default function UsedItemListUI(): JSX.Element {
           <S.BestUsedItem onClick={moveToPage(`/markets/${el._id}`)}>
             <S.ItemImageBox>
               <Image
+                unoptimized
                 src={
                   el.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))
                     .length !== 0
@@ -62,7 +63,7 @@ export default function UsedItemListUI(): JSX.Element {
               <S.InfoBottom>
                 <S.Price>{new Intl.NumberFormat('en-US').format(el.price)}원</S.Price>
                 <S.PickedItem>
-                  <Image src="/images/ic_favorite.png" width={24} height={24} />
+                  <Image unoptimized src="/images/ic_favorite.png" width={24} height={24} />
                   <S.PickedCount>{el.pickedCount}</S.PickedCount>
                 </S.PickedItem>
               </S.InfoBottom>

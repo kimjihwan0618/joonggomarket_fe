@@ -45,6 +45,7 @@ export default function BoardListUI(): JSX.Element {
           <S.BestBoardItem id={el._id} onClick={moveToPage(`/boards/${el._id}`)}>
             <S.ItemImageBox>
               <Image
+                unoptimized
                 src={
                   el.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))
                     .length !== 0
@@ -63,7 +64,7 @@ export default function BoardListUI(): JSX.Element {
                   <S.CreatedAt>{toYYYYMMDD(el.createdAt)}</S.CreatedAt>
                 </ul>
                 <S.ThumbBox>
-                  <Image src={'/images/ic_thumb_up.png'} width={24} height={24} />
+                  <Image unoptimized src={'/images/ic_thumb_up.png'} width={24} height={24} />
                   <S.ThumbCount>{el.likeCount}</S.ThumbCount>
                 </S.ThumbBox>
               </S.Detail>

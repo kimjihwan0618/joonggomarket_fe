@@ -56,7 +56,7 @@ export default function Pagination(props: IPaginationProps): JSX.Element {
     <S.Pagination>
       {!(props.startPage === 1) && (
         <S.PrevButton onClick={onClickPrev}>
-          <Image src={'/images/ic_page_prev.png'} width={7.41} height={12} />
+          <Image unoptimized src={`/images/ic_page_prev.png`} width={7.41} height={12} />
         </S.PrevButton>
       )}
       {new Array(10).fill('').map(
@@ -74,7 +74,7 @@ export default function Pagination(props: IPaginationProps): JSX.Element {
       )}
       {props.startPage + 10 <= lastPage && (
         <S.NextButton onClick={onClickNext}>
-          <Image src={'/images/ic_page_next.png'} width={7.41} height={12} />
+          <Image unoptimized src={`/images/ic_page_next.png`} width={7.41} height={12} />
         </S.NextButton>
       )}
     </S.Pagination>

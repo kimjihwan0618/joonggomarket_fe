@@ -66,6 +66,7 @@ export default function UsedItemDetailUI(): JSX.Element {
             <S.UsedItemTitleWrapper>
               <S.WriterInfo>
                 <Image
+                  unoptimized
                   src={
                     data?.fetchUseditem?.seller.picture !== '' &&
                     data?.fetchUseditem?.seller.picture?.includes('.')
@@ -86,7 +87,7 @@ export default function UsedItemDetailUI(): JSX.Element {
               </S.WriterInfo>
               <S.IconInfo>
                 <S.LinkIcon onClick={onCopyLink}>
-                  <Image width={34} height={34} src={'/images/ic_link.png'} />
+                  <Image unoptimized width={34} height={34} src={'/images/ic_link.png'} />
                 </S.LinkIcon>
                 {(data?.fetchUseditem?.useditemAddress?.address ||
                   data?.fetchUseditem?.useditemAddress?.addressDetail) && (
@@ -101,7 +102,7 @@ export default function UsedItemDetailUI(): JSX.Element {
                     }
                   >
                     <S.LocationIcon>
-                      <Image width={34} height={34} src={'/images/ic_location.png'} />
+                      <Image unoptimized width={34} height={34} src={'/images/ic_location.png'} />
                     </S.LocationIcon>
                   </Tooltip>
                 )}
@@ -115,7 +116,7 @@ export default function UsedItemDetailUI(): JSX.Element {
                 </S.TextBox>
                 <S.PickItem>
                   <S.Heart onClick={toggleUsedItemPick}>
-                    <Image src={'/images/ic_favorite.png'} width={36} height={36} />
+                    <Image unoptimized src={'/images/ic_favorite.png'} width={36} height={36} />
                   </S.Heart>
                   <S.PickCount>{data?.fetchUseditem?.pickedCount}</S.PickCount>
                 </S.PickItem>

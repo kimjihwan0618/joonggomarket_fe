@@ -9,6 +9,7 @@ export default function UsedItemUI(props): JSX.Element {
     <S.UsedItem onClick={moveToPage(`/markets/${props.usedItem._id}`)}>
       <S.ItemImageBox2>
         <Image
+          unoptimized
           src={
             props.usedItem.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))
               .length !== 0
@@ -34,6 +35,7 @@ export default function UsedItemUI(props): JSX.Element {
           <S.SellerPicked>
             <S.Seller>
               <Image
+                unoptimized
                 src={
                   props.usedItem.seller.picture !== '' &&
                   props.usedItem.seller.picture?.includes('.')
@@ -47,7 +49,13 @@ export default function UsedItemUI(props): JSX.Element {
               &nbsp;&nbsp;{props.usedItem.seller.name}
             </S.Seller>
             <S.Picked>
-              <Image src={'/images/ic_favorite.png'} width={24} height={24} alt="하트" />
+              <Image
+                unoptimized
+                src={'/images/ic_favorite.png'}
+                width={24}
+                height={24}
+                alt="하트"
+              />
               &nbsp;&nbsp;{props.usedItem.pickedCount}
             </S.Picked>
           </S.SellerPicked>

@@ -74,6 +74,7 @@ export default function UsedItemQuestionAnswerWriteUI(
       <S.Inner>
         <S.UserImageBox>
           <Image
+            unoptimized
             src={
               data?.fetchUserLoggedIn?.picture
                 ? `https://storage.googleapis.com/${data?.fetchUserLoggedIn?.picture}`

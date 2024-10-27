@@ -31,7 +31,8 @@ export default function Header(): JSX.Element {
             <Link href="/boards">
               <S.Logo>
                 <Image
-                  src="/images/logo_dark.png"
+                  unoptimized
+                  src={`/images/logo_dark.png`}
                   alt="joongomarket 로고"
                   width={160}
                   height={24}

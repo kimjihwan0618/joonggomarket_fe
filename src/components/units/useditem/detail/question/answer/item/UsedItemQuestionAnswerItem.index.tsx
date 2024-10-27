@@ -56,20 +56,20 @@ export default function UsedItemQuestionAnswerItem(
                     data-contents={props.answer.contents}
                     onClick={onClickUpdateAnswerToggle}
                   >
-                    <Image src={'/images/ic_pencil-gray.png'} width={18} height={18} />
+                    <Image unoptimized src={'/images/ic_pencil-gray.png'} width={18} height={18} />
                   </button>
                   <button
                     id={props.answer._id}
                     onClick={() => props.onClickQuestionAnswerDelete(props.answer._id)}
                   >
-                    <Image src={'/images/ic_close-gray.png'} width={18} height={18} />
+                    <Image unoptimized src={'/images/ic_close-gray.png'} width={18} height={18} />
                   </button>
                 </>
               )}
               {/* {data?.fetchUserLoggedIn?._id === props?.question?.user?._id && !props.isEdit && ( */}
               {data?.fetchUserLoggedIn?._id === props?.question?.user?._id && (
                 <button onClick={props.onClickAnswerToggle}>
-                  <Image src={'/images/ic_answer.png'} width={18} height={18} />
+                  <Image unoptimized src={'/images/ic_answer.png'} width={18} height={18} />
                 </button>
               )}
             </S.Buttons>

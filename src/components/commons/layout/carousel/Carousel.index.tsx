@@ -6,9 +6,21 @@ import 'slick-carousel/slick/slick-theme.css'
 import Image from 'next/image'
 
 const items = [
-  { title: 'CAROUSEL DESIGN1', description: '줄바꿈 1\n줄바꿈 2', src: '/images/banner01.png' },
-  { title: 'CAROUSEL DESIGN2', description: '줄바꿈 1\n줄바꿈 2', src: '/images/banner02.png' },
-  { title: 'CAROUSEL DESIGN3', description: '줄바꿈 1\n줄바꿈 2', src: '/images/banner03.png' },
+  {
+    title: 'CAROUSEL DESIGN1',
+    description: '줄바꿈 1\n줄바꿈 2',
+    src: `/images/banner01.png`,
+  },
+  {
+    title: 'CAROUSEL DESIGN2',
+    description: '줄바꿈 1\n줄바꿈 2',
+    src: `/images/banner02.png`,
+  },
+  {
+    title: 'CAROUSEL DESIGN3',
+    description: '줄바꿈 1\n줄바꿈 2',
+    src: `/images/banner03.png`,
+  },
 ]
 
 export default function SimpleSlider(): JSX.Element {
@@ -31,7 +43,13 @@ export default function SimpleSlider(): JSX.Element {
         <Slider {...SETTINGS}>
           {items.map((obj, idx) => (
             <S.ContentWrapper key={idx}>
-              <Image src={obj.src} alt="Banner Image" layout="fill" objectFit={'cover'} />
+              <Image
+                unoptimized
+                src={obj.src}
+                alt="Banner Image"
+                layout="fill"
+                objectFit={'cover'}
+              />
               <S.ContentInner>
                 <S.ContentTitle>{obj.title}</S.ContentTitle>
                 <S.ContentDescription>{obj.description}</S.ContentDescription>

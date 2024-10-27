@@ -67,7 +67,7 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps): J
     <S.Wrapper data-isedit={props.isEdit}>
       {!props.isEdit && (
         <S.CommentTitle>
-          <Image src={'/images/ic_comment.png'} width={20} height={20} />
+          <Image unoptimized src={'/images/ic_comment.png'} width={20} height={20} />
           <h3>댓글</h3>
         </S.CommentTitle>
       )}
@@ -88,6 +88,7 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps): J
           {Array.from({ length: 5 }, (_, index) => (
             <div key={index}>
               <Image
+                unoptimized
                 onClick={() => onClickRating(index + 1)}
                 id={`rating${index + 1}`}
                 src={

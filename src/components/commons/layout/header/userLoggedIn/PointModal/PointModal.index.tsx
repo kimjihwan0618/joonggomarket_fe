@@ -66,7 +66,7 @@ export default function PointModalUI(props: IPointModalUIProps): JSX.Element {
       >
         <S.Content>
           <S.ContentInner>
-            <Image src={'/images/ic_point_add.png'} width={79.07} height={54} />
+            <Image unoptimized src={`/images/ic_point_add.png`} width={79.07} height={54} />
             <S.Title>충전하실 금액을 선택해주세요!</S.Title>
             <S.PointSelect onChange={onChangePoint}>
               <S.Point value={''}>포인트 선택</S.Point>

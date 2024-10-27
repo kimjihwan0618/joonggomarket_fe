@@ -41,9 +41,9 @@ export default function Uploads01UI(props: IUploads01UIProps): JSX.Element {
       {props.fileUrl !== '' ? (
         <S.ImageBox>
           <S.ResetFileButton onClick={onClickReset}>
-            <Image width={11} height={11} src={'/images/ic_close-dark.png'} />
+            <Image unoptimized width={11} height={11} src={`/images/ic_close-dark.png`} />
           </S.ResetFileButton>
-          <Image width={78} height={78} src={`${props.fileUrl}`} />
+          <Image unoptimized width={78} height={78} src={`${props.fileUrl}`} />
         </S.ImageBox>
       ) : (
         <S.ImageUploadButton onClick={onClickUpload}>

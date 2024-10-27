@@ -46,9 +46,21 @@ export default function ProfileUI(props: IProfileUIProps): JSX.Element {
             alt="프로필 이미지"
           />
         ) : (
-          <Image src="/images/ic_profile2.png" width={48} height={48} alt="프로필 이미지" />
+          <Image
+            unoptimized
+            src={`/images/ic_profile2.png`}
+            width={48}
+            height={48}
+            alt="프로필 이미지"
+          />
         )}
-        <Image src="/images/ic_more.png" alt="아래방향 화살표" width={24} height={24} />
+        <Image
+          unoptimized
+          src={`/images/ic_more.png`}
+          alt="아래방향 화살표"
+          width={24}
+          height={24}
+        />
       </S.ProfileButton>
       <S.ProfileBox data-hidden={props.isHidden}>
         <S.ProfileInfo onClick={moveToPage('/mypage/market')}>
@@ -61,7 +73,13 @@ export default function ProfileUI(props: IProfileUIProps): JSX.Element {
                 alt="프로필 이미지"
               />
             ) : (
-              <Image src="/images/ic_profile2.png" width={40} height={40} alt="프로필 이미지" />
+              <Image
+                unoptimized
+                src={`/images/ic_profile2.png`}
+                width={40}
+                height={40}
+                alt="프로필 이미지"
+              />
             )}
           </S.ImgSettingButton>
           <S.TextWrapper>
@@ -73,10 +91,10 @@ export default function ProfileUI(props: IProfileUIProps): JSX.Element {
         </S.ProfileInfo>
         <S.ProfileButtonWrapper>
           <S.AddPointButton onClick={() => props.setPointModalisOpen(true)}>
-            <Image src="/images/ic_savings.png" width={24} height={24} /> 충전하기
+            <Image unoptimized src={`/images/ic_savings.png`} width={24} height={24} /> 충전하기
           </S.AddPointButton>
           <S.LogoutButton onClick={onClickLogout}>
-            <Image src="/images/ic_logout.png" width={24} height={24} />
+            <Image unoptimized src={`/images/ic_logout.png`} width={24} height={24} />
             로그아웃
           </S.LogoutButton>
         </S.ProfileButtonWrapper>
