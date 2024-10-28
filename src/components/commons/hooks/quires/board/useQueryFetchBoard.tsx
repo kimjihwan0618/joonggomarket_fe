@@ -19,16 +19,6 @@ export const FETCH_BOARD = gql`
         zipcode
         address
         addressDetail
-        createdAt
-        updatedAt
-      }
-      user {
-        _id
-        email
-        name
-        picture
-        createdAt
-        updatedAt
       }
     }
   }

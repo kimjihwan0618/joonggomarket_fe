@@ -43,6 +43,7 @@ export const useMutationDeleteBoardComment = (props: IDeleteBoardCommentProps) =
           },
         ],
       })
+      if (!result?.data?.deleteBoardComment) Modal.warning({ content: '비밀번호를 확인해주세요!' })
     } catch (error) {
       if (error instanceof Error) Modal.warning({ content: error.message })
     }

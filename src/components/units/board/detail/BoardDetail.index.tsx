@@ -10,21 +10,54 @@ import { useMutationLikeBoard } from 'src/components/commons/hooks/mutations/boa
 import { useQueryFetchBoard } from 'src/components/commons/hooks/quires/board/useQueryFetchBoard'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useTextCopy } from 'src/components/commons/hooks/custom/useTextCopy'
+import { useState } from 'react'
+import Input01 from 'src/components/commons/inputs/01/Input01.index'
 
 export default function BoardDetailUI(): JSX.Element {
   const router = useRouter()
   const boardId = typeof router.query.boardId === 'string' ? router.query.boardId : ''
   const { moveToPage } = useMoveToPage()
-  const { deleteBoard } = useMutationDeletaBoard(boardId)
+  const [passwordCheck, setPasswordCheck] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
+  const { deleteBoard, loading } = useMutationDeletaBoard(boardId, passwordCheck)
   const { disLikeBoard } = useMutationDisLikeBoard(boardId)
   const { likeBoard } = useMutationLikeBoard(boardId)
   const { data } = useQueryFetchBoard(boardId)
   const { onCopyLink } = useTextCopy()
 
+  const onClickDeleteOk = async (): Promise<void> => {
+    await deleteBoard()
+    setPasswordCheck('')
+    setIsOpen(false)
+  }
+
+  const handlePasswordModal = (): void => {
+    event.stopPropagation()
+    setIsOpen((prev) => !prev)
+    setPasswordCheck('')
+  }
+
   return (
     <>
       {boardId && (
         <>
+          <Modal
+            title="비밀번호를 입력해주세요."
+            open={isOpen}
+            onOk={onClickDeleteOk}
+            onCancel={() => handlePasswordModal()}
+            okButtonProps={{ disabled: passwordCheck === '' || loading }}
+            confirmLoading={loading}
+            okText="확인"
+            cancelText="취소"
+          >
+            <Input01
+              type="password"
+              onChange={(e) => setPasswordCheck(e.target.value)}
+              value={passwordCheck}
+              fullWidth={true}
+            />
+          </Modal>
           <S.ContentWrapper>
             <S.BoardTitleWrapper>
               <S.WriterInfo>
@@ -123,7 +156,7 @@ export default function BoardDetailUI(): JSX.Element {
               name={'수정하기'}
               width="04"
             />
-            <Button01 onClick={deleteBoard} name={'삭제하기'} width="04" />
+            <Button01 onClick={() => setIsOpen(true)} name={'삭제하기'} width="04" />
           </S.ButtonWrapper>
         </>
       )}
