@@ -26,6 +26,7 @@ export default function ApolloSetting(props: IApolloSettingProps): JSX.Element {
     // uri: 'https://backendonline.codebootcamp.co.kr/graphql',
     headers: {
       Authorization: `Bearer ${accessToken}`,
+      'Apollo-Require-Preflight': 'true',
     },
     credentials: 'include',
   })
