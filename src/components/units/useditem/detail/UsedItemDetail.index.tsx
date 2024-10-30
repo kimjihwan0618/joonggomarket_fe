@@ -70,7 +70,7 @@ export default function UsedItemDetailUI(): JSX.Element {
                   src={
                     data?.fetchUseditem?.seller.picture !== '' &&
                     data?.fetchUseditem?.seller.picture?.includes('.')
-                      ? `https://storage.googleapis.com/${data?.fetchUseditem?.seller.picture}`
+                      ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${data?.fetchUseditem?.seller.picture}`
                       : '/images/ic_profile2.png'
                   }
                   width={56}
@@ -141,7 +141,7 @@ export default function UsedItemDetailUI(): JSX.Element {
                           <S.ImageWrapper>
                             <S.ImageBox>
                               <Image
-                                src={`https://storage.googleapis.com/${image}`}
+                                src={`${process.env.NEXT_PUBLIC_S3_STORAGE}${image}`}
                                 alt="상품 이미지"
                                 width={296}
                                 height={296}
@@ -165,7 +165,7 @@ export default function UsedItemDetailUI(): JSX.Element {
                       data-selected={index === imageIndex}
                     >
                       <Image
-                        src={`https://storage.googleapis.com/${image}`}
+                        src={`${process.env.NEXT_PUBLIC_S3_STORAGE}${image}`}
                         width={78}
                         height={78}
                       />

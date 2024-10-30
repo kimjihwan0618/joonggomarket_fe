@@ -19,6 +19,11 @@ module.exports = {
   images: {
     loader: 'akamai', //akamai
     path: '',
-    domains: ['storage.googleapis.com', 'localhost', 'joonggomarket.site'], // 외부 호스트 추가
+    domains: [
+      'storage.googleapis.com', // "강의용 스토리지 서버"
+      's3.ap-northeast-2.amazonaws.com', // "개발(포폴)용 aws s3 서버"
+      'localhost',
+      'joonggomarket.site',
+    ], // 외부 호스트 추가
   },
 }

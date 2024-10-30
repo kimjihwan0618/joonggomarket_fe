@@ -78,7 +78,7 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
     if (fetchUseditem?.images?.length > 0) {
       const images = fetchUseditem.images
       const filledImages: string[] = [images[0] || '', images[1] || '', images[2] || ''].map(
-        (image) => (image !== '' ? `https://storage.googleapis.com/${image}` : '')
+        (image) => (image !== '' ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${image}` : '')
       )
       setFileUrls(filledImages)
     }

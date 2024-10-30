@@ -13,7 +13,7 @@ export default function UsedItemUI(props): JSX.Element {
           src={
             props.usedItem.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))
               .length !== 0
-              ? `https://storage.googleapis.com/${props.usedItem.images[0]}`
+              ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${props.usedItem.images[0]}`
               : '/images/ic-noimage.jpg'
           }
           objectFit="cover"
@@ -39,7 +39,7 @@ export default function UsedItemUI(props): JSX.Element {
                 src={
                   props.usedItem.seller.picture !== '' &&
                   props.usedItem.seller.picture?.includes('.')
-                    ? `https://storage.googleapis.com/${props.usedItem.seller.picture}`
+                    ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${props.usedItem.seller.picture}`
                     : '/images/ic_profile2.png'
                 }
                 width={24}

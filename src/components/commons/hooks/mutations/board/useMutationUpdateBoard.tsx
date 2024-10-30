@@ -49,7 +49,7 @@ export const useMutationUpdateBoard = (props: IUseMutationUpdateBoardProps) => {
         if (imagesResult[index]) {
           return imagesResult[index]
         } else {
-          return el.replace('https://storage.googleapis.com/', '')
+          return el.replace(process.env.NEXT_PUBLIC_S3_STORAGE, '')
         }
       })
       const boardAddress = {

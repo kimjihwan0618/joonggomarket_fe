@@ -70,7 +70,7 @@ export default function UsedItemQuestionWriteUI(props: IUsedItemQuestionWriteUIP
             unoptimized
             src={
               data?.fetchUserLoggedIn?.picture
-                ? `https://storage.googleapis.com/${data?.fetchUserLoggedIn?.picture}`
+                ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${data?.fetchUserLoggedIn?.picture}`
                 : '/images/ic_profile.png'
             }
             width={40}

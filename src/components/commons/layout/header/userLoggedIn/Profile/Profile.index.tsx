@@ -40,7 +40,7 @@ export default function ProfileUI(props: IProfileUIProps): JSX.Element {
       <S.ProfileButton ref={props.profileButtonRef} onClick={onClickProfileButton}>
         {data?.fetchUserLoggedIn?.picture ? (
           <Image
-            src={`https://storage.googleapis.com/${data?.fetchUserLoggedIn?.picture}`}
+            src={`${process.env.NEXT_PUBLIC_S3_STORAGE}${data?.fetchUserLoggedIn?.picture}`}
             width={48}
             height={48}
             alt="프로필 이미지"
@@ -67,7 +67,7 @@ export default function ProfileUI(props: IProfileUIProps): JSX.Element {
           <S.ImgSettingButton>
             {data?.fetchUserLoggedIn?.picture ? (
               <Image
-                src={`https://storage.googleapis.com/${data?.fetchUserLoggedIn?.picture}`}
+                src={`${process.env.NEXT_PUBLIC_S3_STORAGE}${data?.fetchUserLoggedIn?.picture}`}
                 width={40}
                 height={40}
                 alt="프로필 이미지"

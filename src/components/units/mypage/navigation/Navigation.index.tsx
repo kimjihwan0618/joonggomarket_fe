@@ -38,7 +38,7 @@ export default function MypageNavigation(props: IMypageNavigationUIProps): JSX.E
           {data?.fetchUserLoggedIn?.picture ? (
             <Image
               onClick={() => fileRef.current?.click()}
-              src={`https://storage.googleapis.com/${data?.fetchUserLoggedIn?.picture}`}
+              src={`${process.env.NEXT_PUBLIC_S3_STORAGE}${data?.fetchUserLoggedIn?.picture}`}
               width={80}
               height={80}
             />

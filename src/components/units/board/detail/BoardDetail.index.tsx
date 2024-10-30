@@ -100,7 +100,7 @@ export default function BoardDetailUI(): JSX.Element {
                 .map((imagePath) => (
                   <S.ImageContainer>
                     <Image
-                      src={`https://storage.googleapis.com/${imagePath}`}
+                      src={`${process.env.NEXT_PUBLIC_S3_STORAGE}${imagePath}`}
                       width={5}
                       height={5}
                       layout="responsive"

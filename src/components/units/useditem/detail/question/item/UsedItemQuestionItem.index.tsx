@@ -34,7 +34,7 @@ export default function UsedItemQuestionItem(props): JSX.Element {
                 unoptimized
                 src={
                   props.question?.user?.picture
-                    ? `https://storage.googleapis.com/${props.question?.user?.picture}`
+                    ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${props.question?.user?.picture}`
                     : '/images/ic_profile.png'
                 }
                 width={40}
