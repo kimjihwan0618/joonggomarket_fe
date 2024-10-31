@@ -43,8 +43,8 @@ export default function LoginUI(): JSX.Element {
             unoptimized
             src="/images/logo_light.png"
             alt="joongomarket 로고"
-            width={288}
-            height={44}
+            width={279}
+            height={21}
           />
         </S.Logo>
         <InputWithError

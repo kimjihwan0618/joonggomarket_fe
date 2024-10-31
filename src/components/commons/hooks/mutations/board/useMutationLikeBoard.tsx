@@ -3,6 +3,7 @@ import { Modal } from 'antd'
 import type { IMutation, IMutationLikeBoardArgs } from 'src/commons/types/generated/types'
 import { useRouter } from 'next/router'
 import { FETCH_BOARD } from 'src/components/commons/hooks/quires/board/useQueryFetchBoard'
+import { FETCH_BOARDS_BEST } from '../../quires/board/useQueryFetchBoardsOfTheBest'
 
 export const LIKE_BOARD = gql`
   mutation likeBoard($boardId: ID!) {
@@ -25,6 +26,9 @@ export const useMutationLikeBoard = (boardId: IMutationLikeBoardArgs['boardId'])
           {
             query: FETCH_BOARD,
             variables: { boardId },
+          },
+          {
+            query: FETCH_BOARDS_BEST,
           },
         ],
       })

@@ -9,6 +9,7 @@ import type {
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useRouter } from 'next/router'
 import { FETCH_BOARDS } from '../../quires/board/useQueryFetchBoards'
+import { FETCH_BOARDS_BEST } from '../../quires/board/useQueryFetchBoardsOfTheBest'
 
 export const DELETE_BOARD = gql`
   mutation deleteBoard($boardId: ID!, $password: String!) {
@@ -36,6 +37,9 @@ export const useMutationDeletaBoard = (
         refetchQueries: [
           {
             query: FETCH_BOARDS,
+          },
+          {
+            query: FETCH_BOARDS_BEST,
           },
         ],
       })

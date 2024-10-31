@@ -34,8 +34,8 @@ export default function Header(): JSX.Element {
                   unoptimized
                   src={`/images/logo_dark.png`}
                   alt="joongomarket 로고"
-                  width={160}
-                  height={24}
+                  width={155}
+                  height={13}
                 />
               </S.Logo>
             </Link>
