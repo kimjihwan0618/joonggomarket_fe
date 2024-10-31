@@ -6,6 +6,7 @@ import * as S from './PointModal.styles'
 import Button02 from 'src/components/commons/buttons/02/Button02.index'
 import theme from 'src/commons/styles/theme'
 import { useMutationCreatePointTransactionOfLoading } from 'src/components/commons/hooks/mutations/usedItem/useMutationCreatePointTransactionOfLoading'
+import { useQueryFetchUserLoggedIn } from 'src/components/commons/hooks/quires/user/useQueryFetchUserLoggedIn'
 
 declare const window: typeof globalThis & {
   IMP: any
@@ -19,6 +20,7 @@ interface IPointModalUIProps {
 export default function PointModalUI(props: IPointModalUIProps): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState('')
   const { createPointTransactionOfLoading, loading } = useMutationCreatePointTransactionOfLoading()
+  const { data } = useQueryFetchUserLoggedIn()
 
   const onChangePoint = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedPoint(event.target.value)
@@ -34,8 +36,8 @@ export default function PointModalUI(props: IPointModalUIProps): JSX.Element {
         merchant_uid: `payment-${new Date().getTime()}`, // 주문 고유 번호
         name: '테스트 결제입니다. 실제 돈이 나가지 않아요!',
         amount: selectedPoint,
-        buyer_email: 'admin@joonggomarket.com',
-        buyer_name: '김지환',
+        buyer_email: data.fetchUserLoggedIn.email,
+        buyer_name: data.fetchUserLoggedIn.name,
         buyer_tel: '010-5838-5146',
         buyer_addr: '경기도 용인시 기흥구',
         buyer_postcode: '01181',
@@ -44,11 +46,11 @@ export default function PointModalUI(props: IPointModalUIProps): JSX.Element {
       async function (response: any) {
         const { success, imp_uid } = response
         console.log(response)
-        // if (success) {
-        //   await createPointTransactionOfLoading(imp_uid)
-        // } else {
-        //   Modal.error({ content: '카카오페이 결제를 정상적으로 처리하지 못하였습니다.' })
-        // }
+        if (success) {
+          await createPointTransactionOfLoading(imp_uid)
+        } else {
+          Modal.error({ content: '카카오페이 결제를 정상적으로 처리하지 못하였습니다.' })
+        }
       }
     )
   }

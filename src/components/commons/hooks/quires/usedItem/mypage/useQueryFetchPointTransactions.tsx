@@ -7,7 +7,6 @@ export const FETCH_POINT_TRANSACTIONS = gql`
       _id
       createdAt
       status
-      statusDetail
       amount
       balance
     }

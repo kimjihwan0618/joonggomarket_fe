@@ -10,7 +10,6 @@ export const FETCH_POINT_TRANSACTIONS_OF_LOADING = gql`
       _id
       createdAt
       impUid
-      statusDetail
       amount
       balance
     }
