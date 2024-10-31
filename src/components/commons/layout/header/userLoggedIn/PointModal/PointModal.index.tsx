@@ -26,28 +26,29 @@ export default function PointModalUI(props: IPointModalUIProps): JSX.Element {
 
   const onClickAddPoint = () => {
     const IMP = window.IMP
-    IMP.init('imp49910675')
+    IMP.init(process.env.NEXT_PUBLIC_PORTONE_API_KEY)
     IMP.request_pay(
       {
         pg: 'kakaopay',
         pay_method: 'card',
         merchant_uid: `payment-${new Date().getTime()}`, // 주문 고유 번호
-        name: '마우스',
+        name: '테스트 결제입니다. 실제 돈이 나가지 않아요!',
         amount: selectedPoint,
         buyer_email: 'admin@joonggomarket.com',
         buyer_name: '김지환',
         buyer_tel: '010-5838-5146',
         buyer_addr: '경기도 용인시 기흥구',
         buyer_postcode: '01181',
-        m_redirect_url: 'http://localhost:3000/markets', // 모바일에서는 결제시, 페이지 주소가 바뀜. 따라서, 결제 끝나고 돌아갈 주소 입력해야함
+        m_redirect_url: process.env.NEXT_PUBLIC_PORTONE_MOBILE_REDIRECT_URL, // 모바일에서는 결제시, 페이지 주소가 바뀜. 따라서, 결제 끝나고 돌아갈 주소 입력해야함
       },
       async function (response: any) {
         const { success, imp_uid } = response
-        if (success) {
-          await createPointTransactionOfLoading(imp_uid)
-        } else {
-          Modal.error({ content: '카카오페이 결제를 정상적으로 처리하지 못하였습니다.' })
-        }
+        console.log(response)
+        // if (success) {
+        //   await createPointTransactionOfLoading(imp_uid)
+        // } else {
+        //   Modal.error({ content: '카카오페이 결제를 정상적으로 처리하지 못하였습니다.' })
+        // }
       }
     )
   }

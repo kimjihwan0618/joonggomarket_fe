@@ -9,6 +9,7 @@ export const FETCH_POINT_TRANSACTIONS = gql`
       status
       statusDetail
       amount
+      balance
     }
   }
 `

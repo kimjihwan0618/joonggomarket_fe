@@ -103,6 +103,7 @@ export default function MyPointUI(): JSX.Element {
             ...el,
             createdAt: toYYYYMMDDHHMMSS(el.createdAt),
             amount: new Intl.NumberFormat('en-US').format(el.amount),
+            balance: new Intl.NumberFormat('en-US').format(el.balance),
           }))}
           keyword={keyword}
           columns={ALL_COLUMNS}
@@ -116,6 +117,7 @@ export default function MyPointUI(): JSX.Element {
             ...el,
             createdAt: toYYYYMMDDHHMMSS(el.createdAt),
             amount: new Intl.NumberFormat('en-US').format(el.amount),
+            balance: new Intl.NumberFormat('en-US').format(el.balance),
           }))}
           keyword={keyword}
           columns={LOADING_COLUMNS}
@@ -129,6 +131,7 @@ export default function MyPointUI(): JSX.Element {
             ...el,
             createdAt: toYYYYMMDDHHMMSS(el.createdAt),
             useditem_name: el?.useditem?.name ?? '',
+            amount: new Intl.NumberFormat('en-US').format(el.amount),
             balance: new Intl.NumberFormat('en-US').format(el.balance),
           }))}
           keyword={keyword}
@@ -143,6 +146,7 @@ export default function MyPointUI(): JSX.Element {
             ...el,
             createdAt: toYYYYMMDDHHMMSS(el.createdAt),
             useditem_name: el?.useditem?.name ?? '',
+            amount: new Intl.NumberFormat('en-US').format(el.amount),
             balance: new Intl.NumberFormat('en-US').format(el.balance),
           }))}
           keyword={keyword}
