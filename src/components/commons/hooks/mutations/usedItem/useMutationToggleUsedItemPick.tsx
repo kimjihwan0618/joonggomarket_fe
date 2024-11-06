@@ -15,28 +15,30 @@ export const TOGGLE_USED_ITEM_PICK = gql`
 export const useMutationToggleUsedItemPick = (
   useditemId: IQueryFetchUseditemQuestionsArgs['useditemId']
 ) => {
-  const [toggleUsedItemPickMutation] = useMutation<
+  const [toggleUsedItemPickMutation, { loading }] = useMutation<
     Pick<IMutation, 'toggleUseditemPick'>,
     IMutationToggleUseditemPickArgs
   >(TOGGLE_USED_ITEM_PICK)
 
   const toggleUsedItemPick = async (): Promise<void> => {
     try {
-      const result = await toggleUsedItemPickMutation({
-        variables: {
-          useditemId,
-        },
-        refetchQueries: [
-          {
-            query: FETCH_USED_ITEM,
-            variables: { useditemId },
+      if (!loading) {
+        const result = await toggleUsedItemPickMutation({
+          variables: {
+            useditemId,
           },
-        ],
-      })
+          refetchQueries: [
+            {
+              query: FETCH_USED_ITEM,
+              variables: { useditemId },
+            },
+          ],
+        })
+      }
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })
     }
   }
 
-  return { toggleUsedItemPick }
+  return { toggleUsedItemPick, loading }
 }

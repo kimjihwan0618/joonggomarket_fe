@@ -7,10 +7,10 @@ import type {
 } from 'src/commons/types/generated/types'
 import type { UseFormGetValues } from 'react-hook-form'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
-import { useRouter } from 'next/router'
 import { IUsedItemWriteForm } from 'src/components/units/useditem/write/UsedItemWrite.schema'
 import { FETCH_USED_ITEMS } from '../../quires/usedItem/useQueryFetchUsedItems'
 import { useMutationUploadFile } from '../file/useMutationUploadFile'
+import { FETCH_USED_ITEMS_BEST } from '../../quires/usedItem/useQueryFetchBoardsOfTheBest'
 
 interface IUseMutationCreateUsedItemProps {
   getValues: UseFormGetValues<IUsedItemWriteForm>
@@ -78,6 +78,9 @@ export const useMutationCreateUsedItem = (props: IUseMutationCreateUsedItemProps
         refetchQueries: [
           {
             query: FETCH_USED_ITEMS,
+          },
+          {
+            query: FETCH_USED_ITEMS_BEST,
           },
         ],
       })
