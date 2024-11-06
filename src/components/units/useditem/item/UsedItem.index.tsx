@@ -37,8 +37,7 @@ export default function UsedItemUI(props): JSX.Element {
               <Image
                 unoptimized
                 src={
-                  props.usedItem.seller.picture !== '' &&
-                  props.usedItem.seller.picture?.includes('.')
+                  props.usedItem.seller?.picture && props.usedItem.seller.picture?.includes('.')
                     ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${props.usedItem.seller.picture}`
                     : '/images/ic_profile2.png'
                 }
