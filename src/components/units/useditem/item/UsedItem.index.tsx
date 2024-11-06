@@ -13,7 +13,7 @@ export default function UsedItemUI(props): JSX.Element {
           src={
             props.usedItem.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))
               .length !== 0
-              ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${props.usedItem.images[0]}`
+              ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${props.usedItem.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))[0]}`
               : '/images/ic-noimage.jpg'
           }
           objectFit="cover"

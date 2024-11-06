@@ -54,7 +54,7 @@ export const useFetchMoreScroll = (props: IUseFetchMoreScroll) => {
     debounce(() => {
       onLoadMore()
     }, 300),
-    [props.fetchData]
+    [props.fetchData, isLoading, hasMore, props.fetchListName, props.variables]
   )
 
   return {
