@@ -20,18 +20,18 @@ export const CREATE_POINT_TRANSACTION_BUY_SELLING = gql`
 
 export const useMutationCreatePointTransactionOfBuyingAndSelling = () => {
   const router = useRouter()
-  const [createPointTransactionBuySellingMutation, { loading }] = useMutation<
+  const [createPointTransactionOfBuyingAndSellingMutation, { loading }] = useMutation<
     Pick<IMutation, 'createPointTransactionOfBuyingAndSelling'>,
     IMutationCreatePointTransactionOfBuyingAndSellingArgs
   >(CREATE_POINT_TRANSACTION_BUY_SELLING)
 
-  const createPointTransactionBuySelling = async (): Promise<void> => {
+  const createPointTransactionOfBuyingAndSelling = async (): Promise<void> => {
     if (typeof router.query.useditemId !== 'string') {
       Modal.error({ content: '시스템에 문제가 있습니다.' })
       return
     }
     try {
-      const result = await createPointTransactionBuySellingMutation({
+      const result = await createPointTransactionOfBuyingAndSellingMutation({
         variables: {
           useritemId: router.query.useditemId,
         },
@@ -57,5 +57,5 @@ export const useMutationCreatePointTransactionOfBuyingAndSelling = () => {
     }
   }
 
-  return { createPointTransactionBuySelling, loading }
+  return { createPointTransactionOfBuyingAndSelling, loading }
 }

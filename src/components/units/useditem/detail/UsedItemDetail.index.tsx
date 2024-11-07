@@ -23,7 +23,7 @@ export default function UsedItemDetailUI(): JSX.Element {
   const { moveToPage } = useMoveToPage()
   const { data } = useQueryFetchUsedItem(useditemId)
   const { data: userLoggedin } = useQueryFetchUserLoggedIn()
-  const { createPointTransactionBuySelling, loading } =
+  const { createPointTransactionOfBuyingAndSelling, loading } =
     useMutationCreatePointTransactionOfBuyingAndSelling()
   const { onCopyLink } = useTextCopy()
   const [isOpen, setIsOpen] = useState(false)
@@ -31,7 +31,7 @@ export default function UsedItemDetailUI(): JSX.Element {
   const sliderRef = useRef(null)
 
   const onClickSellingOk = async (): Promise<void> => {
-    await createPointTransactionBuySelling()
+    await createPointTransactionOfBuyingAndSelling()
     setIsOpen(false)
   }
 

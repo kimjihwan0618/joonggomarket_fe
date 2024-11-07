@@ -34,6 +34,7 @@ export default function UsedItemQuestionAnswerItem(
           <S.AnswerBox key={`${props.idx}`}>
             <S.AnswerInfo>
               <Image
+                unoptimized
                 src={
                   props.answer?.user?.picture
                     ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${props.answer?.user?.picture}`
