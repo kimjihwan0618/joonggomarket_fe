@@ -28,7 +28,6 @@ export default function BoardCommentListUI(): JSX.Element {
     fetchMore,
     variables: {
       boardId,
-      page: 1,
     },
   })
 

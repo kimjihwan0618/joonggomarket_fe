@@ -1,6 +1,5 @@
 import { ApolloQueryResult, FetchMoreOptions, FetchMoreQueryOptions } from '@apollo/client'
-import { debounce } from 'lodash'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 
 interface IUseFetchMoreScroll {
   fetchData: {}
@@ -12,54 +11,47 @@ interface IUseFetchMoreScroll {
 }
 
 export const useFetchMoreScroll = (props: IUseFetchMoreScroll) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [hasMore, setHasMore] = useState(true)
+  const [fetchedPages, setFetchedPages] = useState<Set<number>>(new Set())
 
-  const onLoadMore = async (): Promise<void> => {
-    if (isLoading || !hasMore) return
+  const onLoadMore = (): void => {
     if (props.fetchData === undefined) return
 
-    try {
-      setIsLoading(true)
-      const result = await props.fetchMore({
-        variables: {
-          ...{
-            page: Math.ceil((props.fetchData?.[props.fetchListName].length ?? 10) / 10 + 1),
-          },
-          ...props.variables,
-        },
-        updateQuery: (prev, { fetchMoreResult }) => {
-          const prevItems = prev?.[props.fetchListName] ?? []
-          const newItems = fetchMoreResult?.[props.fetchListName] ?? []
+    const currentPage = Math.ceil((props.fetchData?.[props.fetchListName].length ?? 10) / 10 + 1)
 
-          if (!newItems.length) {
-            setHasMore(false)
-            return {
-              [props.fetchListName]: [...prevItems],
-            }
-          }
-          return {
-            [props.fetchListName]: [...prevItems, ...newItems],
-          }
-        },
-      })
-    } catch (error) {
-      console.error('Error fetching more items:', error)
-    } finally {
-      setIsLoading(false)
+    if (fetchedPages.has(currentPage)) {
+      return
     }
+
+    setFetchedPages((prev) => new Set(prev).add(currentPage))
+
+    props.fetchMore({
+      variables: {
+        ...{
+          page: currentPage,
+        },
+        ...props.variables,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        const prevItems = prev?.[props.fetchListName] ?? []
+        const newItems = fetchMoreResult?.[props.fetchListName] ?? []
+        if (!newItems.length) {
+          return {
+            [props.fetchListName]: [...prevItems],
+          }
+        }
+        return {
+          [props.fetchListName]: [...prevItems, ...newItems],
+        }
+      },
+    })
   }
 
-  const debouncedLoadMore = useCallback(
-    debounce(() => {
-      onLoadMore()
-    }, 300),
-    [props.fetchData, isLoading, hasMore, props.fetchListName, props.variables]
-  )
+  const resetPageCache = (): void => {
+    setFetchedPages(new Set())
+  }
 
   return {
-    onLoadMore: debouncedLoadMore,
-    isLoading,
-    hasMore,
+    onLoadMore,
+    resetPageCache,
   }
 }

@@ -79,6 +79,10 @@ export const useMutationCreateUsedItem = (props: IUseMutationCreateUsedItemProps
         refetchQueries: [
           {
             query: FETCH_USED_ITEMS,
+            variables: {
+              search: '',
+              isSoldout: false,
+            },
           },
           {
             query: FETCH_USED_ITEMS_BEST,

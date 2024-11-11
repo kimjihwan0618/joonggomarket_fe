@@ -24,7 +24,6 @@ export default function UsedItemListUI(): JSX.Element {
     fetchMore,
     variables: {
       search: keyword,
-      page: 1,
       isSoldout,
     },
   })
