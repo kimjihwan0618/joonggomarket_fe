@@ -32,6 +32,7 @@ export default function UsedItemQuestionAnswerListUI(
     fetchMore,
     variables: {
       useditemQuestionId: props?.useditemQuestion?._id,
+      page: 1,
     },
   })
 

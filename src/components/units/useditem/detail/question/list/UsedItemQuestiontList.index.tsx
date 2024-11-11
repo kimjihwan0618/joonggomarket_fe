@@ -24,6 +24,7 @@ export default function UsedItemQuestionListUI(): JSX.Element {
     fetchMore,
     variables: {
       useditemId,
+      page: 1,
     },
   })
 

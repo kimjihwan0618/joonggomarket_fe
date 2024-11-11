@@ -11,6 +11,7 @@ import { IUsedItemWriteForm } from 'src/components/units/useditem/write/UsedItem
 import { FETCH_USED_ITEMS } from '../../quires/usedItem/useQueryFetchUsedItems'
 import { useMutationUploadFile } from '../file/useMutationUploadFile'
 import { FETCH_USED_ITEMS_BEST } from '../../quires/usedItem/useQueryFetchBoardsOfTheBest'
+import { FETCH_USED_ITEMS_I_SOLD } from '../../quires/usedItem/mypage/useQueryFetchUsedItemsISold'
 
 interface IUseMutationCreateUsedItemProps {
   getValues: UseFormGetValues<IUsedItemWriteForm>
@@ -81,6 +82,9 @@ export const useMutationCreateUsedItem = (props: IUseMutationCreateUsedItemProps
           },
           {
             query: FETCH_USED_ITEMS_BEST,
+          },
+          {
+            query: FETCH_USED_ITEMS_I_SOLD,
           },
         ],
       })

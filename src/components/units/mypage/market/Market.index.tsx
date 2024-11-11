@@ -28,6 +28,7 @@ export default function MyMarketUI(): JSX.Element {
     fetchMore: selectedTab === '나의상품' ? fetchMore01 : fetchMore02,
     variables: {
       search: keyword,
+      page: 1,
     },
   })
 

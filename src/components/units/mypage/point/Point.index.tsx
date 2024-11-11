@@ -14,18 +14,27 @@ import { toYYYYMMDDHHMMSS } from 'src/lib/utils/date'
 export default function MyPointUI(): JSX.Element {
   const [selectedTab, setSelectedTab] = useState('전체내역')
   const { keyword, onChangeKeyword } = useSearch()
-  const { data: transactions, fetchMore: fetchMore01 } = useQueryFetchPointTransactions()
-  const { data: transactionsLoading, fetchMore: fetchMore02 } =
-    useQueryFetchPointTransactionsOfLoading()
+  const {
+    data: transactions,
+    fetchMore: fetchMore01,
+    refetch: refetch01,
+  } = useQueryFetchPointTransactions()
+  const {
+    data: transactionsLoading,
+    fetchMore: fetchMore02,
+    refetch: refetch02,
+  } = useQueryFetchPointTransactionsOfLoading()
   const {
     data: transactionsBuying,
     // refetch: refetch03,
     fetchMore: fetchMore03,
+    refetch: refetch03,
   } = useQueryFetchPointTransactionsOfBuying()
   const {
     data: transactionsSelling,
     // refetch: refetch04,
     fetchMore: fetchMore04,
+    refetch: refetch04,
   } = useQueryFetchPointTransactionsOfSelling()
   const { onLoadMore: onLoadMore01 } = useFetchMoreScroll({
     fetchData: transactions,
@@ -62,6 +71,26 @@ export default function MyPointUI(): JSX.Element {
 
   const onClickTab = async (tabName: string): Promise<void> => {
     setSelectedTab(tabName)
+    switch (tabName) {
+      case '전체내역':
+        await refetch01()
+        break
+      case '충전내역':
+        await refetch02({
+          search: keyword,
+        })
+        break
+      case '구매내역':
+        await refetch03({
+          search: keyword,
+        })
+        break
+      case '판매내역':
+        await refetch04({
+          search: keyword,
+        })
+        break
+    }
   }
 
   return (
