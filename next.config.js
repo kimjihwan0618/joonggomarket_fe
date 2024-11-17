@@ -1,7 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   trailingSlash: true,
-  geterateBuildId: () => 'joonggomarket_fe_project',
+  generateBuildId: () => 'joonggomarket_fe_project',
   // 아래 주소들만 out 폴더에 만들어줘 ! => getServerSideProps 있는 페이지는 제외
   exportPathMap: () => ({
     '/': { page: '/' },
