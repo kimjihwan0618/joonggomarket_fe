@@ -4,13 +4,13 @@ import Image from 'next/image'
 import { toYYYYMMDD } from 'src/lib/utils/date'
 import { useQueryFetchUserLoggedIn } from 'src/components/commons/hooks/quires/user/useQueryFetchUserLoggedIn'
 import UsedItemQuestionAnswerWriteUI from '../write/UsedItemQuestionAnswerWrite.index'
-import { IUseditemQuestion, IUseditemQuestionAnswer } from 'src/commons/types/generated/types'
+import { IUsedItemQuestion, IUseditemQuestionAnswer } from 'src/commons/types/generated/types'
 
 interface IUsedItemQuestionAnswerItemProps {
   key: IUseditemQuestionAnswer['_id']
   idx: number
   answer: IUseditemQuestionAnswer
-  question: IUseditemQuestion
+  question: IUsedItemQuestion
   onClickQuestionAnswerDelete: (_id: IUseditemQuestionAnswer['_id']) => void
   onClickAnswerToggle: () => void
   answerIsEdit: boolean

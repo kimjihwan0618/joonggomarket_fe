@@ -1,11 +1,6 @@
 import { gql, useMutation } from '@apollo/client'
 import { Modal } from 'antd'
-import type {
-  IBoard,
-  IMutation,
-  IMutationDeleteBoardArgs,
-  IMutationDeleteBoardsArgs,
-} from 'src/commons/types/generated/types'
+import type { IMutation, IMutationDeleteBoardArgs } from 'src/commons/types/generated/types'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useRouter } from 'next/router'
 import { FETCH_BOARDS } from '../../quires/board/useQueryFetchBoards'

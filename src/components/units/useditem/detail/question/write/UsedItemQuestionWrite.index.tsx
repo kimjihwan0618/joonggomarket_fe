@@ -5,7 +5,7 @@ import theme from 'src/commons/styles/theme'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useUpdateForm } from 'src/components/commons/hooks/custom/useUpdateForm'
-import type { IUseditemQuestion } from 'src/commons/types/generated/types'
+import type { IUsedItemQuestion } from 'src/commons/types/generated/types'
 import type { Dispatch, MouseEvent } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -17,7 +17,7 @@ import { useQueryFetchUserLoggedIn } from 'src/components/commons/hooks/quires/u
 
 export interface IUsedItemQuestionWriteUIProps {
   isEdit: boolean
-  data?: IUseditemQuestion
+  data?: IUsedItemQuestion
   handleCommentToggle?: (event: MouseEvent<HTMLButtonElement>) => void
   setIsEdit?: Dispatch<React.SetStateAction<boolean>>
 }

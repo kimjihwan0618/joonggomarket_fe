@@ -4,13 +4,13 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { useFetchMoreScroll } from 'src/components/commons/hooks/custom/useFetchMoreScroll'
 import { Modal } from 'antd'
 import UsedItemQuestionAnswerItem from '../item/UsedItemQuestionAnswerItem.index'
-import { IUseditemQuestion, IUseditemQuestionAnswer } from 'src/commons/types/generated/types'
+import { IUsedItemQuestion, IUseditemQuestionAnswer } from 'src/commons/types/generated/types'
 import { useQueryFetchUsedItemQuestionAnswers } from 'src/components/commons/hooks/quires/usedItem/question/answer/useQueryFetchUsedItemQuestionAnswers'
 import UsedItemQuestionAnswerWriteUI from '../write/UsedItemQuestionAnswerWrite.index'
 import { useMutationDeleteUseditemQuestionAnswer } from 'src/components/commons/hooks/mutations/usedItem/question/answer/useMutationDeleteUseditemQuestionAnswer'
 
 interface IUsedItemQuestionAnswerListUIProps {
-  useditemQuestion: IUseditemQuestion
+  useditemQuestion: IUsedItemQuestion
   onClickAnswerToggle: () => void
   answerIsEdit: boolean
   setAnswerIsEdit: Dispatch<SetStateAction<boolean>>
