@@ -1,0 +1,443 @@
+[33mcommit e0e3dc061879fae457516eb7a70ac497a0f7d349[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sun Nov 17 22:57:36 2024 +0900
+
+    S3와 EC2 배포환경 맞추기위해 .next ignore 에서 제외
+
+[33mcommit 770aecdb2c2875ee454b558a5fdebeb53f1ad697[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sun Nov 17 22:56:31 2024 +0900
+
+    S3와 EC2 배포환경 맞추기위해 .next ignore 에서 제외
+
+[33mcommit ac1668aef5baeb71da35e5d35b7305a0ce119fd5[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sun Nov 17 22:53:52 2024 +0900
+
+    S3와 EC2 배포환경 맞추기위해 .next ignore 에서 제외
+
+[33mcommit 0fc941de9d3ab3f057a39fca9c55818b2b829910[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sun Nov 17 21:57:09 2024 +0900
+
+    generateBuildId 이름 수정
+
+[33mcommit a93e6a1ca5facc90951006e8cecb5827fa2c2fd8[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sun Nov 17 21:12:37 2024 +0900
+
+    1차 개발 백엔드 연동 부분 반영
+
+[33mcommit 3d774e13e4f25ef84e8f4eaca9a80bdac64f179e[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Tue Nov 12 00:01:46 2024 +0900
+
+    useFetchMoreScroll 중복 호출 개선
+
+[33mcommit 896e4f07896bfe8e83e877ee9003a02fca7d75d6[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Mon Nov 11 22:59:27 2024 +0900
+
+    scroll 타입 페이징 기본 변수 1 추가
+
+[33mcommit c6588aede8bb99c9494d75d2c42a5b75d2b6908c[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Thu Nov 7 21:34:26 2024 +0900
+
+    API 컴포넌트 변수명 수정
+
+[33mcommit 40c7af165c18f7a225ac2d57f65453561116892e[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Wed Nov 6 18:03:08 2024 +0900
+
+    toggleUseditem 실행중일때는 클린안되게 수정
+
+[33mcommit b7dcd3339225129fcf2d4fb9486b9ba2d81221dd[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Wed Nov 6 12:08:24 2024 +0900
+
+    useFetchMoreScroll 첫페이지 동작 개선 Useditem 이미지 경로 수정
+
+[33mcommit d97b2fd7a987b81e9e33f42c9b9875076915a557[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Wed Nov 6 11:12:15 2024 +0900
+
+    useFetchMoreScroll 중복호출 문제 수정
+
+[33mcommit 7bdaad0ea3303eda86d5eb3bcfd56ef701b0e67f[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Thu Oct 31 17:45:03 2024 +0900
+
+    todolist.txt 추가
+
+[33mcommit 636beb84865bf9cf4c8bf04cb028f96e09165537[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Thu Oct 31 16:28:33 2024 +0900
+
+    포인트 충전 API 개발 백엔드 연동
+
+[33mcommit 7723edbd89f6909fd05892ec5cb61c71a9df8365[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Thu Oct 31 13:24:01 2024 +0900
+
+    데이터 fetch param 수정, mypage-point 컬럼 수정
+
+[33mcommit 5b93909d3ebbfa6e06dac40cc887219129cd0bc3[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Thu Oct 31 11:20:33 2024 +0900
+
+    게시글 사용자 조작에 의한 TOP 4 FETCH BOARDS 리패치에 추가
+
+[33mcommit 125eec04404dd1c8aaa600111efc2a7c767fb3b0[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Wed Oct 30 17:36:18 2024 +0900
+
+    스토리지, 백엔드 서버 환경변수 적용
+
+[33mcommit 5e0e4c436b6f44959dc90c511cdb8a761c2ddb99[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Tue Oct 29 17:40:16 2024 +0900
+
+    파일 업로드시 cors 발생 해결하기위한 headers 설정 추가
+
+[33mcommit 8fae9bf44f7ec975d902112af8e69f979562a986[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Mon Oct 28 17:50:19 2024 +0900
+
+    게시글 삭제 비번 체크하도록 수정
+
+[33mcommit f3278c947ba92bbe91edef939104094c3bbdf2fd[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sun Oct 27 20:36:28 2024 +0900
+
+    정적이미지에 unoptimized 옵션 추가
+
+[33mcommit 4194c4ac344882ee9984a2347f6be298b7060000[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Mon Oct 14 22:30:09 2024 +0900
+
+    백엔드 개발환경 연동
+
+[33mcommit f512432d625cfd5f8a64b9d1de29a801f375491b[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Mon Oct 14 22:29:51 2024 +0900
+
+    DATA INPUT ISO String으로 타입 변경
+
+[33mcommit ef5757e2040bc304145b5dfebd5a948e7d7620da[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Thu Oct 3 21:02:01 2024 +0900
+
+    useDaumPostModal 컴포넌트 핸들 메서드 로직 수정
+
+[33mcommit f5f742ad1f08d59c5b288c5613b05447700b85c8[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Thu Oct 3 18:58:13 2024 +0900
+
+    백엔드 개발환경위해 api url 분리
+
+[33mcommit 51f49c79d11c4e3f68f0ae5c242a1c5f629e6918[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Tue Oct 1 23:56:20 2024 +0900
+
+    backend url http->https 변경
+
+[33mcommit e724466edea38bc424bd7164ad2ac9dc5d2b3d09[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Tue Oct 1 23:47:08 2024 +0900
+
+    백엔드 cors 배포 테스트
+
+[33mcommit d2426220d545430d4ad9fd7179f541fe9ed8349b[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Tue Oct 1 23:23:56 2024 +0900
+
+    도커 스크립트 순서 비교파일 추가
+
+[33mcommit 5e6f24194e72f875d745987ebea68758cc456ab7[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Tue Oct 1 21:09:52 2024 +0900
+
+    로컬개발환경에서 도커 환경 셋팅
+
+[33mcommit 0ac794178e800f93ac3daf4f19c07d94c01bf9a8[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Mon Sep 30 22:28:06 2024 +0900
+
+    배포환경에 따른 이미지 path 변경
+
+[33mcommit badb90f251a03ad00fc048320b5f0bc3a18f8d67[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Mon Sep 30 00:13:31 2024 +0900
+
+    ssg 빌드 페이지 옵션 추가
+
+[33mcommit a0c508e84b7d2af048f20c42179d24d117b0f95c[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sun Sep 29 19:48:58 2024 +0900
+
+    배포환경 빌드시 발생하는 코드 수정
+
+[33mcommit 5fb6820a094ff961ae4e538a25850e64339cbc2a[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sun Sep 29 19:46:03 2024 +0900
+
+    배포시 발생하는 GraphQL 클라이언트 설정 수정
+
+[33mcommit a70edabf5532c74d07f86b4bade47aa6008f70d1[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sun Sep 29 19:22:36 2024 +0900
+
+    build:ssg 스크립트 추가
+
+[33mcommit 5c6afda389c8e90c6bc9316360fd60cbd642d1d0[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sat Sep 21 20:09:44 2024 +0900
+
+    포인트 소비에 따른 refetch 쿼리 추ㅏㄱ
+
+[33mcommit 769212e6412909092e88d399eec18cbfdb0ca684[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sat Sep 21 19:40:00 2024 +0900
+
+    내 포인트 조회 쿼리 리팩토링
+
+[33mcommit 4b3017e32bfba3ec227b5d3a4fbd958b813edd9f[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sat Sep 21 18:02:31 2024 +0900
+
+    비밀번호 변경 API 연동
+
+[33mcommit 3289d62d3ba368f1a9a7b8d1899424c155d455da[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Fri Sep 20 23:28:28 2024 +0900
+
+    상품글에 사진 업로드 Promise.all 적용
+
+[33mcommit fc9b0f26ac992a94c67b94a54505e92a130739f4[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Fri Sep 20 23:12:21 2024 +0900
+
+    게시글 수정 사진 첨부 Promise.all 로 개선
+
+[33mcommit 0f180461347d39375583957387fe5e1efb320f8d[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Fri Sep 20 22:55:20 2024 +0900
+
+    게시글 등록 사진 첨부 Promise.all 로 개선
+
+[33mcommit c93b41e41c32ef0f2fb561e81268e4292ec727f7[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Fri Sep 20 21:08:00 2024 +0900
+
+    포인트 충전 API 이슈 해결(가맹점 key 변경)
+
+[33mcommit 3882fa9505bee56c12335c6b544116f57dd5cb02[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Tue Sep 17 22:50:24 2024 +0900
+
+    포트원 결제 API 연동
+
+[33mcommit faf1fafbdbaae0ab33bc6dc63a5829f5d78a0858[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Tue Sep 17 20:09:23 2024 +0900
+
+    헤더에 포인트 충전 모달 컴포넌트 추가
+
+[33mcommit be25f557829bc6097ec24d9f72432d658cf63bef[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Tue Sep 17 19:29:52 2024 +0900
+
+    삼풍구매 API 추가 & 헤더 컴포넌트 리팩토링
+
+[33mcommit 208f61337ffcac97a827baa344810e456acb2f38[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Mon Sep 16 16:03:41 2024 +0900
+
+    updateUseItem  쿼리 추가
+
+[33mcommit 305e5049ad437823afcbc77069a6fee072fbe2f7[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Mon Sep 16 14:34:55 2024 +0900
+
+    상품 등록 쿼리 추가
+
+[33mcommit 8075995ebee9bc69ae493d8de9775a877300d672[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sat Sep 14 11:58:22 2024 +0900
+
+    상품 게시글 등록/수정 쿼리 작성중
+
+[33mcommit 9c629fe6da8d619ca585d78b103894b334d49436[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sat Sep 14 09:20:19 2024 +0900
+
+    중고상품 내 상품일때만 수정버튼 디스플레이
+
+[33mcommit cb0056f6f14232cda91547b74fbe8fc9c64f6c7b[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sat Sep 14 00:43:52 2024 +0900
+
+    리프레쉬 토큰 기능 추가
+
+[33mcommit d3a89c5e4069bf91642e31c6c2981ed9c08f8709[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Thu Sep 12 17:56:38 2024 +0900
+
+    상품 등록/수정 페이지 Map 부분 스타일 진행중
+
+[33mcommit 749e053cf3ac377432fbf6d95507d81137a68294[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Thu Sep 12 14:32:12 2024 +0900
+
+    kakaomap 공용 컴포넌트 생성 && lib download
+
+[33mcommit 78e31d76afb1ba140c44d2cbdaa5be2ff8aa6570[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Mon Sep 9 17:49:24 2024 +0900
+
+    타입 선언 미진한 부분 수정
+
+[33mcommit 375f1a362a9e3af1ec8aad51b8c4aac0f4cdbc9a[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Mon Sep 9 16:56:32 2024 +0900
+
+    문의 답변 CRUD API 연동 & UI 구현 완료
+
+[33mcommit 6edd71ad7c6151c231bf9e6b60be4a95f4611287[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Mon Sep 9 10:22:17 2024 +0900
+
+    상품 찜하기 기능 연동
+
+[33mcommit b805c706aebf34f98e1f735c0f3f866b12e56905[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sun Sep 8 23:35:22 2024 +0900
+
+    필요없는 쿼리파일 삭제
+
+[33mcommit 1adb3fb550f2a5cfc0c8d40650f30afec4d49ccb[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sun Sep 8 23:19:55 2024 +0900
+
+    section 28 과제 완료(마이 페이지 구현, 상품 등록 & 수정 구현)
+
+[33mcommit 76ce9a35679728d693765fcf7512891a698d9645[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Fri Sep 6 18:02:12 2024 +0900
+
+    마이페이지 UI & API 구현중
+
+[33mcommit 75b9720b0dd240925e515ca80710addb6377a6d7[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Fri Sep 6 00:27:40 2024 +0900
+
+    중고상품 상세페이지 이미지 캐러셀 구현, 마이페이지 구조 제작중
+
+[33mcommit 849af84692cc100f6e57e0a689a87dd6e3bd7bbb[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Thu Sep 5 17:17:35 2024 +0900
+
+    중고상품 문의하기 API 연동 & UI 구현 진행중
+
+[33mcommit 931d73c885664c0e4107cbccd340b2384d377cb5[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Thu Sep 5 15:38:54 2024 +0900
+
+    중고상품 문의하기 API 연동 & UI 구현 진행중
+
+[33mcommit cb3cfaf21d38c051ab1e4dd8b0047f4ccbe6c670[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Mon Sep 2 23:27:32 2024 +0900
+
+    마켓 리스트 페이지 1차 구현 완료, 상세 페이지 구현중
+
+[33mcommit d44f0aefb90ee3c01d26f78c06f6feb1d3d7af0e[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sun Sep 1 23:53:47 2024 +0900
+
+    검색기능 연동중
+
+[33mcommit 46146e068b3c5f91f586e96de56e109c7e608c8b[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sun Sep 1 23:30:12 2024 +0900
+
+    중고마켓 리스트 페이지 구현중
+
+[33mcommit 35a04cb3a6d433056c5def32e59399de915ba1be[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sat Aug 31 17:54:22 2024 +0900
+
+    CommentList, CommentWriter 리팩토링 완료
+
+[33mcommit cc48f552040b9ecb7aa56a154a30cfc1cd058bad[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Thu Aug 29 16:38:16 2024 +0900
+
+    BoardDetail 리팩토링 완료
+
+[33mcommit d9796bbf55407ea12ed52040273af4c831346e32[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Thu Aug 29 15:08:45 2024 +0900
+
+    로그인, 회원가입 페이지 리팩토링 완료
+
+[33mcommit 05899ec89017747f2a39bdcf784257c969d7205f[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Thu Aug 29 11:58:29 2024 +0900
+
+    BoardWriter 컴포넌트 리팩토링 완료
+
+[33mcommit 83697b73f496a40a2b14e3c233e4d8a513fc67bc[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Wed Aug 28 19:24:24 2024 +0900
+
+    BoardWrite 컴포넌트에 소단위 공용 컴포넌트 연결중
+
+[33mcommit fc300e98f94bfdab4d4a5f58b61a52c0135a2f57[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Tue Aug 27 18:03:56 2024 +0900
+
+    createBoard Mutation 리팩토링중
+
+[33mcommit 129d033497fade0663ed4cdee603acb150c4a785[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Mon Aug 26 16:07:10 2024 +0900
+
+    게시글 추가/수정 페이지 컴포넌트 리팩토링중
+
+[33mcommit b187bdfd5801242c1bda72551c62c3dd0c3f97d4[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Mon Aug 26 16:06:14 2024 +0900
+
+    게시글 추가/수정 페이지 컴포넌트 리팩토링중
+
+[33mcommit 5cbacec8a4e0bf5f7b1eecfafa8b2138fd4d5f1e[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sat Aug 24 15:05:05 2024 +0900
+
+    common button 01, 02 생성 후 연동
+
+[33mcommit 30e344bb85fcaec7e1408807bf835c664cbd51de[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Sat Aug 24 10:31:17 2024 +0900
+
+    컴포넌트 index.tsx -> 컴포넌트명.index 로 네이밍룰 변경, 커스텀훅 추가 적용
+
+[33mcommit c5a9ff341a55d090ea53371dbe7b40f1f878354f[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Fri Aug 23 17:49:44 2024 +0900
+
+    로그인 성공시 제일 최근 방문 페이지 이동
+
+[33mcommit 5d20db2c99e7738f5e706af4740dc5e80f5d909e[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Fri Aug 23 07:16:23 2024 +0900
+
+    container presenter 패턴 리팩토링 예제 구현
+
+[33mcommit 5acd4b2cbbdd0b3a5b5a5fd96d2ce82af7e8ebce[m
+Author: kimJiHwan0618 <78426129+kimJiHwan0618@users.noreply.github.com>
+Date:   Thu Aug 22 18:07:35 2024 +0900
+
+    container presenter 패턴 리팩토리중
