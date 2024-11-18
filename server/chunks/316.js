@@ -115,7 +115,7 @@ const RESTORE_ACCESS_TOKEN = graphql_request__WEBPACK_IMPORTED_MODULE_0__.gql`
 `;
 const getAccessToken = async ()=>{
     try {
-        const graphQLClient = new graphql_request__WEBPACK_IMPORTED_MODULE_0__.GraphQLClient("http://localhost:3456/graphql", {
+        const graphQLClient = new graphql_request__WEBPACK_IMPORTED_MODULE_0__.GraphQLClient("https://kimjihodo.synology.me:3459/graphql", {
             credentials: 'include'
         });
         const result = await graphQLClient.request(RESTORE_ACCESS_TOKEN);
