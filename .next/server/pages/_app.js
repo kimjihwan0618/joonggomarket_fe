@@ -193,7 +193,7 @@ function ApolloSetting(props) {
     const [accessToken, setAccessToken] = (0,recoil__WEBPACK_IMPORTED_MODULE_4__.useRecoilState)(src_commons_stores__WEBPACK_IMPORTED_MODULE_5__/* .accessTokenState */ .LR);
     const refreshToken = (0,recoil__WEBPACK_IMPORTED_MODULE_4__.useRecoilValueLoadable)(src_commons_stores__WEBPACK_IMPORTED_MODULE_5__/* .restoreAccessTokenLoadable */ .JE);
     const uploadLink = (0,apollo_upload_client_createUploadLink_mjs__WEBPACK_IMPORTED_MODULE_2__["default"])({
-        uri: "https://kimjihodo.synology.me:3459/graphql",
+        uri: "http://localhost:3456/graphql",
         headers: {
             Authorization: `Bearer ${accessToken}`,
             'Apollo-Require-Preflight': 'true'

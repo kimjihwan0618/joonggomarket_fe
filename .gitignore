@@ -10,11 +10,13 @@ yarn.lock
 /.pnp
 .pnp.js
 
+/deploy
+
 # testing
 /coverage
 
 # next.js
-# /.next/
+/.next/
 /out/
 
 # production
