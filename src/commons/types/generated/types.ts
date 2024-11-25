@@ -296,6 +296,7 @@ export type IQuery = {
   fetchBoardsCount: Scalars['Int']['output'];
   fetchBoardsOfTheBest: Array<IBoard>;
   fetchPointTransactions: Array<IPointTransaction>;
+  fetchPointTransactionsCount: Scalars['Int']['output'];
   fetchPointTransactionsOfBuying: Array<IPointTransaction>;
   fetchPointTransactionsOfLoading: Array<IPointTransaction>;
   fetchPointTransactionsOfSelling: Array<IPointTransaction>;
@@ -339,6 +340,11 @@ export type IQueryFetchBoardsCountArgs = {
 export type IQueryFetchPointTransactionsArgs = {
   page?: InputMaybe<Scalars['Int']['input']>;
   search?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type IQueryFetchPointTransactionsCountArgs = {
+  status?: InputMaybe<Scalars['String']['input']>;
 };
 
 

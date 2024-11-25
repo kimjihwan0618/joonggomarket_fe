@@ -4,12 +4,14 @@ interface ITableProps {
   data: {}[]
   columns: { name: string; dataKey: string; isSearch: boolean }[]
   rowKey: string
-  rowHandler: { onClickRow: (path: string) => () => void | (() => void); path: string }
+  rowHandler?: { onClickRow: (path: string) => () => void | (() => void); path: string }
   activePage: number
   keyword: string
 }
 
 export default function Table(props: ITableProps): JSX.Element {
+  console.log(props.data)
+
   return (
     <S.Table>
       <S.TableHead>
@@ -24,7 +26,7 @@ export default function Table(props: ITableProps): JSX.Element {
         {props.data?.map((el, idx) => (
           <S.TableRow
             key={el[props.rowKey]}
-            onClick={props.rowHandler.onClickRow(`${props.rowHandler.path}/${el[props.rowKey]}`)}
+            onClick={props?.rowHandler?.onClickRow(`${props.rowHandler.path}/${el[props.rowKey]}`)}
             id={el[props.rowKey]}
           >
             <td>{(props.activePage - 1) * 10 + idx + 1}</td>
