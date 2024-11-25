@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil'
 import { accessTokenState } from 'src/commons/stores'
 import ProfileUI from './Profile/Profile.index'
 import ButtonsUI from './Buttons/Buttons.index'
+import { useQueryFetchUserLoggedIn } from 'src/components/commons/hooks/quires/user/useQueryFetchUserLoggedIn'
 
 interface IUserLoggedInProps {
   setPointModalisOpen: Dispatch<SetStateAction<boolean>>
@@ -13,6 +14,7 @@ export default function UserLoggedIn(props: IUserLoggedInProps): JSX.Element {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [isHidden, setIsHidden] = useState(false)
   const profileButtonRef = useRef<HTMLButtonElement>(null)
+  const { data, loading } = useQueryFetchUserLoggedIn()
 
   const handleClickOutside = (event: MouseEvent) => {
     if (profileButtonRef.current && !profileButtonRef.current.contains(event.target as Node)) {
@@ -38,16 +40,18 @@ export default function UserLoggedIn(props: IUserLoggedInProps): JSX.Element {
 
   return (
     <>
-      {accessToken ? (
-        <ProfileUI
-          profileButtonRef={profileButtonRef}
-          isHidden={isHidden}
-          setIsHidden={setIsHidden}
-          setPointModalisOpen={props.setPointModalisOpen}
-        />
-      ) : (
-        <ButtonsUI />
-      )}
+      {!loading &&
+        (accessToken ? (
+          <ProfileUI
+            profileButtonRef={profileButtonRef}
+            isHidden={isHidden}
+            setIsHidden={setIsHidden}
+            setPointModalisOpen={props.setPointModalisOpen}
+            data={data}
+          />
+        ) : (
+          <ButtonsUI />
+        ))}
     </>
   )
 }

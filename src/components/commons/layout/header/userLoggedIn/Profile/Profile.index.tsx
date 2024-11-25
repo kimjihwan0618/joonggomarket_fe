@@ -1,22 +1,22 @@
 import * as S from 'src/components/commons/layout/header/Header.styles'
 import Image from 'next/image'
-import { useQueryFetchUserLoggedIn } from 'src/components/commons/hooks/quires/user/useQueryFetchUserLoggedIn'
 import { useRouter } from 'next/router'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useMutationLogoutUser } from 'src/components/commons/hooks/mutations/user/useMutationLogout'
 import { Modal } from 'antd'
 import type { Dispatch, RefObject, SetStateAction } from 'react'
+import { IQuery } from 'src/commons/types/generated/types'
 
 interface IProfileUIProps {
   isHidden: boolean
   setIsHidden: Dispatch<SetStateAction<boolean>>
   setPointModalisOpen: Dispatch<SetStateAction<boolean>>
   profileButtonRef: RefObject<HTMLButtonElement>
+  data: Pick<IQuery, 'fetchUserLoggedIn'>
 }
 
 export default function ProfileUI(props: IProfileUIProps): JSX.Element {
   const router = useRouter()
-  const { data } = useQueryFetchUserLoggedIn()
   const { moveToPage } = useMoveToPage()
   const { logoutUser } = useMutationLogoutUser()
 
@@ -38,9 +38,9 @@ export default function ProfileUI(props: IProfileUIProps): JSX.Element {
   return (
     <S.ProfileBoxWrapper>
       <S.ProfileButton ref={props.profileButtonRef} onClick={onClickProfileButton}>
-        {data?.fetchUserLoggedIn?.picture ? (
+        {props.data?.fetchUserLoggedIn?.picture ? (
           <Image
-            src={`${process.env.NEXT_PUBLIC_S3_STORAGE}${data?.fetchUserLoggedIn?.picture}`}
+            src={`${process.env.NEXT_PUBLIC_S3_STORAGE}${props.data?.fetchUserLoggedIn?.picture}`}
             width={48}
             height={48}
             alt="프로필 이미지"
@@ -65,9 +65,9 @@ export default function ProfileUI(props: IProfileUIProps): JSX.Element {
       <S.ProfileBox data-hidden={props.isHidden}>
         <S.ProfileInfo onClick={moveToPage('/mypage/market')}>
           <S.ImgSettingButton>
-            {data?.fetchUserLoggedIn?.picture ? (
+            {props.data?.fetchUserLoggedIn?.picture ? (
               <Image
-                src={`${process.env.NEXT_PUBLIC_S3_STORAGE}${data?.fetchUserLoggedIn?.picture}`}
+                src={`${process.env.NEXT_PUBLIC_S3_STORAGE}${props.data?.fetchUserLoggedIn?.picture}`}
                 width={40}
                 height={40}
                 alt="프로필 이미지"
@@ -83,9 +83,12 @@ export default function ProfileUI(props: IProfileUIProps): JSX.Element {
             )}
           </S.ImgSettingButton>
           <S.TextWrapper>
-            <S.Name>{data?.fetchUserLoggedIn.name}</S.Name>
+            <S.Name>{props.data?.fetchUserLoggedIn.name}</S.Name>
             <S.Point>
-              {new Intl.NumberFormat('en-US').format(data?.fetchUserLoggedIn.userPoint?.amount)}P
+              {new Intl.NumberFormat('en-US').format(
+                props.data?.fetchUserLoggedIn.userPoint?.amount
+              )}
+              P
             </S.Point>
           </S.TextWrapper>
         </S.ProfileInfo>
