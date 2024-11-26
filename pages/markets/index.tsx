@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import DefaultLottieUI from 'src/components/commons/lottie/DefaultLottieUI'
 import UsedItemListUI from 'src/components/units/useditem/list/UsedItemList.index'
 
 export default function UsedItemListPage() {

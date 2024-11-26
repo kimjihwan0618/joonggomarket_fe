@@ -3,6 +3,7 @@ import * as S from './Searchbars01.styles'
 import { Searchbars01UIProps } from './Searchbars01.types'
 import { DatePicker } from 'antd'
 import _ from 'lodash'
+import DefaultLottieUI from '../../lottie/DefaultLottieUI'
 
 export default function Searchbars01UI(props: Searchbars01UIProps): JSX.Element {
   const [ischanged, setIschanged] = useState(false)
@@ -34,12 +35,14 @@ export default function Searchbars01UI(props: Searchbars01UIProps): JSX.Element 
 
   return (
     <S.SearchWrapper>
-      <S.SearchInput
-        data-ischanged={ischanged}
-        placeholder="제목을 검색해주세요"
-        type="text"
-        onInput={onInputSearch}
-      />
+      <S.SearcInputhWrapper data-ischanged={ischanged}>
+        <S.SearchInput
+          data-ischanged={ischanged}
+          placeholder="제목을 검색해주세요"
+          type="text"
+          onInput={onInputSearch}
+        />
+      </S.SearcInputhWrapper>
       {props.dateUsed && (
         <S.SearchRightItems>
           <S.DatePickerBox>

@@ -7,17 +7,29 @@ export const SearchWrapper = styled.div`
   justify-content: space-between;
 `
 
-export const SearchInput = styled.input`
+export const SearcInputhWrapper = styled.div`
   width: 100%;
   padding: 14px 16px 14px 48px;
-  font-size: 1.6rem;
   border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.gray06};
+  background-image: ${(props) =>
+    props['data-ischanged'] ? 'url(/loading.gif)' : 'url(/images/ic_search.png)'};
+  background-repeat: no-repeat;
+  background-position: 16px 50%;
+  background-size: auto 50%;
+`
+
+export const SearchInput = styled.input`
+  width: 100%;
+  /* padding: 14px 16px 14px 48px; */
+  font-size: 1.6rem;
+  /* border-radius: 10px; */
   border: none;
   outline: none;
   background-color: ${({ theme }) => theme.colors.gray06};
-  background-image: ${(props) => (props['data-ischanged'] ? '' : 'url(/images/ic_search.png)')};
+  /* background-image: ${(props) => (props['data-ischanged'] ? '' : 'url(/images/ic_search.png)')};
   background-repeat: no-repeat;
-  background-position: 16px 50%;
+  background-position: 16px 50%; */
   &::placeholder {
     color: #000000;
   }
