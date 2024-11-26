@@ -10,7 +10,7 @@ import { useMutationToggleUsedItemPick } from 'src/components/commons/hooks/muta
 import { useTextCopy } from 'src/components/commons/hooks/custom/useTextCopy'
 import theme from 'src/commons/styles/theme'
 import Slider from 'react-slick'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import KakaoMapUI from 'src/components/commons/kakaomap/KakaomapUI'
 import { useQueryFetchUserLoggedIn } from 'src/components/commons/hooks/quires/user/useQueryFetchUserLoggedIn'
 import 'react-quill/dist/quill.snow.css'
@@ -21,7 +21,7 @@ export default function UsedItemDetailUI(): JSX.Element {
   const useditemId = typeof router.query.useditemId === 'string' ? router.query.useditemId : ''
   const { toggleUsedItemPick } = useMutationToggleUsedItemPick(useditemId)
   const { moveToPage } = useMoveToPage()
-  const { data } = useQueryFetchUsedItem(useditemId)
+  const { data, error } = useQueryFetchUsedItem(useditemId)
   const { data: userLoggedin } = useQueryFetchUserLoggedIn()
   const { createPointTransactionOfBuyingAndSelling, loading } =
     useMutationCreatePointTransactionOfBuyingAndSelling()
@@ -47,6 +47,13 @@ export default function UsedItemDetailUI(): JSX.Element {
     slidesToScroll: 1,
     beforeChange: handleBeforeChange,
   }
+
+  useEffect(() => {
+    if (error) {
+      Modal.warning({ content: '유효한 상품이 아닙니다.' })
+      moveToPage(`/markets`)()
+    }
+  }, [error])
 
   return (
     <>

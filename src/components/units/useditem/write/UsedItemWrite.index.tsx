@@ -18,6 +18,8 @@ import TextEditorUI from 'src/components/commons/toast-ui-editor/TextEditorUI'
 import KakaoMapUI from 'src/components/commons/kakaomap/KakaomapUI'
 import { useMutationCreateUsedItem } from 'src/components/commons/hooks/mutations/usedItem/useMutationCreateUsedItem'
 import { useMutationUpdateUsedItem } from 'src/components/commons/hooks/mutations/usedItem/useMutationUpdateUsedItem'
+import { useQueryFetchUsedItem } from 'src/components/commons/hooks/quires/usedItem/useQueryFetchUsedItem'
+import { Modal } from 'antd'
 
 const ACTIVE_OPTION = {
   shouldDirty: true,
@@ -26,11 +28,11 @@ const ACTIVE_OPTION = {
 
 export interface IUsedItemWriteUIProps {
   isEdit: boolean
-  data?: Pick<IQuery, 'fetchUseditem'>
 }
 
 export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Element {
   const router = useRouter()
+  const useditemId = typeof router.query.useditemId === 'string' ? router.query.useditemId : ''
   const {
     handleModalToggle,
     DaumPostModal,
@@ -44,7 +46,7 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
     setLat,
     setLng,
   } = useDaumPostModal(true)
-  const { moveToBack } = useMoveToPage()
+  const { moveToBack, moveToPage } = useMoveToPage()
   const { fileUrls, onChangeFileUrls, onClickReset, setFileUrls, onChangeFile, files } =
     useImageInput(3)
   const { register, formState, setValue, getValues } = useForm<IUsedItemWriteForm>({
@@ -53,10 +55,11 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
   })
   const { createUsedItem } = useMutationCreateUsedItem({ getValues, files })
   const { updateUsedItem } = useMutationUpdateUsedItem({ getValues, fileUrls, files })
+  const { data, error } = useQueryFetchUsedItem(useditemId)
   const { handleFormUpdate } = useUpdateForm({
     setValue,
     updateKeys: ['name', 'remarks', 'price', 'tags', 'contents', 'useditemAddress.addressDetail'],
-    fetchData: props.data?.fetchUseditem,
+    fetchData: data?.fetchUseditem,
   })
 
   const onChangeContents = (value: string) => {
@@ -71,7 +74,12 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
   }, [address, zonecode, lat, lng])
 
   useEffect(() => {
-    const fetchUseditem = props.data?.fetchUseditem
+    const fetchUseditem = data?.fetchUseditem
+    if (error) {
+      console.log(error)
+      Modal.warning({ content: '유효한 상품이 아닙니다.' })
+      moveToPage(`/markets`)()
+    }
     if (fetchUseditem) {
       handleFormUpdate()
     }
@@ -92,7 +100,7 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
     fetchLat && setLat(fetchLat)
     fetchLng && setLng(fetchLng)
     fetchTags && setValue('tags', fetchTags.join(''), ACTIVE_OPTION)
-  }, [props.data?.fetchUseditem])
+  }, [data?.fetchUseditem, error])
 
   return (
     <>

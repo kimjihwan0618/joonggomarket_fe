@@ -31,7 +31,7 @@ export const FETCH_USED_ITEM = gql`
 `
 
 export const useQueryFetchUsedItem = (useditemId: IQueryFetchUseditemArgs['useditemId']) => {
-  const { data } = useQuery<Pick<IQuery, 'fetchUseditem'>, IQueryFetchUseditemArgs>(
+  const { data, error } = useQuery<Pick<IQuery, 'fetchUseditem'>, IQueryFetchUseditemArgs>(
     FETCH_USED_ITEM,
     {
       variables: { useditemId },
@@ -39,5 +39,5 @@ export const useQueryFetchUsedItem = (useditemId: IQueryFetchUseditemArgs['usedi
     }
   )
 
-  return { data }
+  return { data, error }
 }

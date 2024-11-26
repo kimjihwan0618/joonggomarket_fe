@@ -10,7 +10,7 @@ import { useMutationLikeBoard } from 'src/components/commons/hooks/mutations/boa
 import { useQueryFetchBoard } from 'src/components/commons/hooks/quires/board/useQueryFetchBoard'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useTextCopy } from 'src/components/commons/hooks/custom/useTextCopy'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Input01 from 'src/components/commons/inputs/01/Input01.index'
 
 export default function BoardDetailUI(): JSX.Element {
@@ -22,7 +22,7 @@ export default function BoardDetailUI(): JSX.Element {
   const { deleteBoard, loading } = useMutationDeletaBoard(boardId, passwordCheck)
   const { disLikeBoard } = useMutationDisLikeBoard(boardId)
   const { likeBoard } = useMutationLikeBoard(boardId)
-  const { data } = useQueryFetchBoard(boardId)
+  const { data, error } = useQueryFetchBoard(boardId)
   const { onCopyLink } = useTextCopy()
 
   const onClickDeleteOk = async (): Promise<void> => {
@@ -36,6 +36,13 @@ export default function BoardDetailUI(): JSX.Element {
     setIsOpen((prev) => !prev)
     setPasswordCheck('')
   }
+
+  useEffect(() => {
+    if (error) {
+      Modal.warning({ content: '유효한 게시글이 아닙니다.' })
+      moveToPage(`/boards`)()
+    }
+  }, [error])
 
   return (
     <>

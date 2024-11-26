@@ -25,10 +25,10 @@ export const FETCH_BOARD = gql`
 `
 
 export const useQueryFetchBoard = (boardId: IQueryFetchBoardArgs['boardId']) => {
-  const { data } = useQuery<Pick<IQuery, 'fetchBoard'>, IQueryFetchBoardArgs>(FETCH_BOARD, {
+  const { data, error } = useQuery<Pick<IQuery, 'fetchBoard'>, IQueryFetchBoardArgs>(FETCH_BOARD, {
     variables: { boardId },
     skip: !boardId,
   })
 
-  return { data }
+  return { data, error }
 }

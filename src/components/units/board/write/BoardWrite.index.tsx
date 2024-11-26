@@ -17,14 +17,17 @@ import { IQuery } from 'src/commons/types/generated/types'
 import InputWithError from 'src/components/commons/inputs/02/InputWithError.index'
 import TextAreaWithError from 'src/components/commons/textareas/01/TextAreaWithError.index'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
+import { useQueryFetchBoard } from 'src/components/commons/hooks/quires/board/useQueryFetchBoard'
+import { Modal } from 'antd'
 
 export interface IBoardWriteUIProps {
   isEdit: boolean
-  data?: Pick<IQuery, 'fetchBoard'>
 }
 
 export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
   const router = useRouter()
+  const boardId = typeof router.query.boardId === 'string' ? router.query.boardId : ''
+  const { data, error } = useQueryFetchBoard(boardId)
   const {
     handleModalToggle,
     DaumPostModal,
@@ -34,7 +37,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
     setAddress,
     setZoneCode,
   } = useDaumPostModal(false)
-  const { moveToBack } = useMoveToPage()
+  const { moveToBack, moveToPage } = useMoveToPage()
   const { fileUrls, onChangeFileUrls, onClickReset, setFileUrls, files, onChangeFile } =
     useImageInput(3)
   const { register, formState, setValue, getValues } = useForm<IBoardWriterForm>({
@@ -46,7 +49,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
   const { handleFormUpdate } = useUpdateForm({
     setValue,
     updateKeys: ['writer', 'title', 'contents', 'boardAddress.addressDetail', 'youtubeUrl'],
-    fetchData: props.data?.fetchBoard,
+    fetchData: data?.fetchBoard,
   })
 
   useEffect(() => {
@@ -55,7 +58,11 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
   }, [address, zonecode])
 
   useEffect(() => {
-    const fetchBoard = props.data?.fetchBoard
+    if (error) {
+      Modal.warning({ content: '유효한 게시글이 아닙니다.' })
+      moveToPage(`/boards`)()
+    }
+    const fetchBoard = data?.fetchBoard
     if (fetchBoard) {
       handleFormUpdate()
     }
@@ -70,7 +77,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
     const fetchZipCode = fetchBoard?.boardAddress?.zipcode
     fetchAddress && setAddress(fetchAddress)
     fetchZipCode && setZoneCode(fetchZipCode)
-  }, [props.data?.fetchBoard])
+  }, [data?.fetchBoard, error])
 
   return (
     <>
@@ -81,8 +88,8 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
           <InputWithError
             width="48.78%"
             register={register('writer')}
-            disabled={!!props.data?.fetchBoard.writer}
-            readOnly={!!props.data?.fetchBoard.writer}
+            disabled={!!data?.fetchBoard.writer}
+            readOnly={!!data?.fetchBoard.writer}
             placeholder="이름을 적어주세요."
             label={'작성자'}
             error={formState.errors.writer?.message}
