@@ -7,6 +7,9 @@ import theme from 'src/commons/styles/theme'
 import Layout from 'src/components/commons/layout/Layout.index'
 import { RecoilRoot } from 'recoil'
 import Head from 'next/head'
+import { ConfigProvider } from 'antd'
+import 'moment/locale/ko'
+import locale from 'antd/lib/locale/ko_KR'
 
 function MyApp({ Component }: AppProps) {
   return (
@@ -20,16 +23,18 @@ function MyApp({ Component }: AppProps) {
         <meta property="site_name" content="중고마켓"></meta>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <RecoilRoot>
-        <ApolloSetting>
-          <ThemeProvider theme={theme}>
-            <Global styles={globalStyles} />
-            <Layout>
-              <Component />
-            </Layout>
-          </ThemeProvider>
-        </ApolloSetting>
-      </RecoilRoot>
+      <ConfigProvider locale={locale}>
+        <RecoilRoot>
+          <ApolloSetting>
+            <ThemeProvider theme={theme}>
+              <Global styles={globalStyles} />
+              <Layout>
+                <Component />
+              </Layout>
+            </ThemeProvider>
+          </ApolloSetting>
+        </RecoilRoot>
+      </ConfigProvider>
     </>
   )
 }

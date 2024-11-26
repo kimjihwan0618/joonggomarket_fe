@@ -53,8 +53,12 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
     resolver: yupResolver(schema),
     mode: 'onChange',
   })
-  const { createUsedItem } = useMutationCreateUsedItem({ getValues, files })
-  const { updateUsedItem } = useMutationUpdateUsedItem({ getValues, fileUrls, files })
+  const { createUsedItem, loading: createLoading } = useMutationCreateUsedItem({ getValues, files })
+  const { updateUsedItem, loading: updateLoading } = useMutationUpdateUsedItem({
+    getValues,
+    fileUrls,
+    files,
+  })
   const { data, error } = useQueryFetchUsedItem(useditemId)
   const { handleFormUpdate } = useUpdateForm({
     setValue,
@@ -216,7 +220,8 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
             width="03"
           />
           <Button01
-            disabled={!formState.isValid}
+            disabled={!formState.isValid || createLoading || updateLoading}
+            isLoading={createLoading || updateLoading}
             onClick={props.isEdit ? updateUsedItem : createUsedItem}
             background={theme.colors.main}
             name={`${props.isEdit ? '수정' : '등록'}하기`}

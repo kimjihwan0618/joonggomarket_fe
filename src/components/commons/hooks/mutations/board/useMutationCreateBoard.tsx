@@ -27,7 +27,7 @@ export const CREATE_BOARD = gql`
 export const useMutationCreateBoard = (props: IuseMutationCreateBoardProps) => {
   const { moveToPage } = useMoveToPage()
   const { uploadFile } = useMutationUploadFile()
-  const [createBoardMutation] = useMutation<
+  const [createBoardMutation, { loading }] = useMutation<
     Pick<IMutation, 'createBoard'>,
     IMutationCreateBoardArgs
   >(CREATE_BOARD)
@@ -72,5 +72,5 @@ export const useMutationCreateBoard = (props: IuseMutationCreateBoardProps) => {
     }
   }
 
-  return { createBoard }
+  return { createBoard, loading }
 }

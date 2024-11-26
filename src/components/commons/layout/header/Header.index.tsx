@@ -28,7 +28,7 @@ export default function Header(): JSX.Element {
       <S.Header>
         <S.HeaderInner>
           <S.LogoNavigationWrapper>
-            <Link href="/boards">
+            <Link href="/">
               <S.Logo>
                 <Image
                   unoptimized

@@ -3,7 +3,6 @@ import * as S from './Searchbars01.styles'
 import { Searchbars01UIProps } from './Searchbars01.types'
 import { DatePicker } from 'antd'
 import _ from 'lodash'
-import DefaultLottieUI from '../../lottie/DefaultLottieUI'
 
 export default function Searchbars01UI(props: Searchbars01UIProps): JSX.Element {
   const [ischanged, setIschanged] = useState(false)

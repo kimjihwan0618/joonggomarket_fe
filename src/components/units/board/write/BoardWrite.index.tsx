@@ -44,8 +44,12 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
     resolver: yupResolver(schema),
     mode: 'onChange',
   })
-  const { createBoard } = useMutationCreateBoard({ getValues, files })
-  const { updateBoard } = useMutationUpdateBoard({ getValues, fileUrls, files })
+  const { createBoard, loading: createLoading } = useMutationCreateBoard({ getValues, files })
+  const { updateBoard, loading: updateLoading } = useMutationUpdateBoard({
+    getValues,
+    fileUrls,
+    files,
+  })
   const { handleFormUpdate } = useUpdateForm({
     setValue,
     updateKeys: ['writer', 'title', 'contents', 'boardAddress.addressDetail', 'youtubeUrl'],
@@ -167,7 +171,8 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
             width="03"
           />
           <Button01
-            disabled={!formState.isValid}
+            disabled={!formState.isValid || createLoading || updateLoading}
+            isLoading={createLoading || updateLoading}
             onClick={props.isEdit ? updateBoard : createBoard}
             background={theme.colors.main}
             name={`${props.isEdit ? '수정' : '등록'}하기`}

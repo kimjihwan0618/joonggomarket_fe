@@ -33,7 +33,7 @@ export const useMutationUpdateBoard = (props: IUseMutationUpdateBoardProps) => {
   const router = useRouter()
   const { uploadFile } = useMutationUploadFile()
   const { moveToPage } = useMoveToPage()
-  const [updateBoardMutation] = useMutation<
+  const [updateBoardMutation, { loading }] = useMutation<
     Pick<IMutation, 'updateBoard'>,
     IMutationUpdateBoardArgs
   >(UPDATE_BOARD)
@@ -90,5 +90,5 @@ export const useMutationUpdateBoard = (props: IUseMutationUpdateBoardProps) => {
     }
   }
 
-  return { updateBoard }
+  return { updateBoard, loading }
 }

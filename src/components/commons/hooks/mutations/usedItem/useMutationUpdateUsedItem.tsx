@@ -30,7 +30,7 @@ export const useMutationUpdateUsedItem = (props: IUseMutationUpdateUsedItemProps
   const router = useRouter()
   const { uploadFile } = useMutationUploadFile()
   const { moveToPage } = useMoveToPage()
-  const [updateUsedItemMutation] = useMutation<
+  const [updateUsedItemMutation, { loading }] = useMutation<
     Pick<IMutation, 'updateUseditem'>,
     IMutationUpdateUseditemArgs
   >(UPDATE_USED_ITEM)
@@ -105,5 +105,5 @@ export const useMutationUpdateUsedItem = (props: IUseMutationUpdateUsedItemProps
     }
   }
 
-  return { updateUsedItem }
+  return { updateUsedItem, loading }
 }

@@ -1,6 +1,7 @@
 import Header from 'src/components/commons/layout/header/Header.index'
 import Banner from 'src/components/commons/layout/carousel/Carousel.index'
 import { useRouter } from 'next/router'
+import FooterUI from './footer/FooterUI'
 
 interface ILayoutProps {
   children: JSX.Element
@@ -19,6 +20,7 @@ export default function Layout(props: ILayoutProps): JSX.Element {
       ) : (
         <>{props.children}</>
       )}
+      <FooterUI />
     </>
   )
 }

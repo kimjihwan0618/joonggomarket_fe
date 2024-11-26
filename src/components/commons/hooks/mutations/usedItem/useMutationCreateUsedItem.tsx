@@ -29,7 +29,7 @@ export const CREATE_USED_ITEM = gql`
 export const useMutationCreateUsedItem = (props: IUseMutationCreateUsedItemProps) => {
   const { moveToPage } = useMoveToPage()
   const { uploadFile } = useMutationUploadFile()
-  const [createUsedItemMutation] = useMutation<
+  const [createUsedItemMutation, { loading }] = useMutation<
     Pick<IMutation, 'createUseditem'>,
     IMutationCreateUseditemArgs
   >(CREATE_USED_ITEM)
@@ -101,5 +101,5 @@ export const useMutationCreateUsedItem = (props: IUseMutationCreateUsedItemProps
     }
   }
 
-  return { createUsedItem }
+  return { createUsedItem, loading }
 }

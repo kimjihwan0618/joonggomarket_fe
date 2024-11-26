@@ -51,7 +51,7 @@ export const useMutationCreateUsedItemQuestion = (
         ],
       })
     } catch (error) {
-      if (error instanceof Error) Modal.error({ content: error.message })
+      if (error instanceof Error) Modal.warning({ content: error.message })
     }
   }
 
