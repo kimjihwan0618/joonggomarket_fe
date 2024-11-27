@@ -42,14 +42,15 @@ const FETCH_USED_ITEM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
   }
 `;
 const useQueryFetchUsedItem = (useditemId)=>{
-    const { data  } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useQuery)(FETCH_USED_ITEM, {
+    const { data , error  } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useQuery)(FETCH_USED_ITEM, {
         variables: {
             useditemId
         },
         skip: !useditemId
     });
     return {
-        data
+        data,
+        error
     };
 };
 

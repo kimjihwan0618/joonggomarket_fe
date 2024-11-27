@@ -90,11 +90,14 @@ function Searchbars01UI(props) {
     };
     return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Searchbars01_styles__WEBPACK_IMPORTED_MODULE_2__/* .SearchWrapper */ ._8, {
         children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Searchbars01_styles__WEBPACK_IMPORTED_MODULE_2__/* .SearchInput */ .Mj, {
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Searchbars01_styles__WEBPACK_IMPORTED_MODULE_2__/* .SearcInputhWrapper */ .rW, {
                 "data-ischanged": ischanged,
-                placeholder: "제목을 검색해주세요",
-                type: "text",
-                onInput: onInputSearch
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Searchbars01_styles__WEBPACK_IMPORTED_MODULE_2__/* .SearchInput */ .Mj, {
+                    "data-ischanged": ischanged,
+                    placeholder: "제목을 검색해주세요",
+                    type: "text",
+                    onInput: onInputSearch
+                })
             }),
             props.dateUsed && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Searchbars01_styles__WEBPACK_IMPORTED_MODULE_2__/* .SearchRightItems */ .Ee, {
                 children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Searchbars01_styles__WEBPACK_IMPORTED_MODULE_2__/* .DatePickerBox */ .Iu, {
@@ -132,6 +135,7 @@ __webpack_async_result__();
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "_8": () => (/* binding */ SearchWrapper),
+/* harmony export */   "rW": () => (/* binding */ SearcInputhWrapper),
 /* harmony export */   "Mj": () => (/* binding */ SearchInput),
 /* harmony export */   "Ee": () => (/* binding */ SearchRightItems),
 /* harmony export */   "Iu": () => (/* binding */ DatePickerBox)
@@ -146,19 +150,31 @@ const SearchWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].di
   width: 100%;
   justify-content: space-between;
 `;
-const SearchInput = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].input`
+const SearcInputhWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   width: 100%;
   padding: 14px 16px 14px 48px;
-  font-size: 1.6rem;
   border-radius: 10px;
+  background-color: ${({ theme  })=>theme.colors.gray06
+};
+  background-image: ${(props)=>props['data-ischanged'] ? 'url(/loading.gif)' : 'url(/images/ic_search.png)'
+};
+  background-repeat: no-repeat;
+  background-position: 16px 50%;
+  background-size: auto 50%;
+`;
+const SearchInput = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].input`
+  width: 100%;
+  /* padding: 14px 16px 14px 48px; */
+  font-size: 1.6rem;
+  /* border-radius: 10px; */
   border: none;
   outline: none;
   background-color: ${({ theme  })=>theme.colors.gray06
 };
-  background-image: ${(props)=>props['data-ischanged'] ? '' : 'url(/images/ic_search.png)'
+  /* background-image: ${(props)=>props['data-ischanged'] ? '' : 'url(/images/ic_search.png)'
 };
   background-repeat: no-repeat;
-  background-position: 16px 50%;
+  background-position: 16px 50%; */
   &::placeholder {
     color: #000000;
   }

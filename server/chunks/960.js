@@ -36,14 +36,15 @@ const FETCH_BOARD = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
   }
 `;
 const useQueryFetchBoard = (boardId)=>{
-    const { data  } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useQuery)(FETCH_BOARD, {
+    const { data , error  } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useQuery)(FETCH_BOARD, {
         variables: {
             boardId
         },
         skip: !boardId
     });
     return {
-        data
+        data,
+        error
     };
 };
 

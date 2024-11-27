@@ -66,7 +66,12 @@ function Button01(props) {
                 width: 18,
                 height: 18
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Button01_styles__WEBPACK_IMPORTED_MODULE_1__/* .Text */ .x, {
+            props.isLoading ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_2__["default"], {
+                unoptimized: true,
+                src: '/loading.gif',
+                width: 24,
+                height: 24
+            }) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Button01_styles__WEBPACK_IMPORTED_MODULE_1__/* .Text */ .x, {
                 "data-disabled": props.disabled,
                 "data-color": (_color = props.color) !== null && _color !== void 0 ? _color : src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_3__/* ["default"].colors.dark01 */ .Z.colors.dark01,
                 children: props.name

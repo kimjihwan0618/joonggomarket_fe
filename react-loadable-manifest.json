@@ -6,9 +6,9 @@
     ]
   },
   "..\\node_modules\\react-player\\lib\\players\\index.js -> ./DailyMotion": {
-    "id": 6807,
+    "id": 2895,
     "files": [
-      "static/chunks/reactPlayerDailyMotion.d5290074b9ffedc9.js"
+      "static/chunks/reactPlayerDailyMotion.a4b3dbaa6e1e53ee.js"
     ]
   },
   "..\\node_modules\\react-player\\lib\\players\\index.js -> ./Facebook": {
@@ -87,7 +87,7 @@
     "id": 1167,
     "files": [
       "static/chunks/eabe11fc.67207876ae302098.js",
-      "static/chunks/127.5230ba81b7aaa722.js"
+      "static/chunks/127.214206f215d9d824.js"
     ]
   }
 }

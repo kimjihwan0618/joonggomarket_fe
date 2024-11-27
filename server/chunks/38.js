@@ -82,7 +82,7 @@ const CREATE_USED_ITEM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
 const useMutationCreateUsedItem = (props)=>{
     const { moveToPage  } = (0,src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__/* .useMoveToPage */ .G)();
     const { uploadFile  } = (0,_file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_4__/* .useMutationUploadFile */ .sY)();
-    const [createUsedItemMutation] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useMutation)(CREATE_USED_ITEM);
+    const [createUsedItemMutation, { loading  }] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useMutation)(CREATE_USED_ITEM);
     const createUsedItem = async ()=>{
         const { name , remarks , contents , price , tags: strTags , address , addressDetail , zipcode , lat , lng ,  } = props.getValues();
         try {
@@ -148,7 +148,8 @@ const useMutationCreateUsedItem = (props)=>{
         }
     };
     return {
-        createUsedItem
+        createUsedItem,
+        loading
     };
 };
 
@@ -170,7 +171,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9316);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9925);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _quires_usedItem_useQueryFetchUsedItem__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5097);
 /* harmony import */ var _file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9473);
@@ -193,7 +194,7 @@ const useMutationUpdateUsedItem = (props)=>{
     const router = (0,next_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
     const { uploadFile  } = (0,_file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_5__/* .useMutationUploadFile */ .sY)();
     const { moveToPage  } = (0,src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__/* .useMoveToPage */ .G)();
-    const [updateUsedItemMutation] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useMutation)(UPDATE_USED_ITEM);
+    const [updateUsedItemMutation, { loading  }] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useMutation)(UPDATE_USED_ITEM);
     const updateUsedItem = async ()=>{
         const { name , remarks , contents , price , tags: strTags , address , addressDetail , zipcode , lat , lng ,  } = props.getValues();
         try {
@@ -266,7 +267,8 @@ const useMutationUpdateUsedItem = (props)=>{
         }
     };
     return {
-        updateUsedItem
+        updateUsedItem,
+        loading
     };
 };
 
@@ -477,7 +479,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var src_components_commons_hooks_custom_useImageInput__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(5042);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(9925);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var src_components_commons_hooks_custom_useUpdateForm__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(5445);
 /* harmony import */ var src_components_commons_hooks_custom_useDaumPostModal__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(6496);
@@ -487,8 +489,13 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var src_components_commons_kakaomap_KakaomapUI__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(3913);
 /* harmony import */ var src_components_commons_hooks_mutations_usedItem_useMutationCreateUsedItem__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(8880);
 /* harmony import */ var src_components_commons_hooks_mutations_usedItem_useMutationUpdateUsedItem__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(3752);
+/* harmony import */ var src_components_commons_hooks_quires_usedItem_useQueryFetchUsedItem__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(5097);
+/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(5725);
+/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_21__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_UsedItemWrite_styles__WEBPACK_IMPORTED_MODULE_1__, src_components_commons_uploads_01_Upload01_index__WEBPACK_IMPORTED_MODULE_3__, src_components_commons_buttons_01_Button01_index__WEBPACK_IMPORTED_MODULE_4__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_5__, react_hook_form__WEBPACK_IMPORTED_MODULE_6__, _hookform_resolvers_yup__WEBPACK_IMPORTED_MODULE_8__, src_components_commons_inputs_02_InputWithError_index__WEBPACK_IMPORTED_MODULE_14__, src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_15__, src_components_commons_hooks_mutations_usedItem_useMutationCreateUsedItem__WEBPACK_IMPORTED_MODULE_18__, src_components_commons_hooks_mutations_usedItem_useMutationUpdateUsedItem__WEBPACK_IMPORTED_MODULE_19__]);
 ([_UsedItemWrite_styles__WEBPACK_IMPORTED_MODULE_1__, src_components_commons_uploads_01_Upload01_index__WEBPACK_IMPORTED_MODULE_3__, src_components_commons_buttons_01_Button01_index__WEBPACK_IMPORTED_MODULE_4__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_5__, react_hook_form__WEBPACK_IMPORTED_MODULE_6__, _hookform_resolvers_yup__WEBPACK_IMPORTED_MODULE_8__, src_components_commons_inputs_02_InputWithError_index__WEBPACK_IMPORTED_MODULE_14__, src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_15__, src_components_commons_hooks_mutations_usedItem_useMutationCreateUsedItem__WEBPACK_IMPORTED_MODULE_18__, src_components_commons_hooks_mutations_usedItem_useMutationUpdateUsedItem__WEBPACK_IMPORTED_MODULE_19__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
+
 
 
 
@@ -514,24 +521,26 @@ const ACTIVE_OPTION = {
     shouldValidate: true
 };
 function UsedItemWriteUI(props) {
-    var ref11, ref1, ref2, ref3, ref4, ref5;
+    var ref8, ref1, ref2, ref3;
     const router = (0,next_router__WEBPACK_IMPORTED_MODULE_11__.useRouter)();
+    const useditemId = typeof router.query.useditemId === 'string' ? router.query.useditemId : '';
     const { handleModalToggle , DaumPostModal , postModalOpen , address , zonecode , setAddress , setZoneCode , lat , lng , setLat , setLng ,  } = (0,src_components_commons_hooks_custom_useDaumPostModal__WEBPACK_IMPORTED_MODULE_13__/* .useDaumPostModal */ .O)(true);
-    const { moveToBack  } = (0,src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_15__/* .useMoveToPage */ .G)();
+    const { moveToBack , moveToPage  } = (0,src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_15__/* .useMoveToPage */ .G)();
     const { fileUrls , onChangeFileUrls , onClickReset , setFileUrls , onChangeFile , files  } = (0,src_components_commons_hooks_custom_useImageInput__WEBPACK_IMPORTED_MODULE_10__/* .useImageInput */ .j)(3);
     const { register , formState , setValue , getValues  } = (0,react_hook_form__WEBPACK_IMPORTED_MODULE_6__.useForm)({
         resolver: (0,_hookform_resolvers_yup__WEBPACK_IMPORTED_MODULE_8__.yupResolver)(_UsedItemWrite_schema__WEBPACK_IMPORTED_MODULE_7__/* .schema */ .f),
         mode: 'onChange'
     });
-    const { createUsedItem  } = (0,src_components_commons_hooks_mutations_usedItem_useMutationCreateUsedItem__WEBPACK_IMPORTED_MODULE_18__/* .useMutationCreateUsedItem */ .k)({
+    const { createUsedItem , loading: createLoading  } = (0,src_components_commons_hooks_mutations_usedItem_useMutationCreateUsedItem__WEBPACK_IMPORTED_MODULE_18__/* .useMutationCreateUsedItem */ .k)({
         getValues,
         files
     });
-    const { updateUsedItem  } = (0,src_components_commons_hooks_mutations_usedItem_useMutationUpdateUsedItem__WEBPACK_IMPORTED_MODULE_19__/* .useMutationUpdateUsedItem */ .w)({
+    const { updateUsedItem , loading: updateLoading  } = (0,src_components_commons_hooks_mutations_usedItem_useMutationUpdateUsedItem__WEBPACK_IMPORTED_MODULE_19__/* .useMutationUpdateUsedItem */ .w)({
         getValues,
         fileUrls,
         files
     });
+    const { data , error  } = (0,src_components_commons_hooks_quires_usedItem_useQueryFetchUsedItem__WEBPACK_IMPORTED_MODULE_20__/* .useQueryFetchUsedItem */ .L)(useditemId);
     const { handleFormUpdate  } = (0,src_components_commons_hooks_custom_useUpdateForm__WEBPACK_IMPORTED_MODULE_12__/* .useUpdateForm */ .o)({
         setValue,
         updateKeys: [
@@ -542,7 +551,7 @@ function UsedItemWriteUI(props) {
             'contents',
             'useditemAddress.addressDetail'
         ],
-        fetchData: (ref11 = props.data) === null || ref11 === void 0 ? void 0 : ref11.fetchUseditem
+        fetchData: data === null || data === void 0 ? void 0 : data.fetchUseditem
     });
     const onChangeContents = (value)=>{
         setValue('contents', value === '<p><br></p>' ? '<p>최소 내용을 입력해주세요!!</p>' : value);
@@ -559,12 +568,19 @@ function UsedItemWriteUI(props) {
         lng
     ]);
     (0,react__WEBPACK_IMPORTED_MODULE_9__.useEffect)(()=>{
-        var ref, ref6, ref7, ref8, ref9, ref10;
-        const fetchUseditem = (ref = props.data) === null || ref === void 0 ? void 0 : ref.fetchUseditem;
+        var ref, ref4, ref5, ref6, ref7;
+        const fetchUseditem = data === null || data === void 0 ? void 0 : data.fetchUseditem;
+        if (error) {
+            console.log(error);
+            antd__WEBPACK_IMPORTED_MODULE_21__.Modal.warning({
+                content: '유효한 상품이 아닙니다.'
+            });
+            moveToPage(`/markets`)();
+        }
         if (fetchUseditem) {
             handleFormUpdate();
         }
-        if ((fetchUseditem === null || fetchUseditem === void 0 ? void 0 : (ref6 = fetchUseditem.images) === null || ref6 === void 0 ? void 0 : ref6.length) > 0) {
+        if ((fetchUseditem === null || fetchUseditem === void 0 ? void 0 : (ref = fetchUseditem.images) === null || ref === void 0 ? void 0 : ref.length) > 0) {
             const images = fetchUseditem.images;
             const filledImages = [
                 images[0] || '',
@@ -574,10 +590,10 @@ function UsedItemWriteUI(props) {
             );
             setFileUrls(filledImages);
         }
-        const fetchAddress = fetchUseditem === null || fetchUseditem === void 0 ? void 0 : (ref7 = fetchUseditem.useditemAddress) === null || ref7 === void 0 ? void 0 : ref7.address;
-        const fetchZipCode = fetchUseditem === null || fetchUseditem === void 0 ? void 0 : (ref8 = fetchUseditem.useditemAddress) === null || ref8 === void 0 ? void 0 : ref8.zipcode;
-        const fetchLat = fetchUseditem === null || fetchUseditem === void 0 ? void 0 : (ref9 = fetchUseditem.useditemAddress) === null || ref9 === void 0 ? void 0 : ref9.lat;
-        const fetchLng = fetchUseditem === null || fetchUseditem === void 0 ? void 0 : (ref10 = fetchUseditem.useditemAddress) === null || ref10 === void 0 ? void 0 : ref10.lng;
+        const fetchAddress = fetchUseditem === null || fetchUseditem === void 0 ? void 0 : (ref4 = fetchUseditem.useditemAddress) === null || ref4 === void 0 ? void 0 : ref4.address;
+        const fetchZipCode = fetchUseditem === null || fetchUseditem === void 0 ? void 0 : (ref5 = fetchUseditem.useditemAddress) === null || ref5 === void 0 ? void 0 : ref5.zipcode;
+        const fetchLat = fetchUseditem === null || fetchUseditem === void 0 ? void 0 : (ref6 = fetchUseditem.useditemAddress) === null || ref6 === void 0 ? void 0 : ref6.lat;
+        const fetchLng = fetchUseditem === null || fetchUseditem === void 0 ? void 0 : (ref7 = fetchUseditem.useditemAddress) === null || ref7 === void 0 ? void 0 : ref7.lng;
         const fetchTags = fetchUseditem === null || fetchUseditem === void 0 ? void 0 : fetchUseditem.tags;
         fetchAddress && setAddress(fetchAddress);
         fetchZipCode && setZoneCode(fetchZipCode);
@@ -585,7 +601,8 @@ function UsedItemWriteUI(props) {
         fetchLng && setLng(fetchLng);
         fetchTags && setValue('tags', fetchTags.join(''), ACTIVE_OPTION);
     }, [
-        (ref1 = props.data) === null || ref1 === void 0 ? void 0 : ref1.fetchUseditem
+        data === null || data === void 0 ? void 0 : data.fetchUseditem,
+        error
     ]);
     return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: [
@@ -604,13 +621,13 @@ function UsedItemWriteUI(props) {
                                 register: register('name'),
                                 placeholder: "상품명을 작성해주세요.",
                                 label: '상품명',
-                                error: (ref2 = formState.errors.name) === null || ref2 === void 0 ? void 0 : ref2.message
+                                error: (ref8 = formState.errors.name) === null || ref8 === void 0 ? void 0 : ref8.message
                             }),
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(src_components_commons_inputs_02_InputWithError_index__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z, {
                                 register: register('remarks'),
                                 placeholder: "한줄요약을 작성해주세요.",
                                 label: '한줄요약',
-                                error: (ref3 = formState.errors.remarks) === null || ref3 === void 0 ? void 0 : ref3.message
+                                error: (ref1 = formState.errors.remarks) === null || ref1 === void 0 ? void 0 : ref1.message
                             }),
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(src_components_commons_inputs_02_InputWithError_index__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z, {
                                 width: "48.78%",
@@ -618,14 +635,14 @@ function UsedItemWriteUI(props) {
                                 register: register('price'),
                                 placeholder: "판매 가격을 입력해주세요.",
                                 label: '판매가격',
-                                error: (ref4 = formState.errors.price) === null || ref4 === void 0 ? void 0 : ref4.message
+                                error: (ref2 = formState.errors.price) === null || ref2 === void 0 ? void 0 : ref2.message
                             }),
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(src_components_commons_inputs_02_InputWithError_index__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z, {
                                 width: "48.78%",
                                 register: register('tags'),
                                 placeholder: "#태그 #태그 #태그",
                                 label: '태그입력',
-                                error: (ref5 = formState.errors.tags) === null || ref5 === void 0 ? void 0 : ref5.message
+                                error: (ref3 = formState.errors.tags) === null || ref3 === void 0 ? void 0 : ref3.message
                             }),
                             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_UsedItemWrite_styles__WEBPACK_IMPORTED_MODULE_1__/* .TextEditorWrapper */ .d1, {
                                 children: [
@@ -742,7 +759,8 @@ function UsedItemWriteUI(props) {
                                 width: "03"
                             }),
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(src_components_commons_buttons_01_Button01_index__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
-                                disabled: !formState.isValid,
+                                disabled: !formState.isValid || createLoading || updateLoading,
+                                isLoading: createLoading || updateLoading,
                                 onClick: props.isEdit ? updateUsedItem : createUsedItem,
                                 background: src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_5__/* ["default"].colors.main */ .Z.colors.main,
                                 name: `${props.isEdit ? '수정' : '등록'}하기`,

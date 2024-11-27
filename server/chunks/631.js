@@ -124,9 +124,10 @@ const FETCH_USER_LOGGEDIN = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
   }
 `;
 const useQueryFetchUserLoggedIn = ()=>{
-    const { data  } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useQuery)(FETCH_USER_LOGGEDIN);
+    const { data , loading  } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useQuery)(FETCH_USER_LOGGEDIN);
     return {
-        data
+        data,
+        loading
     };
 };
 
