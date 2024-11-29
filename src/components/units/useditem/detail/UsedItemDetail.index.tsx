@@ -18,6 +18,7 @@ import { useMutationCreatePointTransactionOfBuyingAndSelling } from 'src/compone
 
 export default function UsedItemDetailUI(): JSX.Element {
   const router = useRouter()
+  const [isSliding, setIsSliding] = useState(false)
   const useditemId = typeof router.query.useditemId === 'string' ? router.query.useditemId : ''
   const { toggleUsedItemPick } = useMutationToggleUsedItemPick(useditemId)
   const { moveToPage } = useMoveToPage()
@@ -42,7 +43,7 @@ export default function UsedItemDetailUI(): JSX.Element {
   const SETTINGS = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 250,
     slidesToShow: 1,
     slidesToScroll: 1,
     beforeChange: handleBeforeChange,
@@ -166,8 +167,11 @@ export default function UsedItemDetailUI(): JSX.Element {
                   .map((image, index) => (
                     <S.PreviewItem
                       onClick={() => {
-                        sliderRef.current.slickGoTo(index)
+                        if (isSliding) return
+                        setIsSliding(true)
                         setImageIndex(index)
+                        sliderRef.current.slickGoTo(index)
+                        setTimeout(() => setIsSliding(false), 250)
                       }}
                       data-selected={index === imageIndex}
                     >
