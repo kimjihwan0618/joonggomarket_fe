@@ -9,7 +9,6 @@ import { IBoardWriterForm } from 'src/components/units/board/write/BoardWrite.sc
 import type { UseFormGetValues } from 'react-hook-form'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useRouter } from 'next/router'
-import { FETCH_BOARD } from 'src/components/commons/hooks/quires/board/useQueryFetchBoard'
 import { useMutationUploadFile } from '../file/useMutationUploadFile'
 
 interface IUseMutationUpdateBoardProps {
