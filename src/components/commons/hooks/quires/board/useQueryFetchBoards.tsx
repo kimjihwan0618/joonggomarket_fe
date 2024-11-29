@@ -14,7 +14,9 @@ export const FETCH_BOARDS = gql`
 `
 
 export const useQueryFetchBoards = () => {
-  const result = useQuery<Pick<IQuery, 'fetchBoards'>, IQueryFetchBoardsArgs>(FETCH_BOARDS)
+  const result = useQuery<Pick<IQuery, 'fetchBoards'>, IQueryFetchBoardsArgs>(FETCH_BOARDS, {
+    fetchPolicy: 'cache-first',
+  })
 
   return result
 }

@@ -13,7 +13,6 @@ import { useMutationUpdateBoard } from 'src/components/commons/hooks/mutations/b
 import { useRouter } from 'next/router'
 import { useUpdateForm } from 'src/components/commons/hooks/custom/useUpdateForm'
 import { useDaumPostModal } from 'src/components/commons/hooks/custom/useDaumPostModal'
-import { IQuery } from 'src/commons/types/generated/types'
 import InputWithError from 'src/components/commons/inputs/02/InputWithError.index'
 import TextAreaWithError from 'src/components/commons/textareas/01/TextAreaWithError.index'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'

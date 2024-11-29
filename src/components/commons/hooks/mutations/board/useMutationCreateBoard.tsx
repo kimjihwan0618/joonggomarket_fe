@@ -8,7 +8,6 @@ import type {
 import { IBoardWriterForm } from 'src/components/units/board/write/BoardWrite.schema'
 import type { UseFormGetValues } from 'react-hook-form'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
-import { FETCH_BOARDS } from 'src/components/commons/hooks/quires/board/useQueryFetchBoards'
 import { useMutationUploadFile } from '../file/useMutationUploadFile'
 
 interface IuseMutationCreateBoardProps {
@@ -57,11 +56,37 @@ export const useMutationCreateBoard = (props: IuseMutationCreateBoardProps) => {
         variables: {
           createBoardInput,
         },
-        refetchQueries: [
-          {
-            query: FETCH_BOARDS,
-          },
-        ],
+        update(cache, { data }) {
+          const newBoardRef = cache.writeFragment({
+            data: {
+              __typename: 'Board',
+              ...data?.createBoard,
+            },
+            fragment: gql`
+              fragment NewBoard on Board {
+                _id
+                title
+                contents
+                writer
+                createdAt
+              }
+            `,
+          })
+
+          cache.modify({
+            fields: {
+              fetchBoards(existingBoards = []) {
+                return [newBoardRef, ...existingBoards]
+              },
+            },
+          })
+        },
+        // 리패치제거
+        // refetchQueries: [
+        //   {
+        //     query: FETCH_BOARDS,
+        //   },
+        // ],
       })
       if (result?.data?.createBoard?._id) {
         Modal.success({ content: '게시글이 등록되었습니다.' })
