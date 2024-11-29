@@ -9,6 +9,7 @@ import { IBoardWriterForm } from 'src/components/units/board/write/BoardWrite.sc
 import type { UseFormGetValues } from 'react-hook-form'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useMutationUploadFile } from '../file/useMutationUploadFile'
+import { FETCH_BOARDS_BEST } from '../../quires/board/useQueryFetchBoardsOfTheBest'
 
 interface IuseMutationCreateBoardProps {
   getValues: UseFormGetValues<IBoardWriterForm>
@@ -82,11 +83,12 @@ export const useMutationCreateBoard = (props: IuseMutationCreateBoardProps) => {
           })
         },
         // 리패치제거
-        // refetchQueries: [
-        //   {
-        //     query: FETCH_BOARDS,
-        //   },
-        // ],
+        // FETCH_BOARDS
+        refetchQueries: [
+          {
+            query: FETCH_BOARDS_BEST,
+          },
+        ],
       })
       if (result?.data?.createBoard?._id) {
         Modal.success({ content: '게시글이 등록되었습니다.' })

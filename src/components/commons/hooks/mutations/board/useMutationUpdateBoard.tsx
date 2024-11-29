@@ -74,12 +74,24 @@ export const useMutationUpdateBoard = (props: IUseMutationUpdateBoardProps) => {
           password: password,
           updateBoardInput,
         },
-        refetchQueries: [
-          {
-            query: FETCH_BOARD,
-            variables: { boardId: router.query.boardId },
-          },
-        ],
+        update(cache, { data }) {
+          const updatedBoard = data.updateBoard
+          cache.modify({
+            fields: {
+              fetchBoard(existingBoard, { readField }) {
+                if (readField('_id', existingBoard) === updatedBoard._id) {
+                  return {
+                    ...existingBoard,
+                    ...updatedBoard,
+                  }
+                }
+                return existingBoard // 일치하지 않으면 기존 게시글 반환
+              },
+            },
+          })
+        },
+        // 리패치제거
+        // FETCH_BOARD
       })
       if (result?.data?.updateBoard?._id) {
         Modal.success({ content: '게시글이 수정되었습니다.' })
