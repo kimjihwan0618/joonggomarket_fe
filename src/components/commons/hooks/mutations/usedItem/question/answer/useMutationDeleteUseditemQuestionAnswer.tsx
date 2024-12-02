@@ -32,12 +32,20 @@ export const useMutationDeleteUseditemQuestionAnswer = (
         variables: {
           useditemQuestionAnswerId: props.deleteQuestionAnswerId,
         },
-        refetchQueries: [
-          {
-            query: FETCH_USED_ITEM_QUESTION_ANSWERS,
-            variables: { useditemQuestionId: props.useditemQuestionId },
-          },
-        ],
+        update(cache) {
+          cache.modify({
+            fields: {
+              fetchUseditemQuestionAnswers(existingUseditemQuestionAnswers = [], { readField }) {
+                return existingUseditemQuestionAnswers.filter(
+                  (useditemQuestionAnswer) =>
+                    readField('_id', useditemQuestionAnswer) !== props.deleteQuestionAnswerId
+                )
+              },
+            },
+          })
+        },
+        // 리패치 제거
+        // FETCH_USED_ITEM_QUESTION_ANSWERS
       })
     } catch (error) {
       if (error instanceof Error) Modal.warning({ content: error.message })

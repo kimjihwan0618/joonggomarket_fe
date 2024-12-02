@@ -49,12 +49,27 @@ export const useMutationUpdateUseditemQuestionAnswer = () => {
             contents,
           },
         },
-        refetchQueries: [
-          {
-            query: FETCH_USED_ITEM_QUESTION_ANSWERS,
-            variables: { useditemQuestionId },
-          },
-        ],
+        update(cache, { data }) {
+          const updatedUseditemQuestionAnswer = data.updateUseditemQuestionAnswer
+          cache.modify({
+            fields: {
+              fetchUseditemQuestionAnswers(existingUseditemQuestionAnswers = [], { readField }) {
+                if (
+                  readField('_id', existingUseditemQuestionAnswers) ===
+                  updatedUseditemQuestionAnswer._id
+                ) {
+                  return {
+                    ...existingUseditemQuestionAnswers,
+                    ...updatedUseditemQuestionAnswer,
+                  }
+                }
+                return existingUseditemQuestionAnswers // 일치하지 않으면 기존 댓글 반환
+              },
+            },
+          })
+        },
+        // 리패치 제거
+        // FETCH_USED_ITEM_QUESTION_ANSWERS
       })
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })

@@ -5,7 +5,6 @@ import type {
   IMutationUpdateUseditemQuestionArgs,
   IQueryFetchUseditemQuestionsArgs,
 } from 'src/commons/types/generated/types'
-import { FETCH_USED_ITEM_QUESTIONS } from '../../../quires/usedItem/question/useQueryFetchUsedItemQuestions'
 
 export const UDATE_USED_ITEM_COMMENTS = gql`
   mutation updateUseditemQuestion(
@@ -44,12 +43,24 @@ export const useMutationUpdateUsedItemQuestion = (
             contents: props.contents,
           },
         },
-        refetchQueries: [
-          {
-            query: FETCH_USED_ITEM_QUESTIONS,
-            variables: { useditemId },
-          },
-        ],
+        update(cache, { data }) {
+          const updatedUseditemQuestion = data.updateUseditemQuestion
+          cache.modify({
+            fields: {
+              fetchUseditemQuestions(existingUseditemQuestions = [], { readField }) {
+                if (readField('_id', existingUseditemQuestions) === updatedUseditemQuestion._id) {
+                  return {
+                    ...existingUseditemQuestions,
+                    ...updatedUseditemQuestion,
+                  }
+                }
+                return existingUseditemQuestions // 일치하지 않으면 기존 댓글 반환
+              },
+            },
+          })
+        },
+        // 리패치 제거
+        // FETCH_USED_ITEM_QUESTIONS
       })
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })

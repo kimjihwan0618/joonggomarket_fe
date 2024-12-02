@@ -1,12 +1,10 @@
 import { gql, useMutation } from '@apollo/client'
 import type {
   IMutation,
-  IMutationDeleteBoardCommentArgs,
   IMutationDeleteUseditemQuestionArgs,
   IQueryFetchUseditemQuestionsArgs,
 } from 'src/commons/types/generated/types'
 import { Modal } from 'antd'
-import { FETCH_USED_ITEM_QUESTIONS } from '../../../quires/usedItem/question/useQueryFetchUsedItemQuestions'
 
 export const DELETE_USED_ITEM_QUESTION = gql`
   mutation deleteUseditemQuestion($useditemQuestionId: ID!) {
@@ -31,12 +29,20 @@ export const useMutationDeleteUsedItemQuestion = (props: IDeleteUsedItemQuestion
         variables: {
           useditemQuestionId: props.deleteQuestionId,
         },
-        refetchQueries: [
-          {
-            query: FETCH_USED_ITEM_QUESTIONS,
-            variables: { useditemId: props.useditemId },
-          },
-        ],
+        update(cache) {
+          cache.modify({
+            fields: {
+              fetchUseditemQuestions(existingUseditemQuestions = [], { readField }) {
+                return existingUseditemQuestions.filter(
+                  (useditemQuestion) =>
+                    readField('_id', useditemQuestion) !== props.deleteQuestionId
+                )
+              },
+            },
+          })
+        },
+        // 리패치 제거
+        // FETCH_USED_ITEM_QUESTIONS
       })
     } catch (error) {
       if (error instanceof Error) Modal.warning({ content: error.message })

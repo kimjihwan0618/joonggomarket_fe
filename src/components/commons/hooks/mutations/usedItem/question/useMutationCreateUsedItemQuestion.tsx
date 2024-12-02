@@ -7,7 +7,6 @@ import type {
   IQueryFetchUseditemQuestionsArgs,
 } from 'src/commons/types/generated/types'
 import { IUsedItemQuestionWriteForm } from 'src/components/units/useditem/detail/question/write/UsedItemQuestionWrite.schema'
-import { FETCH_USED_ITEM_QUESTIONS } from '../../../quires/usedItem/question/useQueryFetchUsedItemQuestions'
 
 export const CREATE_USED_ITEM_COMMENTS = gql`
   mutation createUseditemQuestion(
@@ -43,12 +42,36 @@ export const useMutationCreateUsedItemQuestion = (
             contents,
           },
         },
-        refetchQueries: [
-          {
-            query: FETCH_USED_ITEM_QUESTIONS,
-            variables: { useditemId },
-          },
-        ],
+        update(cache, { data }) {
+          const newUseditemQuestionRef = cache.writeFragment({
+            data: {
+              __typename: 'UseditemQuestion',
+              ...data?.createUseditemQuestion,
+            },
+            fragment: gql`
+              fragment NewUseditemQuestion on UseditemQuestion {
+                _id
+                contents
+                updatedAt
+                user {
+                  _id
+                  name
+                  picture
+                }
+              }
+            `,
+          })
+
+          cache.modify({
+            fields: {
+              fetchUseditemQuestions(existingUseditemQuestions = []) {
+                return [...existingUseditemQuestions, newUseditemQuestionRef]
+              },
+            },
+          })
+        },
+        // 리패치 제거
+        // FETCH_USED_ITEM_QUESTIONS
       })
     } catch (error) {
       if (error instanceof Error) Modal.warning({ content: error.message })

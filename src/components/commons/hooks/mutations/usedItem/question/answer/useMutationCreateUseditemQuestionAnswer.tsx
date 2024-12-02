@@ -5,7 +5,6 @@ import type {
   IMutationCreateUseditemQuestionAnswerArgs,
   IQueryFetchUseditemQuestionAnswersArgs,
 } from 'src/commons/types/generated/types'
-import { FETCH_USED_ITEM_QUESTION_ANSWERS } from 'src/components/commons/hooks/quires/usedItem/question/answer/useQueryFetchUsedItemQuestionAnswers'
 
 export const CREATE_USED_ITEM_QUESTION_ANSWER = gql`
   mutation createUseditemQuestionAnswer(
@@ -47,12 +46,36 @@ export const useMutationCreateUseditemQuestionAnswer = () => {
             contents,
           },
         },
-        refetchQueries: [
-          {
-            query: FETCH_USED_ITEM_QUESTION_ANSWERS,
-            variables: { useditemQuestionId },
-          },
-        ],
+        update(cache, { data }) {
+          const newUseditemQuestionAnswerRef = cache.writeFragment({
+            data: {
+              __typename: 'UseditemQuestionAnswer',
+              ...data?.createUseditemQuestionAnswer,
+            },
+            fragment: gql`
+              fragment NewUseditemQuestionAnswer on UseditemQuestionAnswer {
+                _id
+                contents
+                updatedAt
+                user {
+                  _id
+                  name
+                  picture
+                }
+              }
+            `,
+          })
+
+          cache.modify({
+            fields: {
+              fetchUseditemQuestionAnswers(existingUseditemQuestionAnswers = []) {
+                return [...existingUseditemQuestionAnswers, newUseditemQuestionAnswerRef]
+              },
+            },
+          })
+        },
+        // 리패치 제거
+        // FETCH_USED_ITEM_QUESTION_ANSWERS
       })
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })
