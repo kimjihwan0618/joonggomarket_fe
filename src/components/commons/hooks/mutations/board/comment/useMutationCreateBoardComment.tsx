@@ -6,7 +6,7 @@ import type {
   IMutationCreateBoardCommentArgs,
   IQueryFetchBoardCommentsArgs,
 } from 'src/commons/types/generated/types'
-import { FETCH_BOARD_COMMENTS } from 'src/components/commons/hooks/quires/board/comment/useQueryFetchBoardComments'
+// import { FETCH_BOARD_COMMENTS } from 'src/components/commons/hooks/quires/board/comment/useQueryFetchBoardComments'
 import { IBoardCommentWriterForm } from 'src/components/units/board/detail/comment/write/BoardCommentWrite.schema'
 
 export const CREATE_BOARD_COMMENT = gql`
@@ -42,12 +42,38 @@ export const useMutationCreateBoardComment = (boardId: IQueryFetchBoardCommentsA
             rating,
           },
         },
-        refetchQueries: [
-          {
-            query: FETCH_BOARD_COMMENTS,
-            variables: { boardId },
-          },
-        ],
+        update(cache, { data }) {
+          const newBoardRef = cache.writeFragment({
+            data: {
+              __typename: 'BoardComment',
+              ...data?.createBoardComment,
+            },
+            fragment: gql`
+              fragment NewBoardComment on BoardComment {
+                _id
+                writer
+                contents
+                rating
+                createdAt
+              }
+            `,
+          })
+
+          cache.modify({
+            fields: {
+              fetchBoardComments(existingBoardComments = []) {
+                return [newBoardRef, ...existingBoardComments]
+              },
+            },
+          })
+        },
+        // 리패치 제거
+        // refetchQueries: [
+        //   {
+        //     query: FETCH_BOARD_COMMENTS,
+        //     variables: { boardId },
+        //   },
+        // ],
       })
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })

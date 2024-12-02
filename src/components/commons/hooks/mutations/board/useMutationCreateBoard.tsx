@@ -79,16 +79,19 @@ export const useMutationCreateBoard = (props: IuseMutationCreateBoardProps) => {
               fetchBoards(existingBoards = []) {
                 return [newBoardRef, ...existingBoards]
               },
+              fetchBoardsOfTheBest(existingBoards = []) {
+                if (existingBoards.length < 4) {
+                  return [...existingBoards, newBoardRef]
+                } else {
+                  return existingBoards
+                }
+              },
             },
           })
         },
         // 리패치제거
         // FETCH_BOARDS
-        refetchQueries: [
-          {
-            query: FETCH_BOARDS_BEST,
-          },
-        ],
+        // FETCH_BOARDS_BEST
       })
       if (result?.data?.createBoard?._id) {
         Modal.success({ content: '게시글이 등록되었습니다.' })

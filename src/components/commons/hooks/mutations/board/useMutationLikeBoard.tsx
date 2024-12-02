@@ -30,42 +30,60 @@ export const useMutationLikeBoard = (board: IBoard) => {
                 }
               },
               fetchBoardsOfTheBest(existingBoards = [], { readField }) {
-                const newBoardId = board._id // 새로 추가된 보드의 ID
-                const newLikeCount = data.likeBoard // 새로 추가된 보드의 좋아요 수
+                const newBoardRef = cache.writeFragment({
+                  data: {
+                    __typename: 'Board',
+                    ...board,
+                    likeCount: data.likeBoard,
+                  },
+                  fragment: gql`
+                    fragment NewBoard on Board {
+                      _id
+                      images
+                      likeCount
+                      createdAt
+                      title
+                      writer
+                    }
+                  `,
+                })
+                const updatedBoards = [...existingBoards]
+                const newBoard = { ...board, likeCount: data.likeBoard }
 
-                const likeCountMap = new Map<string, number>()
-
-                // 기존 보드의 __ref에서 ID를 읽어와서 좋아요 수를 맵에 저장
-                existingBoards.forEach((boardRef) => {
-                  const boardId = readField('_id', boardRef) as string
-                  likeCountMap.set(boardId, likeCountMap.get(boardId) || 0) // 기본값 0
+                // 기존 보드 중 likeCount가 높은 보드만 필터링
+                const filteredBoards = updatedBoards.filter((existingBoard) => {
+                  return (
+                    readField('_id', existingBoard) !== newBoard._id ||
+                    parseInt(readField('likeCount', existingBoard), 10) >= newBoard.likeCount
+                  )
                 })
 
-                // 새 보드의 좋아요 수 업데이트
-                likeCountMap.set(newBoardId, newLikeCount)
+                // 새로운 보드가 기존 보드와 중복되지 않는 경우에만 추가
+                const isNewBoardExists = filteredBoards.some(
+                  (existingBoard) => readField('_id', existingBoard) === newBoard._id
+                )
 
-                // 맵을 배열로 변환하고 좋아요 수에 따라 정렬
-                const updatedBoards = Array.from(likeCountMap.entries())
-                  .map(([id, likeCount]) => ({ _id: id, likeCount }))
-                  .sort((a, b) => b.likeCount - a.likeCount)
-
-                // 최대 4개로 제한
-                return updatedBoards.slice(0, 4)
+                if (
+                  !isNewBoardExists &&
+                  newBoard.likeCount >
+                    Math.min(...filteredBoards.map((b) => parseInt(readField('likeCount', b), 10)))
+                ) {
+                  filteredBoards.push(newBoardRef)
+                }
+                // likeCount 기준으로 정렬 후 상위 4개 반환
+                return filteredBoards
+                  .sort(
+                    (a, b) =>
+                      parseInt(readField('likeCount', b), 10) -
+                      parseInt(readField('likeCount', a), 10)
+                  )
+                  .slice(0, 4)
               },
             },
           })
         },
         // 리패치제거
         // FETCH_BOARD, FETCH_BOARDS_BEST
-        // refetchQueries: [
-        //   {
-        //     query: FETCH_BOARD,
-        //     variables: { boardId },
-        //   },
-        //   {
-        //     query: FETCH_BOARDS_BEST,
-        //   },
-        // ],
       })
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })
