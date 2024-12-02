@@ -30,6 +30,24 @@ export const useMutationCreatePointTransactionOfLoading = () => {
         variables: {
           impUid,
         },
+        update(cache, { data }) {
+          cache.modify({
+            fields: {
+              // fetchUserLoggedIn(existingUserData = {}) {
+              //   console.log(data)
+              //   return {
+              //     ...existingUserData,
+              //     userPoint: {
+              //       ...existingUserData.userPoint,
+              //       amount:
+              //         (existingUserData.userPoint.amount || 0) +
+              //         (data?.createPointTransactionOfLoading.amount || 0),
+              //     },
+              //   }
+              // },
+            },
+          })
+        },
         // 리패치 제거
         // FETCH_USER_LOGGEDIN
         // refetchQueries: [
