@@ -28,32 +28,32 @@ export default function MyPointUI(): JSX.Element {
     setSelectedTab(tabName)
     setSelectedPage(1)
 
-    switch (tabName) {
-      case '전체내역':
-        refetch01({
-          search: '',
-          page: 1,
-        })
-        break
-      case '충전내역':
-        refetch02({
-          search: '',
-          page: 1,
-        })
-        break
-      case '구매내역':
-        refetch03({
-          search: '',
-          page: 1,
-        })
-        break
-      case '판매내역':
-        refetch04({
-          search: '',
-          page: 1,
-        })
-        break
-    }
+    // switch (tabName) {
+    //   case '전체내역':
+    //     refetch01({
+    //       search: '',
+    //       page: 1,
+    //     })
+    //     break
+    //   case '충전내역':
+    //     refetch02({
+    //       search: '',
+    //       page: 1,
+    //     })
+    //     break
+    //   case '구매내역':
+    //     refetch03({
+    //       search: '',
+    //       page: 1,
+    //     })
+    //     break
+    //   case '판매내역':
+    //     refetch04({
+    //       search: '',
+    //       page: 1,
+    //     })
+    //     break
+    // }
 
     refetchPointTransactionCount({
       status: tabName === '전체내역' ? '' : tabName.replace('내역', ''),

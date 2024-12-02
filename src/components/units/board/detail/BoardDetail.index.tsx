@@ -20,8 +20,8 @@ export default function BoardDetailUI(): JSX.Element {
   const [passwordCheck, setPasswordCheck] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const { deleteBoard, loading } = useMutationDeletaBoard(boardId, passwordCheck)
-  const { disLikeBoard } = useMutationDisLikeBoard(boardId)
   const { data, error } = useQueryFetchBoard(boardId)
+  const { disLikeBoard } = useMutationDisLikeBoard(data?.fetchBoard)
   const { likeBoard } = useMutationLikeBoard(data?.fetchBoard)
   const { onCopyLink } = useTextCopy()
 

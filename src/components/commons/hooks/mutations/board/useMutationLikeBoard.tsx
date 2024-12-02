@@ -21,13 +21,8 @@ export const useMutationLikeBoard = (board: IBoard) => {
         update(cache, { data }) {
           cache.modify({
             fields: {
-              fetchBoard(existingBoard, { readField }) {
-                if (readField('_id') === board._id) {
-                  return {
-                    ...existingBoard,
-                    likeCount: data.likeBoard,
-                  }
-                }
+              likeCount(existingLikeCount) {
+                return data?.likeBoard ?? existingLikeCount
               },
               fetchBoardsOfTheBest(existingBoards = [], { readField }) {
                 const newBoardRef = cache.writeFragment({

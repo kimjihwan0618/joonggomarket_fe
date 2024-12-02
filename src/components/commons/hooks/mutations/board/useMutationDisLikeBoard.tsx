@@ -1,8 +1,11 @@
 import { gql, useMutation } from '@apollo/client'
 import { Modal } from 'antd'
-import type { IMutation, IMutationDislikeBoardArgs } from 'src/commons/types/generated/types'
+import type {
+  IBoard,
+  IMutation,
+  IMutationDislikeBoardArgs,
+} from 'src/commons/types/generated/types'
 import { useRouter } from 'next/router'
-import { FETCH_BOARD } from 'src/components/commons/hooks/quires/board/useQueryFetchBoard'
 
 export const DISLIKE_BOARD = gql`
   mutation dislikeBoard($boardId: ID!) {
@@ -10,7 +13,7 @@ export const DISLIKE_BOARD = gql`
   }
 `
 
-export const useMutationDisLikeBoard = (boardId: IMutationDislikeBoardArgs['boardId']) => {
+export const useMutationDisLikeBoard = (board: IBoard) => {
   const router = useRouter()
   const [dislikeBoardMutation] = useMutation<
     Pick<IMutation, 'dislikeBoard'>,
@@ -20,14 +23,20 @@ export const useMutationDisLikeBoard = (boardId: IMutationDislikeBoardArgs['boar
     try {
       const result = await dislikeBoardMutation({
         variables: {
-          boardId,
+          boardId: board._id,
         },
-        refetchQueries: [
-          {
-            query: FETCH_BOARD,
-            variables: { boardId },
-          },
-        ],
+        update(cache, { data }) {
+          cache.modify({
+            id: cache.identify(board), // 보드의 캐시 ID를 명시적으로 지정
+            fields: {
+              dislikeCount(existingDislikeCount) {
+                return data?.dislikeBoard ?? existingDislikeCount
+              },
+            },
+          })
+        },
+        // 리패치 제거
+        // FETCH_BOARD
       })
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })

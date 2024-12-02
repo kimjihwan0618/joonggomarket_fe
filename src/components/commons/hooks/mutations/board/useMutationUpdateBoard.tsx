@@ -79,6 +79,10 @@ export const useMutationUpdateBoard = (props: IUseMutationUpdateBoardProps) => {
             fields: {
               fetchBoard(existingBoard, { readField }) {
                 if (readField('_id', existingBoard) === updatedBoard._id) {
+                  console.log({
+                    ...existingBoard,
+                    ...updatedBoard,
+                  })
                   return {
                     ...existingBoard,
                     ...updatedBoard,
