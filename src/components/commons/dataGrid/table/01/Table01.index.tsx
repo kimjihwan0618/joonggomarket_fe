@@ -10,8 +10,6 @@ interface ITableProps {
 }
 
 export default function Table(props: ITableProps): JSX.Element {
-  console.log(props.data)
-
   return (
     <S.Table>
       <S.TableHead>
