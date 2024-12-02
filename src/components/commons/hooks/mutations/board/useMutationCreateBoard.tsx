@@ -9,7 +9,6 @@ import { IBoardWriterForm } from 'src/components/units/board/write/BoardWrite.sc
 import type { UseFormGetValues } from 'react-hook-form'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useMutationUploadFile } from '../file/useMutationUploadFile'
-import { FETCH_BOARDS_BEST } from '../../quires/board/useQueryFetchBoardsOfTheBest'
 
 interface IuseMutationCreateBoardProps {
   getValues: UseFormGetValues<IBoardWriterForm>

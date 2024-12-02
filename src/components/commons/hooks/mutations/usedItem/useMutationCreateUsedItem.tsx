@@ -8,10 +8,7 @@ import type {
 import type { UseFormGetValues } from 'react-hook-form'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { IUsedItemWriteForm } from 'src/components/units/useditem/write/UsedItemWrite.schema'
-import { FETCH_USED_ITEMS } from '../../quires/usedItem/useQueryFetchUsedItems'
 import { useMutationUploadFile } from '../file/useMutationUploadFile'
-import { FETCH_USED_ITEMS_BEST } from '../../quires/usedItem/useQueryFetchBoardsOfTheBest'
-import { FETCH_USED_ITEMS_I_SOLD } from '../../quires/usedItem/mypage/useQueryFetchUsedItemsISold'
 
 interface IUseMutationCreateUsedItemProps {
   getValues: UseFormGetValues<IUsedItemWriteForm>
@@ -76,21 +73,44 @@ export const useMutationCreateUsedItem = (props: IUseMutationCreateUsedItemProps
         variables: {
           createUseditemInput,
         },
-        refetchQueries: [
-          {
-            query: FETCH_USED_ITEMS,
-            variables: {
-              search: '',
-              isSoldout: false,
+        update(cache, { data }) {
+          const newUseditemRef = cache.writeFragment({
+            data: {
+              __typename: 'Useditem',
+              ...data?.createUseditem,
             },
-          },
-          {
-            query: FETCH_USED_ITEMS_BEST,
-          },
-          {
-            query: FETCH_USED_ITEMS_I_SOLD,
-          },
-        ],
+            fragment: gql`
+              fragment NewUseditem on Useditem {
+                _id
+                name
+                remarks
+                contents
+                price
+                tags
+                createdAt
+              }
+            `,
+          })
+
+          cache.modify({
+            fields: {
+              fetchUseditems(existingUseditems = []) {
+                return [newUseditemRef, ...existingUseditems]
+              },
+              fetchUseditemsOfTheBest(existingUseditems = []) {
+                if (existingUseditems.length < 4) {
+                  return [...existingUseditems, newUseditemRef]
+                } else {
+                  return existingUseditems
+                }
+              },
+            },
+          })
+        },
+        // 리패치 제거
+        // FETCH_USED_ITEMS
+        // FETCH_USED_ITEMS_BEST
+        // FETCH_USED_ITEMS_I_SOLD
       })
       if (result?.data?.createUseditem?._id) {
         Modal.success({ content: '상품이 등록되었습니다.' })

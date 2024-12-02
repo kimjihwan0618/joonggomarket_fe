@@ -132,35 +132,36 @@ export default function UsedItemDetailUI(): JSX.Element {
               <S.Price>
                 {new Intl.NumberFormat('en-US').format(data?.fetchUseditem?.price)}원
               </S.Price>
-              {data?.fetchUseditem?.images.length !== 0 && (
-                <S.CarouselWrapper>
-                  <S.Carousel>
-                    <Slider
-                      {...{
-                        ...SETTINGS,
-                        infinite:
-                          data?.fetchUseditem?.images.filter((image) => image !== '').length > 1,
-                      }}
-                      ref={sliderRef}
-                    >
-                      {data?.fetchUseditem?.images
-                        .filter((image) => image !== '')
-                        .map((image) => (
-                          <S.ImageWrapper>
-                            <S.ImageBox>
-                              <Image
-                                src={`${process.env.NEXT_PUBLIC_S3_STORAGE}${image}`}
-                                alt="상품 이미지"
-                                width={296}
-                                height={296}
-                              />
-                            </S.ImageBox>
-                          </S.ImageWrapper>
-                        ))}
-                    </Slider>
-                  </S.Carousel>
-                </S.CarouselWrapper>
-              )}
+              {data?.fetchUseditem?.images.length !== 0 &&
+                data?.fetchUseditem?.images.filter((image) => image !== '').length >= 1 && (
+                  <S.CarouselWrapper>
+                    <S.Carousel>
+                      <Slider
+                        {...{
+                          ...SETTINGS,
+                          infinite:
+                            data?.fetchUseditem?.images.filter((image) => image !== '').length > 1,
+                        }}
+                        ref={sliderRef}
+                      >
+                        {data?.fetchUseditem?.images
+                          .filter((image) => image !== '')
+                          .map((image) => (
+                            <S.ImageWrapper>
+                              <S.ImageBox>
+                                <Image
+                                  src={`${process.env.NEXT_PUBLIC_S3_STORAGE}${image}`}
+                                  alt="상품 이미지"
+                                  width={296}
+                                  height={296}
+                                />
+                              </S.ImageBox>
+                            </S.ImageWrapper>
+                          ))}
+                      </Slider>
+                    </S.Carousel>
+                  </S.CarouselWrapper>
+                )}
               <S.PreviewImageList>
                 {data?.fetchUseditem?.images
                   .filter((image) => image !== '')

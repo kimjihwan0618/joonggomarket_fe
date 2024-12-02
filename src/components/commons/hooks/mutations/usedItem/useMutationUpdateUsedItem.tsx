@@ -9,7 +9,6 @@ import type { UseFormGetValues } from 'react-hook-form'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useRouter } from 'next/router'
 import { IUsedItemWriteForm } from 'src/components/units/useditem/write/UsedItemWrite.schema'
-import { FETCH_USED_ITEM } from '../../quires/usedItem/useQueryFetchUsedItem'
 import { useMutationUploadFile } from '../file/useMutationUploadFile'
 
 interface IUseMutationUpdateUsedItemProps {
@@ -22,6 +21,22 @@ export const UPDATE_USED_ITEM = gql`
   mutation updateUseditem($updateUseditemInput: UpdateUseditemInput!, $useditemId: ID!) {
     updateUseditem(updateUseditemInput: $updateUseditemInput, useditemId: $useditemId) {
       _id
+      name
+      soldAt
+      updatedAt
+      useditemAddress {
+        lat
+        lng
+        address
+        addressDetail
+        zipcode
+      }
+      remarks
+      pickedCount
+      price
+      images
+      contents
+      tags
     }
   }
 `
@@ -89,12 +104,24 @@ export const useMutationUpdateUsedItem = (props: IUseMutationUpdateUsedItemProps
           updateUseditemInput,
           useditemId: router.query.useditemId,
         },
-        refetchQueries: [
-          {
-            query: FETCH_USED_ITEM,
-            variables: { useditemId: router.query.useditemId },
-          },
-        ],
+        update(cache, { data }) {
+          const updatedUseditem = data.updateUseditem
+          cache.modify({
+            fields: {
+              fetchUseditem(existingUseditem, { readField }) {
+                if (readField('_id', existingUseditem) === updatedUseditem._id) {
+                  return {
+                    ...existingUseditem,
+                    ...updatedUseditem,
+                  }
+                }
+                return existingUseditem // 일치하지 않으면 기존 상품 반환
+              },
+            },
+          })
+        },
+        // 리패치 제거
+        // FETCH_USED_ITEM
       })
       if (result?.data?.updateUseditem?._id) {
         Modal.success({ content: '상품이 수정되었습니다.' })
