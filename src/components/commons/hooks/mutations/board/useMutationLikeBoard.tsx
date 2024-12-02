@@ -1,8 +1,6 @@
 import { gql, useMutation } from '@apollo/client'
 import { Modal } from 'antd'
 import type { IBoard, IMutation, IMutationLikeBoardArgs } from 'src/commons/types/generated/types'
-import { FETCH_BOARD } from 'src/components/commons/hooks/quires/board/useQueryFetchBoard'
-import { FETCH_BOARDS_BEST } from '../../quires/board/useQueryFetchBoardsOfTheBest'
 
 export const LIKE_BOARD = gql`
   mutation likeBoard($boardId: ID!) {
