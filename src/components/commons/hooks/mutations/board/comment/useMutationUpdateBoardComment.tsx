@@ -4,7 +4,6 @@ import type {
   IMutationUpdateBoardCommentArgs,
   IQueryFetchBoardCommentsArgs,
 } from 'src/commons/types/generated/types'
-import { FETCH_BOARD_COMMENTS } from 'src/components/commons/hooks/quires/board/comment/useQueryFetchBoardComments'
 import { UseFormGetValues } from 'react-hook-form'
 import { IBoardCommentWriterForm } from 'src/components/units/board/detail/comment/write/BoardCommentWrite.schema'
 import { Modal } from 'antd'
@@ -53,12 +52,24 @@ export const useMutationUpdateBoardComment = (boardId: IQueryFetchBoardCommentsA
             rating,
           },
         },
-        refetchQueries: [
-          {
-            query: FETCH_BOARD_COMMENTS,
-            variables: { boardId },
-          },
-        ],
+        update(cache, { data }) {
+          const updatedBoardComment = data.updateBoardComment
+          cache.modify({
+            fields: {
+              fetchBoardComments(existingBoardComments = [], { readField }) {
+                if (readField('_id', existingBoardComments) === updatedBoardComment._id) {
+                  return {
+                    ...existingBoardComments,
+                    ...updatedBoardComment,
+                  }
+                }
+                return existingBoardComments // 일치하지 않으면 기존 댓글 반환
+              },
+            },
+          })
+        },
+        // 리패치 제거
+        // FETCH_BOARD_COMMENTS
       })
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })

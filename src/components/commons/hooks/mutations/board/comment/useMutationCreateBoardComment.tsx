@@ -54,7 +54,7 @@ export const useMutationCreateBoardComment = (boardId: IQueryFetchBoardCommentsA
                 writer
                 contents
                 rating
-                createdAt
+                updatedAt
               }
             `,
           })
@@ -62,18 +62,13 @@ export const useMutationCreateBoardComment = (boardId: IQueryFetchBoardCommentsA
           cache.modify({
             fields: {
               fetchBoardComments(existingBoardComments = []) {
-                return [newBoardRef, ...existingBoardComments]
+                return [...existingBoardComments, newBoardRef]
               },
             },
           })
         },
         // 리패치 제거
-        // refetchQueries: [
-        //   {
-        //     query: FETCH_BOARD_COMMENTS,
-        //     variables: { boardId },
-        //   },
-        // ],
+        // FETCH_BOARD_COMMENTS
       })
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message })

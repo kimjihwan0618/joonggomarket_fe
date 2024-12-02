@@ -25,11 +25,13 @@ export const TopItems = styled.div`
 
 export const WriterRating = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column-reverse;
 `
 
 export const Writer = styled.p`
   margin: 0px;
+  margin-top: 10px;
   margin-right: 18px;
   display: inline-block;
 `

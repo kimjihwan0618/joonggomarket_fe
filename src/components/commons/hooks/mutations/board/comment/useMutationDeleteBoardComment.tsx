@@ -4,7 +4,6 @@ import type {
   IMutationDeleteBoardCommentArgs,
   IQueryFetchBoardCommentsArgs,
 } from 'src/commons/types/generated/types'
-import { FETCH_BOARD_COMMENTS } from 'src/components/commons/hooks/quires/board/comment/useQueryFetchBoardComments'
 import { Modal } from 'antd'
 
 export const DELETE_BOARD_COMMENT = gql`
@@ -36,12 +35,19 @@ export const useMutationDeleteBoardComment = (props: IDeleteBoardCommentProps) =
           boardCommentId: props.deleteCommentId,
           password: props.passwordCheck,
         },
-        refetchQueries: [
-          {
-            query: FETCH_BOARD_COMMENTS,
-            variables: { boardId: props.boardId },
-          },
-        ],
+        update(cache) {
+          cache.modify({
+            fields: {
+              fetchBoardComments(existingBoardComments = [], { readField }) {
+                return existingBoardComments.filter(
+                  (boardComment) => readField('_id', boardComment) !== props.deleteCommentId
+                )
+              },
+            },
+          })
+        },
+        // 리패치 제거
+        // FETCH_BOARD_COMMENTS
       })
       if (!result?.data?.deleteBoardComment) Modal.warning({ content: '비밀번호를 확인해주세요!' })
     } catch (error) {
