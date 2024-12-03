@@ -19,9 +19,9 @@ interface IMypageNavigationUIProps {
 export default function MypageNavigation(props: IMypageNavigationUIProps): JSX.Element {
   const { moveToPage } = useMoveToPage()
   const fileRef = useRef<HTMLInputElement>(null)
-  const { uploadFile } = useMutationUploadFile()
+  const { uploadFile, loading: uploadFileLoading } = useMutationUploadFile()
   const { data } = useQueryFetchUserLoggedIn()
-  const { updateUser } = useMutationUpdateUser()
+  const { updateUser, loading: updateUserLoading } = useMutationUpdateUser()
 
   const onChangeFile = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
     const file = event.target.files?.[0]
@@ -35,8 +35,11 @@ export default function MypageNavigation(props: IMypageNavigationUIProps): JSX.E
       <S.PageTitle>MYPAGE</S.PageTitle>
       <S.ProfileImageBox>
         <S.ImageBox>
-          {data?.fetchUserLoggedIn?.picture ? (
+          {uploadFileLoading || updateUserLoading ? (
+            <Image unoptimized src="/loading.gif" width={80} height={80} />
+          ) : data?.fetchUserLoggedIn?.picture ? (
             <Image
+              unoptimized
               onClick={() => fileRef.current?.click()}
               src={`${process.env.NEXT_PUBLIC_S3_STORAGE}${data?.fetchUserLoggedIn?.picture}`}
               width={80}

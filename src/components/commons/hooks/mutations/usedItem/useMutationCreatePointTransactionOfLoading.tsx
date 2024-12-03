@@ -18,7 +18,6 @@ export const CREATE_POINT_TRANSACTION_OF_LOADING = gql`
 `
 
 export const useMutationCreatePointTransactionOfLoading = () => {
-  const router = useRouter()
   const [createPointTransactionOfLoadingMutation, { loading }] = useMutation<
     Pick<IMutation, 'createPointTransactionOfLoading'>,
     IMutationCreatePointTransactionOfLoadingArgs

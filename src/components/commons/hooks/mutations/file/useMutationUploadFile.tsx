@@ -31,9 +31,10 @@ export const UPLOAD_FILE = gql`
 `
 
 export const useMutationUploadFile = () => {
-  const [uploadFileMutation] = useMutation<Pick<IMutation, 'uploadFile'>, IMutationUploadFileArgs>(
-    UPLOAD_FILE
-  )
+  const [uploadFileMutation, { loading }] = useMutation<
+    Pick<IMutation, 'uploadFile'>,
+    IMutationUploadFileArgs
+  >(UPLOAD_FILE)
 
   const uploadFile = async (props: IMutationUploadFileArgs) => {
     try {
@@ -50,5 +51,5 @@ export const useMutationUploadFile = () => {
     }
   }
 
-  return { uploadFile }
+  return { uploadFile, loading }
 }
