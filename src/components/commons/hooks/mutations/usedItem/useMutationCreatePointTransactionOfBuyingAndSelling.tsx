@@ -3,17 +3,18 @@ import { Modal } from 'antd'
 import type {
   IMutation,
   IMutationCreatePointTransactionOfBuyingAndSellingArgs,
+  IQuery,
 } from 'src/commons/types/generated/types'
 import { useRouter } from 'next/router'
-import { FETCH_USED_ITEM } from '../../quires/usedItem/useQueryFetchUsedItem'
 import { FETCH_USER_LOGGEDIN } from '../../quires/user/useQueryFetchUserLoggedIn'
-import { FETCH_POINT_TRANSACTIONS } from '../../quires/usedItem/mypage/useQueryFetchPointTransactions'
-import { FETCH_POINT_TRANSACTIONS_OF_BUYING } from '../../quires/usedItem/mypage/useQueryFetchPointTransactionsOfBuying'
+import { FETCH_USED_ITEM } from '../../quires/usedItem/useQueryFetchUsedItem'
 
 export const CREATE_POINT_TRANSACTION_BUY_SELLING = gql`
   mutation createPointTransactionOfBuyingAndSelling($useritemId: ID!) {
     createPointTransactionOfBuyingAndSelling(useritemId: $useritemId) {
       _id
+      soldAt
+      price
     }
   }
 `
@@ -35,21 +36,48 @@ export const useMutationCreatePointTransactionOfBuyingAndSelling = () => {
         variables: {
           useritemId: router.query.useditemId,
         },
-        refetchQueries: [
-          {
+        update(cache, { data }) {
+          if (!data) return // 데이터가 없으면 아무 작업도 하지 않음
+
+          const usedItem = data.createPointTransactionOfBuyingAndSelling
+          const price = usedItem.price
+          const existingData1 = cache.readQuery<Pick<IQuery, 'fetchUserLoggedIn'>>({
+            query: FETCH_USER_LOGGEDIN,
+          })
+          const existingData2 = cache.readQuery<Pick<IQuery, 'fetchUseditem'>>({
             query: FETCH_USED_ITEM,
             variables: { useditemId: router.query.useditemId },
-          },
-          {
-            query: FETCH_USER_LOGGEDIN,
-          },
-          {
-            query: FETCH_POINT_TRANSACTIONS,
-          },
-          {
-            query: FETCH_POINT_TRANSACTIONS_OF_BUYING,
-          },
-        ],
+          })
+
+          if (existingData1?.fetchUserLoggedIn) {
+            cache.writeQuery({
+              query: FETCH_USER_LOGGEDIN,
+              data: {
+                fetchUserLoggedIn: {
+                  ...existingData1.fetchUserLoggedIn,
+                  userPoint: {
+                    ...existingData1.fetchUserLoggedIn.userPoint,
+                    amount: existingData1.fetchUserLoggedIn.userPoint.amount - price, // amount에서 price 만큼 차감
+                  },
+                },
+              },
+            })
+          }
+
+          // fetchUsedItem 캐시 업데이트
+          cache.writeQuery({
+            query: FETCH_USED_ITEM,
+            data: {
+              fetchUseditem: {
+                ...existingData2.fetchUseditem,
+                soldAt: usedItem.soldAt,
+              },
+            },
+          })
+        },
+        // 리패치 제거
+        // FETCH_USED_ITEM
+        // FETCH_USER_LOGGEDIN
       })
       Modal.success({ content: '해당제품 구입이 완료되었습니다.' })
     } catch (error) {

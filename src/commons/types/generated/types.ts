@@ -115,7 +115,7 @@ export type IMutation = {
   __typename?: 'Mutation';
   createBoard: IBoard;
   createBoardComment: IBoardComment;
-  createPointTransactionOfBuyingAndSelling: IPointTransaction;
+  createPointTransactionOfBuyingAndSelling: IUsedItem;
   createPointTransactionOfLoading: IPointTransaction;
   createUseditem: IUsedItem;
   createUseditemQuestion: IUsedItemQuestion;

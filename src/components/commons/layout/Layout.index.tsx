@@ -20,7 +20,7 @@ export default function Layout(props: ILayoutProps): JSX.Element {
       ) : (
         <>{props.children}</>
       )}
-      <FooterUI />
+      {!HIDDEN_LAYOUTS.includes(router.pathname) && <FooterUI />}
     </>
   )
 }

@@ -3,6 +3,7 @@ import { Modal } from 'antd'
 import type {
   IMutation,
   IMutationToggleUseditemPickArgs,
+  IQuery,
   IQueryFetchUseditemQuestionsArgs,
 } from 'src/commons/types/generated/types'
 import { FETCH_USED_ITEM } from '../../quires/usedItem/useQueryFetchUsedItem'
@@ -27,12 +28,24 @@ export const useMutationToggleUsedItemPick = (
           variables: {
             useditemId,
           },
-          refetchQueries: [
-            {
+          update(cache, { data }) {
+            const pickedCount = data.toggleUseditemPick
+            const existingData = cache.readQuery<Pick<IQuery, 'fetchUseditem'>>({
               query: FETCH_USED_ITEM,
               variables: { useditemId },
-            },
-          ],
+            })
+            cache.writeQuery({
+              query: FETCH_USED_ITEM,
+              data: {
+                fetchUseditem: {
+                  ...existingData.fetchUseditem,
+                  pickedCount,
+                },
+              },
+            })
+          },
+          // 리패치 제거
+          // FETCH_USED_ITEM
         })
       }
     } catch (error) {
