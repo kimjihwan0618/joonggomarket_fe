@@ -40,7 +40,6 @@ export const useMutationUpdateUser = () => {
           })
 
           if (existingData?.fetchUserLoggedIn) {
-            // 캐시를 업데이트하여 새로운 포인트 반영
             cache.writeQuery({
               query: FETCH_USER_LOGGEDIN,
               data: {
