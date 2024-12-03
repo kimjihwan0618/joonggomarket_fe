@@ -5,7 +5,6 @@ import type {
   IMutation,
   IMutationDislikeBoardArgs,
 } from 'src/commons/types/generated/types'
-import { useRouter } from 'next/router'
 
 export const DISLIKE_BOARD = gql`
   mutation dislikeBoard($boardId: ID!) {
@@ -14,7 +13,6 @@ export const DISLIKE_BOARD = gql`
 `
 
 export const useMutationDisLikeBoard = (board: IBoard) => {
-  const router = useRouter()
   const [dislikeBoardMutation] = useMutation<
     Pick<IMutation, 'dislikeBoard'>,
     IMutationDislikeBoardArgs

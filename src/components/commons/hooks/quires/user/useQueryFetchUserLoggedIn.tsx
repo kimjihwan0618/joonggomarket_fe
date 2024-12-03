@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client'
-import { IQuery, IQueryFetchBoardArgs } from 'src/commons/types/generated/types'
+import { IQuery } from 'src/commons/types/generated/types'
 
 export const FETCH_USER_LOGGEDIN = gql`
   query {

@@ -88,7 +88,7 @@ export const useMutationCreateBoard = (props: IuseMutationCreateBoardProps) => {
             },
           })
         },
-        // 리패치제거
+        // 리패치 제거
         // FETCH_BOARDS
         // FETCH_BOARDS_BEST
       })

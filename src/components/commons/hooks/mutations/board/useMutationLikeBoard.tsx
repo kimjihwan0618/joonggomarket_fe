@@ -77,7 +77,7 @@ export const useMutationLikeBoard = (board: IBoard) => {
             },
           })
         },
-        // 리패치제거
+        // 리패치 제거
         // FETCH_BOARD, FETCH_BOARDS_BEST
       })
     } catch (error) {
