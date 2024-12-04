@@ -23,15 +23,21 @@ export const BestBoardWrapper = styled.div`
   margin-bottom: 80px;
 `
 export const BestBoardItem = styled.div`
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-  height: 257px;
+  box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.15);
+  border-radius: 14px;
+  height: auto;
+  padding: 10px;
   width: 25%;
   margin-right: 24px;
   overflow: hidden;
   cursor: pointer;
+  transition: all 0.05s ease-in-out;
   &:last-of-type {
     margin-right: 0px;
+  }
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.2);
   }
 `
 
@@ -39,6 +45,11 @@ export const ItemImageBox = styled.div`
   position: relative;
   width: 100%;
   height: 120px;
+  /* box-sizing: border-box; */
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 10px;
+  margin: 0 auto;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray06};
 `
 
@@ -65,6 +76,9 @@ export const Detail = styled.dd`
 
 export const Writer = styled.li`
   font-size: 1.6rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 export const CreatedAt = styled.li`
   color: ${({ theme }) => theme.colors.gray03};
@@ -75,7 +89,7 @@ export const CreatedAt = styled.li`
   text-overflow: ellipsis;
 `
 
-export const ThumbBox = styled.li``
+export const ThumbBox = styled.div``
 export const ThumbCount = styled.p`
   font-size: 1.6rem;
   font-weight: 400;
