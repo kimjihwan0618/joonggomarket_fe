@@ -87,7 +87,7 @@ export default function UsedItemDetailUI(): JSX.Element {
                 <S.Info>
                   <dt>{data?.fetchUseditem?.seller.name}</dt>
                   <dd>
-                    Date :{' '}
+                    작성일 :{' '}
                     {data?.fetchUseditem?.updatedAt &&
                       toYYYYMMDDHHMMSS(data?.fetchUseditem?.updatedAt)}
                   </dd>

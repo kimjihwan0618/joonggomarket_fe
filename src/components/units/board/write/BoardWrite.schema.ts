@@ -10,7 +10,15 @@ export const schema = yup
       .required('비밀번호는 필수 입력입니다.'),
     title: yup.string().required('제목을 입력해주세요.'),
     contents: yup.string().required('내용을 입력해주세요.'),
-    youtubeUrl: yup.string().url('올바른 URL 형식이 아닙니다').notRequired(),
+    youtubeUrl: yup
+      .string()
+      .url('올바른 URL 형식이 아닙니다')
+      .test('is-valid-watch-url', '유효한 Youtube이 아닙니다', (value) => {
+        if (!value) return true // Allow empty values
+        const watchRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.?be\/).+$/ // YouTube watch URL 정규 표현식
+        return watchRegex.test(value)
+      })
+      .notRequired(),
     address: yup.string().notRequired(),
     addressDetail: yup.string().notRequired(),
     zipcode: yup.string().notRequired(),

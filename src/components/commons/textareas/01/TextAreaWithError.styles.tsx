@@ -23,6 +23,7 @@ export const TextArea = styled.textarea`
   padding: 14px 16px;
   font-size: 1.6rem;
   width: 100%;
+  border-radius: 6px;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;

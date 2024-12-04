@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import * as S from './UsedItem.styles'
+import theme from 'src/commons/styles/theme'
 
 export default function UsedItemUI(props): JSX.Element {
   const { moveToPage } = useMoveToPage()
@@ -27,7 +28,9 @@ export default function UsedItemUI(props): JSX.Element {
               .replaceAll(props.keyword, `!@#${props.keyword}!@#`)
               .split('!@#')
               .map((el2: string) => (
-                <span style={{ color: el2 === props.keyword ? 'red' : 'black' }}>{el2}</span>
+                <span style={{ color: el2 === props.keyword ? theme.colors.main : 'black' }}>
+                  {el2}
+                </span>
               ))}
           </S.Title2>
           <S.Remarks2>{props.usedItem.remarks}</S.Remarks2>

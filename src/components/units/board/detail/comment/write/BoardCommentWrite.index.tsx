@@ -77,12 +77,14 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps): J
           readOnly={props.isEdit}
           placeholder="작성자"
           width="180px"
+          maxLength={10}
         />
         <InputWithError
           register={register('password')}
           type="password"
           placeholder="비밀번호"
           width="180px"
+          maxLength={15}
         />
         <S.Rating>
           {Array.from({ length: 5 }, (_, index) => (
@@ -107,6 +109,7 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps): J
             style={{ border: 'none' }}
             register={register('contents')}
             height={'108px'}
+            maxLength={99}
             placeholder="개인정보를 공유 및 요청하거나, 명예 훼손, 무단 광고, 불법 정보 유포시 모니터링 후 삭제될 수 있으며, 이에 대한 민형사상 책임은 게시자에게 있습니다."
           />
           <S.CommentFooter>

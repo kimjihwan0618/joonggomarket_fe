@@ -16,22 +16,33 @@ export const BestUsedItemWrapper = styled.div`
   margin-bottom: 80px;
 `
 export const BestUsedItem = styled.div`
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-  /* height: 391px; */
+  box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.15);
+  border-radius: 14px;
+  height: auto;
+  padding: 10px;
   width: 25%;
   margin-right: 24px;
   overflow: hidden;
   cursor: pointer;
+  transition: all 0.05s ease-in-out;
   &:last-of-type {
     margin-right: 0px;
+  }
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.2);
   }
 `
 
 export const ItemImageBox = styled.div`
   position: relative;
   width: 100%;
-  height: 160px;
-  padding: 20px;
+  height: 120px;
+  /* box-sizing: border-box; */
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 10px;
+  margin: 0 auto;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray06};
 `
 
@@ -56,6 +67,9 @@ export const InfoBottom = styled.dd`
 
 export const Remarks = styled.p`
   font-size: 1.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: ${({ theme }) => theme.colors.gray02};
 `
 
@@ -102,7 +116,6 @@ export const Tab = styled.li`
 
 export const UsedItemsWrapper = styled.div`
   width: 100%;
-  padding-right: 20px;
   max-height: 800px;
   overflow-y: auto;
 `
@@ -110,7 +123,6 @@ export const UsedItemsWrapper = styled.div`
 export const Bottom = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 20px;
   padding-top: 20px;
   border-top: 1px solid ${({ theme }) => theme.colors.gray04};
 `

@@ -20,9 +20,7 @@ interface IUseMutationUpdateUsedItemProps {
 export const UPDATE_USED_ITEM = gql`
   mutation updateUseditem($updateUseditemInput: UpdateUseditemInput!, $useditemId: ID!) {
     updateUseditem(updateUseditemInput: $updateUseditemInput, useditemId: $useditemId) {
-      _id
       name
-      soldAt
       updatedAt
       useditemAddress {
         lat
@@ -32,7 +30,6 @@ export const UPDATE_USED_ITEM = gql`
         zipcode
       }
       remarks
-      pickedCount
       price
       images
       contents

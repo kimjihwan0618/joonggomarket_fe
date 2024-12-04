@@ -54,7 +54,7 @@ export const ItemImageBox = styled.div`
 `
 
 export const BoardInfo = styled.dl`
-  padding: 20px;
+  padding: 20px 20px 6px 20px;
 `
 
 export const Title = styled.dt`
@@ -69,9 +69,6 @@ export const Detail = styled.dd`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  ul {
-    margin-bottom: 8px;
-  }
 `
 
 export const Writer = styled.li`

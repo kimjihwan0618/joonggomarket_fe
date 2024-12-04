@@ -24,6 +24,7 @@ export const ImageUploadButton = styled.button`
   margin-right: 24px;
   border: none;
   display: flex;
+  border-radius: 6px;
   cursor: pointer;
   flex-direction: column;
   align-items: center;

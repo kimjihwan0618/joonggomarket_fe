@@ -50,6 +50,7 @@ export const CommentWrapper = styled.div`
   width: 100%;
   margin-top: 20px;
   border: 1px solid ${({ theme }) => theme.colors.gray04};
+  border-radius: 6px;
 `
 
 export const CommentTextArea = styled.textarea`

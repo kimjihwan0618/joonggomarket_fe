@@ -18,6 +18,8 @@ export const ItemImageBox2 = styled.div`
   position: relative;
   width: 140px;
   height: 140px;
+  border-radius: 10px;
+  overflow: hidden;
 `
 
 export const UsedItemInfo2 = styled.div`

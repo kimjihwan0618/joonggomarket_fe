@@ -13,6 +13,7 @@ export const Button = styled.button`
   background: ${(props) => (props.disabled ? props.theme.colors.gray04 : props['data-background'])};
   border: ${(props) => props['data-background'] === 'white' && '1px solid rgba(189, 189, 189, 1)'};
   display: flex;
+  border-radius: 6px;
   align-items: center;
   justify-content: center;
   height: 42px;

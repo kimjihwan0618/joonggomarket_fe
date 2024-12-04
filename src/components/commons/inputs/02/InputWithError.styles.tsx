@@ -23,6 +23,7 @@ export const Input = styled.input`
   font-size: 1.6rem;
   height: 52px;
   width: 100%;
+  border-radius: 6px;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;

@@ -49,7 +49,7 @@ export default function BoardListUI(): JSX.Element {
                 src={
                   el.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))
                     .length !== 0
-                    ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${el.images[0]}`
+                    ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${el.images.filter((image) => image !== '')[0]}`
                     : '/images/ic-noimage.jpg'
                 }
                 objectFit="cover"

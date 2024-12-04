@@ -1,8 +1,9 @@
 import styled from '@emotion/styled'
 
 export const ContentWrapper = styled.div`
-  padding: 40px 75px 60px;
+  padding: 40px 55px;
   /* min-width: 920px; */
+  border-radius: 14px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 `
 

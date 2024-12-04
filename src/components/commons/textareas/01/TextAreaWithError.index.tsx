@@ -12,6 +12,7 @@ interface ITextAreaWithErrorProps {
   width?: string
   height: string
   style?: object
+  maxLength?: number
 }
 
 export default function TextAreaWithError(props: ITextAreaWithErrorProps): JSX.Element {
@@ -26,6 +27,7 @@ export default function TextAreaWithError(props: ITextAreaWithErrorProps): JSX.E
           placeholder={props.placeholder ?? ''}
           style={props.style && props.style}
           data-height={props.height}
+          maxLength={props.maxLength || undefined}
         />
         {props.error && <S.Error>{props.error}</S.Error>}
       </S.TextAreaItem>

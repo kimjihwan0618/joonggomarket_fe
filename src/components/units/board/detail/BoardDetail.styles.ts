@@ -8,9 +8,10 @@ const IconButton = css`
 `
 
 export const ContentWrapper = styled.div`
-  padding: 60px 75px;
+  padding: 40px 55px;
   /* min-width: 920px; */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 14px;
 `
 
 export const BoardTitleWrapper = styled.div`
@@ -54,8 +55,8 @@ export const ContentsTitle = styled.h3`
 `
 
 export const ContentsMain = styled.div`
-  margin-top: 40px;
-  p {
+  margin: 40px 0 80px;
+  pre {
     font-size: 1.6rem;
   }
 `
@@ -79,7 +80,7 @@ export const ThumbsWrapper = styled.ul`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 120px;
+  /* margin-top: 120px; */
   li:nth-of-type(1) {
     margin-right: 40px;
   }

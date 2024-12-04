@@ -72,7 +72,7 @@ export default function BoardDetailUI(): JSX.Element {
                 <S.Info>
                   <dt>{data?.fetchBoard?.writer}</dt>
                   <dd>
-                    Date :{' '}
+                    작성일 :{' '}
                     {data?.fetchBoard?.updatedAt && toYYYYMMDDHHMMSS(data?.fetchBoard?.updatedAt)}
                   </dd>
                 </S.Info>
@@ -115,14 +115,14 @@ export default function BoardDetailUI(): JSX.Element {
                   </S.ImageContainer>
                 ))}
               <S.ContentsMain>
-                <p>
+                <pre>
                   {data?.fetchBoard?.contents.split('\n').map((line, index) => (
                     <>
                       {line}
                       <br />
                     </>
                   ))}
-                </p>
+                </pre>
               </S.ContentsMain>
               {data?.fetchBoard?.youtubeUrl && (
                 <S.YoutubePlayer url={data?.fetchBoard?.youtubeUrl} />
