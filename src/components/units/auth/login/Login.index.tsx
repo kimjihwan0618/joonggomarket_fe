@@ -69,8 +69,8 @@ export default function LoginUI(): JSX.Element {
           fullWidth={true}
         />
         <S.ButtonListWrapper>
-          <S.BottomButton>이메일 찾기</S.BottomButton>
-          <S.BottomButton>비밀번호 찾기</S.BottomButton>
+          {/* <S.BottomButton>이메일 찾기</S.BottomButton> */}
+          {/* <S.BottomButton>비밀번호 찾기</S.BottomButton> */}
           <S.BottomButton onClick={moveToPage('/signup')}>회원가입</S.BottomButton>
         </S.ButtonListWrapper>
       </S.LoginFormBox>
