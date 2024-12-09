@@ -2,7 +2,10 @@ import * as yup from 'yup'
 
 export const schema = yup
   .object({
-    writer: yup.string().required('작성자를 입력해주세요.'),
+    writer: yup
+      .string()
+      .max(15, '작성자는 최대 15자리 이하로 입력해주세요.')
+      .required('작성자를 입력해주세요.'),
     password: yup
       .string()
       .min(4, '비밀번호는 최소 4자리 이상으로 입력해주세요.')

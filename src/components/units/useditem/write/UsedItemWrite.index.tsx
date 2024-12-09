@@ -11,7 +11,6 @@ import { useImageInput } from 'src/components/commons/hooks/custom/useImageInput
 import { useRouter } from 'next/router'
 import { useUpdateForm } from 'src/components/commons/hooks/custom/useUpdateForm'
 import { useDaumPostModal } from 'src/components/commons/hooks/custom/useDaumPostModal'
-import { IQuery } from 'src/commons/types/generated/types'
 import InputWithError from 'src/components/commons/inputs/02/InputWithError.index'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import TextEditorUI from 'src/components/commons/toast-ui-editor/TextEditorUI'
@@ -146,7 +145,7 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
 
           <S.MapAddressWrapper>
             <S.MapWrapper>
-              <KakaoMapUI draggable={false} lat={lat} lng={lng} />
+              <KakaoMapUI lat={lat} lng={lng} />
             </S.MapWrapper>
             <S.AddressWrapper>
               <S.GpsWrapper>
@@ -172,7 +171,7 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
                     type="number"
                     placeholder="위도(LAT)"
                     label="위도"
-                    width="100px"
+                    width="180px"
                   />
                   <InputWithError
                     register={register('lng')}
@@ -180,7 +179,7 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
                     type="number"
                     placeholder="경도(LNG)"
                     label="경도"
-                    width="100px"
+                    width="180px"
                   />
                 </S.LatLng>
               </S.GpsWrapper>

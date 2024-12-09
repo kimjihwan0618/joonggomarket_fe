@@ -9,6 +9,7 @@ const IconButton = css`
 export const ContentWrapper = styled.div`
   padding: 60px 75px;
   /* min-width: 920px; */
+  border-radius: 14px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 `
 
@@ -152,6 +153,8 @@ export const Price = styled.p`
 export const ContentsMain = styled.div`
   margin-top: 40px;
   font-size: 1.6rem;
+  padding: 0px !important;
+  border: none !important;
 `
 
 export const Tags = styled.p`

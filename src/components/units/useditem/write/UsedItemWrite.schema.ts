@@ -8,13 +8,19 @@ const extractTags = (input: string): string[] => {
 
 export const schema = yup
   .object({
-    name: yup.string().required('상품명을 작성해주세요.'),
-    remarks: yup.string().required('한줄요약을 작성해주세요.'),
+    name: yup
+      .string()
+      .max(30, '최대 30글자 이하로 입력해주세요.')
+      .required('상품명을 작성해주세요.'),
+    remarks: yup
+      .string()
+      .max(30, '최대 30글자 이하로 입력해주세요.')
+      .required('한줄요약을 작성해주세요.'),
     price: yup
       .number()
       .typeError('판매 가격을 확인해주세요.')
-      .required('판매 가격을 작성해주세요.')
-      .required('판매 가격을 입력해주세요.'),
+      .max(1000000, '최대 100만원 이하로 입력해주세요.')
+      .required('판매 가격을 작성해주세요.'),
     tags: yup
       .string()
       .required('태그를 한개 이상 입력해주세요.')
@@ -28,7 +34,7 @@ export const schema = yup
         }
       ),
     address: yup.string().notRequired(),
-    addressDetail: yup.string().notRequired(),
+    addressDetail: yup.string().required('상세주소를 작성해주세요.'),
     zipcode: yup.string().notRequired(),
     lat: yup.number().notRequired(),
     lng: yup.number().notRequired(),

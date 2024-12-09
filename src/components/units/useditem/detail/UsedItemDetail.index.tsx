@@ -185,6 +185,7 @@ export default function UsedItemDetailUI(): JSX.Element {
                   ))}
               </S.PreviewImageList>
               <S.ContentsMain
+                className="ql-editor ql-container ql-snow"
                 dangerouslySetInnerHTML={{ __html: data?.fetchUseditem?.contents }}
               ></S.ContentsMain>
               <S.Tags>{data?.fetchUseditem?.tags.map((tag) => <>{tag}&nbsp;</>)}</S.Tags>

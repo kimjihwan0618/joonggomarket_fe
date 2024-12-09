@@ -4,6 +4,7 @@ export const ContentWrapper = styled.div`
   padding: 40px 75px 60px;
   /* min-width: 920px; */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 14px;
 `
 
 export const ContentTitle = styled.h2`
@@ -75,7 +76,7 @@ export const MapAddressWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 400px;
+  height: 560px;
 `
 export const MapWrapper = styled.div`
   width: 40%;
@@ -97,8 +98,9 @@ export const LatLng = styled.div`
 export const GpsWrapper = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
 `
 export const Address = styled.div`
   width: 100%;
