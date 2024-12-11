@@ -1,5 +1,7 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
+import theme from 'src/commons/styles/theme'
+import { MenuOutlined, CloseOutlined, ArrowRightOutlined } from '@ant-design/icons'
 
 const ProfileButtonStyles = css`
   height: 50px;
@@ -35,6 +37,12 @@ export const HeaderInner = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  ${theme.media.screen2} {
+    min-width: 720px;
+  }
+  ${theme.media.screen3} {
+    min-width: auto;
+  }
 `
 
 export const Logo = styled.h1`
@@ -48,6 +56,9 @@ export const ButtonWrapper = styled.div`
   button:first-of-type {
     margin-right: 16px;
   }
+  ${theme.media.screen3} {
+    display: none;
+  }
 `
 
 export const LogoNavigationWrapper = styled.div`
@@ -55,7 +66,11 @@ export const LogoNavigationWrapper = styled.div`
   align-items: center;
 `
 
-export const Navigation = styled.nav``
+export const Navigation = styled.nav`
+  ${theme.media.screen3} {
+    display: none;
+  }
+`
 
 export const MenuList = styled.ul`
   display: flex;
@@ -76,6 +91,9 @@ export const Menu = styled.li`
 
 export const ProfileBoxWrapper = styled.div`
   position: relative;
+  ${theme.media.screen3} {
+    display: none;
+  }
 `
 
 export const ProfileButton = styled.button`
@@ -98,7 +116,7 @@ export const ProfileBox = styled.div`
   display: ${(props) => (!props['data-hidden'] ? 'none' : 'block')};
   right: 0;
   bottom: -300%;
-  border-radius: 16px;
+  border-radius: 10px 16px;
   background: white;
   width: 258px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -155,4 +173,124 @@ export const LogoutButton = styled.button`
 `
 export const MypageButton = styled.button`
   ${ProfileButtonStyles}
+`
+// 모바일 메뉴 스타일 ↓↓
+export const MMenuButton = styled(MenuOutlined)`
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  color: #333;
+  cursor: pointer;
+  border-radius: 100px;
+  & path {
+    color: ${({ theme }) => theme.colors.gray04};
+  }
+  & svg {
+    width: 100%;
+    height: 100%;
+  }
+  ${theme.media.screen3} {
+    display: block;
+  }
+`
+
+export const MMenuWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  ${theme.media.screen3} {
+    display: ${(props) => (props['data-isOpen'] ? 'block' : 'none')};
+  }
+`
+
+export const MMenuBar = styled.div`
+  position: fixed;
+  top: 0;
+  right: ${(props) => (props['data-isOpen'] ? '0px' : '-300px')};
+  width: 300px;
+  height: 100%;
+  background: white;
+  box-sizing: border-box;
+  padding: 16px;
+`
+
+export const MCloseButton = styled(CloseOutlined)`
+  width: 38px;
+  height: 38px;
+  padding: 10px;
+  & path {
+    color: ${({ theme }) => theme.colors.gray04};
+  }
+  cursor: pointer;
+  border-radius: 100px;
+  & svg {
+    width: 100%;
+    height: 100%;
+  }
+`
+
+export const MProfileBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 8px;
+`
+
+export const MProfileInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 16px;
+  width: 100%;
+  padding: 16px;
+  background: ${({ theme }) => theme.colors.gray07};
+  border-radius: 8px;
+`
+
+export const MProfileName = styled.p`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  span {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+`
+
+export const MProfileMail = styled.p`
+  font-size: 2rem;
+  color: ${({ theme }) => theme.colors.gray03};
+`
+
+export const MProfileBoxTop = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray06};
+  & > span {
+    border-radius: 100px;
+  }
+`
+
+export const MProfileBoxBottom = styled.div``
+
+export const MArrowRight = styled(ArrowRightOutlined)`
+  width: 32px;
+  height: 32px;
+  padding: 10px;
+  & path {
+    color: ${({ theme }) => theme.colors.gray01};
+  }
+  & svg {
+    width: 100%;
+    height: 100%;
+  }
 `

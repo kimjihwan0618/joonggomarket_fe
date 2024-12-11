@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 
 export const Wrapper = styled.div`
   max-width: 1200px;
+  margin: 0 auto;
 `
 export const BestUsedItemSectionTitle = styled.h3`
   font-size: 3.6rem;

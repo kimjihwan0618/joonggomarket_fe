@@ -6,6 +6,7 @@ import { useMoveToPage } from '../../hooks/custom/useMoveToPage'
 import { useRouter } from 'next/router'
 import UserLoggedIn from './userLoggedIn/UserLoggedIn.index'
 import PointModalUI from './userLoggedIn/PointModal/PointModal.index'
+import MobileNavigation from './mobileNavigation/MobileNavigation.index'
 
 const menus = [
   { name: '자유게시판', path: '/boards' },
@@ -39,6 +40,7 @@ export default function Header(): JSX.Element {
                 />
               </S.Logo>
             </Link>
+            {/* 태블릿 & PC뷰 */}
             <S.Navigation>
               <S.MenuList>
                 {menus.map((menu, idx) => (
@@ -53,6 +55,10 @@ export default function Header(): JSX.Element {
             </S.Navigation>
           </S.LogoNavigationWrapper>
           <UserLoggedIn setPointModalisOpen={setPointModalisOpen} />
+          {/* // 태블릿 & PC뷰 */}
+          {/* 모바일 네비게이션 */}
+          <MobileNavigation setPointModalisOpen={setPointModalisOpen} />
+          {/* // 모바일 네비게이션 */}
         </S.HeaderInner>
       </S.Header>
     </>
