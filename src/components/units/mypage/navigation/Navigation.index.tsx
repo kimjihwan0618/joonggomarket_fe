@@ -61,7 +61,7 @@ export default function MypageNavigation(props: IMypageNavigationUIProps): JSX.E
         <S.PointText>
           <Image unoptimized src="/images/ic_savings_02_on.png" width={24} height={24} />
           <S.Point>
-            {new Intl.NumberFormat('en-US').format(data?.fetchUserLoggedIn.userPoint?.amount)}P
+            {new Intl.NumberFormat('en-US').format(data?.fetchUserLoggedIn.userPoint?.amount)}원
           </S.Point>
         </S.PointText>
       </S.InfoBox>

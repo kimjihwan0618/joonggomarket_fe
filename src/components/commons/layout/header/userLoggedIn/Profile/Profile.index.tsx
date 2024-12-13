@@ -2,7 +2,7 @@ import * as S from 'src/components/commons/layout/header/Header.styles'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
-import { useMutationLogoutUser } from 'src/components/commons/hooks/mutations/user/useMutationLogout'
+import { useMutationLogout } from 'src/components/commons/hooks/mutations/user/useMutationLogout'
 import { Modal } from 'antd'
 import type { Dispatch, RefObject, SetStateAction } from 'react'
 import { IQuery } from 'src/commons/types/generated/types'
@@ -18,21 +18,10 @@ interface IProfileUIProps {
 export default function ProfileUI(props: IProfileUIProps): JSX.Element {
   const router = useRouter()
   const { moveToPage } = useMoveToPage()
-  const { logoutUser } = useMutationLogoutUser()
+  const { logoutUser } = useMutationLogout()
 
   const onClickProfileButton = () => {
     props.setIsHidden((prev) => !prev)
-  }
-
-  const onClickLogout = async (): Promise<void> => {
-    try {
-      const result = await logoutUser()
-      if (result?.data?.logoutUser) {
-        router.reload()
-      }
-    } catch (error) {
-      if (error instanceof Error) Modal.error({ content: error.message })
-    }
   }
 
   return (
@@ -88,7 +77,7 @@ export default function ProfileUI(props: IProfileUIProps): JSX.Element {
               {new Intl.NumberFormat('en-US').format(
                 props.data?.fetchUserLoggedIn.userPoint?.amount
               )}
-              P
+              원
             </S.Point>
           </S.TextWrapper>
         </S.ProfileInfo>
@@ -96,7 +85,7 @@ export default function ProfileUI(props: IProfileUIProps): JSX.Element {
           <S.AddPointButton onClick={() => props.setPointModalisOpen(true)}>
             <Image unoptimized src={`/images/ic_savings.png`} width={24} height={24} /> 충전하기
           </S.AddPointButton>
-          <S.LogoutButton onClick={onClickLogout}>
+          <S.LogoutButton onClick={logoutUser}>
             <Image unoptimized src={`/images/ic_logout.png`} width={24} height={24} />
             로그아웃
           </S.LogoutButton>

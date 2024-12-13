@@ -11,6 +11,7 @@ declare module '@emotion/react' {
       gray05: string
       gray06: string
       gray07: string
+      gray08: string
     }
   }
 }

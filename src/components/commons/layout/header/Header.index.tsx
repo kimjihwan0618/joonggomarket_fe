@@ -7,13 +7,11 @@ import { useRouter } from 'next/router'
 import UserLoggedIn from './userLoggedIn/UserLoggedIn.index'
 import PointModalUI from './userLoggedIn/PointModal/PointModal.index'
 import MobileNavigation from './mobileNavigation/MobileNavigation.index'
-
-const menus = [
-  { name: '자유게시판', path: '/boards' },
-  { name: '중고마켓', path: '/markets' },
-]
+import { useRecoilState } from 'recoil'
+import { menuState } from 'src/commons/stores'
 
 export default function Header(): JSX.Element {
+  const [menus] = useRecoilState(menuState)
   const { pathname } = useRouter()
   const [pointModalisOpen, setPointModalisOpen] = useState(false)
   const [basePath, setBasePath] = useState('')

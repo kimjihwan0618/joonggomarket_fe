@@ -61,6 +61,15 @@ export const ButtonWrapper = styled.div`
   }
 `
 
+export const MButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  button:first-of-type {
+    margin-right: 16px;
+  }
+`
+
 export const LogoNavigationWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -86,6 +95,36 @@ export const Menu = styled.li`
   cursor: pointer;
   &:last-of-type {
     margin-right: 0px;
+  }
+`
+
+export const MMenuList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: ${({ theme }) => theme.colors.gray08};
+  border-radius: 8px;
+`
+
+export const MMenu = styled.li`
+  font-size: 1.6rem;
+  width: 100%;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray05};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  span {
+    font-size: 1.8rem;
+  }
+
+  &:last-of-type {
+    border-bottom: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
   }
 `
 
@@ -217,6 +256,12 @@ export const MMenuBar = styled.div`
   background: white;
   box-sizing: border-box;
   padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+`
+export const MMenuBarInner = styled.div`
+  width: 100%;
 `
 
 export const MCloseButton = styled(CloseOutlined)`
@@ -247,8 +292,8 @@ export const MProfileInfo = styled.div`
   align-items: flex-start;
   margin-left: 16px;
   width: 100%;
-  padding: 16px;
-  background: ${({ theme }) => theme.colors.gray07};
+  padding: 12px 16px 16px 16px;
+  background: ${({ theme }) => theme.colors.gray08};
   border-radius: 8px;
 `
 
@@ -280,7 +325,26 @@ export const MProfileBoxTop = styled.div`
   }
 `
 
-export const MProfileBoxBottom = styled.div``
+export const MProfileBoxBottom = styled.dl`
+  width: 100%;
+  padding: 16px;
+  background: ${({ theme }) => theme.colors.gray08};
+  border-radius: 8px;
+  font-size: 1.8rem;
+  display: flex;
+  justify-content: space-between;
+`
+export const MProfilePointTitle = styled.dt`
+  font-size: 1.8rem;
+`
+export const MProfilePointText = styled.dd`
+  font-size: 2rem;
+  span {
+    font-size: 2rem;
+    font-weight: bold;
+    color: ${({ theme }) => theme.colors.main};
+  }
+`
 
 export const MArrowRight = styled(ArrowRightOutlined)`
   width: 32px;
@@ -293,4 +357,14 @@ export const MArrowRight = styled(ArrowRightOutlined)`
     width: 100%;
     height: 100%;
   }
+`
+export const MLogoutButton = styled.dl`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`
+
+export const MLogoutButtonText = styled.dt`
+  font-size: 1.8rem;
+  margin-right: 12px;
 `
