@@ -1,10 +1,9 @@
 import styled from '@emotion/styled'
+import theme from 'src/commons/styles/theme'
 
 export const Wrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: url(/images/login_bg.jpg) no-repeat 50% 50%;
-  background-size: auto 130%;
+  width: 100%;
+  height: 100%;
   &:after {
     position: absolute;
     left: 0;
@@ -13,6 +12,18 @@ export const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
+    display: block;
+    content: '';
+  }
+  &:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: url(/images/login_bg.jpg) no-repeat 50% 50%;
+    background-size: auto 130%;
     display: block;
     content: '';
   }
@@ -30,6 +41,9 @@ export const LoginFormBox = styled.div`
   width: 420px;
   dl {
     margin-bottom: 21px;
+  }
+  ${theme.media.screen3} {
+    width: 320px;
   }
 `
 
