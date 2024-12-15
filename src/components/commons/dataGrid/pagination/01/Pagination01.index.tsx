@@ -29,23 +29,23 @@ export default function Pagination(props: IPaginationProps): JSX.Element {
 
   const onClickPrev = (): void => {
     if (props.startPage === 1) return
-    props.setStartPage(props.startPage - 10)
+    props.setStartPage(props.startPage - 5)
     void props.refetch({
       ...{
-        page: props.startPage - 10,
+        page: props.startPage - 5,
       },
       ...props.refetchVariables,
     })
-    props.setSelectedPage(props.startPage - 10)
+    props.setSelectedPage(props.startPage - 5)
   }
 
   const onClickNext = (): void => {
-    if (props.startPage + 10 <= lastPage) {
-      props.setStartPage(props.startPage + 10)
-      props.setSelectedPage(props.startPage + 10)
+    if (props.startPage + 5 <= lastPage) {
+      props.setStartPage(props.startPage + 5)
+      props.setSelectedPage(props.startPage + 5)
       void props.refetch({
         ...{
-          page: props.startPage + 10,
+          page: props.startPage + 5,
         },
         ...props.refetchVariables,
       })
@@ -59,7 +59,7 @@ export default function Pagination(props: IPaginationProps): JSX.Element {
           <Image unoptimized src={`/images/ic_page_prev.png`} width={7.41} height={12} />
         </S.PrevButton>
       )}
-      {new Array(10).fill('').map(
+      {new Array(5).fill('').map(
         (_, index) =>
           index + props.startPage <= lastPage && (
             <S.PageButton

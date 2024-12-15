@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import theme from 'src/commons/styles/theme'
 
 export const Wrapper = styled.div`
   max-width: 1200px;
@@ -19,10 +20,23 @@ export const BestBoardsSectionTitle = styled.h3`
 `
 
 export const BestBoardWrapper = styled.div`
+  margin-bottom: 80px;
+  ${theme.media.screen3} {
+    margin-bottom: 40px;
+    position: relative;
+    width: 100%;
+    overflow: scroll;
+  }
+`
+export const BestBoardWrapperInner = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 80px;
+  padding: 16px 0;
+  ${theme.media.screen3} {
+    width: 190%;
+  }
 `
+
 export const BestBoardItem = styled.div`
   box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.15);
   border-radius: 14px;

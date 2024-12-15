@@ -1,10 +1,14 @@
 import styled from '@emotion/styled'
+import theme from 'src/commons/styles/theme'
 
 export const SearchWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
   justify-content: space-between;
+  ${theme.media.screen3} {
+    flex-direction: column-reverse;
+  }
 `
 
 export const SearcInputhWrapper = styled.div`
@@ -39,6 +43,9 @@ export const SearchRightItems = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
+  ${theme.media.screen3} {
+    width: 100%;
+  }
 `
 
 export const DatePickerBox = styled.div`
@@ -63,5 +70,15 @@ export const DatePickerBox = styled.div`
     font-size: 1.6rem;
     padding: 0px;
     margin: 0px; */
+  }
+  ${theme.media.screen3} {
+    margin: 0px;
+    width: 100%;
+    .ant-picker {
+      width: 50%;
+    }
+    ${theme.media.screen3} {
+      margin-bottom: 22px;
+    }
   }
 `

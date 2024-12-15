@@ -41,36 +41,38 @@ export default function BoardListUI(): JSX.Element {
     <S.Wrapper>
       <S.BestBoardsSectionTitle>베스트 게시글</S.BestBoardsSectionTitle>
       <S.BestBoardWrapper>
-        {boardsBest?.fetchBoardsOfTheBest.map((el) => (
-          <S.BestBoardItem id={el._id} onClick={moveToPage(`/boards/${el._id}`)}>
-            <S.ItemImageBox>
-              <Image
-                unoptimized
-                src={
-                  el.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))
-                    .length !== 0
-                    ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${el.images.filter((image) => image !== '')[0]}`
-                    : '/images/ic-noimage.jpg'
-                }
-                objectFit="cover"
-                layout="fill"
-              />
-            </S.ItemImageBox>
-            <S.BoardInfo>
-              <S.Title>{el.title}</S.Title>
-              <S.Detail>
-                <ul>
-                  <S.Writer>{el.writer}</S.Writer>
-                  <S.CreatedAt>{toYYYYMMDD(el.createdAt)}</S.CreatedAt>
-                </ul>
-                <S.ThumbBox>
-                  <Image unoptimized src={'/images/ic_thumb_up.png'} width={24} height={24} />
-                  <S.ThumbCount>{el.likeCount}</S.ThumbCount>
-                </S.ThumbBox>
-              </S.Detail>
-            </S.BoardInfo>
-          </S.BestBoardItem>
-        ))}
+        <S.BestBoardWrapperInner>
+          {boardsBest?.fetchBoardsOfTheBest.map((el) => (
+            <S.BestBoardItem id={el._id} onClick={moveToPage(`/boards/${el._id}`)}>
+              <S.ItemImageBox>
+                <Image
+                  unoptimized
+                  src={
+                    el.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))
+                      .length !== 0
+                      ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${el.images.filter((image) => image !== '')[0]}`
+                      : '/images/ic-noimage.jpg'
+                  }
+                  objectFit="cover"
+                  layout="fill"
+                />
+              </S.ItemImageBox>
+              <S.BoardInfo>
+                <S.Title>{el.title}</S.Title>
+                <S.Detail>
+                  <ul>
+                    <S.Writer>{el.writer}</S.Writer>
+                    <S.CreatedAt>{toYYYYMMDD(el.createdAt)}</S.CreatedAt>
+                  </ul>
+                  <S.ThumbBox>
+                    <Image unoptimized src={'/images/ic_thumb_up.png'} width={24} height={24} />
+                    <S.ThumbCount>{el.likeCount}</S.ThumbCount>
+                  </S.ThumbBox>
+                </S.Detail>
+              </S.BoardInfo>
+            </S.BestBoardItem>
+          ))}
+        </S.BestBoardWrapperInner>
       </S.BestBoardWrapper>
       <Searchbars01UI
         refetchData={refetchBoards}
