@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import theme from 'src/commons/styles/theme'
 
 export const Wrapper = styled.div`
   margin-top: 31px;
@@ -22,6 +23,9 @@ export const AnswerBox = styled.div`
   margin-bottom: 20px;
   &:last-of-type {
     margin-bottom: 0px;
+  }
+  ${theme.media.screen3} {
+    width: 85%;
   }
 `
 

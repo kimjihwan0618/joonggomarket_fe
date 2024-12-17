@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
+import theme from 'src/commons/styles/theme'
 
 const InputStyle = css`
   padding: 14px 20px;
@@ -43,6 +44,9 @@ export const Rating = styled.div`
   }
   div:last-of-type {
     margin-right: 0px;
+  }
+  ${theme.media.screen3} {
+    margin-top: 14px;
   }
 `
 

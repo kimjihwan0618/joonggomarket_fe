@@ -69,7 +69,7 @@ export const ItemImageBox = styled.div`
 `
 
 export const BoardInfo = styled.dl`
-  padding: 20px 20px 6px 20px;
+  padding: 20px 12px 6px 12px;
 `
 
 export const Title = styled.dt`
@@ -105,4 +105,5 @@ export const ThumbBox = styled.div``
 export const ThumbCount = styled.p`
   font-size: 1.6rem;
   font-weight: 400;
+  text-align: center;
 `

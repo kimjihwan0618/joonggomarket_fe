@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import ReactPlayer from 'react-player'
 import { css } from '@emotion/react'
+import theme from 'src/commons/styles/theme'
 
 const IconButton = css`
   background: none;
@@ -12,6 +13,9 @@ export const ContentWrapper = styled.div`
   /* min-width: 920px; */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   border-radius: 14px;
+  ${theme.media.screen3} {
+    padding: 40px 25px;
+  }
 `
 
 export const BoardTitleWrapper = styled.div`
@@ -37,11 +41,15 @@ export const Info = styled.dl`
   dt {
     font-size: 2.4rem;
     font-weight: 500;
+    margin-bottom: 4px;
   }
   dd {
     font-size: 1.3rem;
     margin-left: 0px;
     color: rgba(130, 130, 130, 1);
+  }
+  ${theme.media.screen3} {
+    margin-left: 8px;
   }
 `
 

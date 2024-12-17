@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import theme from 'src/commons/styles/theme'
 
 export const Wrapper = styled.div`
   max-width: 1200px;
@@ -12,10 +13,24 @@ export const BestUsedItemSectionTitle = styled.h3`
 `
 
 export const BestUsedItemWrapper = styled.div`
+  margin-bottom: 80px;
+  ${theme.media.screen3} {
+    margin-bottom: 40px;
+    position: relative;
+    width: 100%;
+    overflow: scroll;
+  }
+`
+
+export const BestUsedItemWrapperInner = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 80px;
+  padding: 16px 0;
+  ${theme.media.screen3} {
+    width: 190%;
+  }
 `
+
 export const BestUsedItem = styled.div`
   box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.15);
   border-radius: 14px;
@@ -48,7 +63,7 @@ export const ItemImageBox = styled.div`
 `
 
 export const UsedItemInfo1 = styled.dl`
-  padding: 20px;
+  padding: 20px 12px 6px 12px;
 `
 
 export const Title = styled.dt`
@@ -100,6 +115,9 @@ export const TabsItem = styled.ul`
   display: flex;
   align-items: center;
   margin-left: 28px;
+  ${theme.media.screen3} {
+    margin-left: 14px;
+  }
 `
 export const Tab = styled.li`
   font-size: 1.8rem;

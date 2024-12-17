@@ -16,6 +16,7 @@ export const useMoveToPage = (): IUseMoveToPageReturn => {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
 
   const moveToPage = (path: string) => () => {
+    console.log('ㅇㅇ?')
     if (!SKIP_PAGE_HISTORY.includes(path)) {
       setVisitedPage(path)
     }

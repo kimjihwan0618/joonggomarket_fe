@@ -42,34 +42,36 @@ export default function UsedItemListUI(): JSX.Element {
     <S.Wrapper>
       <S.BestUsedItemSectionTitle>베스트 상품</S.BestUsedItemSectionTitle>
       <S.BestUsedItemWrapper>
-        {usedItemsBest?.fetchUseditemsOfTheBest.map((el) => (
-          <S.BestUsedItem onClick={moveToPage(`/markets/${el._id}`)}>
-            <S.ItemImageBox>
-              <Image
-                unoptimized
-                src={
-                  el.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))
-                    .length !== 0
-                    ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${el.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))[0]}`
-                    : '/images/ic-noimage.jpg'
-                }
-                objectFit="cover"
-                layout="fill"
-              />
-            </S.ItemImageBox>
-            <S.UsedItemInfo1>
-              <S.Title>{el.name}</S.Title>
-              <S.Remarks>{el.remarks}</S.Remarks>
-              <S.InfoBottom>
-                <S.Price>{new Intl.NumberFormat('en-US').format(el.price)}원</S.Price>
-                <S.PickedItem>
-                  <Image unoptimized src="/images/ic_favorite.png" width={24} height={24} />
-                  <S.PickedCount>{el.pickedCount}</S.PickedCount>
-                </S.PickedItem>
-              </S.InfoBottom>
-            </S.UsedItemInfo1>
-          </S.BestUsedItem>
-        ))}
+        <S.BestUsedItemWrapperInner>
+          {usedItemsBest?.fetchUseditemsOfTheBest.map((el) => (
+            <S.BestUsedItem onClick={moveToPage(`/markets/${el._id}`)}>
+              <S.ItemImageBox>
+                <Image
+                  unoptimized
+                  src={
+                    el.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))
+                      .length !== 0
+                      ? `${process.env.NEXT_PUBLIC_S3_STORAGE}${el.images.filter((imagePath) => imagePath !== '' && imagePath.includes('.'))[0]}`
+                      : '/images/ic-noimage.jpg'
+                  }
+                  objectFit="cover"
+                  layout="fill"
+                />
+              </S.ItemImageBox>
+              <S.UsedItemInfo1>
+                <S.Title>{el.name}</S.Title>
+                <S.Remarks>{el.remarks}</S.Remarks>
+                <S.InfoBottom>
+                  <S.Price>{new Intl.NumberFormat('en-US').format(el.price)}원</S.Price>
+                  <S.PickedItem>
+                    <Image unoptimized src="/images/ic_favorite.png" width={24} height={24} />
+                    <S.PickedCount>{el.pickedCount}</S.PickedCount>
+                  </S.PickedItem>
+                </S.InfoBottom>
+              </S.UsedItemInfo1>
+            </S.BestUsedItem>
+          ))}
+        </S.BestUsedItemWrapperInner>
       </S.BestUsedItemWrapper>
       <S.UsedItemSearchWrapper>
         <S.SearchWrapper>

@@ -67,8 +67,8 @@ export const globalStyles = css`
       min-width: 480px;
     }
     ${theme.media.screen3} {
-      width: 80%;
-      min-width: 400px;
+      width: 84%;
+      min-width: 370px;
     }
   }
 

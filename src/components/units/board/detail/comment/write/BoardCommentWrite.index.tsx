@@ -76,14 +76,14 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps): J
           register={register('writer')}
           readOnly={props.isEdit}
           placeholder="작성자"
-          width="180px"
+          width="169px"
           maxLength={10}
         />
         <InputWithError
           register={register('password')}
           type="password"
           placeholder="비밀번호"
-          width="180px"
+          width="169px"
           maxLength={15}
         />
         <S.Rating>

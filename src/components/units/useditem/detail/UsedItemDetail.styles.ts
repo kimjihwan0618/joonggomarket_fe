@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
+import theme from 'src/commons/styles/theme'
 
 const IconButton = css`
   background: none;
@@ -11,6 +12,9 @@ export const ContentWrapper = styled.div`
   /* min-width: 920px; */
   border-radius: 14px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  ${theme.media.screen3} {
+    padding: 40px 25px;
+  }
 `
 
 export const UsedItemTitleWrapper = styled.div`
@@ -24,6 +28,9 @@ export const UsedItemTitleWrapper = styled.div`
 export const CarouselWrapper = styled.div`
   margin: 60px auto 0px;
   width: 360px;
+  ${theme.media.screen3} {
+    width: 220px;
+  }
 `
 
 export const Carousel = styled.div`
@@ -65,12 +72,24 @@ export const Carousel = styled.div`
   .slick-dots li.slick-active button:before {
     color: ${({ theme }) => theme.colors.main}; /* 활성화된 동그라미 버튼 색상 */
   }
+  ${theme.media.screen3} {
+    .slick-prev {
+      left: -60px;
+    }
+    .slick-next {
+      right: -40px;
+    }
+  }
 `
 
 export const ImageWrapper = styled.div`
   position: relative;
   height: 360px;
   overflow: hidden; /* 이미지가 컨테이너를 벗어나지 않도록 설정 */
+  ${theme.media.screen3} {
+    height: 260px;
+    margin-bottom: 20px;
+  }
 `
 
 export const ImageBox = styled.div`
@@ -175,7 +194,7 @@ export const ButtonWrapper = styled.div`
   border-bottom: 1px solid rgba(189, 189, 189, 1);
 
   button:nth-of-type(2) {
-    margin: 0 24px;
+    margin-left: 24px;
   }
 `
 

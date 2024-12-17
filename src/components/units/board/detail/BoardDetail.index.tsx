@@ -24,6 +24,7 @@ export default function BoardDetailUI(): JSX.Element {
   const { disLikeBoard } = useMutationDisLikeBoard(data?.fetchBoard)
   const { likeBoard } = useMutationLikeBoard(data?.fetchBoard)
   const { onCopyLink } = useTextCopy()
+  const [buttonWidth, setButtonWidth] = useState('02')
 
   const onClickDeleteOk = async (): Promise<void> => {
     await deleteBoard()
@@ -41,6 +42,20 @@ export default function BoardDetailUI(): JSX.Element {
     if (error) {
       Modal.warning({ content: '유효한 게시글이 아닙니다.' })
       moveToPage(`/boards`)()
+    }
+
+    const handleResize = () => {
+      if (window.innerWidth <= 767) {
+        setButtonWidth('02') // 브라우저 가로 크기가 767 이하일 때 버튼 너비를 04로 설정
+      } else {
+        setButtonWidth('04') // 다시 02로 설정
+      }
+    }
+    window.addEventListener('resize', handleResize)
+    handleResize() // 초기값 설정
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
     }
   }, [error])
 
@@ -157,13 +172,13 @@ export default function BoardDetailUI(): JSX.Element {
             </S.ContentsWrapper>
           </S.ContentWrapper>
           <S.ButtonWrapper>
-            <Button01 onClick={moveToPage('/boards')} name={'목록으로'} width="04" />
+            <Button01 onClick={moveToPage('/boards')} name={'목록으로'} width={buttonWidth} />
             <Button01
               onClick={moveToPage(`/boards/${boardId}/edit`)}
               name={'수정하기'}
-              width="04"
+              width={buttonWidth}
             />
-            <Button01 onClick={() => setIsOpen(true)} name={'삭제하기'} width="04" />
+            <Button01 onClick={() => setIsOpen(true)} name={'삭제하기'} width={buttonWidth} />
           </S.ButtonWrapper>
         </>
       )}

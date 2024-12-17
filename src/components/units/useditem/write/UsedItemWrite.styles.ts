@@ -1,10 +1,13 @@
 import styled from '@emotion/styled'
-
+import theme from 'src/commons/styles/theme'
 export const ContentWrapper = styled.div`
   padding: 40px 75px 60px;
   /* min-width: 920px; */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   border-radius: 14px;
+  ${theme.media.screen3} {
+    padding: 40px 25px;
+  }
 `
 
 export const ContentTitle = styled.h2`
@@ -12,6 +15,9 @@ export const ContentTitle = styled.h2`
   font-weight: 700;
   margin-bottom: 80px;
   text-align: center;
+  ${theme.media.screen3} {
+    margin-bottom: 45px;
+  }
 `
 
 export const FormWrapper = styled.div`
@@ -77,14 +83,26 @@ export const MapAddressWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 560px;
+  ${theme.media.screen3} {
+    margin-top: 50px;
+    flex-direction: column;
+    height: 630px;
+  }
 `
 export const MapWrapper = styled.div`
   width: 40%;
   height: 75%;
   border: 1px solid ${({ theme }) => theme.colors.gray05};
+  ${theme.media.screen3} {
+    width: 100%;
+    height: 200px;
+  }
 `
 export const AddressWrapper = styled.div`
   width: calc(60% - 24px);
+  ${theme.media.screen3} {
+    width: 100%;
+  }
 `
 
 export const LatLng = styled.div`

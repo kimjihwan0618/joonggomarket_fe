@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import theme from 'src/commons/styles/theme'
 
 const width = {
   '01': '14px 16px',
@@ -27,5 +28,9 @@ export const Button = styled.button`
 export const Text = styled.p`
   font-weight: 500;
   color: ${(props) => (props['data-disabled'] ? props.theme.colors.gray03 : props['data-color'])};
+  white-space: nowrap;
+  ${theme.media.screen3} {
+    font-size: 1.2rem;
+  }
   /* color: ${(props) => props['data-color']}; */
 `

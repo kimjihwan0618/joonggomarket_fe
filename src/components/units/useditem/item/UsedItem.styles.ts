@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-
+import theme from 'src/commons/styles/theme'
 export const UsedItem = styled.div`
   display: flex;
   position: relative;
@@ -12,6 +12,9 @@ export const UsedItem = styled.div`
     background: ${({ theme }) => theme.colors.gray07};
   }
   height: 160px;
+  ${theme.media.screen3} {
+    height: 180px;
+  }
 `
 
 export const ItemImageBox2 = styled.div`
@@ -28,6 +31,12 @@ export const UsedItemInfo2 = styled.div`
   align-items: center;
   margin-left: 40px;
   justify-content: space-between;
+  ${theme.media.screen3} {
+    width: calc(100% - 100px);
+    margin-left: 20px;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
 `
 
 export const LeftInfo = styled.ul``
@@ -81,6 +90,9 @@ export const Price2 = styled.p`
   font-weight: bold;
   font-size: 2.4rem;
   text-align: right;
+  ${theme.media.screen3} {
+    margin-bottom: 12px;
+  }
 `
 
 export const IsSold = styled.p`

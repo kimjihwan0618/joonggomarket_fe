@@ -1,10 +1,14 @@
 import styled from '@emotion/styled'
+import theme from 'src/commons/styles/theme'
 
 export const ContentWrapper = styled.div`
   padding: 40px 55px;
   /* min-width: 920px; */
   border-radius: 14px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  ${theme.media.screen3} {
+    padding: 40px 25px;
+  }
 `
 
 export const ContentTitle = styled.h2`
@@ -12,6 +16,9 @@ export const ContentTitle = styled.h2`
   font-weight: 700;
   margin-bottom: 80px;
   text-align: center;
+  ${theme.media.screen3} {
+    margin-bottom: 45px;
+  }
 `
 
 export const FormWrapper = styled.div`

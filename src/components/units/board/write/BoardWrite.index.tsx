@@ -115,7 +115,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
             label="내용"
             register={register('contents')}
             placeholder="내용을 작성해주세요"
-            height="480px"
+            height="380px"
             error={formState.errors.contents?.message}
           />
           <S.PostAddressWrapper>
