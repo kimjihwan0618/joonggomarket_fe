@@ -333,10 +333,19 @@ export const MProfileBoxBottom = styled.dl`
   font-size: 1.8rem;
   display: flex;
   justify-content: space-between;
+  &:last-of-type {
+    margin-top: 12px;
+    background: ${({ theme }) => theme.colors.main};
+    span {
+      color: black;
+    }
+  }
 `
+
 export const MProfilePointTitle = styled.dt`
   font-size: 1.8rem;
 `
+
 export const MProfilePointText = styled.dd`
   font-size: 2rem;
   span {

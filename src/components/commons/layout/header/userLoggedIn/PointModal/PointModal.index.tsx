@@ -45,7 +45,7 @@ export default function PointModalUI(props: IPointModalUIProps): JSX.Element {
       },
       async function (response: any) {
         const { success, imp_uid } = response
-        console.log(response)
+        // console.log(response)
         if (success) {
           await createPointTransactionOfLoading(imp_uid)
         } else {

@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import * as S from '../Header.styles'
 import { useRecoilState } from 'recoil'
 import { accessTokenState } from 'src/commons/stores'
@@ -8,7 +8,6 @@ import Image from 'next/image'
 import { menuState } from 'src/commons/stores'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useMutationLogout } from 'src/components/commons/hooks/mutations/user/useMutationLogout'
-import ButtonsUI from '../userLoggedIn/Buttons/Buttons.index'
 import Button02 from 'src/components/commons/buttons/02/Button02.index'
 import theme from 'src/commons/styles/theme'
 
@@ -74,6 +73,12 @@ export default function MobileNavigation(props: IUserLoggedInProps): JSX.Element
                         )}
                       </span>
                       &nbsp;원
+                    </S.MProfilePointText>
+                  </S.MProfileBoxBottom>
+                  <S.MProfileBoxBottom>
+                    <S.MProfilePointTitle>충전하기</S.MProfilePointTitle>
+                    <S.MProfilePointText>
+                      <span>+</span>
                     </S.MProfilePointText>
                   </S.MProfileBoxBottom>
                 </S.MProfileBox>
