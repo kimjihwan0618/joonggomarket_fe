@@ -11,6 +11,7 @@ interface IButton01Props {
   background?: ThemeColorValues
   color?: string
   iconSrc?: string
+  isLoading?: boolean
   width?: '01' | '02' | '03' | '04'
   fullWidth?: boolean
   name: string
@@ -26,9 +27,13 @@ export default function Button02(props: IButton01Props): JSX.Element {
       data-fullwidth={props.fullWidth ?? false}
     >
       {props.iconSrc && <Image unoptimized src={props.iconSrc} width={18} height={18} />}
-      <S.Text data-disabled={props.disabled} data-color={props.color ?? theme.colors.dark01}>
-        {props.name}
-      </S.Text>
+      {props.isLoading ? (
+        <Image unoptimized src={'/loading.gif'} width={24} height={24} />
+      ) : (
+        <S.Text data-disabled={props.disabled} data-color={props.color ?? theme.colors.dark01}>
+          {props.name}
+        </S.Text>
+      )}
     </S.Button>
   )
 }

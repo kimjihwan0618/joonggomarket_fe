@@ -22,9 +22,10 @@ export const CREATE_USER = gql`
 export const useMutationCreateUser = (props: IUseMutationCreateUserProps) => {
   const router = useRouter()
   const { moveToPage } = useMoveToPage()
-  const [createUserMutation] = useMutation<Pick<IMutation, 'createUser'>, IMutationCreateUserArgs>(
-    CREATE_USER
-  )
+  const [createUserMutation, { loading }] = useMutation<
+    Pick<IMutation, 'createUser'>,
+    IMutationCreateUserArgs
+  >(CREATE_USER)
 
   const createUser = async (): Promise<void> => {
     const { email, password, name } = props.getValues()
@@ -45,5 +46,5 @@ export const useMutationCreateUser = (props: IUseMutationCreateUserProps) => {
     }
   }
 
-  return { createUser }
+  return { createUser, loading }
 }

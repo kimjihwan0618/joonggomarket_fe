@@ -15,7 +15,7 @@ export default function SignupUI(): JSX.Element {
     resolver: yupResolver(schema),
     mode: 'onChange',
   })
-  const { createUser } = useMutationCreateUser({ getValues })
+  const { createUser, loading } = useMutationCreateUser({ getValues })
 
   return (
     <S.Wrapper>
@@ -59,7 +59,8 @@ export default function SignupUI(): JSX.Element {
         />
         <Button02
           background={!formState.isValid ? theme.colors.gray03 : theme.colors.main}
-          disabled={!formState.isValid}
+          disabled={!formState.isValid || loading}
+          isLoading={loading}
           name="회원가입하기"
           onClick={createUser}
           color={!formState.isValid && 'white'}

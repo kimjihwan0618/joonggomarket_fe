@@ -16,7 +16,7 @@ export default function LoginUI(): JSX.Element {
     resolver: yupResolver(schema),
     mode: 'onChange',
   })
-  const { loginUser } = useMutationLoginUser()
+  const { loginUser, loading } = useMutationLoginUser()
 
   const onClickLogin = () => {
     loginUser({
@@ -62,7 +62,8 @@ export default function LoginUI(): JSX.Element {
         />
         <Button02
           background={!formState.isValid ? theme.colors.gray03 : theme.colors.main}
-          disabled={!formState.isValid}
+          disabled={!formState.isValid || loading}
+          isLoading={loading}
           name="로그인하기"
           onClick={onClickLogin}
           color={!formState.isValid && 'white'}
