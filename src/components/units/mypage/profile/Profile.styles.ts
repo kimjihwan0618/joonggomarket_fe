@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import theme from 'src/commons/styles/theme'
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -23,6 +24,9 @@ export const Label = styled.label`
   font-size: 1.6rem;
   white-space: nowrap;
   color: ${({ theme }) => theme.colors.gray02};
+  ${theme.media.screen3} {
+    margin-right: 0;
+  }
 `
 
 export const Bottom = styled.div`

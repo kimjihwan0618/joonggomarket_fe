@@ -77,8 +77,7 @@ export const DatePickerBox = styled.div`
     .ant-picker {
       width: 50%;
     }
-    ${theme.media.screen3} {
-      margin-bottom: 22px;
-    }
+    /* margin-bottom: 22px; */
+    margin: 0 0px 22px 22px;
   }
 `

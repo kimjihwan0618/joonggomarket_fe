@@ -7,6 +7,7 @@ import theme from 'src/commons/styles/theme'
 import Button01 from 'src/components/commons/buttons/01/Button01.index'
 import { useQueryFetchUserLoggedIn } from 'src/components/commons/hooks/quires/user/useQueryFetchUserLoggedIn'
 import { useMutationResetUserPassword } from 'src/components/commons/hooks/mutations/user/useMutationResetUserPassword'
+import { useEffect, useState } from 'react'
 
 export default function MyProfileUI(): JSX.Element {
   const { register, formState, setValue, getValues } = useForm<IUserUpdateForm>({
@@ -20,6 +21,23 @@ export default function MyProfileUI(): JSX.Element {
     password: getValues('password'),
     newPassword: getValues('newPassword'),
   })
+  const [inputWidth, setInputWidth] = useState('66%')
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 767) {
+        setInputWidth('230px') //
+      } else {
+        setInputWidth('66%')
+      }
+    }
+    window.addEventListener('resize', handleResize)
+    handleResize() // 초기값 설정
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   return (
     <S.Wrapper>
@@ -28,7 +46,7 @@ export default function MyProfileUI(): JSX.Element {
         <S.FormItem>
           <S.Label>현재 비밀번호</S.Label>
           <InputWithError
-            width="66%"
+            width={inputWidth}
             type="password"
             style={{ background: theme.colors.gray06, border: 'none' }}
             register={register('password')}
@@ -39,7 +57,7 @@ export default function MyProfileUI(): JSX.Element {
         <S.FormItem>
           <S.Label>새 비밀번호</S.Label>
           <InputWithError
-            width="66%"
+            width={inputWidth}
             type="password"
             style={{ background: theme.colors.gray06, border: 'none' }}
             register={register('newPassword')}
@@ -50,7 +68,7 @@ export default function MyProfileUI(): JSX.Element {
         <S.FormItem>
           <S.Label>새 비밀번호 확인</S.Label>
           <InputWithError
-            width="66%"
+            width={inputWidth}
             type="password"
             style={{ background: theme.colors.gray06, border: 'none' }}
             register={register('newPasswordCheck')}

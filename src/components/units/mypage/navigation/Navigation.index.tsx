@@ -8,7 +8,7 @@ import { useMutationUpdateUser } from 'src/components/commons/hooks/mutations/us
 
 const MAPAGE_SUB_PAGES = [
   { link: '/market', name: '내 장터', icon: '/ic_shopping_cart_02' },
-  { link: '/point', name: '내 포인트', icon: '/ic_savings_02' },
+  { link: '/point', name: '포인트 내역', icon: '/ic_savings_02' },
   { link: '/profile', name: '내 프로필', icon: '/ic_profile_02' },
 ]
 
@@ -36,22 +36,22 @@ export default function MypageNavigation(props: IMypageNavigationUIProps): JSX.E
       <S.ProfileImageBox>
         <S.ImageBox>
           {uploadFileLoading || updateUserLoading ? (
-            <Image unoptimized src="/loading.gif" width={80} height={80} />
+            <Image unoptimized src="/loading.gif" width={120} height={120} />
           ) : data?.fetchUserLoggedIn?.picture ? (
             <Image
               unoptimized
               onClick={() => fileRef.current?.click()}
               src={`${process.env.NEXT_PUBLIC_S3_STORAGE}${data?.fetchUserLoggedIn?.picture}`}
-              width={80}
-              height={80}
+              width={120}
+              height={120}
             />
           ) : (
             <Image
               unoptimized
               onClick={() => fileRef.current?.click()}
               src="/images/ic_profile.png"
-              width={80}
-              height={80}
+              width={120}
+              height={120}
             />
           )}
         </S.ImageBox>
@@ -67,15 +67,22 @@ export default function MypageNavigation(props: IMypageNavigationUIProps): JSX.E
       </S.InfoBox>
       <S.SubMenuList>
         {MAPAGE_SUB_PAGES.map((menu) => (
-          <S.MenuItem onClick={moveToPage(`/mypage${menu.link}`)}>
-            <Image
-              unoptimized
-              src={
-                props.page === menu.link ? `/images${menu.icon}_on.png` : `/images${menu.icon}.png`
-              }
-              width={24}
-              height={24}
-            />
+          <S.MenuItem
+            data-isactive={props.page === menu.link}
+            onClick={moveToPage(`/mypage${menu.link}`)}
+          >
+            <S.ImageWrapper>
+              <Image
+                unoptimized
+                src={
+                  props.page === menu.link
+                    ? `/images${menu.icon}_on.png`
+                    : `/images${menu.icon}.png`
+                }
+                width={24}
+                height={24}
+              />
+            </S.ImageWrapper>
             <S.Text data-active={props.page === menu.link}>{menu.name}</S.Text>
           </S.MenuItem>
         ))}

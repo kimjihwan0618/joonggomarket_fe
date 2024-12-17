@@ -6,7 +6,7 @@ import type {
   IMutationResetUserPasswordArgs,
 } from 'src/commons/types/generated/types'
 import { useMutationLoginUser } from './useMutationLoginUser'
-import { useMutationLogoutUser } from './useMutationLogout'
+import { useMutationLogout } from './useMutationLogout'
 import { useMoveToPage } from '../../custom/useMoveToPage'
 
 interface IUseMutationResetUserPasswordProps {
@@ -25,7 +25,7 @@ export const useMutationResetUserPassword = (props: IUseMutationResetUserPasswor
   const { email, password, newPassword } = props
   const { moveToPage } = useMoveToPage()
   const { loginUser } = useMutationLoginUser()
-  const { logoutUser } = useMutationLogoutUser()
+  const { logoutUser } = useMutationLogout()
   const [resetUserPasswordMutation] = useMutation<
     Pick<IMutation, 'resetUserPassword'>,
     IMutationResetUserPasswordArgs
@@ -42,10 +42,8 @@ export const useMutationResetUserPassword = (props: IUseMutationResetUserPasswor
         })
         if (resetPasswordResult?.data?.resetUserPassword) {
           Modal.success({ content: '비밀번호가 변경되었습니다. 다시 로그인해주세요.' })
-          const logoutResult = await logoutUser()
-          if (logoutResult?.data?.logoutUser) {
-            moveToPage(`/login`)()
-          }
+          await logoutUser()
+          moveToPage(`/login`)()
         }
       }
     } catch (error) {

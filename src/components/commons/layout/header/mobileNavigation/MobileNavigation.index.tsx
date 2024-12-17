@@ -52,7 +52,12 @@ export default function MobileNavigation(props: IUserLoggedInProps): JSX.Element
                         alt="프로필 이미지"
                       />
                     )}
-                    <S.MProfileInfo>
+                    <S.MProfileInfo
+                      onClick={() => {
+                        moveToPage('/mypage/market')()
+                        setIsOpen(false)
+                      }}
+                    >
                       <S.MProfileName>
                         <span>{data?.fetchUserLoggedIn.name}</span>
                         <S.MArrowRight />

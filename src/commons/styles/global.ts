@@ -69,6 +69,7 @@ export const globalStyles = css`
     ${theme.media.screen3} {
       width: 84%;
       min-width: 370px;
+      margin: 60px auto 40px;
     }
   }
 
