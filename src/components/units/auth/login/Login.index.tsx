@@ -28,7 +28,7 @@ export default function LoginUI(): JSX.Element {
 
   return (
     <S.Wrapper>
-      <S2.PageBackButton onClick={moveToBack('/boards')}>
+      <S2.PageBackButton onClick={moveToBack()}>
         <Image
           unoptimized
           src="/images/ic_close-white.png"

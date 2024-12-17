@@ -24,9 +24,9 @@ export const RESET_USER_PASSWORD = gql`
 export const useMutationResetUserPassword = (props: IUseMutationResetUserPasswordProps) => {
   const { email, password, newPassword } = props
   const { moveToPage } = useMoveToPage()
-  const { loginUser } = useMutationLoginUser()
+  const { loginUser, loading: loginLoading } = useMutationLoginUser()
   const { logoutUser } = useMutationLogout()
-  const [resetUserPasswordMutation] = useMutation<
+  const [resetUserPasswordMutation, { loading: resetLoading }] = useMutation<
     Pick<IMutation, 'resetUserPassword'>,
     IMutationResetUserPasswordArgs
   >(RESET_USER_PASSWORD)
@@ -51,5 +51,5 @@ export const useMutationResetUserPassword = (props: IUseMutationResetUserPasswor
     }
   }
 
-  return { resetUserPassword }
+  return { resetUserPassword, resetLoading, loginLoading }
 }

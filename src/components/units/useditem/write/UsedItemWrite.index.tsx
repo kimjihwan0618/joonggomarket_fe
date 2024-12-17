@@ -212,7 +212,7 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
         </S.FormWrapper>
         <S.ButtonWrapper>
           <Button01
-            onClick={moveToBack(`/markets/${router.query.useditemId}`)}
+            onClick={moveToBack()}
             background={theme.colors.dark01}
             color={'white'}
             name={'취소하기'}

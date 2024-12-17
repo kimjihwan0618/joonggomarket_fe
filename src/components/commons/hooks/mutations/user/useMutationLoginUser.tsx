@@ -24,7 +24,7 @@ export const useMutationLoginUser = () => {
   const { moveToPage } = useMoveToPage()
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [vistedPage, setVisitedPage] = useRecoilState(vistedPageState)
-  const [loginUserMutation, { data }] = useMutation<
+  const [loginUserMutation, { data, loading }] = useMutation<
     Pick<IMutation, 'loginUser'>,
     IMutationLoginUserArgs
   >(LOGIN_USER)
@@ -51,5 +51,5 @@ export const useMutationLoginUser = () => {
     }
   }
 
-  return { loginUser, data }
+  return { loginUser, data, loading }
 }

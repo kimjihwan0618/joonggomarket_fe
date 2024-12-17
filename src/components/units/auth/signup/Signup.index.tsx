@@ -19,7 +19,7 @@ export default function SignupUI(): JSX.Element {
 
   return (
     <S.Wrapper>
-      <S.PageBackButton onClick={moveToBack('/login')}>
+      <S.PageBackButton onClick={moveToBack()}>
         <Image
           unoptimized
           src="/images/ic_close-white.png"

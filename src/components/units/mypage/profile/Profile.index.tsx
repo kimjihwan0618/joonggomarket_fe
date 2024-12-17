@@ -16,7 +16,7 @@ export default function MyProfileUI(): JSX.Element {
   })
 
   const { data } = useQueryFetchUserLoggedIn()
-  const { resetUserPassword } = useMutationResetUserPassword({
+  const { resetUserPassword, resetLoading, loginLoading } = useMutationResetUserPassword({
     email: data?.fetchUserLoggedIn.email,
     password: getValues('password'),
     newPassword: getValues('newPassword'),
@@ -78,7 +78,8 @@ export default function MyProfileUI(): JSX.Element {
         </S.FormItem>
         <S.Bottom>
           <Button01
-            disabled={!formState.isValid}
+            disabled={!formState.isValid || resetLoading || loginLoading}
+            isLoading={resetLoading || loginLoading}
             onClick={resetUserPassword}
             background={theme.colors.main}
             name={`비밀번호 변경`}

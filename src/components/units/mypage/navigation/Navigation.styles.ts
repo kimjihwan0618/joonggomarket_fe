@@ -64,7 +64,7 @@ export const PointText = styled.div`
 export const Point = styled.p`
   margin-left: 6px;
   font-weight: bold;
-  font-size: 1.6rem;
+  font-size: 2rem;
   ${theme.media.screen3} {
     font-size: 2rem;
   }

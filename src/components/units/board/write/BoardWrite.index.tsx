@@ -163,7 +163,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps): JSX.Element {
         </S.FormWrapper>
         <S.ButtonWrapper>
           <Button01
-            onClick={moveToBack(`/boards/${router.query.boardId}`)}
+            onClick={moveToBack()}
             background={theme.colors.dark01}
             color={'white'}
             name={'취소하기'}
