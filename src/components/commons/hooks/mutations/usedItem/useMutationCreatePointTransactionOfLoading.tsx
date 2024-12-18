@@ -5,7 +5,6 @@ import type {
   IMutationCreatePointTransactionOfLoadingArgs,
   IQuery,
 } from 'src/commons/types/generated/types'
-import { useRouter } from 'next/router'
 import { FETCH_USER_LOGGEDIN } from '../../quires/user/useQueryFetchUserLoggedIn'
 
 export const CREATE_POINT_TRANSACTION_OF_LOADING = gql`
@@ -64,7 +63,13 @@ export const useMutationCreatePointTransactionOfLoading = () => {
         content: `${new Intl.NumberFormat('en-US').format(result?.data.createPointTransactionOfLoading.amount)}원 포인트 충전이 완료되었습니다.`,
       })
     } catch (error) {
-      if (error instanceof Error) Modal.error({ content: error.message })
+      if (error instanceof Error) {
+        if (error.message.includes('이미 처리')) {
+          Modal.warning({ content: error.message })
+        } else {
+          Modal.error({ content: error.message })
+        }
+      }
     }
   }
 

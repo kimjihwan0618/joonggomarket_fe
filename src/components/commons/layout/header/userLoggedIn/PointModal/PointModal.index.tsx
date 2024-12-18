@@ -1,12 +1,13 @@
 import { Modal } from 'antd'
 import Image from 'next/image'
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as S from './PointModal.styles'
 import Button02 from 'src/components/commons/buttons/02/Button02.index'
 import theme from 'src/commons/styles/theme'
 import { useMutationCreatePointTransactionOfLoading } from 'src/components/commons/hooks/mutations/usedItem/useMutationCreatePointTransactionOfLoading'
 import { useQueryFetchUserLoggedIn } from 'src/components/commons/hooks/quires/user/useQueryFetchUserLoggedIn'
+import { useRouter } from 'next/router'
 
 declare const window: typeof globalThis & {
   IMP: any
@@ -18,6 +19,7 @@ interface IPointModalUIProps {
 }
 
 export default function PointModalUI(props: IPointModalUIProps): JSX.Element {
+  const router = useRouter()
   const [selectedPoint, setSelectedPoint] = useState('')
   const { createPointTransactionOfLoading, loading } = useMutationCreatePointTransactionOfLoading()
   const { data } = useQueryFetchUserLoggedIn()
@@ -28,6 +30,7 @@ export default function PointModalUI(props: IPointModalUIProps): JSX.Element {
 
   const onClickAddPoint = () => {
     const IMP = window.IMP
+    const vistedPage = window.location.href
     IMP.init(process.env.NEXT_PUBLIC_PORTONE_API_KEY)
     IMP.request_pay(
       {
@@ -41,19 +44,28 @@ export default function PointModalUI(props: IPointModalUIProps): JSX.Element {
         buyer_tel: '010-5838-5146',
         buyer_addr: '경기도 용인시 기흥구',
         buyer_postcode: '01181',
-        m_redirect_url: process.env.NEXT_PUBLIC_PORTONE_MOBILE_REDIRECT_URL, // 모바일에서는 결제시, 페이지 주소가 바뀜. 따라서, 결제 끝나고 돌아갈 주소 입력해야함
+        m_redirect_url: vistedPage, // 모바일에서는 결제시, 페이지 주소가 바뀜. 따라서, 결제 끝나고 돌아갈 주소 입력해야함
       },
       async function (response: any) {
         const { success, imp_uid } = response
-        // console.log(response)
         if (success) {
           await createPointTransactionOfLoading(imp_uid)
-        } else {
+          window.location.href = vistedPage
+        } else if (!response?.error_msg.includes('결제포기')) {
           Modal.error({ content: '카카오페이 결제를 정상적으로 처리하지 못하였습니다.' })
         }
       }
     )
   }
+
+  useEffect(() => {
+    if (router.isReady) {
+      const { imp_uid, imp_success } = router.query
+      if (imp_success === 'true' && typeof imp_uid === 'string') {
+        createPointTransactionOfLoading(imp_uid)
+      }
+    }
+  }, [router.isReady, router.query])
 
   return (
     <>

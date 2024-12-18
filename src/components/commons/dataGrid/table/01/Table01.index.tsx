@@ -1,3 +1,4 @@
+import theme from 'src/commons/styles/theme'
 import * as S from 'src/components/commons/dataGrid/table/01/Table01.Styles'
 
 interface ITableProps {
@@ -35,7 +36,9 @@ export default function Table(props: ITableProps): JSX.Element {
                     .replaceAll(props.keyword, `!@#${props.keyword}!@#`)
                     .split('!@#')
                     .map((el2: string) => (
-                      <span style={{ color: el2 === props.keyword ? 'red' : 'black' }}>{el2}</span>
+                      <span style={{ color: el2 === props.keyword ? theme.colors.main : 'black' }}>
+                        {el2}
+                      </span>
                     ))}
                 </td>
               ) : column.dataKey.includes('.') ? (

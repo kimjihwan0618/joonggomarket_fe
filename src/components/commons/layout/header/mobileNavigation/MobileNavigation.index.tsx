@@ -75,7 +75,7 @@ export default function MobileNavigation(props: IUserLoggedInProps): JSX.Element
                       &nbsp;원
                     </S.MProfilePointText>
                   </S.MProfileBoxBottom>
-                  <S.MProfileBoxBottom>
+                  <S.MProfileBoxBottom onClick={() => props.setPointModalisOpen(true)}>
                     <S.MProfilePointTitle>충전하기</S.MProfilePointTitle>
                     <S.MProfilePointText>
                       <span>+</span>

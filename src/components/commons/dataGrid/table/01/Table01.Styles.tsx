@@ -43,6 +43,9 @@ export const TableRow = styled.tr`
       white-space: nowrap;
       word-break: break-all;
     }
+    span {
+      font-size: 1.4rem;
+    }
   }
   td[data-issearch='true'] {
     &:hover {
