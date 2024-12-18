@@ -9,12 +9,12 @@ const items = [
   {
     title: '커뮤니티',
     description: `회원 인증없이 자유롭게 글을 쓰고 읽을 수 있는 서비스입니다.`,
-    src: `/images/banner01.png`,
+    src: `/images/banner01.jpg`,
   },
   {
     title: '중고거래',
     description: `유저 등록후, 중고 물품을 거래할 수 있는 서비스입니다.`,
-    src: `/images/banner02.png`,
+    src: `/images/banner02.jpg`,
   },
 ]
 
