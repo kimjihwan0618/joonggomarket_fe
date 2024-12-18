@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import theme from 'src/commons/styles/theme'
 
 export const Wrapper = styled.div`
   margin-top: 31px;
@@ -27,17 +28,26 @@ export const Writer = styled.p`
   margin: 0px;
   margin-right: 18px;
   display: inline-block;
+  ${theme.media.screen3} {
+    font-size: 1.2rem;
+  }
 `
 
 export const Question = styled.p`
   margin: 0px;
   margin-top: 4px;
+  ${theme.media.screen3} {
+    font-size: 1.2rem;
+  }
 `
 
 export const Date = styled.p`
   color: ${({ theme }) => theme.colors.gray04};
   margin-top: 12px;
   font-size: 1.2rem;
+  ${theme.media.screen3} {
+    font-size: 1.4rem;
+  }
 `
 
 export const QuestionInfo = styled.div`
