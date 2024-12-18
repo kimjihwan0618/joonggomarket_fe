@@ -78,6 +78,6 @@ export const DatePickerBox = styled.div`
       width: 50%;
     }
     /* margin-bottom: 22px; */
-    margin: 0 0px 22px 22px;
+    margin: 0px 0px 22px 0;
   }
 `

@@ -4,7 +4,7 @@ export const schema = yup
   .object({
     writer: yup
       .string()
-      .max(15, '작성자는 최대 15자리 이하로 입력해주세요.')
+      .max(8, '작성자는 최대 8자리 이하로 입력해주세요.')
       .required('작성자를 입력해주세요.'),
     password: yup
       .string()

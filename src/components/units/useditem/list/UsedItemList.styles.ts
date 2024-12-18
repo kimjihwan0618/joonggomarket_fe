@@ -14,6 +14,12 @@ export const BestUsedItemSectionTitle = styled.h3`
 
 export const BestUsedItemWrapper = styled.div`
   margin-bottom: 80px;
+  ${theme.media.screen2} {
+    margin-bottom: 40px;
+    position: relative;
+    width: 100%;
+    overflow: scroll;
+  }
   ${theme.media.screen3} {
     margin-bottom: 40px;
     position: relative;
@@ -47,6 +53,10 @@ export const BestUsedItem = styled.div`
   &:hover {
     transform: translateY(-2px);
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.2);
+  }
+  min-width: 190px;
+  ${theme.media.screen3} {
+    min-width: auto;
   }
 `
 

@@ -140,7 +140,11 @@ export default function BoardDetailUI(): JSX.Element {
                 </pre>
               </S.ContentsMain>
               {data?.fetchBoard?.youtubeUrl && (
-                <S.YoutubePlayer url={data?.fetchBoard?.youtubeUrl} />
+                <S.YoutubePlayer
+                  width={'90%'}
+                  height={'300px'}
+                  url={data?.fetchBoard?.youtubeUrl}
+                />
               )}
               <S.ThumbsWrapper>
                 <li>

@@ -21,6 +21,12 @@ export const BestBoardsSectionTitle = styled.h3`
 
 export const BestBoardWrapper = styled.div`
   margin-bottom: 80px;
+  ${theme.media.screen2} {
+    margin-bottom: 40px;
+    position: relative;
+    width: 100%;
+    overflow: scroll;
+  }
   ${theme.media.screen3} {
     margin-bottom: 40px;
     position: relative;
@@ -47,12 +53,16 @@ export const BestBoardItem = styled.div`
   overflow: hidden;
   cursor: pointer;
   transition: all 0.05s ease-in-out;
+  min-width: 190px;
   &:last-of-type {
     margin-right: 0px;
   }
   &:hover {
     transform: translateY(-2px);
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.2);
+  }
+  ${theme.media.screen3} {
+    min-width: auto;
   }
 `
 

@@ -2,6 +2,7 @@ import { gql, useMutation } from '@apollo/client'
 import { Modal } from 'antd'
 import type { IMutation, IMutationDeleteBoardArgs } from 'src/commons/types/generated/types'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
+import { FETCH_BOARDS } from '../../quires/board/useQueryFetchBoards'
 
 export const DELETE_BOARD = gql`
   mutation deleteBoard($boardId: ID!, $password: String!) {
@@ -28,15 +29,16 @@ export const useMutationDeletaBoard = (
         update(cache) {
           cache.modify({
             fields: {
-              fetchBoards(existingBoards = [], { readField }) {
-                return existingBoards.filter((board) => readField('_id', board) !== boardId)
-              },
               fetchBoardsOfTheBest(existingBoards = [], { readField }) {
                 return existingBoards.filter((board) => readField('_id', board) !== boardId)
+              },
+              fetchBoardsCount(existingCount = 0) {
+                return existingCount - 1
               },
             },
           })
         },
+        refetchQueries: [{ query: FETCH_BOARDS }],
         // 리패치 제거
         // FETCH_BOARDS, FETCH_BOARDS_BEST
       })

@@ -9,6 +9,7 @@ import { IBoardWriterForm } from 'src/components/units/board/write/BoardWrite.sc
 import type { UseFormGetValues } from 'react-hook-form'
 import { useMoveToPage } from 'src/components/commons/hooks/custom/useMoveToPage'
 import { useMutationUploadFile } from '../file/useMutationUploadFile'
+import { FETCH_BOARDS_COUNT } from '../../quires/board/useQueryFetchBoardsCount'
 
 interface IuseMutationCreateBoardProps {
   getValues: UseFormGetValues<IBoardWriterForm>
@@ -75,8 +76,13 @@ export const useMutationCreateBoard = (props: IuseMutationCreateBoardProps) => {
 
           cache.modify({
             fields: {
+              fetchBoardsCount(existingCount = 0) {
+                return existingCount + 1
+              },
               fetchBoards(existingBoards = []) {
-                return [newBoardRef, ...existingBoards]
+                if (existingBoards.length < 10) {
+                  return [newBoardRef, ...existingBoards]
+                }
               },
               fetchBoardsOfTheBest(existingBoards = []) {
                 if (existingBoards.length < 4) {
@@ -91,6 +97,7 @@ export const useMutationCreateBoard = (props: IuseMutationCreateBoardProps) => {
         // 리패치 제거
         // FETCH_BOARDS
         // FETCH_BOARDS_BEST
+        // FETCH_BOARDS_COUNT
       })
       if (result?.data?.createBoard?._id) {
         Modal.success({ content: '게시글이 등록되었습니다.' })

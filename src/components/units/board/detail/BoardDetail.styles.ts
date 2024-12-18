@@ -66,6 +66,7 @@ export const ContentsMain = styled.div`
   margin: 40px 0 80px;
   pre {
     font-size: 1.6rem;
+    white-space: normal;
   }
 `
 
@@ -120,7 +121,7 @@ export const Thumbs = styled.dl`
 `
 
 export const YoutubePlayer = styled(ReactPlayer)`
-  margin: 120px auto 0;
+  margin: 40px auto;
   /* width: 486px !important;
   height: 240px !important; */
 `
