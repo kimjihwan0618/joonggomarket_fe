@@ -23,7 +23,7 @@ export const useMoveToPage = (): IUseMoveToPageReturn => {
   }
 
   const moveToBack = () => () => {
-    if (!vistedPage || vistedPage.includes('/mypage') || vistedPage === '/markets/write') {
+    if (!vistedPage || vistedPage.includes('/mypage') || vistedPage === '/markets/new') {
       setVisitedPage('/')
       void router.push('/')
     } else {

@@ -171,7 +171,7 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
                     type="number"
                     placeholder="위도(LAT)"
                     label="위도"
-                    width="160px"
+                    width="149px"
                   />
                   <InputWithError
                     register={register('lng')}
@@ -179,7 +179,7 @@ export default function UsedItemWriteUI(props: IUsedItemWriteUIProps): JSX.Eleme
                     type="number"
                     placeholder="경도(LNG)"
                     label="경도"
-                    width="160px"
+                    width="149px"
                   />
                 </S.LatLng>
               </S.GpsWrapper>
