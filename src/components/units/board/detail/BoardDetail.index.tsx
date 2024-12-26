@@ -24,7 +24,7 @@ export default function BoardDetailUI(): JSX.Element {
   const { disLikeBoard } = useMutationDisLikeBoard(data?.fetchBoard)
   const { likeBoard } = useMutationLikeBoard(data?.fetchBoard)
   const { onCopyLink } = useTextCopy()
-  const [buttonWidth, setButtonWidth] = useState('02')
+  const [buttonWidth, setButtonWidth] = useState<'01' | '02' | '03' | '04'>('02')
 
   const onClickDeleteOk = async (): Promise<void> => {
     await deleteBoard()

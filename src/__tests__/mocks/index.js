@@ -1,3 +1,4 @@
+import 'isomorphic-fetch'
 import { setupServer } from 'msw/node'
 import apis from './apis'
 

@@ -1,4 +1,5 @@
-import { graphql } from 'graphql'
+import { graphql } from 'msw'
+// 버전 호환성 문제로 1.1.0 버전 사용
 
 const gql = graphql.link('http://mock.com/graphql')
 
