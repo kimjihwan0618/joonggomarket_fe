@@ -16,8 +16,8 @@ export default function Table(props: ITableProps): JSX.Element {
       <S.TableHead>
         <S.TableHeadRow>
           <th>번호</th>
-          {props.columns.map((column) => (
-            <th key={column.name}>{column.name}</th>
+          {props.columns.map((column, idx) => (
+            <th key={`${column.name}-${idx}`}>{column.name}</th>
           ))}
         </S.TableHeadRow>
       </S.TableHead>
