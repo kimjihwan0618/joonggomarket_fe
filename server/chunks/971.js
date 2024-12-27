@@ -16,11 +16,9 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9316);
-/* harmony import */ var src_components_commons_hooks_quires_board_useQueryFetchBoards__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9754);
-/* harmony import */ var _file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9473);
+/* harmony import */ var _file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9473);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__]);
 src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
-
 
 
 
@@ -35,7 +33,7 @@ const CREATE_BOARD = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
 `;
 const useMutationCreateBoard = (props)=>{
     const { moveToPage  } = (0,src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__/* .useMoveToPage */ .G)();
-    const { uploadFile  } = (0,_file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_4__/* .useMutationUploadFile */ .sY)();
+    const { uploadFile  } = (0,_file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_3__/* .useMutationUploadFile */ .sY)();
     const [createBoardMutation, { loading  }] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useMutation)(CREATE_BOARD);
     const createBoard = async ()=>{
         const { addressDetail , writer , password , title , contents , youtubeUrl , address , zipcode  } = props.getValues();
@@ -67,11 +65,48 @@ const useMutationCreateBoard = (props)=>{
                 variables: {
                     createBoardInput
                 },
-                refetchQueries: [
-                    {
-                        query: src_components_commons_hooks_quires_board_useQueryFetchBoards__WEBPACK_IMPORTED_MODULE_3__/* .FETCH_BOARDS */ .X
-                    }, 
-                ]
+                update (cache, { data  }) {
+                    const newBoardRef = cache.writeFragment({
+                        data: {
+                            __typename: 'Board',
+                            ...data === null || data === void 0 ? void 0 : data.createBoard
+                        },
+                        fragment: _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
+              fragment NewBoard on Board {
+                _id
+                title
+                contents
+                writer
+                createdAt
+              }
+            `
+                    });
+                    cache.modify({
+                        fields: {
+                            fetchBoardsCount (existingCount = 0) {
+                                return existingCount + 1;
+                            },
+                            fetchBoards (existingBoards = []) {
+                                if (existingBoards.length < 10) {
+                                    return [
+                                        newBoardRef,
+                                        ...existingBoards
+                                    ];
+                                }
+                            },
+                            fetchBoardsOfTheBest (existingBoards = []) {
+                                if (existingBoards.length < 4) {
+                                    return [
+                                        ...existingBoards,
+                                        newBoardRef
+                                    ];
+                                } else {
+                                    return existingBoards;
+                                }
+                            }
+                        }
+                    });
+                }
             });
             if (result === null || result === void 0 ? void 0 : (ref4 = result.data) === null || ref4 === void 0 ? void 0 : (ref1 = ref4.createBoard) === null || ref1 === void 0 ? void 0 : ref1._id) {
                 var ref2, ref3;
@@ -112,11 +147,9 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9316);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var src_components_commons_hooks_quires_board_useQueryFetchBoard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1601);
-/* harmony import */ var _file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9473);
+/* harmony import */ var _file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9473);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__]);
 src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
-
 
 
 
@@ -128,13 +161,20 @@ const UPDATE_BOARD = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
       _id
       title
       contents
-      writer
+      youtubeUrl
+      images
+      updatedAt
+      boardAddress {
+        zipcode
+        address
+        addressDetail
+      }
     }
   }
 `;
 const useMutationUpdateBoard = (props)=>{
     const router = (0,next_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
-    const { uploadFile  } = (0,_file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_5__/* .useMutationUploadFile */ .sY)();
+    const { uploadFile  } = (0,_file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_4__/* .useMutationUploadFile */ .sY)();
     const { moveToPage  } = (0,src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__/* .useMoveToPage */ .G)();
     const [updateBoardMutation, { loading  }] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useMutation)(UPDATE_BOARD);
     const updateBoard = async ()=>{
@@ -180,14 +220,23 @@ const useMutationUpdateBoard = (props)=>{
                     password: password,
                     updateBoardInput
                 },
-                refetchQueries: [
-                    {
-                        query: src_components_commons_hooks_quires_board_useQueryFetchBoard__WEBPACK_IMPORTED_MODULE_4__/* .FETCH_BOARD */ .u,
-                        variables: {
-                            boardId: router.query.boardId
+                update (cache, { data  }) {
+                    const updatedBoard = data.updateBoard;
+                    cache.modify({
+                        fields: {
+                            fetchBoard (existingBoard, { readField  }) {
+                                if (readField('_id', existingBoard) === updatedBoard._id) {
+                                    return {
+                                        ...existingBoard,
+                                        ...updatedBoard
+                                    };
+                                }
+                                return existingBoard // 일치하지 않으면 기존 게시글 반환
+                                ;
+                            }
                         }
-                    }, 
-                ]
+                    });
+                }
             });
             if (result === null || result === void 0 ? void 0 : (ref4 = result.data) === null || ref4 === void 0 ? void 0 : (ref1 = ref4.updateBoard) === null || ref1 === void 0 ? void 0 : ref1._id) {
                 var ref2, ref3;
@@ -210,6 +259,54 @@ const useMutationUpdateBoard = (props)=>{
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ 1601:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "H": () => (/* binding */ useQueryFetchBoard)
+/* harmony export */ });
+/* unused harmony export FETCH_BOARD */
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9114);
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_0__);
+
+const FETCH_BOARD = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
+  query fetchBoard($boardId: ID!) {
+    fetchBoard(boardId: $boardId) {
+      _id
+      writer
+      title
+      contents
+      youtubeUrl
+      likeCount
+      dislikeCount
+      images
+      createdAt
+      updatedAt
+      boardAddress {
+        _id
+        zipcode
+        address
+        addressDetail
+      }
+    }
+  }
+`;
+const useQueryFetchBoard = (boardId)=>{
+    const { data , error  } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useQuery)(FETCH_BOARD, {
+        variables: {
+            boardId
+        },
+        skip: !boardId
+    });
+    return {
+        data,
+        error
+    };
+};
+
 
 /***/ }),
 
@@ -378,7 +475,7 @@ function BoardWriteUI(props) {
                                 label: "내용",
                                 register: register('contents'),
                                 placeholder: "내용을 작성해주세요",
-                                height: "480px",
+                                height: "380px",
                                 error: (ref3 = formState.errors.contents) === null || ref3 === void 0 ? void 0 : ref3.message
                             }),
                             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_BoardWrite_styles__WEBPACK_IMPORTED_MODULE_1__/* .PostAddressWrapper */ .Wb, {
@@ -438,7 +535,7 @@ function BoardWriteUI(props) {
                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_BoardWrite_styles__WEBPACK_IMPORTED_MODULE_1__/* .ButtonWrapper */ .W4, {
                         children: [
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(src_components_commons_buttons_01_Button01_index__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
-                                onClick: moveToBack(`/boards/${router.query.boardId}`),
+                                onClick: moveToBack(),
                                 background: src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_5__/* ["default"].colors.dark01 */ .Z.colors.dark01,
                                 color: 'white',
                                 name: '취소하기',
@@ -475,11 +572,17 @@ __webpack_async_result__();
 /* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(yup__WEBPACK_IMPORTED_MODULE_0__);
 
 const schema = yup__WEBPACK_IMPORTED_MODULE_0__.object({
-    writer: yup__WEBPACK_IMPORTED_MODULE_0__.string().required('작성자를 입력해주세요.'),
+    writer: yup__WEBPACK_IMPORTED_MODULE_0__.string().max(8, '작성자는 최대 8자리 이하로 입력해주세요.').required('작성자를 입력해주세요.'),
     password: yup__WEBPACK_IMPORTED_MODULE_0__.string().min(4, '비밀번호는 최소 4자리 이상으로 입력해주세요.').max(15, '비밀번호는 최대 15자리 이하로 입력해주세요.').required('비밀번호는 필수 입력입니다.'),
     title: yup__WEBPACK_IMPORTED_MODULE_0__.string().required('제목을 입력해주세요.'),
     contents: yup__WEBPACK_IMPORTED_MODULE_0__.string().required('내용을 입력해주세요.'),
-    youtubeUrl: yup__WEBPACK_IMPORTED_MODULE_0__.string().url('올바른 URL 형식이 아닙니다').notRequired(),
+    youtubeUrl: yup__WEBPACK_IMPORTED_MODULE_0__.string().url('올바른 URL 형식이 아닙니다').test('is-valid-watch-url', '유효한 Youtube이 아닙니다', (value)=>{
+        if (!value) return true // Allow empty values
+        ;
+        const watchRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.?be\/).+$/ // YouTube watch URL 정규 표현식
+        ;
+        return watchRegex.test(value);
+    }).notRequired(),
     address: yup__WEBPACK_IMPORTED_MODULE_0__.string().notRequired(),
     addressDetail: yup__WEBPACK_IMPORTED_MODULE_0__.string().notRequired(),
     zipcode: yup__WEBPACK_IMPORTED_MODULE_0__.string().notRequired()
@@ -504,19 +607,28 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */ });
 /* unused harmony export RadioItem */
 /* harmony import */ var _emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4115);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__]);
-_emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9500);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__]);
+([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 const ContentWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
-  padding: 40px 75px 60px;
+  padding: 40px 55px;
   /* min-width: 920px; */
+  border-radius: 14px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    padding: 40px 25px;
+  }
 `;
 const ContentTitle = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].h2`
   font-size: 3.6rem;
   font-weight: 700;
   margin-bottom: 80px;
   text-align: center;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    margin-bottom: 45px;
+  }
 `;
 const FormWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   margin-bottom: 40px;
@@ -552,9 +664,9 @@ const RadioItem = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   & > input[type='radio'] {
     width: 20px;
     height: 20px;
-    accent-color: ${({ theme  })=>theme.colors.main
+    accent-color: ${({ theme: theme1  })=>theme1.colors.main
 };
-    background-color: ${({ theme  })=>theme.colors.main
+    background-color: ${({ theme: theme2  })=>theme2.colors.main
 };
   }
 `;

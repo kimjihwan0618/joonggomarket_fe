@@ -1,6 +1,6 @@
 "use strict";
-exports.id = 316;
-exports.ids = [316];
+exports.id = 587;
+exports.ids = [587];
 exports.modules = {
 
 /***/ 3600:
@@ -8,6 +8,7 @@ exports.modules = {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Te": () => (/* binding */ menuState),
 /* harmony export */   "LR": () => (/* binding */ accessTokenState),
 /* harmony export */   "uV": () => (/* binding */ vistedPageState),
 /* harmony export */   "JE": () => (/* binding */ restoreAccessTokenLoadable)
@@ -19,6 +20,19 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([src_
 src_lib_getAccessToken__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 
+const menuState = (0,recoil__WEBPACK_IMPORTED_MODULE_0__.atom)({
+    key: 'menuState',
+    default: [
+        {
+            name: '자유게시판',
+            path: '/boards'
+        },
+        {
+            name: '중고마켓',
+            path: '/markets'
+        }, 
+    ]
+});
 const accessTokenState = (0,recoil__WEBPACK_IMPORTED_MODULE_0__.atom)({
     key: 'accessTokenState',
     default: ''
@@ -34,6 +48,44 @@ const restoreAccessTokenLoadable = (0,recoil__WEBPACK_IMPORTED_MODULE_0__.select
         return newAccessToken;
     }
 });
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ 9500:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _emotion_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3139);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_react__WEBPACK_IMPORTED_MODULE_0__]);
+_emotion_react__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+
+const theme = {
+    colors: {
+        main: '#FFD600',
+        gray01: '#333333',
+        gray02: '#4f4f4f',
+        gray03: '#828282',
+        gray04: '#bdbdbd',
+        gray05: '#e0e0e0',
+        gray06: '#f2f2f2',
+        gray07: '#f5f5f5',
+        gray08: '#f7f7f7',
+        dark01: '#161616'
+    },
+    media: {
+        // screen1: '@media (min-width: 1440px)', // largeDesktop
+        screen1: '@media (min-width: 1200px) and (max-width: 1439px)',
+        screen2: '@media (min-width: 768px) and (max-width: 1199px)',
+        screen3: '@media (max-width: 767px)'
+    }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (theme);
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
@@ -72,12 +124,10 @@ const useMoveToPage = ()=>{
             void router.push(path);
         }
     ;
-    const moveToBack = (path)=>()=>{
-            if (!vistedPage) {
-                setVisitedPage(path);
-                void router.push(path);
-            } else if (!accessToken) {
-                window.history.go(-2);
+    const moveToBack = ()=>()=>{
+            if (!vistedPage || vistedPage.includes('/mypage') || vistedPage === '/markets/new') {
+                setVisitedPage('/');
+                void router.push('/');
             } else {
                 window.history.go(-1);
             }

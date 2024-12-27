@@ -70,7 +70,7 @@ const UPDATE_USER = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
   }
 `;
 const useMutationUpdateUser = ()=>{
-    const [updateUserMutation] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useMutation)(UPDATE_USER);
+    const [updateUserMutation, { loading  }] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useMutation)(UPDATE_USER);
     const updateUser = async (props)=>{
         try {
             const result = await updateUserMutation({
@@ -79,11 +79,24 @@ const useMutationUpdateUser = ()=>{
                         picture: props.picture
                     }
                 },
-                refetchQueries: [
-                    {
+                update (cache, { data  }) {
+                    if (!data) return; // 데이터가 없으면 아무 작업도 하지 않음
+                    // 기존 캐시에서 fetchUserLoggedIn 데이터를 가져오기
+                    const existingData = cache.readQuery({
                         query: _quires_user_useQueryFetchUserLoggedIn__WEBPACK_IMPORTED_MODULE_2__/* .FETCH_USER_LOGGEDIN */ .v
-                    }, 
-                ]
+                    });
+                    if (existingData === null || existingData === void 0 ? void 0 : existingData.fetchUserLoggedIn) {
+                        cache.writeQuery({
+                            query: _quires_user_useQueryFetchUserLoggedIn__WEBPACK_IMPORTED_MODULE_2__/* .FETCH_USER_LOGGEDIN */ .v,
+                            data: {
+                                fetchUserLoggedIn: {
+                                    ...existingData.fetchUserLoggedIn,
+                                    picture: data.updateUser.picture
+                                }
+                            }
+                        });
+                    }
+                }
             });
         } catch (error) {
             if (error instanceof Error) antd__WEBPACK_IMPORTED_MODULE_1__.Modal.error({
@@ -92,7 +105,8 @@ const useMutationUpdateUser = ()=>{
         }
     };
     return {
-        updateUser
+        updateUser,
+        loading
     };
 };
 
@@ -177,16 +191,24 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   "q": () => (/* binding */ MypageContentWrapper)
 /* harmony export */ });
 /* harmony import */ var _emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4115);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__]);
-_emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9500);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__]);
+([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 const Wrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   display: flex;
   justify-content: space-between;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    flex-direction: column;
+  }
 `;
 const MypageContentWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   padding-left: 40px;
   width: 100%;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    padding-left: 0px;
+  }
 `;
 
 __webpack_async_result__();
@@ -229,7 +251,7 @@ const MAPAGE_SUB_PAGES = [
     },
     {
         link: '/point',
-        name: '내 포인트',
+        name: '포인트 내역',
         icon: '/ic_savings_02'
     },
     {
@@ -242,9 +264,9 @@ function MypageNavigation(props) {
     var ref5, ref1, ref2;
     const { moveToPage  } = (0,src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_1__/* .useMoveToPage */ .G)();
     const fileRef = (0,react__WEBPACK_IMPORTED_MODULE_5__.useRef)(null);
-    const { uploadFile  } = (0,src_components_commons_hooks_mutations_file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_6__/* .useMutationUploadFile */ .sY)();
+    const { uploadFile , loading: uploadFileLoading  } = (0,src_components_commons_hooks_mutations_file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_6__/* .useMutationUploadFile */ .sY)();
     const { data  } = (0,src_components_commons_hooks_quires_user_useQueryFetchUserLoggedIn__WEBPACK_IMPORTED_MODULE_4__/* .useQueryFetchUserLoggedIn */ .l)();
-    const { updateUser  } = (0,src_components_commons_hooks_mutations_user_useMutationUpdateUser__WEBPACK_IMPORTED_MODULE_7__/* .useMutationUpdateUser */ .x)();
+    const { updateUser , loading: updateUserLoading  } = (0,src_components_commons_hooks_mutations_user_useMutationUpdateUser__WEBPACK_IMPORTED_MODULE_7__/* .useMutationUpdateUser */ .x)();
     const onChangeFile = async (event)=>{
         var ref, ref3, ref4;
         const file = (ref = event.target.files) === null || ref === void 0 ? void 0 : ref[0];
@@ -267,14 +289,20 @@ function MypageNavigation(props) {
             }),
             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Navigation_styles__WEBPACK_IMPORTED_MODULE_2__/* .ProfileImageBox */ .Vy, {
                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Navigation_styles__WEBPACK_IMPORTED_MODULE_2__/* .ImageBox */ .FS, {
-                    children: (data === null || data === void 0 ? void 0 : (ref5 = data.fetchUserLoggedIn) === null || ref5 === void 0 ? void 0 : ref5.picture) ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                    children: uploadFileLoading || updateUserLoading ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                        unoptimized: true,
+                        src: "/loading.gif",
+                        width: 120,
+                        height: 120
+                    }) : (data === null || data === void 0 ? void 0 : (ref5 = data.fetchUserLoggedIn) === null || ref5 === void 0 ? void 0 : ref5.picture) ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                        unoptimized: true,
                         onClick: ()=>{
                             var ref;
                             return (ref = fileRef.current) === null || ref === void 0 ? void 0 : ref.click();
                         },
                         src: `${"https://s3.ap-northeast-2.amazonaws.com/joonggomarket.files"}${data === null || data === void 0 ? void 0 : (ref1 = data.fetchUserLoggedIn) === null || ref1 === void 0 ? void 0 : ref1.picture}`,
-                        width: 80,
-                        height: 80
+                        width: 120,
+                        height: 120
                     }) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_3__["default"], {
                         unoptimized: true,
                         onClick: ()=>{
@@ -282,8 +310,8 @@ function MypageNavigation(props) {
                             return (ref = fileRef.current) === null || ref === void 0 ? void 0 : ref.click();
                         },
                         src: "/images/ic_profile.png",
-                        width: 80,
-                        height: 80
+                        width: 120,
+                        height: 120
                     })
                 })
             }),
@@ -303,7 +331,7 @@ function MypageNavigation(props) {
                             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Navigation_styles__WEBPACK_IMPORTED_MODULE_2__/* .Point */ .E9, {
                                 children: [
                                     new Intl.NumberFormat('en-US').format((ref2 = data === null || data === void 0 ? void 0 : data.fetchUserLoggedIn.userPoint) === null || ref2 === void 0 ? void 0 : ref2.amount),
-                                    "P"
+                                    "원"
                                 ]
                             })
                         ]
@@ -312,13 +340,16 @@ function MypageNavigation(props) {
             }),
             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Navigation_styles__WEBPACK_IMPORTED_MODULE_2__/* .SubMenuList */ .Cv, {
                 children: MAPAGE_SUB_PAGES.map((menu)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Navigation_styles__WEBPACK_IMPORTED_MODULE_2__/* .MenuItem */ .sN, {
+                        "data-isactive": props.page === menu.link,
                         onClick: moveToPage(`/mypage${menu.link}`),
                         children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                                unoptimized: true,
-                                src: props.page === menu.link ? `/images${menu.icon}_on.png` : `/images${menu.icon}.png`,
-                                width: 24,
-                                height: 24
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Navigation_styles__WEBPACK_IMPORTED_MODULE_2__/* .ImageWrapper */ .fb, {
+                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                                    unoptimized: true,
+                                    src: props.page === menu.link ? `/images${menu.icon}_on.png` : `/images${menu.icon}.png`,
+                                    width: 24,
+                                    height: 24
+                                })
                             }),
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Navigation_styles__WEBPACK_IMPORTED_MODULE_2__/* .Text */ .xv, {
                                 "data-active": props.page === menu.link,
@@ -352,12 +383,15 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   "E9": () => (/* binding */ Point),
 /* harmony export */   "Cv": () => (/* binding */ SubMenuList),
 /* harmony export */   "sN": () => (/* binding */ MenuItem),
+/* harmony export */   "fb": () => (/* binding */ ImageWrapper),
 /* harmony export */   "xv": () => (/* binding */ Text),
 /* harmony export */   "Ww": () => (/* binding */ UploadFileHidden)
 /* harmony export */ });
 /* harmony import */ var _emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4115);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__]);
-_emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9500);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__]);
+([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 const Wrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   flex-shrink: 0;
@@ -365,23 +399,34 @@ const Wrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-right: 1px solid ${({ theme  })=>theme.colors.gray06
+  border-right: 1px solid ${({ theme: theme1  })=>theme1.colors.gray06
 };
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    padding-right: 0px;
+    border-right: none;
+    margin-bottom: 40px;
+  }
 `;
 const PageTitle = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].h2`
   font-weight: bold;
   font-size: 2.4rem;
   margin-bottom: 40px;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    margin-bottom: 20px;
+  }
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    font-size: 3.6rem;
+  }
 `;
 const ProfileImageBox = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
-  width: 96px;
-  height: 96px;
+  width: 140px;
+  height: 140px;
   text-align: center;
 `;
 const ImageBox = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   margin: 0 auto;
   cursor: pointer;
   &:after {
@@ -412,10 +457,20 @@ const PointText = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
 const Point = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].p`
   margin-left: 6px;
   font-weight: bold;
-  font-size: 1.6rem;
+  font-size: 2rem;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    font-size: 2rem;
+  }
 `;
 const SubMenuList = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].ul`
   margin-top: 60px;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 40px;
+  }
 `;
 const MenuItem = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].li`
   margin-bottom: 24px;
@@ -426,7 +481,22 @@ const MenuItem = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].li`
   }
   font-weight: ${(props)=>props['data-active'] && 'bold !important'
 };
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    margin-bottom: 0px;
+    flex-direction: column;
+    width: 33.33%;
+    justify-content: center;
+    align-items: center;
+    /* padding-right: 6px;
+    margin-right: 6px; */
+    border-right: 1px solid ${({ theme: theme2  })=>theme2.colors.gray05
+};
+    background: ${(props)=>props['data-isactive'] && src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].colors.gray08 */ .Z.colors.gray08
+};
+    padding: 10px 0;
+  }
 `;
+const ImageWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div``;
 const Text = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].p`
   margin-left: 8px;
   color: ${(props)=>props['data-active'] ? '#000' : props.theme.colors.gray03
@@ -435,6 +505,10 @@ const Text = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].p`
 };
   font-size: 1.8rem;
   white-space: nowrap;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    margin: 0px;
+    margin-top: 10px;
+  }
 `;
 const UploadFileHidden = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].input`
   display: none;

@@ -128,9 +128,15 @@ const globalStyles = _emotion_react__WEBPACK_IMPORTED_MODULE_0__.css`
     background: none;
     list-style: none;
     box-sizing: border-box;
-    font-size: 10px;
+    font-size: 11px;
     font-family: 'NotoSansKR';
     color: #000;
+    ${_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen2 */ .Z.media.screen2} {
+      font-size: 9px;
+    }
+    ${_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+      font-size: 8px;
+    }
   }
   input[readonly] {
     background: ${_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].colors.gray06 */ .Z.colors.gray06};
@@ -172,6 +178,17 @@ const globalStyles = _emotion_react__WEBPACK_IMPORTED_MODULE_0__.css`
     width: 70%;
     margin: 80px auto 60px;
     min-width: 920px;
+    ${_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen1 */ .Z.media.screen1} {
+      min-width: 720px;
+    }
+    ${_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen2 */ .Z.media.screen2} {
+      min-width: 480px;
+    }
+    ${_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+      width: 84%;
+      min-width: 370px;
+      margin: 60px auto 40px;
+    }
   }
 
   @font-face {
@@ -308,14 +325,7 @@ __webpack_async_result__();
 /* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1853);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _quires_user_useQueryFetchUserLoggedIn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3174);
-/* harmony import */ var _quires_usedItem_mypage_useQueryFetchPointTransactions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(475);
-/* harmony import */ var _quires_usedItem_mypage_useQueryFetchPointTransactionsOfLoading__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8767);
-
-
-
+/* harmony import */ var _quires_user_useQueryFetchUserLoggedIn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3174);
 
 
 
@@ -328,7 +338,6 @@ const CREATE_POINT_TRANSACTION_OF_LOADING = _apollo_client__WEBPACK_IMPORTED_MOD
   }
 `;
 const useMutationCreatePointTransactionOfLoading = ()=>{
-    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
     const [createPointTransactionOfLoadingMutation, { loading  }] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useMutation)(CREATE_POINT_TRANSACTION_OF_LOADING);
     const createPointTransactionOfLoading = async (impUid)=>{
         try {
@@ -336,25 +345,47 @@ const useMutationCreatePointTransactionOfLoading = ()=>{
                 variables: {
                     impUid
                 },
-                refetchQueries: [
-                    {
-                        query: _quires_user_useQueryFetchUserLoggedIn__WEBPACK_IMPORTED_MODULE_3__/* .FETCH_USER_LOGGEDIN */ .v
-                    },
-                    {
-                        query: _quires_usedItem_mypage_useQueryFetchPointTransactions__WEBPACK_IMPORTED_MODULE_4__/* .FETCH_POINT_TRANSACTIONS */ .T
-                    },
-                    {
-                        query: _quires_usedItem_mypage_useQueryFetchPointTransactionsOfLoading__WEBPACK_IMPORTED_MODULE_5__/* .FETCH_POINT_TRANSACTIONS_OF_LOADING */ .E
-                    }, 
-                ]
+                update (cache, { data  }) {
+                    if (!data) return; // 데이터가 없으면 아무 작업도 하지 않음
+                    const newAmount = data.createPointTransactionOfLoading.amount;
+                    // 기존 캐시에서 fetchUserLoggedIn 데이터를 가져오기
+                    const existingData = cache.readQuery({
+                        query: _quires_user_useQueryFetchUserLoggedIn__WEBPACK_IMPORTED_MODULE_2__/* .FETCH_USER_LOGGEDIN */ .v
+                    });
+                    if (existingData === null || existingData === void 0 ? void 0 : existingData.fetchUserLoggedIn) {
+                        // 캐시를 업데이트하여 새로운 포인트 반영
+                        cache.writeQuery({
+                            query: _quires_user_useQueryFetchUserLoggedIn__WEBPACK_IMPORTED_MODULE_2__/* .FETCH_USER_LOGGEDIN */ .v,
+                            data: {
+                                fetchUserLoggedIn: {
+                                    ...existingData.fetchUserLoggedIn,
+                                    userPoint: {
+                                        ...existingData.fetchUserLoggedIn.userPoint,
+                                        amount: existingData.fetchUserLoggedIn.userPoint.amount + newAmount
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
             });
+            // 리패치 제거
+            // FETCH_USER_LOGGEDIN
             antd__WEBPACK_IMPORTED_MODULE_1__.Modal.success({
                 content: `${new Intl.NumberFormat('en-US').format(result === null || result === void 0 ? void 0 : result.data.createPointTransactionOfLoading.amount)}원 포인트 충전이 완료되었습니다.`
             });
         } catch (error) {
-            if (error instanceof Error) antd__WEBPACK_IMPORTED_MODULE_1__.Modal.error({
-                content: error.message
-            });
+            if (error instanceof Error) {
+                if (error.message.includes('이미 처리')) {
+                    antd__WEBPACK_IMPORTED_MODULE_1__.Modal.warning({
+                        content: error.message
+                    });
+                } else {
+                    antd__WEBPACK_IMPORTED_MODULE_1__.Modal.error({
+                        content: error.message
+                    });
+                }
+            }
         }
     };
     return {
@@ -370,80 +401,42 @@ const useMutationCreatePointTransactionOfLoading = ()=>{
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "f": () => (/* binding */ useMutationLogoutUser)
+/* harmony export */   "O": () => (/* binding */ useMutationLogout)
 /* harmony export */ });
 /* unused harmony export USER_LOGOUT */
 /* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9114);
 /* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1853);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5725);
+/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_2__);
+
+
 
 const USER_LOGOUT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
   mutation {
     logoutUser
   }
 `;
-const useMutationLogoutUser = ()=>{
-    const [logoutUser] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useMutation)(USER_LOGOUT);
+const useMutationLogout = ()=>{
+    const [logoutUserMutation] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useMutation)(USER_LOGOUT);
+    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_1__.useRouter)();
+    const logoutUser = async ()=>{
+        try {
+            var ref;
+            const result = await logoutUserMutation();
+            if (result === null || result === void 0 ? void 0 : (ref = result.data) === null || ref === void 0 ? void 0 : ref.logoutUser) {
+                router.reload();
+            }
+        } catch (error) {
+            if (error instanceof Error) antd__WEBPACK_IMPORTED_MODULE_2__.Modal.error({
+                content: error.message
+            });
+        }
+    };
     return {
         logoutUser
     };
-};
-
-
-/***/ }),
-
-/***/ 475:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "T": () => (/* binding */ FETCH_POINT_TRANSACTIONS),
-/* harmony export */   "f": () => (/* binding */ useQueryFetchPointTransactions)
-/* harmony export */ });
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9114);
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_0__);
-
-const FETCH_POINT_TRANSACTIONS = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
-  query fetchPointTransactions($search: String, $page: Int) {
-    fetchPointTransactions(search: $search, page: $page) {
-      _id
-      createdAt
-      status
-      amount
-      balance
-    }
-  }
-`;
-const useQueryFetchPointTransactions = ()=>{
-    const result = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useQuery)(FETCH_POINT_TRANSACTIONS);
-    return result;
-};
-
-
-/***/ }),
-
-/***/ 8767:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "E": () => (/* binding */ FETCH_POINT_TRANSACTIONS_OF_LOADING),
-/* harmony export */   "X": () => (/* binding */ useQueryFetchPointTransactionsOfLoading)
-/* harmony export */ });
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9114);
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_0__);
-
-const FETCH_POINT_TRANSACTIONS_OF_LOADING = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
-  query fetchPointTransactionsOfLoading($search: String, $page: Int) {
-    fetchPointTransactionsOfLoading(search: $search, page: $page) {
-      _id
-      createdAt
-      impUid
-      amount
-      balance
-    }
-  }
-`;
-const useQueryFetchPointTransactionsOfLoading = ()=>{
-    const result = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useQuery)(FETCH_POINT_TRANSACTIONS_OF_LOADING);
-    return result;
 };
 
 
@@ -523,7 +516,7 @@ function Layout(props) {
             }) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
                 children: props.children
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_footer_FooterUI__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {})
+            !HIDDEN_LAYOUTS.includes(router.pathname) && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_footer_FooterUI__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {})
         ]
     }));
 };
@@ -559,19 +552,14 @@ src_components_commons_layout_carousel_Carousel_styles__WEBPACK_IMPORTED_MODULE_
 
 const items = [
     {
-        title: 'CAROUSEL DESIGN1',
-        description: '줄바꿈 1\n줄바꿈 2',
-        src: `/images/banner01.png`
+        title: '커뮤니티',
+        description: `회원 인증없이 자유롭게 글을 쓰고 읽을 수 있는 서비스입니다.`,
+        src: `/images/banner01.jpg`
     },
     {
-        title: 'CAROUSEL DESIGN2',
-        description: '줄바꿈 1\n줄바꿈 2',
-        src: `/images/banner02.png`
-    },
-    {
-        title: 'CAROUSEL DESIGN3',
-        description: '줄바꿈 1\n줄바꿈 2',
-        src: `/images/banner03.png`
+        title: '중고거래',
+        description: `유저 등록후, 중고 물품을 거래할 수 있는 서비스입니다.`,
+        src: `/images/banner02.jpg`
     }, 
 ];
 function SimpleSlider() {
@@ -584,7 +572,9 @@ function SimpleSlider() {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        beforeChange: handleBeforeChange
+        beforeChange: handleBeforeChange,
+        autoplay: true,
+        autoplaySpeed: 5000
     };
     return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(src_components_commons_layout_carousel_Carousel_styles__WEBPACK_IMPORTED_MODULE_3__/* .Wrapper */ .im, {
         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(src_components_commons_layout_carousel_Carousel_styles__WEBPACK_IMPORTED_MODULE_3__/* .Carousel */ .lr, {
@@ -635,8 +625,10 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   "Te": () => (/* binding */ ContentDescription)
 /* harmony export */ });
 /* harmony import */ var _emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4115);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__]);
-_emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9500);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__]);
+([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 const Wrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   height: 400px;
@@ -654,16 +646,27 @@ const Carousel = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
     z-index: 1; /* 버튼이 슬라이드 위에 표시되도록 설정 */
     width: 48px;
     height: 48px;
+    ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+      left: 8%;
+      width: 40px;
+      height: 40px;
+    }
   }
 
   .slick-next {
     right: 18%; /* 우측 위치 조정 */
     z-index: 1; /* 버튼이 슬라이드 위에 표시되도록 설정 */
+    ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+      right: 8%;
+    }
   }
   .slick-next:before,
   .slick-prev:before {
     font-size: 48px;
     color: white;
+    ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+      font-size: 40px;
+    }
   }
   .slick-dots {
     bottom: 40px;
@@ -672,16 +675,21 @@ const Carousel = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
     font-size: 0; /* 버튼 텍스트 제거 */
     background: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
-    width: 8px;
-    height: 8px;
-    padding: 0;
+    width: 14px;
+    height: 14px;
     border: 1px solid white;
     cursor: pointer;
     outline: none;
+    &:before {
+      content: '';
+    }
+    /* ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    } */
   }
 
   .slick-dots .slick-active button {
-    background: white; /* 활성화된 동그라미 버튼 색상 */
+    background: ${({ theme: theme1  })=>theme1.colors.main
+}; /* 활성화된 동그라미 버튼 색상 */
   }
 `;
 const ContentWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
@@ -693,7 +701,6 @@ const ContentWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].d
 const ContentInner = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   height: 100%;
   width: 70%;
-  min-width: 920px;
   position: relative;
   z-index: 10;
   display: flex;
@@ -710,7 +717,8 @@ const ContentTitle = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].h3`
 `;
 const ContentDescription = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].p`
   font-weight: 500;
-  font-size: 1.2rem;
+  opacity: 0.8;
+  font-size: 1.5rem;
   text-align: center;
   white-space: pre-wrap;
 `;
@@ -772,8 +780,12 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _userLoggedIn_UserLoggedIn_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2558);
 /* harmony import */ var _userLoggedIn_PointModal_PointModal_index__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6420);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([src_components_commons_layout_header_Header_styles__WEBPACK_IMPORTED_MODULE_1__, _hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_5__, _userLoggedIn_UserLoggedIn_index__WEBPACK_IMPORTED_MODULE_7__, _userLoggedIn_PointModal_PointModal_index__WEBPACK_IMPORTED_MODULE_8__]);
-([src_components_commons_layout_header_Header_styles__WEBPACK_IMPORTED_MODULE_1__, _hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_5__, _userLoggedIn_UserLoggedIn_index__WEBPACK_IMPORTED_MODULE_7__, _userLoggedIn_PointModal_PointModal_index__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _mobileNavigation_MobileNavigation_index__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1977);
+/* harmony import */ var recoil__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(9755);
+/* harmony import */ var recoil__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(recoil__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var src_commons_stores__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(3600);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([src_components_commons_layout_header_Header_styles__WEBPACK_IMPORTED_MODULE_1__, _hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_5__, _userLoggedIn_UserLoggedIn_index__WEBPACK_IMPORTED_MODULE_7__, _userLoggedIn_PointModal_PointModal_index__WEBPACK_IMPORTED_MODULE_8__, _mobileNavigation_MobileNavigation_index__WEBPACK_IMPORTED_MODULE_9__, src_commons_stores__WEBPACK_IMPORTED_MODULE_11__]);
+([src_components_commons_layout_header_Header_styles__WEBPACK_IMPORTED_MODULE_1__, _hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_5__, _userLoggedIn_UserLoggedIn_index__WEBPACK_IMPORTED_MODULE_7__, _userLoggedIn_PointModal_PointModal_index__WEBPACK_IMPORTED_MODULE_8__, _mobileNavigation_MobileNavigation_index__WEBPACK_IMPORTED_MODULE_9__, src_commons_stores__WEBPACK_IMPORTED_MODULE_11__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -783,17 +795,11 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([src_
 
 
 
-const menus = [
-    {
-        name: '자유게시판',
-        path: '/boards'
-    },
-    {
-        name: '중고마켓',
-        path: '/markets'
-    }, 
-];
+
+
+
 function Header() {
+    const [menus] = (0,recoil__WEBPACK_IMPORTED_MODULE_10__.useRecoilState)(src_commons_stores__WEBPACK_IMPORTED_MODULE_11__/* .menuState */ .Te);
     const { pathname  } = (0,next_router__WEBPACK_IMPORTED_MODULE_6__.useRouter)();
     const { 0: pointModalisOpen , 1: setPointModalisOpen  } = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
     const { 0: basePath , 1: setBasePath  } = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)('');
@@ -840,6 +846,9 @@ function Header() {
                         }),
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_userLoggedIn_UserLoggedIn_index__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
                             setPointModalisOpen: setPointModalisOpen
+                        }),
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mobileNavigation_MobileNavigation_index__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
+                            setPointModalisOpen: setPointModalisOpen
                         })
                     ]
                 })
@@ -862,10 +871,13 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   "AB": () => (/* binding */ HeaderInner),
 /* harmony export */   "TR": () => (/* binding */ Logo),
 /* harmony export */   "W4": () => (/* binding */ ButtonWrapper),
+/* harmony export */   "EF": () => (/* binding */ MButtonWrapper),
 /* harmony export */   "rl": () => (/* binding */ LogoNavigationWrapper),
 /* harmony export */   "W_": () => (/* binding */ Navigation),
 /* harmony export */   "qy": () => (/* binding */ MenuList),
 /* harmony export */   "v2": () => (/* binding */ Menu),
+/* harmony export */   "Fv": () => (/* binding */ MMenuList),
+/* harmony export */   "Jc": () => (/* binding */ MMenu),
 /* harmony export */   "WV": () => (/* binding */ ProfileBoxWrapper),
 /* harmony export */   "BF": () => (/* binding */ ProfileButton),
 /* harmony export */   "PX": () => (/* binding */ ProfileBox),
@@ -876,13 +888,34 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   "E9": () => (/* binding */ Point),
 /* harmony export */   "oc": () => (/* binding */ ProfileButtonWrapper),
 /* harmony export */   "hb": () => (/* binding */ AddPointButton),
-/* harmony export */   "sv": () => (/* binding */ LogoutButton)
+/* harmony export */   "sv": () => (/* binding */ LogoutButton),
+/* harmony export */   "JF": () => (/* binding */ MMenuButton),
+/* harmony export */   "Ad": () => (/* binding */ MMenuWrapper),
+/* harmony export */   "Gk": () => (/* binding */ MMenuBar),
+/* harmony export */   "s4": () => (/* binding */ MMenuBarInner),
+/* harmony export */   "C$": () => (/* binding */ MCloseButton),
+/* harmony export */   "zI": () => (/* binding */ MProfileBox),
+/* harmony export */   "h9": () => (/* binding */ MProfileInfo),
+/* harmony export */   "WH": () => (/* binding */ MProfileName),
+/* harmony export */   "CX": () => (/* binding */ MProfileMail),
+/* harmony export */   "Ge": () => (/* binding */ MProfileBoxTop),
+/* harmony export */   "Qn": () => (/* binding */ MProfileBoxBottom),
+/* harmony export */   "$T": () => (/* binding */ MProfilePointTitle),
+/* harmony export */   "aX": () => (/* binding */ MProfilePointText),
+/* harmony export */   "bG": () => (/* binding */ MArrowRight),
+/* harmony export */   "kJ": () => (/* binding */ MLogoutButton),
+/* harmony export */   "Wr": () => (/* binding */ MLogoutButtonText)
 /* harmony export */ });
 /* unused harmony export MypageButton */
 /* harmony import */ var _emotion_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3139);
 /* harmony import */ var _emotion_styled__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4115);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_react__WEBPACK_IMPORTED_MODULE_0__, _emotion_styled__WEBPACK_IMPORTED_MODULE_1__]);
-([_emotion_react__WEBPACK_IMPORTED_MODULE_0__, _emotion_styled__WEBPACK_IMPORTED_MODULE_1__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9500);
+/* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7066);
+/* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ant_design_icons__WEBPACK_IMPORTED_MODULE_3__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_react__WEBPACK_IMPORTED_MODULE_0__, _emotion_styled__WEBPACK_IMPORTED_MODULE_1__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_2__]);
+([_emotion_react__WEBPACK_IMPORTED_MODULE_0__, _emotion_styled__WEBPACK_IMPORTED_MODULE_1__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_2__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
+
 
 
 const ProfileButtonStyles = _emotion_react__WEBPACK_IMPORTED_MODULE_0__.css`
@@ -911,13 +944,19 @@ const Header = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].header`
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
 `;
 const HeaderInner = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].div`
-  width: 70%;
+  width: 90%;
   min-width: 920px;
   height: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_2__/* ["default"].media.screen2 */ .Z.media.screen2} {
+    min-width: 720px;
+  }
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_2__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    min-width: auto;
+  }
 `;
 const Logo = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].h1`
   cursor: pointer;
@@ -929,12 +968,27 @@ const ButtonWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].di
   button:first-of-type {
     margin-right: 16px;
   }
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_2__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    display: none;
+  }
+`;
+const MButtonWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].div`
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  button:first-of-type {
+    margin-right: 16px;
+  }
 `;
 const LogoNavigationWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].div`
   display: flex;
   align-items: center;
 `;
-const Navigation = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].nav``;
+const Navigation = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].nav`
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_2__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    display: none;
+  }
+`;
 const MenuList = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].ul`
   display: flex;
   align-items: center;
@@ -951,8 +1005,41 @@ const Menu = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].li`
     margin-right: 0px;
   }
 `;
+const MMenuList = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].ul`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: ${({ theme: theme1  })=>theme1.colors.gray08
+};
+  border-radius: 8px;
+`;
+const MMenu = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].li`
+  font-size: 1.6rem;
+  width: 100%;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid ${({ theme: theme2  })=>theme2.colors.gray05
+};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  span {
+    font-size: 1.8rem;
+  }
+
+  &:last-of-type {
+    border-bottom: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+  }
+`;
 const ProfileBoxWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].div`
   position: relative;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_2__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    display: none;
+  }
 `;
 const ProfileButton = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].button`
   display: flex;
@@ -963,7 +1050,7 @@ const ProfileButton = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].bu
   padding: 8px;
   border-radius: 8px;
   &:hover {
-    background: ${({ theme  })=>theme.colors.gray06
+    background: ${({ theme: theme3  })=>theme3.colors.gray06
 };
   }
   & > span {
@@ -976,7 +1063,7 @@ const ProfileBox = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].div`
 };
   right: 0;
   bottom: -300%;
-  border-radius: 16px;
+  border-radius: 10px 16px;
   background: white;
   width: 258px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -989,7 +1076,7 @@ const ProfileInfo = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].div`
   border-bottom: 1px solid black;
   cursor: pointer;
   &:hover {
-    background: ${({ theme  })=>theme.colors.gray06
+    background: ${({ theme: theme4  })=>theme4.colors.gray06
 };
   }
 `;
@@ -1018,25 +1105,374 @@ const ProfileButtonWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["defau
 `;
 const AddPointButton = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].button`
   ${ProfileButtonStyles}
-  color: ${({ theme  })=>theme.colors.gray04
+  color: ${({ theme: theme5  })=>theme5.colors.gray04
 };
   &:hover {
-    background: ${({ theme  })=>theme.colors.gray06
+    background: ${({ theme: theme6  })=>theme6.colors.gray06
 };
   }
 `;
 const LogoutButton = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].button`
   ${ProfileButtonStyles}
-  color: ${({ theme  })=>theme.colors.gray04
+  color: ${({ theme: theme7  })=>theme7.colors.gray04
 };
   &:hover {
-    background: ${({ theme  })=>theme.colors.gray06
+    background: ${({ theme: theme8  })=>theme8.colors.gray06
 };
   }
 `;
 const MypageButton = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].button`
   ${ProfileButtonStyles}
 `;
+// 모바일 메뉴 스타일 ↓↓
+const MMenuButton = (0,_emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"])(_ant_design_icons__WEBPACK_IMPORTED_MODULE_3__.MenuOutlined)`
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  color: #333;
+  cursor: pointer;
+  border-radius: 100px;
+  & path {
+    color: ${({ theme: theme9  })=>theme9.colors.gray04
+};
+  }
+  & svg {
+    width: 100%;
+    height: 100%;
+  }
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_2__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    display: block;
+  }
+`;
+const MMenuWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_2__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    display: ${(props)=>props['data-isOpen'] ? 'block' : 'none'
+};
+  }
+`;
+const MMenuBar = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].div`
+  position: fixed;
+  top: 0;
+  right: ${(props)=>props['data-isOpen'] ? '0px' : '-300px'
+};
+  width: 300px;
+  height: 100%;
+  background: white;
+  box-sizing: border-box;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+`;
+const MMenuBarInner = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].div`
+  width: 100%;
+`;
+const MCloseButton = (0,_emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"])(_ant_design_icons__WEBPACK_IMPORTED_MODULE_3__.CloseOutlined)`
+  width: 38px;
+  height: 38px;
+  padding: 10px;
+  & path {
+    color: ${({ theme: theme10  })=>theme10.colors.gray04
+};
+  }
+  cursor: pointer;
+  border-radius: 100px;
+  & svg {
+    width: 100%;
+    height: 100%;
+  }
+`;
+const MProfileBox = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 8px;
+`;
+const MProfileInfo = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 16px;
+  width: 100%;
+  padding: 12px 16px 16px 16px;
+  background: ${({ theme: theme11  })=>theme11.colors.gray08
+};
+  border-radius: 8px;
+`;
+const MProfileName = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].p`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  span {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+`;
+const MProfileMail = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].p`
+  font-size: 2rem;
+  color: ${({ theme: theme12  })=>theme12.colors.gray03
+};
+`;
+const MProfileBoxTop = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid ${({ theme: theme13  })=>theme13.colors.gray06
+};
+  & > span {
+    border-radius: 100px;
+  }
+`;
+const MProfileBoxBottom = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].dl`
+  width: 100%;
+  padding: 16px;
+  background: ${({ theme: theme14  })=>theme14.colors.gray08
+};
+  border-radius: 8px;
+  font-size: 1.8rem;
+  display: flex;
+  justify-content: space-between;
+  &:last-of-type {
+    margin-top: 12px;
+    background: ${({ theme: theme15  })=>theme15.colors.main
+};
+    span {
+      color: black;
+    }
+  }
+`;
+const MProfilePointTitle = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].dt`
+  font-size: 1.8rem;
+`;
+const MProfilePointText = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].dd`
+  font-size: 2rem;
+  span {
+    font-size: 2rem;
+    font-weight: bold;
+    color: ${({ theme: theme16  })=>theme16.colors.main
+};
+  }
+`;
+const MArrowRight = (0,_emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"])(_ant_design_icons__WEBPACK_IMPORTED_MODULE_3__.ArrowRightOutlined)`
+  width: 32px;
+  height: 32px;
+  padding: 10px;
+  & path {
+    color: ${({ theme: theme17  })=>theme17.colors.gray01
+};
+  }
+  & svg {
+    width: 100%;
+    height: 100%;
+  }
+`;
+const MLogoutButton = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].dl`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+const MLogoutButtonText = _emotion_styled__WEBPACK_IMPORTED_MODULE_1__["default"].dt`
+  font-size: 1.8rem;
+  margin-right: 12px;
+`;
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ 1977:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (/* binding */ MobileNavigation)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Header_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7995);
+/* harmony import */ var recoil__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9755);
+/* harmony import */ var recoil__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(recoil__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var src_commons_stores__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3600);
+/* harmony import */ var src_components_commons_hooks_quires_user_useQueryFetchUserLoggedIn__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3174);
+/* harmony import */ var next_image__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5675);
+/* harmony import */ var src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9316);
+/* harmony import */ var src_components_commons_hooks_mutations_user_useMutationLogout__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1722);
+/* harmony import */ var src_components_commons_buttons_02_Button02_index__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6882);
+/* harmony import */ var src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(9500);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_Header_styles__WEBPACK_IMPORTED_MODULE_2__, src_commons_stores__WEBPACK_IMPORTED_MODULE_4__, src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_7__, src_components_commons_buttons_02_Button02_index__WEBPACK_IMPORTED_MODULE_9__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_10__]);
+([_Header_styles__WEBPACK_IMPORTED_MODULE_2__, src_commons_stores__WEBPACK_IMPORTED_MODULE_4__, src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_7__, src_components_commons_buttons_02_Button02_index__WEBPACK_IMPORTED_MODULE_9__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_10__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
+
+
+
+
+
+
+
+
+
+
+
+function MobileNavigation(props) {
+    var ref, ref1, ref2;
+    const { logoutUser  } = (0,src_components_commons_hooks_mutations_user_useMutationLogout__WEBPACK_IMPORTED_MODULE_8__/* .useMutationLogout */ .O)();
+    const { 0: isOpen , 1: setIsOpen  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [accessToken, setAccessToken] = (0,recoil__WEBPACK_IMPORTED_MODULE_3__.useRecoilState)(src_commons_stores__WEBPACK_IMPORTED_MODULE_4__/* .accessTokenState */ .LR);
+    const { data , loading  } = (0,src_components_commons_hooks_quires_user_useQueryFetchUserLoggedIn__WEBPACK_IMPORTED_MODULE_5__/* .useQueryFetchUserLoggedIn */ .l)();
+    const [menus] = (0,recoil__WEBPACK_IMPORTED_MODULE_3__.useRecoilState)(src_commons_stores__WEBPACK_IMPORTED_MODULE_4__/* .menuState */ .Te);
+    const { moveToPage  } = (0,src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_7__/* .useMoveToPage */ .G)();
+    const { 0: basePath , 1: setBasePath  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        children: [
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MMenuButton */ .JF, {
+                onClick: ()=>setIsOpen((prev)=>!prev
+                    )
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MMenuWrapper */ .Ad, {
+                "data-isOpen": isOpen,
+                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MMenuBar */ .Gk, {
+                    "data-isOpen": isOpen,
+                    children: [
+                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MMenuBarInner */ .s4, {
+                            children: [
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MCloseButton */ .C$, {
+                                    onClick: ()=>setIsOpen((prev)=>!prev
+                                        )
+                                }),
+                                !loading && (accessToken ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MProfileBox */ .zI, {
+                                    children: [
+                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MProfileBoxTop */ .Ge, {
+                                            children: [
+                                                (data === null || data === void 0 ? void 0 : (ref = data.fetchUserLoggedIn) === null || ref === void 0 ? void 0 : ref.picture) ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_6__["default"], {
+                                                    src: `${"https://s3.ap-northeast-2.amazonaws.com/joonggomarket.files"}${data === null || data === void 0 ? void 0 : (ref1 = data.fetchUserLoggedIn) === null || ref1 === void 0 ? void 0 : ref1.picture}`,
+                                                    width: 56,
+                                                    height: 56,
+                                                    alt: "프로필 이미지"
+                                                }) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_6__["default"], {
+                                                    unoptimized: true,
+                                                    src: `/images/ic_profile2.png`,
+                                                    width: 56,
+                                                    height: 56,
+                                                    alt: "프로필 이미지"
+                                                }),
+                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MProfileInfo */ .h9, {
+                                                    onClick: ()=>{
+                                                        moveToPage('/mypage/market')();
+                                                        setIsOpen(false);
+                                                    },
+                                                    children: [
+                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MProfileName */ .WH, {
+                                                            children: [
+                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                                    children: data === null || data === void 0 ? void 0 : data.fetchUserLoggedIn.name
+                                                                }),
+                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MArrowRight */ .bG, {})
+                                                            ]
+                                                        }),
+                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MProfileMail */ .CX, {
+                                                            children: data === null || data === void 0 ? void 0 : data.fetchUserLoggedIn.email
+                                                        })
+                                                    ]
+                                                })
+                                            ]
+                                        }),
+                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MProfileBoxBottom */ .Qn, {
+                                            children: [
+                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MProfilePointTitle */ .$T, {
+                                                    children: "포인트"
+                                                }),
+                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MProfilePointText */ .aX, {
+                                                    children: [
+                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                            children: new Intl.NumberFormat('en-US').format((ref2 = data === null || data === void 0 ? void 0 : data.fetchUserLoggedIn.userPoint) === null || ref2 === void 0 ? void 0 : ref2.amount)
+                                                        }),
+                                                        "\xa0원"
+                                                    ]
+                                                })
+                                            ]
+                                        }),
+                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MProfileBoxBottom */ .Qn, {
+                                            onClick: ()=>props.setPointModalisOpen(true)
+                                            ,
+                                            children: [
+                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MProfilePointTitle */ .$T, {
+                                                    children: "충전하기"
+                                                }),
+                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MProfilePointText */ .aX, {
+                                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                        children: "+"
+                                                    })
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                }) : /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MButtonWrapper */ .EF, {
+                                    children: [
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(src_components_commons_buttons_02_Button02_index__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
+                                            fullWidth: true,
+                                            onClick: moveToPage('/login'),
+                                            name: '로그인'
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(src_components_commons_buttons_02_Button02_index__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
+                                            fullWidth: true,
+                                            onClick: moveToPage('/signup'),
+                                            background: src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_10__/* ["default"].colors.main */ .Z.colors.main,
+                                            name: '회원가입'
+                                        })
+                                    ]
+                                })),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MMenuList */ .Fv, {
+                                    children: menus.map((menu, idx)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MMenu */ .Jc, {
+                                            onClick: ()=>{
+                                                moveToPage(menu.path)();
+                                                setIsOpen(false);
+                                            },
+                                            "data-active": basePath === menu.path.replace('/', ''),
+                                            children: [
+                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                    children: menu.name
+                                                }),
+                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MArrowRight */ .bG, {})
+                                            ]
+                                        })
+                                    )
+                                })
+                            ]
+                        }),
+                        accessToken && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MLogoutButton */ .kJ, {
+                            onClick: logoutUser,
+                            children: [
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Header_styles__WEBPACK_IMPORTED_MODULE_2__/* .MLogoutButtonText */ .Wr, {
+                                    children: "로그아웃"
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_6__["default"], {
+                                    unoptimized: true,
+                                    src: `/images/ic_logout.png`,
+                                    width: 24,
+                                    height: 24
+                                })
+                            ]
+                        })
+                    ]
+                })
+            })
+        ]
+    }));
+};
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
@@ -1104,6 +1540,8 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9500);
 /* harmony import */ var src_components_commons_hooks_mutations_usedItem_useMutationCreatePointTransactionOfLoading__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(8113);
 /* harmony import */ var src_components_commons_hooks_quires_user_useQueryFetchUserLoggedIn__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(3174);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1853);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_9__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_PointModal_styles__WEBPACK_IMPORTED_MODULE_4__, src_components_commons_buttons_02_Button02_index__WEBPACK_IMPORTED_MODULE_5__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_6__]);
 ([_PointModal_styles__WEBPACK_IMPORTED_MODULE_4__, src_components_commons_buttons_02_Button02_index__WEBPACK_IMPORTED_MODULE_5__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_6__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -1115,7 +1553,9 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_Poi
 
 
 
+
 function PointModalUI(props) {
+    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_9__.useRouter)();
     const { 0: selectedPoint , 1: setSelectedPoint  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)('');
     const { createPointTransactionOfLoading , loading  } = (0,src_components_commons_hooks_mutations_usedItem_useMutationCreatePointTransactionOfLoading__WEBPACK_IMPORTED_MODULE_7__/* .useMutationCreatePointTransactionOfLoading */ .x)();
     const { data  } = (0,src_components_commons_hooks_quires_user_useQueryFetchUserLoggedIn__WEBPACK_IMPORTED_MODULE_8__/* .useQueryFetchUserLoggedIn */ .l)();
@@ -1124,6 +1564,7 @@ function PointModalUI(props) {
     };
     const onClickAddPoint = ()=>{
         const IMP = window.IMP;
+        const vistedPage = window.location.href;
         IMP.init("imp31236121");
         IMP.request_pay({
             pg: 'kakaopay',
@@ -1136,19 +1577,30 @@ function PointModalUI(props) {
             buyer_tel: '010-5838-5146',
             buyer_addr: '경기도 용인시 기흥구',
             buyer_postcode: '01181',
-            m_redirect_url: "https://joonggomarket.site/markets"
+            m_redirect_url: vistedPage
         }, async function(response) {
             const { success , imp_uid  } = response;
-            console.log(response);
             if (success) {
                 await createPointTransactionOfLoading(imp_uid);
-            } else {
+                window.location.href = vistedPage;
+            } else if (!(response === null || response === void 0 ? void 0 : response.error_msg.includes('결제포기'))) {
                 antd__WEBPACK_IMPORTED_MODULE_1__.Modal.error({
                     content: '카카오페이 결제를 정상적으로 처리하지 못하였습니다.'
                 });
             }
         });
     };
+    (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
+        if (router.isReady) {
+            const { imp_uid , imp_success  } = router.query;
+            if (imp_success === 'true' && typeof imp_uid === 'string') {
+                createPointTransactionOfLoading(imp_uid);
+            }
+        }
+    }, [
+        router.isReady,
+        router.query
+    ]);
     return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: [
             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("script", {
@@ -1301,8 +1753,6 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9316);
 /* harmony import */ var src_components_commons_hooks_mutations_user_useMutationLogout__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1722);
-/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5725);
-/* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_6__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([src_components_commons_layout_header_Header_styles__WEBPACK_IMPORTED_MODULE_1__, src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_4__]);
 ([src_components_commons_layout_header_Header_styles__WEBPACK_IMPORTED_MODULE_1__, src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_4__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -1311,28 +1761,14 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([src_
 
 
 
-
 function ProfileUI(props) {
-    var ref11, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10;
+    var ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10;
     const router = (0,next_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
     const { moveToPage  } = (0,src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_4__/* .useMoveToPage */ .G)();
-    const { logoutUser  } = (0,src_components_commons_hooks_mutations_user_useMutationLogout__WEBPACK_IMPORTED_MODULE_5__/* .useMutationLogoutUser */ .f)();
+    const { logoutUser  } = (0,src_components_commons_hooks_mutations_user_useMutationLogout__WEBPACK_IMPORTED_MODULE_5__/* .useMutationLogout */ .O)();
     const onClickProfileButton = ()=>{
         props.setIsHidden((prev)=>!prev
         );
-    };
-    const onClickLogout = async ()=>{
-        try {
-            var ref;
-            const result = await logoutUser();
-            if (result === null || result === void 0 ? void 0 : (ref = result.data) === null || ref === void 0 ? void 0 : ref.logoutUser) {
-                router.reload();
-            }
-        } catch (error) {
-            if (error instanceof Error) antd__WEBPACK_IMPORTED_MODULE_6__.Modal.error({
-                content: error.message
-            });
-        }
     };
     return(/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(src_components_commons_layout_header_Header_styles__WEBPACK_IMPORTED_MODULE_1__/* .ProfileBoxWrapper */ .WV, {
         children: [
@@ -1340,7 +1776,7 @@ function ProfileUI(props) {
                 ref: props.profileButtonRef,
                 onClick: onClickProfileButton,
                 children: [
-                    ((ref11 = props.data) === null || ref11 === void 0 ? void 0 : (ref1 = ref11.fetchUserLoggedIn) === null || ref1 === void 0 ? void 0 : ref1.picture) ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_2__["default"], {
+                    ((ref = props.data) === null || ref === void 0 ? void 0 : (ref1 = ref.fetchUserLoggedIn) === null || ref1 === void 0 ? void 0 : ref1.picture) ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_2__["default"], {
                         src: `${"https://s3.ap-northeast-2.amazonaws.com/joonggomarket.files"}${(ref2 = props.data) === null || ref2 === void 0 ? void 0 : (ref3 = ref2.fetchUserLoggedIn) === null || ref3 === void 0 ? void 0 : ref3.picture}`,
                         width: 48,
                         height: 48,
@@ -1389,7 +1825,7 @@ function ProfileUI(props) {
                                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(src_components_commons_layout_header_Header_styles__WEBPACK_IMPORTED_MODULE_1__/* .Point */ .E9, {
                                         children: [
                                             new Intl.NumberFormat('en-US').format((ref10 = (ref9 = props.data) === null || ref9 === void 0 ? void 0 : ref9.fetchUserLoggedIn.userPoint) === null || ref10 === void 0 ? void 0 : ref10.amount),
-                                            "P"
+                                            "원"
                                         ]
                                     })
                                 ]
@@ -1412,7 +1848,7 @@ function ProfileUI(props) {
                                 ]
                             }),
                             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(src_components_commons_layout_header_Header_styles__WEBPACK_IMPORTED_MODULE_1__/* .LogoutButton */ .sv, {
-                                onClick: onClickLogout,
+                                onClick: logoutUser,
                                 children: [
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_2__["default"], {
                                         unoptimized: true,
@@ -1498,6 +1934,13 @@ function UserLoggedIn(props) {
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ 7066:
+/***/ ((module) => {
+
+module.exports = require("@ant-design/icons");
 
 /***/ }),
 
@@ -1732,7 +2175,7 @@ module.exports = import("graphql-request");;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [675,676,664,316,882], () => (__webpack_exec__(5656)));
+var __webpack_exports__ = __webpack_require__.X(0, [675,676,664,587,882], () => (__webpack_exec__(5656)));
 module.exports = __webpack_exports__;
 
 })();

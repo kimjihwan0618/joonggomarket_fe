@@ -15,8 +15,10 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var next_image__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5675);
 /* harmony import */ var src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9316);
 /* harmony import */ var _UsedItem_styles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3035);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__, _UsedItem_styles__WEBPACK_IMPORTED_MODULE_3__]);
-([src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__, _UsedItem_styles__WEBPACK_IMPORTED_MODULE_3__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9500);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__, _UsedItem_styles__WEBPACK_IMPORTED_MODULE_3__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_4__]);
+([src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__, _UsedItem_styles__WEBPACK_IMPORTED_MODULE_3__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_4__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 
 
@@ -44,7 +46,7 @@ function UsedItemUI(props) {
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_UsedItem_styles__WEBPACK_IMPORTED_MODULE_3__/* .Title2 */ .Rn, {
                                 children: props.usedItem.name.replaceAll(props.keyword, `!@#${props.keyword}!@#`).split('!@#').map((el2)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
                                         style: {
-                                            color: el2 === props.keyword ? 'red' : 'black'
+                                            color: el2 === props.keyword ? src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_4__/* ["default"].colors.main */ .Z.colors.main : 'black'
                                         },
                                         children: el2
                                     })
@@ -128,28 +130,35 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   "ud": () => (/* binding */ IsSold)
 /* harmony export */ });
 /* harmony import */ var _emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4115);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__]);
-_emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9500);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__]);
+([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 const UsedItem = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   display: flex;
   position: relative;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid ${({ theme  })=>theme.colors.gray04
+  border-top: 1px solid ${({ theme: theme1  })=>theme1.colors.gray04
 };
   padding: 20px 0;
   cursor: pointer;
   &:hover {
-    background: ${({ theme  })=>theme.colors.gray07
+    background: ${({ theme: theme2  })=>theme2.colors.gray07
 };
   }
   height: 160px;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    height: 180px;
+  }
 `;
 const ItemImageBox2 = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   position: relative;
   width: 140px;
   height: 140px;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 const UsedItemInfo2 = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   display: flex;
@@ -157,6 +166,12 @@ const UsedItemInfo2 = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].di
   align-items: center;
   margin-left: 40px;
   justify-content: space-between;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    width: calc(100% - 100px);
+    margin-left: 20px;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
 `;
 const LeftInfo = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].ul``;
 const Title2 = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].li`
@@ -172,19 +187,19 @@ const Remarks2 = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].li`
   margin-bottom: 8px;
   font-size: 1.6rem;
   font-weight: 500;
-  color: ${({ theme  })=>theme.colors.gray02
+  color: ${({ theme: theme3  })=>theme3.colors.gray02
 };
 `;
 const Tags = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].li`
   font-weight: 500;
   font-size: 1.6rem;
-  color: ${({ theme  })=>theme.colors.gray04
+  color: ${({ theme: theme4  })=>theme4.colors.gray04
 };
   margin-bottom: 24px;
 `;
 const SellerPicked = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].li`
   font-size: 1.6rem;
-  color: ${({ theme  })=>theme.colors.gray02
+  color: ${({ theme: theme5  })=>theme5.colors.gray02
 };
   display: flex;
   align-items: center;
@@ -205,6 +220,9 @@ const Price2 = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].p`
   font-weight: bold;
   font-size: 2.4rem;
   text-align: right;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    margin-bottom: 12px;
+  }
 `;
 const IsSold = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].p`
   position: absolute;
@@ -230,6 +248,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   "im": () => (/* binding */ Wrapper),
 /* harmony export */   "Mw": () => (/* binding */ BestUsedItemSectionTitle),
 /* harmony export */   "zY": () => (/* binding */ BestUsedItemWrapper),
+/* harmony export */   "sV": () => (/* binding */ BestUsedItemWrapperInner),
 /* harmony export */   "Ty": () => (/* binding */ BestUsedItem),
 /* harmony export */   "oI": () => (/* binding */ ItemImageBox),
 /* harmony export */   "rl": () => (/* binding */ UsedItemInfo1),
@@ -247,11 +266,14 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   "z": () => (/* binding */ Bottom)
 /* harmony export */ });
 /* harmony import */ var _emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4115);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__]);
-_emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9500);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__]);
+([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 const Wrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   max-width: 1200px;
+  margin: 0 auto;
 `;
 const BestUsedItemSectionTitle = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].h3`
   font-size: 3.6rem;
@@ -260,31 +282,64 @@ const BestUsedItemSectionTitle = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["d
   text-align: center;
 `;
 const BestUsedItemWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
+  margin-bottom: 80px;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen2 */ .Z.media.screen2} {
+    margin-bottom: 40px;
+    position: relative;
+    width: 100%;
+    overflow: scroll;
+  }
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    margin-bottom: 40px;
+    position: relative;
+    width: 100%;
+    overflow: scroll;
+  }
+`;
+const BestUsedItemWrapperInner = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   display: flex;
   align-items: center;
-  margin-bottom: 80px;
+  padding: 16px 0;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    width: 190%;
+  }
 `;
 const BestUsedItem = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-  /* height: 391px; */
+  box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.15);
+  border-radius: 14px;
+  height: auto;
+  padding: 10px;
   width: 25%;
   margin-right: 24px;
   overflow: hidden;
   cursor: pointer;
+  transition: all 0.05s ease-in-out;
   &:last-of-type {
     margin-right: 0px;
+  }
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.2);
+  }
+  min-width: 190px;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    min-width: auto;
   }
 `;
 const ItemImageBox = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   position: relative;
   width: 100%;
-  height: 160px;
-  padding: 20px;
-  border-bottom: 1px solid ${({ theme  })=>theme.colors.gray06
+  height: 120px;
+  /* box-sizing: border-box; */
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 10px;
+  margin: 0 auto;
+  border-bottom: 1px solid ${({ theme: theme1  })=>theme1.colors.gray06
 };
 `;
 const UsedItemInfo1 = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].dl`
-  padding: 20px;
+  padding: 20px 12px 6px 12px;
 `;
 const Title = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].dt`
   font-size: 1.8rem;
@@ -301,7 +356,10 @@ const InfoBottom = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].dd`
 `;
 const Remarks = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].p`
   font-size: 1.2rem;
-  color: ${({ theme  })=>theme.colors.gray02
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: ${({ theme: theme2  })=>theme2.colors.gray02
 };
 `;
 const Price = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].p`
@@ -328,6 +386,9 @@ const TabsItem = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].ul`
   display: flex;
   align-items: center;
   margin-left: 28px;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    margin-left: 14px;
+  }
 `;
 const Tab = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].li`
   font-size: 1.8rem;
@@ -348,16 +409,14 @@ const Tab = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].li`
 `;
 const UsedItemsWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   width: 100%;
-  padding-right: 20px;
   max-height: 800px;
   overflow-y: auto;
 `;
 const Bottom = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 20px;
   padding-top: 20px;
-  border-top: 1px solid ${({ theme  })=>theme.colors.gray04
+  border-top: 1px solid ${({ theme: theme3  })=>theme3.colors.gray04
 };
 `;
 

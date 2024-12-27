@@ -287,6 +287,7 @@ const ImageUploadButton = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"
   margin-right: 24px;
   border: none;
   display: flex;
+  border-radius: 6px;
   cursor: pointer;
   flex-direction: column;
   align-items: center;

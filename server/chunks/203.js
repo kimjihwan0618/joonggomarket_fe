@@ -33,7 +33,8 @@ function TextAreaWithError(props) {
                         readOnly: (_readOnly = props.readOnly) !== null && _readOnly !== void 0 ? _readOnly : false,
                         placeholder: (_placeholder = props.placeholder) !== null && _placeholder !== void 0 ? _placeholder : '',
                         style: props.style && props.style,
-                        "data-height": props.height
+                        "data-height": props.height,
+                        maxLength: props.maxLength || undefined
                     }),
                     props.error && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_TextAreaWithError_styles__WEBPACK_IMPORTED_MODULE_1__/* .Error */ .jj, {
                         children: props.error
@@ -87,6 +88,7 @@ const TextArea = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].textare
   padding: 14px 16px;
   font-size: 1.6rem;
   width: 100%;
+  border-radius: 6px;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;

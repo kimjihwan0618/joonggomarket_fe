@@ -3,37 +3,6 @@ exports.id = 882;
 exports.ids = [882];
 exports.modules = {
 
-/***/ 9500:
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _emotion_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3139);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_react__WEBPACK_IMPORTED_MODULE_0__]);
-_emotion_react__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
-
-const theme = {
-    colors: {
-        main: '#ffd600',
-        gray01: '#333333',
-        gray02: '#4f4f4f',
-        gray03: '#828282',
-        gray04: '#bdbdbd',
-        gray05: '#e0e0e0',
-        gray06: '#f2f2f2',
-        gray07: '#f5f5f5',
-        dark01: '#161616'
-    }
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (theme);
-
-__webpack_async_result__();
-} catch(e) { __webpack_async_result__(e); } });
-
-/***/ }),
-
 /***/ 6882:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -67,7 +36,12 @@ function Button02(props) {
                 width: 18,
                 height: 18
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Button02_styles__WEBPACK_IMPORTED_MODULE_1__/* .Text */ .x, {
+            props.isLoading ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_2__["default"], {
+                unoptimized: true,
+                src: '/loading.gif',
+                width: 24,
+                height: 24
+            }) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Button02_styles__WEBPACK_IMPORTED_MODULE_1__/* .Text */ .x, {
                 "data-disabled": props.disabled,
                 "data-color": (_color = props.color) !== null && _color !== void 0 ? _color : src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_3__/* ["default"].colors.dark01 */ .Z.colors.dark01,
                 children: props.name
@@ -90,8 +64,10 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   "x": () => (/* binding */ Text)
 /* harmony export */ });
 /* harmony import */ var _emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4115);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__]);
-_emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9500);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__]);
+([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 const width = {
     '01': '18px 16px',
@@ -108,6 +84,7 @@ const Button = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].button`
   border: ${(props)=>props['data-background'] === 'white' && '1px solid rgba(189, 189, 189, 1)'
 };
   display: flex;
+  border-radius: 6px;
   align-items: center;
   justify-content: center;
   height: 42px;
@@ -128,6 +105,9 @@ const Text = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].p`
   font-size: 1.4rem;
   color: ${(props)=>props['data-disabled'] ? 'white' : props['data-color']
 };
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    font-size: 1.6rem;
+  }
 `;
 
 __webpack_async_result__();

@@ -35,7 +35,8 @@ function InputWithError(props) {
                         disabled: (_disabled = props.disabled) !== null && _disabled !== void 0 ? _disabled : false,
                         readOnly: (_readOnly = props.readOnly) !== null && _readOnly !== void 0 ? _readOnly : false,
                         style: props.style && props.style,
-                        placeholder: (_placeholder = props.placeholder) !== null && _placeholder !== void 0 ? _placeholder : ''
+                        placeholder: (_placeholder = props.placeholder) !== null && _placeholder !== void 0 ? _placeholder : '',
+                        maxLength: props.maxLength || undefined
                     }),
                     props.error && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_InputWithError_styles__WEBPACK_IMPORTED_MODULE_1__/* .Error */ .jj, {
                         children: props.error
@@ -89,6 +90,7 @@ const Input = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].input`
   font-size: 1.6rem;
   height: 52px;
   width: 100%;
+  border-radius: 6px;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;

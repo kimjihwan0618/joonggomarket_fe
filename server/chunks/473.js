@@ -26,13 +26,13 @@ function checkValidationImage(file) {
     }
     if (file.size > MAX_FILE_SIZE) {
         antd__WEBPACK_IMPORTED_MODULE_1__.Modal.error({
-            content: '파일이 너무 큽니다. (제한 : 5MB'
+            content: '파일이 너무 큽니다. (제한 : 5MB)'
         });
         return false;
     }
     if (!file.type.includes('png') && !file.type.includes('jpeg') && !file.type.includes('jpg')) {
         antd__WEBPACK_IMPORTED_MODULE_1__.Modal.error({
-            content: '파일 확장자가 올바르지 않습니다. (png, jpeg, jpg만 가능'
+            content: '파일 확장자가 올바르지 않습니다. (png, jpeg, jpg만 가능)'
         });
         return false;
     }
@@ -46,7 +46,7 @@ const UPLOAD_FILE = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
   }
 `;
 const useMutationUploadFile = ()=>{
-    const [uploadFileMutation] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useMutation)(UPLOAD_FILE);
+    const [uploadFileMutation, { loading  }] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useMutation)(UPLOAD_FILE);
     const uploadFile = async (props)=>{
         try {
             const isValid = checkValidationImage(props.file);
@@ -64,7 +64,8 @@ const useMutationUploadFile = ()=>{
         }
     };
     return {
-        uploadFile
+        uploadFile,
+        loading
     };
 };
 

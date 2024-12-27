@@ -59,15 +59,9 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5725);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9316);
-/* harmony import */ var _quires_usedItem_useQueryFetchUsedItems__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4399);
-/* harmony import */ var _file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9473);
-/* harmony import */ var _quires_usedItem_useQueryFetchBoardsOfTheBest__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6818);
-/* harmony import */ var _quires_usedItem_mypage_useQueryFetchUsedItemsISold__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1583);
+/* harmony import */ var _file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9473);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__]);
 src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
-
-
-
 
 
 
@@ -81,7 +75,7 @@ const CREATE_USED_ITEM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
 `;
 const useMutationCreateUsedItem = (props)=>{
     const { moveToPage  } = (0,src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__/* .useMoveToPage */ .G)();
-    const { uploadFile  } = (0,_file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_4__/* .useMutationUploadFile */ .sY)();
+    const { uploadFile  } = (0,_file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_3__/* .useMutationUploadFile */ .sY)();
     const [createUsedItemMutation, { loading  }] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useMutation)(CREATE_USED_ITEM);
     const createUsedItem = async ()=>{
         const { name , remarks , contents , price , tags: strTags , address , addressDetail , zipcode , lat , lng ,  } = props.getValues();
@@ -118,21 +112,45 @@ const useMutationCreateUsedItem = (props)=>{
                 variables: {
                     createUseditemInput
                 },
-                refetchQueries: [
-                    {
-                        query: _quires_usedItem_useQueryFetchUsedItems__WEBPACK_IMPORTED_MODULE_3__/* .FETCH_USED_ITEMS */ .z,
-                        variables: {
-                            search: '',
-                            isSoldout: false
+                update (cache, { data  }) {
+                    const newUseditemRef = cache.writeFragment({
+                        data: {
+                            __typename: 'Useditem',
+                            ...data === null || data === void 0 ? void 0 : data.createUseditem
+                        },
+                        fragment: _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
+              fragment NewUseditem on Useditem {
+                _id
+                name
+                remarks
+                contents
+                price
+                tags
+                createdAt
+              }
+            `
+                    });
+                    cache.modify({
+                        fields: {
+                            fetchUseditems (existingUseditems = []) {
+                                return [
+                                    newUseditemRef,
+                                    ...existingUseditems
+                                ];
+                            },
+                            fetchUseditemsOfTheBest (existingUseditems = []) {
+                                if (existingUseditems.length < 4) {
+                                    return [
+                                        ...existingUseditems,
+                                        newUseditemRef
+                                    ];
+                                } else {
+                                    return existingUseditems;
+                                }
+                            }
                         }
-                    },
-                    {
-                        query: _quires_usedItem_useQueryFetchBoardsOfTheBest__WEBPACK_IMPORTED_MODULE_5__/* .FETCH_USED_ITEMS_BEST */ .p
-                    },
-                    {
-                        query: _quires_usedItem_mypage_useQueryFetchUsedItemsISold__WEBPACK_IMPORTED_MODULE_6__/* .FETCH_USED_ITEMS_I_SOLD */ .C
-                    }, 
-                ]
+                    });
+                }
             });
             if (result === null || result === void 0 ? void 0 : (ref4 = result.data) === null || ref4 === void 0 ? void 0 : (ref1 = ref4.createUseditem) === null || ref1 === void 0 ? void 0 : ref1._id) {
                 var ref2, ref3;
@@ -173,11 +191,9 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9316);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _quires_usedItem_useQueryFetchUsedItem__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5097);
-/* harmony import */ var _file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9473);
+/* harmony import */ var _file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9473);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__]);
 src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
-
 
 
 
@@ -187,12 +203,26 @@ const UPDATE_USED_ITEM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
   mutation updateUseditem($updateUseditemInput: UpdateUseditemInput!, $useditemId: ID!) {
     updateUseditem(updateUseditemInput: $updateUseditemInput, useditemId: $useditemId) {
       _id
+      name
+      updatedAt
+      useditemAddress {
+        lat
+        lng
+        address
+        addressDetail
+        zipcode
+      }
+      remarks
+      price
+      images
+      contents
+      tags
     }
   }
 `;
 const useMutationUpdateUsedItem = (props)=>{
     const router = (0,next_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
-    const { uploadFile  } = (0,_file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_5__/* .useMutationUploadFile */ .sY)();
+    const { uploadFile  } = (0,_file_useMutationUploadFile__WEBPACK_IMPORTED_MODULE_4__/* .useMutationUploadFile */ .sY)();
     const { moveToPage  } = (0,src_components_commons_hooks_custom_useMoveToPage__WEBPACK_IMPORTED_MODULE_2__/* .useMoveToPage */ .G)();
     const [updateUsedItemMutation, { loading  }] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useMutation)(UPDATE_USED_ITEM);
     const updateUsedItem = async ()=>{
@@ -244,14 +274,23 @@ const useMutationUpdateUsedItem = (props)=>{
                     updateUseditemInput,
                     useditemId: router.query.useditemId
                 },
-                refetchQueries: [
-                    {
-                        query: _quires_usedItem_useQueryFetchUsedItem__WEBPACK_IMPORTED_MODULE_4__/* .FETCH_USED_ITEM */ .o,
-                        variables: {
-                            useditemId: router.query.useditemId
+                update (cache, { data  }) {
+                    const updatedUseditem = data.updateUseditem;
+                    cache.modify({
+                        fields: {
+                            fetchUseditem (existingUseditem, { readField  }) {
+                                if (readField('_id', existingUseditem) === updatedUseditem._id) {
+                                    return {
+                                        ...existingUseditem,
+                                        ...updatedUseditem
+                                    };
+                                }
+                                return existingUseditem // 일치하지 않으면 기존 상품 반환
+                                ;
+                            }
                         }
-                    }, 
-                ]
+                    });
+                }
             });
             if (result === null || result === void 0 ? void 0 : (ref4 = result.data) === null || ref4 === void 0 ? void 0 : (ref1 = ref4.updateUseditem) === null || ref1 === void 0 ? void 0 : ref1._id) {
                 var ref2, ref3;
@@ -274,115 +313,6 @@ const useMutationUpdateUsedItem = (props)=>{
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
-
-/***/ }),
-
-/***/ 1583:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "C": () => (/* binding */ FETCH_USED_ITEMS_I_SOLD),
-/* harmony export */   "v": () => (/* binding */ useQueryFetchUsedItemsISold)
-/* harmony export */ });
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9114);
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_0__);
-
-const FETCH_USED_ITEMS_I_SOLD = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
-  query fetchUseditemsISold($search: String, $page: Int) {
-    fetchUseditemsISold(search: $search, page: $page) {
-      _id
-      name
-      images
-      pickedCount
-      price
-      updatedAt
-      remarks
-      tags
-      soldAt
-      seller {
-        name
-        picture
-      }
-    }
-  }
-`;
-const useQueryFetchUsedItemsISold = ()=>{
-    const result = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useQuery)(FETCH_USED_ITEMS_I_SOLD);
-    return result;
-};
-
-
-/***/ }),
-
-/***/ 6818:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "p": () => (/* binding */ FETCH_USED_ITEMS_BEST),
-/* harmony export */   "A": () => (/* binding */ useQueryFetchUsedItemsOfTheBest)
-/* harmony export */ });
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9114);
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_0__);
-
-const FETCH_USED_ITEMS_BEST = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
-  query {
-    fetchUseditemsOfTheBest {
-      _id
-      name
-      images
-      pickedCount
-      price
-      updatedAt
-      remarks
-    }
-  }
-`;
-const useQueryFetchUsedItemsOfTheBest = ()=>{
-    const result = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useQuery)(FETCH_USED_ITEMS_BEST);
-    return result;
-};
-
-
-/***/ }),
-
-/***/ 4399:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "z": () => (/* binding */ FETCH_USED_ITEMS),
-/* harmony export */   "g": () => (/* binding */ useQueryFetchUsedItems)
-/* harmony export */ });
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9114);
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_0__);
-
-const FETCH_USED_ITEMS = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql`
-  query fetchUseditems($isSoldout: Boolean, $search: String, $page: Int) {
-    fetchUseditems(isSoldout: $isSoldout, search: $search, page: $page) {
-      _id
-      name
-      images
-      pickedCount
-      price
-      updatedAt
-      remarks
-      tags
-      soldAt
-      seller {
-        name
-        picture
-      }
-    }
-  }
-`;
-const useQueryFetchUsedItems = ()=>{
-    const result = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_0__.useQuery)(FETCH_USED_ITEMS, {
-        variables: {
-            isSoldout: false
-        }
-    });
-    return result;
-};
-
 
 /***/ }),
 
@@ -659,7 +589,6 @@ function UsedItemWriteUI(props) {
                                 children: [
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_UsedItemWrite_styles__WEBPACK_IMPORTED_MODULE_1__/* .MapWrapper */ .fk, {
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(src_components_commons_kakaomap_KakaomapUI__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Z, {
-                                            draggable: false,
                                             lat: lat,
                                             lng: lng
                                         })
@@ -693,7 +622,7 @@ function UsedItemWriteUI(props) {
                                                                 type: "number",
                                                                 placeholder: "위도(LAT)",
                                                                 label: "위도",
-                                                                width: "100px"
+                                                                width: "149px"
                                                             }),
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(src_components_commons_inputs_02_InputWithError_index__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z, {
                                                                 register: register('lng'),
@@ -701,7 +630,7 @@ function UsedItemWriteUI(props) {
                                                                 type: "number",
                                                                 placeholder: "경도(LNG)",
                                                                 label: "경도",
-                                                                width: "100px"
+                                                                width: "149px"
                                                             })
                                                         ]
                                                     })
@@ -752,7 +681,7 @@ function UsedItemWriteUI(props) {
                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_UsedItemWrite_styles__WEBPACK_IMPORTED_MODULE_1__/* .ButtonWrapper */ .W4, {
                         children: [
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(src_components_commons_buttons_01_Button01_index__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
-                                onClick: moveToBack(`/markets/${router.query.useditemId}`),
+                                onClick: moveToBack(),
                                 background: src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_5__/* ["default"].colors.dark01 */ .Z.colors.dark01,
                                 color: 'white',
                                 name: '취소하기',
@@ -795,9 +724,9 @@ const extractTags = (input)=>{
     ) : [];
 };
 const schema = yup__WEBPACK_IMPORTED_MODULE_0__.object({
-    name: yup__WEBPACK_IMPORTED_MODULE_0__.string().required('상품명을 작성해주세요.'),
-    remarks: yup__WEBPACK_IMPORTED_MODULE_0__.string().required('한줄요약을 작성해주세요.'),
-    price: yup__WEBPACK_IMPORTED_MODULE_0__.number().typeError('판매 가격을 확인해주세요.').required('판매 가격을 작성해주세요.').required('판매 가격을 입력해주세요.'),
+    name: yup__WEBPACK_IMPORTED_MODULE_0__.string().max(30, '최대 30글자 이하로 입력해주세요.').required('상품명을 작성해주세요.'),
+    remarks: yup__WEBPACK_IMPORTED_MODULE_0__.string().max(30, '최대 30글자 이하로 입력해주세요.').required('한줄요약을 작성해주세요.'),
+    price: yup__WEBPACK_IMPORTED_MODULE_0__.number().typeError('판매 가격을 확인해주세요.').max(1000000, '최대 100만원 이하로 입력해주세요.').required('판매 가격을 작성해주세요.'),
     tags: yup__WEBPACK_IMPORTED_MODULE_0__.string().required('태그를 한개 이상 입력해주세요.').test('has-valid-tags', '유효한 태그를 입력해주세요. (태그는 #으로 시작해야 합니다)', (value)=>{
         if (!value) return false // 필드가 비어있으면 유효하지 않음
         ;
@@ -807,7 +736,7 @@ const schema = yup__WEBPACK_IMPORTED_MODULE_0__.object({
         ;
     }),
     address: yup__WEBPACK_IMPORTED_MODULE_0__.string().notRequired(),
-    addressDetail: yup__WEBPACK_IMPORTED_MODULE_0__.string().notRequired(),
+    addressDetail: yup__WEBPACK_IMPORTED_MODULE_0__.string().required('상세주소를 작성해주세요.'),
     zipcode: yup__WEBPACK_IMPORTED_MODULE_0__.string().notRequired(),
     lat: yup__WEBPACK_IMPORTED_MODULE_0__.number().notRequired(),
     lng: yup__WEBPACK_IMPORTED_MODULE_0__.number().notRequired(),
@@ -841,19 +770,28 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */ });
 /* unused harmony export RadioItem */
 /* harmony import */ var _emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4115);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__]);
-_emotion_styled__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9500);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__]);
+([_emotion_styled__WEBPACK_IMPORTED_MODULE_0__, src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 const ContentWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   padding: 40px 75px 60px;
   /* min-width: 920px; */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 14px;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    padding: 40px 25px;
+  }
 `;
 const ContentTitle = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].h2`
   font-size: 3.6rem;
   font-weight: 700;
   margin-bottom: 80px;
   text-align: center;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    margin-bottom: 45px;
+  }
 `;
 const FormWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   margin-bottom: 40px;
@@ -900,11 +838,11 @@ const RadioItem = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
     border-radius: 50%;
   }
   & > input[type='radio']:checked {
-    border: 0.4em solid ${({ theme  })=>theme.colors.main
+    border: 0.4em solid ${({ theme: theme1  })=>theme1.colors.main
 };
   }
   & > input[type='radio']:focus-visible {
-    outline: max(2px, 0.1em) dotted ${({ theme  })=>theme.colors.main
+    outline: max(2px, 0.1em) dotted ${({ theme: theme2  })=>theme2.colors.main
 };
     outline-offset: max(2px, 0.1em);
   }
@@ -914,16 +852,28 @@ const MapAddressWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 400px;
+  height: 560px;
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    margin-top: 50px;
+    flex-direction: column;
+    height: 630px;
+  }
 `;
 const MapWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   width: 40%;
   height: 75%;
-  border: 1px solid ${({ theme  })=>theme.colors.gray05
+  border: 1px solid ${({ theme: theme3  })=>theme3.colors.gray05
 };
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    width: 100%;
+    height: 200px;
+  }
 `;
 const AddressWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   width: calc(60% - 24px);
+  ${src_commons_styles_theme__WEBPACK_IMPORTED_MODULE_1__/* ["default"].media.screen3 */ .Z.media.screen3} {
+    width: 100%;
+  }
 `;
 const LatLng = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   display: flex;
@@ -935,8 +885,9 @@ const LatLng = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
 const GpsWrapper = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
 `;
 const Address = _emotion_styled__WEBPACK_IMPORTED_MODULE_0__["default"].div`
   width: 100%;
