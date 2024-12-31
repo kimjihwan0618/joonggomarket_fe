@@ -1,4 +1,4 @@
-# MyPopol
+# 중고마켓
 
 ![Main](./public/images/main.png)
 
