@@ -193,7 +193,10 @@ export default function UsedItemDetailUI(): JSX.Element {
             {data?.fetchUseditem?.useditemAddress?.lat &&
               data?.fetchUseditem?.useditemAddress?.lng && (
                 <S.KakaoMapWrapper>
-                  <KakaoMapUI lat={37.5665} lng={126.978} />
+                  <KakaoMapUI
+                    lat={data?.fetchUseditem?.useditemAddress?.lat || 0}
+                    lng={data?.fetchUseditem?.useditemAddress?.lng || 0}
+                  />
                 </S.KakaoMapWrapper>
               )}
           </S.ContentWrapper>
