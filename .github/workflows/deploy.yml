@@ -1,0 +1,49 @@
+name: Deploy Joonggomarket Static App(S3)
+
+on:
+  push:
+    branches:
+      - main # main 브랜치에 push 시 실행
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 리포지토리 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Node.js 20.15.0 설치 및 yarn 설치
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.15.0'
+
+      - name: Install yarn
+        run: npm install -g yarn
+
+      # 3. 의존성 설치
+      - name: Install dependencies
+        run: yarn install
+
+      # 4. 정적 사이트 빌드
+      - name: Build static files
+        run: yarn build:ssg
+
+      # 5. S3 업로드
+      - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@v0.5.1
+        with:
+          args: --acl public-read --follow-symlinks
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SOURCE_DIR: './out' # 빌드 결과 디렉토리
+
+      # 6. 버전 정보 파일 생성 및 업로드
+      - name: Upload version file
+        run: |
+          echo "{ \"version\": \"$(jq -r .version package.json)\", \"buildTime\": \"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\" }" > version.json
+          aws s3 cp version.json s3://$AWS_S3_BUCKET/version.json --acl public-read
