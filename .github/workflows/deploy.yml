@@ -42,8 +42,9 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: './out' # 빌드 결과 디렉토리
 
+
       # 6. 버전 정보 파일 생성 및 업로드
-      - name: Upload version file
-        run: |
-          echo "{ \"version\": \"$(jq -r .version package.json)\", \"buildTime\": \"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\" }" > version.json
-          aws s3 cp version.json s3://$AWS_S3_BUCKET/version.json --acl public-read
+      # - name: Upload version file
+      #   run: |
+      #     echo "{ \"version\": \"$(jq -r .version package.json)\", \"buildTime\": \"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\" }" > version.json
+      #     aws s3 cp version.json s3://$AWS_S3_BUCKET/version.json --acl public-read
