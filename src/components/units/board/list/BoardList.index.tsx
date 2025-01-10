@@ -39,7 +39,7 @@ export default function BoardListUI(): JSX.Element {
 
   return (
     <S.Wrapper>
-      <S.BestBoardsSectionTitle>베스트 게시긁</S.BestBoardsSectionTitle>
+      <S.BestBoardsSectionTitle>베스트 게시긹</S.BestBoardsSectionTitle>
       <S.BestBoardWrapper>
         <S.BestBoardWrapperInner>
           {boardsBest?.fetchBoardsOfTheBest.map((el) => (
