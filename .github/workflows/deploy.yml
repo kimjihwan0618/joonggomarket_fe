@@ -42,7 +42,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: './out'
 
-      # 6. SSH 키 복원 및 권한 설정
+      ## 6. SSH 키 복원 및 권한 설정
       # - name: Setup SSH Key
       #   run: |
       #     mkdir -p ~/.ssh
