@@ -27,6 +27,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      # ================ S3 배포 ==================================
       # 4. 정적 사이트 빌드
       - name: Build static files
         run: yarn build:ssg
@@ -42,9 +43,41 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: './out' # 빌드 결과 디렉토리
 
+      # 6. 동적 사이트 빌드
+        - name: Build dynamic files
+          run: yarn build
+
+
+      # 7. EC2 서버 배포
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user  # EC2의 기본 사용자 이름 (Amazon Linux의 경우)
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ec2-user/joonggomarket_front
+	   
+            rm -rf *
+
+            scp -i ${{ secrets.EC2_SSH_KEY }} -r ./next ./node_modules ./package.json ./yarn.lock ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/joonggomarket_front
+           
+	          PORT=3000
+              PID=$(lsof -t -i:$PORT)
+              if [ -n "$PID" ]; then
+                echo "Stopping process on port $PORT (PID: $PID)..."
+                kill -9 $PID
+              else
+                echo "No process found on port $PORT."
+              fi
+   
+            yarn install
+            yarn start > /dev/null 2>&1 &
+         
 
       # 6. 버전 정보 파일 생성 및 업로드
       # - name: Upload version file
       #   run: |
       #     echo "{ \"version\": \"$(jq -r .version package.json)\", \"buildTime\": \"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\" }" > version.json
       #     aws s3 cp version.json s3://$AWS_S3_BUCKET/version.json --acl public-read
+
