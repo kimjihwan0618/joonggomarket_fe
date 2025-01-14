@@ -3,7 +3,7 @@ name: Deploy Joonggomarket App(S3, EC2)
 on:
   push:
     branches:
-      - main # main 브랜치에 push 시 실행
+      - main
 
 jobs:
   build-and-deploy:
@@ -27,7 +27,6 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      # ================ S3 배포 ==================================
       # 4. 정적 사이트 빌드
       - name: Build static files
         run: yarn build:ssg
@@ -41,11 +40,12 @@ jobs:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SOURCE_DIR: './out' # 빌드 결과 디렉토리
+          SOURCE_DIR: './out'
 
       # 6. SSH 키 복원 및 권한 설정
       - name: Setup SSH Key
         run: |
+          mkdir -p ~/.ssh # SSH 디렉토리 생성
           echo "${{ secrets.EC2_SSH_KEY }}" | base64 -d > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
