@@ -45,7 +45,7 @@ jobs:
       # 6. SSH 키 복원 및 권한 설정
       - name: Setup SSH Key
         run: |
-          mkdir -p ~/.ssh # SSH 디렉토리 생성
+          mkdir -p ~/.ssh
           echo "${{ secrets.EC2_SSH_KEY }}" | base64 -d > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
