@@ -48,6 +48,8 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_SSH_KEY }}" | base64 -d > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          cat ~/.ssh/id_rsa
+          echo "=========================== rsa decoding result ============================"
 
       # 7. 동적 사이트 빌드
       - name: Build dynamic files
