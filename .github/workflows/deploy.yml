@@ -43,13 +43,13 @@ jobs:
           SOURCE_DIR: './out'
 
       # 6. SSH 키 복원 및 권한 설정
-      - name: Setup SSH Key
-        script: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_SSH_KEY }}" | base64 -d > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          cat ~/.ssh/id_rsa
-          ls -l ~/.ssh/id_rsa
+      # - name: Setup SSH Key
+      #   run: |
+      #     mkdir -p ~/.ssh
+      #     echo "${{ secrets.EC2_SSH_KEY }}" | base64 -d > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+      #     cat ~/.ssh/id_rsa
+      #     ls -l ~/.ssh/id_rsa
 
       # 7. 동적 사이트 빌드
       - name: Build dynamic files
@@ -64,6 +64,11 @@ jobs:
           key: ~/.ssh/id_rsa
           port: 22
           script: |
+            mkdir -p ~/.ssh
+            echo "${{ secrets.EC2_SSH_KEY }}" | base64 -d > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            ls -l ~/.ssh/id_rsa
+
             echo "Testing SSH connection"
             uname -a
             cd /home/ec2-user/joonggomarket_front
