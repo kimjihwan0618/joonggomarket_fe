@@ -44,8 +44,8 @@ jobs:
           SOURCE_DIR: './out' # 빌드 결과 디렉토리
 
       # 6. 동적 사이트 빌드
-        - name: Build dynamic files
-          run: yarn build
+      - name: Build dynamic files
+        run: yarn build
 
 
       # 7. EC2 서버 배포
