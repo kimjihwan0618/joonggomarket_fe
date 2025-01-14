@@ -23,7 +23,7 @@ jobs:
       - name: Install yarn
         run: npm install -g yarn
 
-      ## 3. 의존성 설치
+      # 3. 의존성 설치
       - name: Install dependencies
         run: yarn install
 
