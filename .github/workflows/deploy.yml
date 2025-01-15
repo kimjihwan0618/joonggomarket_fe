@@ -41,24 +41,8 @@ jobs:
           pwd
           ls -al
 
-          echo "Cleaning EC2 target directory and stopping port 3000 process..."
-          ssh -o StrictHostKeyChecking=no -i ec2_key.pem ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
-            set -e
-            TARGET_DIR="/home/ec2-user/joonggomarket_front"
-            PORT=3000
-
-            echo "Stopping any process running on port $PORT..."
-            PID=$(lsof -t -i:$PORT)
-            if [ -n "$PID" ]; then
-              echo "Stopping process with PID $PID..."
-              kill -9 $PID
-            else
-              echo "No process found on port $PORT."
-            fi
-
-            echo "Clearing target directory: $TARGET_DIR"
-            rm -rf $TARGET_DIR/*
-          EOF
+          echo "Clearing target directory: $TARGET_DIR"
+          rm -rf $TARGET_DIR/*
 
           echo "Uploading files to EC2..."
           scp -o StrictHostKeyChecking=no -i ec2_key.pem \
@@ -76,6 +60,18 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
+            echo "Testing SSH connection================================="
+            echo "Current directory file list:"
+            cd /home/ec2-user/joonggomarket_front
+            rm -rf *
+            PORT=3000
+            PID=$(lsof -t -i:$PORT)
+            if [ -n "$PID" ]; then
+              echo "Stopping process on port $PORT (PID: $PID)..."
+              kill -9 $PID
+            else
+              echo "No process found on port $PORT."
+            fi
             yarn install
             yarn start > /dev/null 2>&1 &
 
