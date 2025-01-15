@@ -31,6 +31,9 @@ jobs:
       - name: Build dynamic files
         run: |
           yarn build
+          echo "Current directory file list:============================="
+          pwd
+          ls -al
 
           scp -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} \
             -r ./.next ./node_modules ./yarn.lock ./package.json \
