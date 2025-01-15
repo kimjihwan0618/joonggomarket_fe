@@ -41,15 +41,20 @@ jobs:
           pwd
           ls -al
 
+        echo "Cleaning EC2 target directory and stopping port 3000 process..."
+        ssh -o StrictHostKeyChecking=no -i ec2_key.pem ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+          set -e
+          TARGET_DIR="/home/ec2-user/joonggomarket_front"
           echo "Clearing target directory: $TARGET_DIR"
           rm -rf $TARGET_DIR/*
+        EOF
 
-          echo "Uploading files to EC2..."
-          scp -o StrictHostKeyChecking=no -i ec2_key.pem \
-            -r ./.next ./node_modules ./yarn.lock ./package.json \
-            ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/joonggomarket_front/
+        echo "Uploading files to EC2..."
+        scp -o StrictHostKeyChecking=no -i ec2_key.pem \
+          -r ./.next ./node_modules ./yarn.lock ./package.json \
+          ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/joonggomarket_front/
 
-          echo "Deployment completed."
+        echo "Deployment completed."
 
       # 7. EC2 서버 배포
       - name: Deploy to EC2
