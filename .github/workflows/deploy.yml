@@ -68,7 +68,6 @@ jobs:
             echo "Testing SSH connection================================="
             echo "Current directory file list:"
             cd /home/ec2-user/joonggomarket_front
-            rm -rf *
             PORT=3000
             PID=$(lsof -t -i:$PORT)
             if [ -n "$PID" ]; then
