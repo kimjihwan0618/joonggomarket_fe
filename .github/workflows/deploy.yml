@@ -29,7 +29,12 @@ jobs:
 
       # 6. 동적 사이트 빌드
       - name: Build dynamic files
-        run: yarn build
+        run: |
+          yarn build
+
+          scp -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} \
+            -r ./.next ./node_modules ./yarn.lock ./package.json \
+            ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/joonggomarket_front/
 
       # 7. EC2 서버 배포
       - name: Deploy to EC2
@@ -41,11 +46,7 @@ jobs:
           port: 22
           script: |
             echo "Testing SSH connection================================="
-            uname -a
-            cd /home
-            uname -a
             echo "Current directory file list:"
-            ls -al
             cd /home/ec2-user/joonggomarket_front
             rm -rf *
             PORT=3000
@@ -56,7 +57,6 @@ jobs:
             else
               echo "No process found on port $PORT."
             fi
-            scp -r ./.next ./node_modules ./yarn.lock ./package.json ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/joonggomarket_front/
             yarn install
             yarn start > /dev/null 2>&1 &
 
