@@ -1,12 +1,30 @@
-version: '3.7'
+# version: '3.7'
+# ========================== backup config
+# # 컴퓨터들
+# services:
+#   # 첫번째 컴퓨터 이름
+#   my-frontend:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     ports:
+#       - 3001:3001
+#   # 두번째컴퓨터 이름
+# ========================== backup config
 
-# 컴퓨터들
+version: '3.7'
 services:
-  # 첫번째 컴퓨터 이름
-  my-frontend:
+  app_ec2:
     build:
       context: .
-      dockerfile: Dockerfile
-    ports:
-      - 3001:3001
-  # 두번째컴퓨터 이름
+      dockerfile: Dockerfile.ec2
+    volumes:
+      - ./.next:/app/.next # Next.js 빌드 결과물을 로컬 ./.next 디렉토리로 저장
+    command: bash -c "yarn build"
+  app_s3:
+    build:
+      context: .
+      dockerfile: Dockerfile.s3
+    volumes:
+      - ./out:/app/out # SSG 빌드 결과물을 로컬 ./out 디렉토리로 저장
+    command: bash -c "yarn build:ssg"

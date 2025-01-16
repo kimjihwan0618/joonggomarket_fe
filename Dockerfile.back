@@ -1,0 +1,40 @@
+# # 나만의 가짜 컴퓨터 만드는 설명서
+
+# # 1. 운영체제 및 프로그램 하나 하나 설치
+# # FROM ubuntu:22.04
+
+# # RUN sudo apt install -y nodejs
+# # RUN sudo npm install -g yarn
+
+# # 2. 이미 리눅스, node, npm, yarn까지 모두 깔려있는 컴퓨터 다운로드
+# FROM node:20.15.0
+
+# WORKDIR /joonggomarket/
+# COPY ./package.json /joonggomarket/
+# COPY ./yarn.lock /joonggomarket/
+# RUN yarn install
+
+# # 2-2. 프고그램 셋팅하기
+# # RUN mkdir myfolder   =>   아래에서 COPY 할 때, 자동으로 만들어주므로 굳이 필요 없음!
+# COPY . /joonggomarket/
+# CMD bash -c "yarn build && yarn build:ssg"
+
+# # 2-3. 도커안에서 프로그램 실행하기
+# # CMD yarn start
+# =================================================================================
+# =================================================================================
+# Node.js 환경 설정
+FROM node:20.15.0
+
+# 컨테이너 작업 디렉토리 설정
+WORKDIR /app
+
+# 의존성 파일 복사 및 설치
+COPY package.json yarn.lock ./
+RUN yarn install
+
+# 전체 프로젝트 복사
+COPY . .
+
+# 두 가지 빌드를 실행
+CMD bash -c "yarn build && yarn build:ssg"
