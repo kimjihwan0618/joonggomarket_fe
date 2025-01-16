@@ -20,12 +20,18 @@ jobs:
           sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
 
-      # 3. Docker Compose로 S3 빌드
+      # 3. Yarn 설치 및 의존성 설치
+      - name: Install yarn and dependencies
+        run: |
+          npm install -g yarn
+          yarn install
+
+      # 4. Docker Compose로 S3 빌드
       - name: Build and Upload to S3
         run: |
           docker-compose up --build app_s3
 
-      # 4. S3 업로드
+      # 5. S3 업로드
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@v0.5.1
         with:
@@ -36,7 +42,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: './out'
 
-      # 5. EC2 배포 (SSH 접속)
+      # 6. EC2 배포 (SSH 접속)
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.4
         with:
