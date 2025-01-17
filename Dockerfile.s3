@@ -4,6 +4,7 @@ FROM node:20.15.0
 WORKDIR /app
 
 # 의존성 파일 복사 및 설치
+COPY .env.production .env.production
 COPY package.json yarn.lock ./
 RUN yarn install
 
