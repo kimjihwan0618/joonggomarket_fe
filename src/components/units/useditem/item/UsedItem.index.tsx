@@ -62,10 +62,12 @@ export default function UsedItemUI(props): JSX.Element {
             </S.Picked>
           </S.SellerPicked>
         </S.LeftInfo>
-        <S.Price2>{new Intl.NumberFormat('en-US').format(props.usedItem.price)}원</S.Price2>
-        <S.IsSold data-sold={props.usedItem.soldAt !== null}>
-          {props.usedItem.soldAt ? '판매완료' : '판매중'}
-        </S.IsSold>
+        <S.PriceBox>
+          <S.Price2>{new Intl.NumberFormat('en-US').format(props.usedItem.price)}원</S.Price2>
+          <S.IsSold data-sold={props.usedItem.soldAt !== null}>
+            {props.usedItem.soldAt ? '판매완료' : '판매중'}
+          </S.IsSold>
+        </S.PriceBox>
       </S.UsedItemInfo2>
     </S.UsedItem>
   )

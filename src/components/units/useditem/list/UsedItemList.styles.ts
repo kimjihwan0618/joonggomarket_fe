@@ -89,6 +89,7 @@ export const InfoBottom = styled.dd`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  margin-top: 12px;
 `
 
 export const Remarks = styled.p`

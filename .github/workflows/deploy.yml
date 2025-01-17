@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      ## 1. 체크아웃 리포지토리
+      # 1. 체크아웃 리포지토리
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -55,6 +55,6 @@ jobs:
             cd /home/ec2-user/joonggomarket_fe/
             git pull origin main
             yarn install
-            rm -rf /home/ec2-user/joonggomarket_fe/.next || true
+            sudo rm -rf /home/ec2-user/joonggomarket_fe/.next || true
             sudo docker-compose up --build app_ec2
             yarn start > /dev/null 2>&1 &

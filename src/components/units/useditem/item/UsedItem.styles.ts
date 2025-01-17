@@ -44,25 +44,40 @@ export const LeftInfo = styled.ul``
 export const Title2 = styled.li`
   margin-bottom: 4px;
   font-weight: 500;
-  font-size: 2.4rem;
+  font-size: 2rem;
   span {
     font-weight: 500;
-    font-size: 2.4rem;
+    font-size: 2rem;
+  }
+  ${theme.media.screen3} {
+    font-size: 1.6rem;
+    span {
+      font-size: 1.6rem;
+    }
   }
 `
 
 export const Remarks2 = styled.li`
   margin-bottom: 8px;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.gray02};
+  ${theme.media.screen3} {
+    font-size: 1.2rem;
+  }
 `
 
 export const Tags = styled.li`
   font-weight: 500;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   color: ${({ theme }) => theme.colors.gray04};
   margin-bottom: 24px;
+  ${theme.media.screen3} {
+    margin-bottom: 12px;
+  }
+  ${theme.media.screen2} {
+    font-size: 1rem;
+  }
 `
 
 export const SellerPicked = styled.li`
@@ -86,13 +101,20 @@ export const Picked = styled.p`
   margin-left: 20px;
 `
 
+export const PriceBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  ${theme.media.screen3} {
+    margin-bottom: 8px;
+    width: 100%;
+  }
+`
+
 export const Price2 = styled.p`
   font-weight: bold;
   font-size: 2.4rem;
   text-align: right;
-  ${theme.media.screen3} {
-    margin-bottom: 12px;
-  }
 `
 
 export const IsSold = styled.p`
@@ -103,4 +125,8 @@ export const IsSold = styled.p`
   right: 5px;
   top: 20px;
   color: ${(props) => props['data-sold'] && props.theme.colors.main};
+  ${theme.media.screen3} {
+    position: unset;
+    margin-right: 12px;
+  }
 `
