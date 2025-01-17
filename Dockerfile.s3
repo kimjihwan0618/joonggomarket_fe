@@ -11,4 +11,4 @@ RUN yarn install
 COPY . .
 
 # ec2 배포 빌드를 실행
-CMD bash -c "yarn build"
+CMD bash -c "yarn build:ssg"

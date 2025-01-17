@@ -11,4 +11,4 @@ RUN yarn install
 COPY . .
 
 # s3 배포 빌드를 실행
-CMD bash -c "yarn build:ssg"
+CMD bash -c "yarn build"
